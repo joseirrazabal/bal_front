@@ -1,0 +1,11 @@
+query codigoGet($codigo: String) {
+  codigoGet(codigo: $codigo) {
+    _id
+    codigo
+    participantes
+    expira
+    juego {
+      nombre
+    }
+  }
+}

@@ -1,0 +1,3 @@
+mutation codigoVerificar($codigoId: ID, $acertijo: ID, $codigo: String) {
+  codigoVerificar(codigoId: $codigoId, acertijo: $acertijo, codigo: $codigo)
+}

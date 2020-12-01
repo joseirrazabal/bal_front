@@ -1,0 +1,12 @@
+# service: eurekafront
+runtime: nodejs12
+entrypoint: npm run prod
+
+network:
+  forwarded_ports:
+    - 8080/tcp
+
+env_variables:
+  NODE_ENV: 'production'
+  MICRO: 'https://eurekamicro-dot-desafios-294202.uc.r.appspot.com'
+  LINKS: 'https://eurekamicro-dot-desafios-294202.uc.r.appspot.com'

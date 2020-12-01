@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Fill 7</title>
+    <defs>
+        <filter x="-0.9%" y="-5.7%" width="101.8%" height="115.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search" transform="translate(-820.000000, -33.000000)" fill="#FFFFFF">
+            <g filter="url(#filter-1)" transform="translate(0.000000, 5.000000)" id="Buttton">
+                <g transform="translate(773.000000, 0.753157)">
+                    <path d="M61.5,51.2468431 C55.7073065,51.2468431 51,46.5385116 51,40.7491296 C51,34.9615768 55.7073065,30.2468431 61.5,30.2468431 C67.2862928,30.2468431 72,34.9615768 72,40.7491296 C72,46.5385116 67.2862928,51.2468431 61.5,51.2468431 M79.6075294,56.9736833 L71.9143529,49.2805634 C73.8211765,46.9568158 74.9712941,43.9789553 74.9712941,40.7319204 C74.9712941,33.2872693 68.9298824,27.2468431 61.4851765,27.2468431 C54.0338824,27.2468431 48,33.2872693 48,40.7319204 C48,48.1784539 54.0338824,54.21888 61.4851765,54.21888 C64.7312941,54.21888 67.7016471,53.0763002 70.0272941,51.1685495 L77.7204706,58.8550813 C78.2428235,59.3774304 79.0851765,59.3774304 79.6075294,58.8550813 C80.1308235,58.3383792 80.1308235,57.4903854 79.6075294,56.9736833" id="Fill-7"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
