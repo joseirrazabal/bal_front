@@ -190,30 +190,30 @@ const config = {
               limit: 10000,
             },
           },
-          ({ resource }) => ({
-            loader: 'image-webpack-loader',
-            options: {
-              bypassOnDebug: true,
-              mozjpeg: {
-                quality: [0.85, 0.95],
-              },
-              pngquant: {
-                quality: [0.85, 0.95],
-                speed: 1,
-              },
-              svgo: {
-                plugins: [
-                  {
-                    cleanupIDs: {
-                      prefix: hash(path.relative(appRootDir.get(), resource)),
-                      minify: true,
-                      remove: true,
-                    },
-                  },
-                ],
-              },
-            },
-          }),
+          // ({ resource }) => ({
+          //   loader: 'image-webpack-loader',
+          //   options: {
+          //     bypassOnDebug: true,
+          //     mozjpeg: {
+          //       quality: [0.85, 0.95],
+          //     },
+          //     pngquant: {
+          //       quality: [0.85, 0.95],
+          //       speed: 1,
+          //     },
+          //     svgo: {
+          //       plugins: [
+          //         {
+          //           cleanupIDs: {
+          //             prefix: hash(path.relative(appRootDir.get(), resource)),
+          //             minify: true,
+          //             remove: true,
+          //           },
+          //         },
+          //       ],
+          //     },
+          //   },
+          // }),
         ],
       },
       {
