@@ -1,10 +1,11 @@
 import React from 'react'
 // Material
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 // Components
 import Search from "../../components/Search"
 import CardBal from '../../components/CardBal'
+import Typography from '../../components/Typography'
+// Assets
 import imageBackground from '../../assets/fondo.jpg'
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +25,22 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
+    margin: 10
+  },
+  containerMobile: {
+    margin: '0 auto',
+    width: '100%',
+    maxWidth: 1280,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+
+/*     '@media (max-width: 960px)': {
+      
+    }, */
   },
   contentSearch: {
     width: '100vw',
@@ -38,6 +54,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+
+    '@media (max-width: 960px)': {
+      height: '40vh',
+    },
   },
   contentBanners: {
     width: '100vw',
@@ -46,6 +66,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+
+    '@media (max-width: 960px)': {
+      height: '60vh',
+    },
   },
   contentSlider: {
     width: '100%',
@@ -54,11 +78,27 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'strech',
     boxSizing: 'border-box',
 
+    '& ul': {
+      listStyle: 'none',
+      display: 'inline-flex',
+      width: '100%',
+      padding: 0,
+
+      '@media (max-width: 960px)': {
+        width: '1000px'
+      },
+
+      '& li': {
+        width: '100%',
+        margin: 5
+      },
+
+    },
+
 		'@media (max-width: 960px)': {
 			overflowX: 'scroll',
       whiteSpace: 'nowrap',
-      display: 'box',
-      background: 'silver'
+      display: 'box'
 		}
   },
   shadow: {
@@ -68,6 +108,10 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     width: '100%',
     height: '100%'
+  },
+  subTitle: {
+    color: theme.palette.secondary,
+    margin: '5px 0'
   },
   title: {
     position: 'absolute',
@@ -104,11 +148,14 @@ const Home = () => {
         </div>
       </div>
       <div className={classes.contentBanners}>
-        <div className={classes.container}>
+        <div className={classes.containerMobile}>
+          <Typography fontWeight={700} fontSize={25} textAlign="center" className={classes.subTitle} varian="h2">Mejores Balnearios</Typography>
           <div className={classes.contentSlider}>
-            <CardBal />
-            <CardBal />
-            <CardBal />
+            <ul>
+              <li><CardBal moludar /></li>
+              <li><CardBal moludar /></li>
+              <li><CardBal moludar /></li>
+            </ul>
           </div>
         </div>
       </div>

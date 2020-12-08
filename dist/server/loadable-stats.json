@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "hash": "f84b522fe05a31667a91",
+  "hash": "81354f5c9356458bb516",
   "version": "5.6.0",
   "publicPath": "/",
   "outputPath": "/Users/lucianorechini/works/alamar/alamar_front/dist/server",
@@ -16,7 +16,7 @@
     {
       "type": "asset",
       "name": "server.js",
-      "size": 240526,
+      "size": 241701,
       "chunkNames": [
         "server"
       ],

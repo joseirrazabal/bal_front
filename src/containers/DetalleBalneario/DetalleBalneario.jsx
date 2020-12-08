@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   contentSearch: {
     width: '100vw',
     height: 80,
-    background: 'gray',
+    background: '#e0e0e0',
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
 			height: 80,
-      background: 'gray',
+      background: '#e0e0e0',
       padding: '0 10px',
       marginTop: 0,
 		}

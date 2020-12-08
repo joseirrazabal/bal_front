@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     height: 40
   },
   listbox: {
-    width: 200,
+    width: '100%',
+    maxWidth: 340,
     margin: 0,
     padding: 0,
     zIndex: 1,
@@ -21,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     maxHeight: 200,
     border: '1px solid rgba(0,0,0,.25)',
+
+    '& li': {
+      padding: '10px 0'
+    },
+
     '& li[data-focus="true"]': {
       backgroundColor: '#4a8df6',
       color: 'white',

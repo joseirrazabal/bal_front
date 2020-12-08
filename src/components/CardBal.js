@@ -6,9 +6,9 @@ import Button from './Button'
 const imageBackground = 'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=37&tipoEscala=stretch&width=2000&height=1119';
 
 const useStyles = makeStyles({
-  cardBal: ({moludar  = true}) => ({
+  cardBal: ({moludar  = false}) => ({
     float: 'left',
-    width: moludar ? 'calc(100% / 3 - 10px)' : '100%',
+    width: !moludar ? 'calc(100% / 3 - 10px)' : '100%',
     height: 'auto',
     margin: 5,
     borderRadius: 6,
@@ -53,12 +53,12 @@ const useStyles = makeStyles({
   }
 });
 
-const CardBal = ({ moludar }) => {
+const CardBal = ({ moludar, className }) => {
 
   const classes = useStyles({moludar});
 
   return (
-    <div className={classes.cardBal}>
+    <div className={`${className} ${classes.cardBal}`}>
       <div className={classes.image}>
 
       </div>

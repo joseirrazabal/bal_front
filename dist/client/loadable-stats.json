@@ -1,13 +1,13 @@
 {
   "name": "client",
-  "hash": "125ac7969c1a3267987d",
+  "hash": "2518fd86b8453aa67d44",
   "version": "5.6.0",
   "publicPath": "/",
   "outputPath": "/Users/lucianorechini/works/alamar/alamar_front/dist/client",
   "assetsByChunkName": {
     "client-src_a": [
       "client-src_a.js",
-      "client-src_a.82444a26ddc680ec9f85.hot-update.js"
+      "client-src_a.6ed0c1e84cdf56a1adcf.hot-update.js"
     ],
     "react": [
       "react.js"
@@ -323,7 +323,7 @@
     {
       "type": "asset",
       "name": "client-src_a.js",
-      "size": 264056,
+      "size": 268246,
       "chunkNames": [
         "client-src_a"
       ],
@@ -344,7 +344,7 @@
         {
           "type": "gzipped",
           "name": "client-src_a.js.gz",
-          "size": 59594,
+          "size": 60430,
           "chunkNames": [],
           "chunkIdHints": [],
           "auxiliaryChunkNames": [],
@@ -459,56 +459,6 @@
       ],
       "chunks": [
         "client-kit_a"
-      ],
-      "auxiliaryChunks": [],
-      "isOverSizeLimit": false
-    },
-    {
-      "type": "asset",
-      "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js",
-      "size": 27831,
-      "chunkNames": [
-        "client-src_a"
-      ],
-      "chunkIdHints": [],
-      "auxiliaryChunkNames": [],
-      "auxiliaryChunkIdHints": [],
-      "emitted": false,
-      "comparedForEmit": false,
-      "cached": true,
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true,
-        "fullhash": "82444a26ddc680ec9f85",
-        "related": {
-          "gzipped": "client-src_a.82444a26ddc680ec9f85.hot-update.js.gz"
-        }
-      },
-      "filteredRelated": 0,
-      "related": [
-        {
-          "type": "gzipped",
-          "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js.gz",
-          "size": 7487,
-          "chunkNames": [],
-          "chunkIdHints": [],
-          "auxiliaryChunkNames": [],
-          "auxiliaryChunkIdHints": [],
-          "emitted": false,
-          "comparedForEmit": false,
-          "cached": true,
-          "info": {
-            "compressed": true,
-            "immutable": true
-          },
-          "related": {},
-          "chunks": [],
-          "auxiliaryChunks": [],
-          "isOverSizeLimit": false
-        }
-      ],
-      "chunks": [
-        "client-src_a"
       ],
       "auxiliaryChunks": [],
       "isOverSizeLimit": false
@@ -1114,6 +1064,56 @@
     },
     {
       "type": "asset",
+      "name": "client-src_a.6ed0c1e84cdf56a1adcf.hot-update.js",
+      "size": 15035,
+      "chunkNames": [
+        "client-src_a"
+      ],
+      "chunkIdHints": [],
+      "auxiliaryChunkNames": [],
+      "auxiliaryChunkIdHints": [],
+      "emitted": false,
+      "comparedForEmit": false,
+      "cached": true,
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true,
+        "fullhash": "6ed0c1e84cdf56a1adcf",
+        "related": {
+          "gzipped": "client-src_a.6ed0c1e84cdf56a1adcf.hot-update.js.gz"
+        }
+      },
+      "filteredRelated": 0,
+      "related": [
+        {
+          "type": "gzipped",
+          "name": "client-src_a.6ed0c1e84cdf56a1adcf.hot-update.js.gz",
+          "size": 4846,
+          "chunkNames": [],
+          "chunkIdHints": [],
+          "auxiliaryChunkNames": [],
+          "auxiliaryChunkIdHints": [],
+          "emitted": false,
+          "comparedForEmit": false,
+          "cached": true,
+          "info": {
+            "compressed": true,
+            "immutable": true
+          },
+          "related": {},
+          "chunks": [],
+          "auxiliaryChunks": [],
+          "isOverSizeLimit": false
+        }
+      ],
+      "chunks": [
+        "client-src_a"
+      ],
+      "auxiliaryChunks": [],
+      "isOverSizeLimit": false
+    },
+    {
+      "type": "asset",
       "name": "client-n.css",
       "size": 7996,
       "chunkNames": [
@@ -1395,7 +1395,7 @@
     },
     {
       "type": "asset",
-      "name": "82444a26ddc680ec9f85.hot-update.json",
+      "name": "6ed0c1e84cdf56a1adcf.hot-update.json",
       "size": 36,
       "chunkNames": [],
       "chunkIdHints": [],
@@ -1407,7 +1407,7 @@
       "info": {
         "hotModuleReplacement": true,
         "immutable": true,
-        "fullhash": "82444a26ddc680ec9f85"
+        "fullhash": "6ed0c1e84cdf56a1adcf"
       },
       "related": {},
       "chunks": [],
@@ -1462,7 +1462,7 @@
           "name": "client-src_a.js"
         },
         {
-          "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js"
+          "name": "client-src_a.6ed0c1e84cdf56a1adcf.hot-update.js"
         }
       ],
       "filteredAssets": 0,
@@ -1613,7 +1613,7 @@
           "name": "client-src_a.js"
         },
         {
-          "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js"
+          "name": "client-src_a.6ed0c1e84cdf56a1adcf.hot-update.js"
         }
       ],
       "filteredAssets": 0,

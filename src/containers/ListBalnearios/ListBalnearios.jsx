@@ -88,7 +88,8 @@ const useStyles = makeStyles(theme => ({
 		}
   },
   title: {
-    color: theme.palette.secondary.main
+    color: theme.palette.secondary,
+    margin: '5px 0'
   },
   gridFull: {
     width: '100%',
@@ -112,7 +113,7 @@ const ListBalnearios = () => {
         <div className={classes.container}>
           <div className={classes.contentList}>
             <div className={classes.gridFull}>
-              <Typography fontWeight={700} className={classes.title} varian="h2">Valnearios en Mar del Plata</Typography>
+              <Typography fontWeight={700} fontSize={25} textAlign="center" className={classes.title} varian="h2">Valnearios en Mar del Plata</Typography>
             </div>
             <div className={classes.gridFull}>
               {itemsCard.map((id) => {
