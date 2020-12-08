@@ -1,9 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 
-// import SimpleImage from "./SimpleImage"
-// import logoCircularCopoApps from "../assets/logo_copoApps.svg"
+import SimpleImage from "./SimpleImage"
+import LogoAlamar from "../assets/almar-logo.svg"
+import Typography from "./Typography";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -22,20 +23,44 @@ const useStyles = makeStyles((theme) => ({
     "-moz-box-shadow": "0px 0px 9px 0px rgba(0,0,0,0.75)",
     "box-shadow": "0px 0px 9px 0px rgba(0,0,0,0.75)",
 
-    "@media (max-width: 1024px)": {
+    "@media (max-width: 960px)": {
       justifyContent: "center",
       position: 'relative',
       padding: '0 10px'
     },
   },
+  container: {
+    padding: 0, 
+    width: "100%", 
+    maxWidth: 1200, 
+    margin: "0 auto",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   contentLogo: {
     cursor: 'pointer',
 
-    "@media (max-width: 1024px)": {
-      /* display: "flex",
-      justifyContent: "center", */
+    "@media (max-width: 960px)": {
     },
   },
+  nav: {
+    display: 'flex',
+    listStyle: 'none',
+    color: 'black',
+    alignItems: 'center',
+
+    '& li': {
+      margin: '0 10px',
+
+      '& a': {
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline'
+        }
+      }
+    }
+  }
 }));
 
 const Header = () => {
@@ -44,22 +69,22 @@ const Header = () => {
 
   return (
     <div className={classes.header}>
-      <div
-        style={{ 
-          padding: 0, 
-          width: "100%", 
-          maxWidth: 1200, 
-          margin: "0 auto" 
-        }}
-      >
+      <div className={classes.container}>
         <div className={classes.contentLogo}>
-          {/* <SimpleImage
-            height={47}
-            alt="Presupuesta tu aplicación"
-            image={logoCircularCopoApps}
-            onClick={() => history.push("/")}
-          /> */}
+          <Link to="/">
+            <SimpleImage
+              height={60}
+              alt="Alamar"
+              image={LogoAlamar}
+              onClick={() => history.push("/")}
+            />
+          </Link>
         </div>
+        <ul className={classes.nav}>
+          <li><Link to="list"><Typography color="black">balnearios</Typography></Link></li>
+          <li><Link to="#"><Typography color="black">ayuda</Typography></Link></li>
+          <li><Link to="#"><Typography color="black">covid-19</Typography></Link></li>
+        </ul>
       </div>
     </div>
   );

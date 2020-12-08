@@ -1,7 +1,9 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { makeStyles } from "@material-ui/core/styles"
 // Components
 import Button from './Button'
+import Typography from './Typography'
 
 const imageBackground = 'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=37&tipoEscala=stretch&width=2000&height=1119';
 
@@ -39,7 +41,11 @@ const useStyles = makeStyles({
     alignItems: 'center',
     padding: 10,
     boxSizing: 'border-box',
-    background: '#F9F8F7'
+    background: '#F9F8F7',
+
+    '& a': {
+      textDecoration: 'none'
+    },
   },
   data: {
     '& h2': {
@@ -64,13 +70,15 @@ const CardBal = ({ moludar, className }) => {
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <h2>Titulo del balneario</h2>
-          <p>Playa del mismo</p>
+          <Typography variant="h2">Titulo del balneario</Typography>
+          <Typography variant="p">Playa del mismo</Typography>
         </div>
         <div>
-          <Button size="small" height="auto">
-            DETALLE
-          </Button>
+          <Link to="detalle">
+            <Button size="small" height="auto">
+              DETALLE
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
