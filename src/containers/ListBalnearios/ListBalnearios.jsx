@@ -1,10 +1,10 @@
 import React from 'react'
 // Material
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 // Components
 import CardLab from "../../components/CardBal"
 import Search from "../../components/Search"
+import Typography from '../../components/Typography'
 
 const itemsCard = [1,2,3,4,5,6,7,8,9];
 const imageOnline = "https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=213&tipoEscala=stretch&width=2048&height=978"
@@ -87,6 +87,9 @@ const useStyles = makeStyles(theme => ({
       background: '#f2f2f2',
 		}
   },
+  title: {
+    color: theme.palette.secondary.main
+  },
   gridFull: {
     width: '100%',
     padding: '5px 0',
@@ -109,7 +112,7 @@ const ListBalnearios = () => {
         <div className={classes.container}>
           <div className={classes.contentList}>
             <div className={classes.gridFull}>
-              <Typography varian="h2">ver mas</Typography>
+              <Typography fontWeight={700} className={classes.title} varian="h2">Valnearios en Mar del Plata</Typography>
             </div>
             <div className={classes.gridFull}>
               {itemsCard.map((id) => {

@@ -1,13 +1,17 @@
 import React from 'react'
 // Material
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 // Components
-import Button from '../../components/Button'
+import ButtonAcceptComponent from '../../components/ButtonAccept'
 import Input from '../../components/Input'
 import ItemSelected from '../../components/ItemSelected'
+import Typography from '../../components/Typography'
+import SimpleImage from '../../components/SimpleImage'
+// Assets
+// import ImageMp from '../../assets/img-mercadopago.jpg'
 
 const itemsCard = [1,2,3];
+const imageMp = require('../../assets/img-mercadopago.jpg')
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -79,9 +83,14 @@ const useStyles = makeStyles(theme => ({
       background: '#f2f2f2',
 		}
   },
+  item: {
+    margin: '15px 0',
+  },
   slider: {
     width: '65%',
     height: 450,
+    alignItems: 'stretch',
+    display: 'flex',
 
     '@media (max-width: 960px)': {
       width: '100%',
@@ -136,6 +145,7 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       background: 'white',
       position: 'fixed',
+      padding: 15,
       bottom: 0,
       zIndex: 3,
       left: 0
@@ -166,10 +176,21 @@ const useStyles = makeStyles(theme => ({
     fontSize: 25,
     textAlign: 'left',
     margin: '10px 0'
+  },
+  title: {
+    color: theme.palette.secondary,
+    margin: '15px 0'
+  },
+  subTitle: {
+    margin: '5px 0',
+    color: theme.palette.secondary.light
+  },
+  imageMpClass: {
+    margin: '15px 0',
   }
 }))
 
-const CheckoutBalnearios = () => {
+const CheckoutBalnearios = ({theme}) => {
 
   const classes = useStyles()
 
@@ -177,7 +198,7 @@ const CheckoutBalnearios = () => {
     <div className={classes.contentFull}>
       <div className={classes.contentBanners}>
         <div className={classes.container}>
-          <Typography className={classes.titleGeneric} varian="h2" color="secondary">Checkout de pago</Typography>
+          <Typography fontWeight={700} fontSize={25} textAlign="center" className={classes.title} varian="h2">Checkout de pago</Typography>
           <div className={classes.contentDetalle}>
             <div className={classes.slider}>
               <div className={classes.gridColumn}>              
@@ -219,12 +240,15 @@ const CheckoutBalnearios = () => {
                 <div className={classes.detalleBottom}>
                   <div className={`${classes.cardPrecio}`}>
                     <div>
-                      <p>precio</p>
-                      <h3>Total</h3>
+                      <Typography variant="p">
+                        <Typography color="black" variant="span">$</Typography>
+                        <Typography fontWeight={700} fontSize={25} color="black" variant="b">1850</Typography>
+                      </Typography>
+                      <Typography fontSize={14} fontWeight={700} color="black" variant="p">Total</Typography>
                     </div>
-                    <Button height={48}> 
+                    <ButtonAcceptComponent>
                       ALQUILAR
-                    </Button>
+                    </ButtonAcceptComponent>
                   </div>
                 </div>
               </div>
@@ -232,16 +256,17 @@ const CheckoutBalnearios = () => {
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
                 <div className={classes.gridColumn}>
-                  <p>titulo</p>
-                  <p>titulo</p>
-                  <ItemSelected checkout title="Alquilaste una Sombrilla" />
+                  <Typography fontSize={25} variant="h3">RESUMEN</Typography>
+                  <Typography fontSize={23} className={classes.subTitle}  variant="h4">Balnearios Santa Catalina</Typography>
+                  <Typography fontSize={18} color="grey" variant="p">Mar del Plata</Typography>
+                  <Typography fontSize={16} variant="p" color="grey">Balneario N° 11, Complejo Punta Mogotes, Mar del Plata</Typography>
+                  <ItemSelected className={classes.item} checkout title="Alquilaste una Sombrilla" />
                 </div>
               </div>
               <div className={classes.detalleBottom}>
                 <div className={classes.gridColumn}>
-                  <p>titulo</p>
-                  <p>titulo</p>
-                  <p>titulo</p>
+                  <Typography fontSize={14} fontStyle="italic" color="grey" variant="p">Medios de PAgo</Typography>
+                  <SimpleImage className={classes.imageMpClass} image={imageMp} />
                 </div>
               </div>
             </div>

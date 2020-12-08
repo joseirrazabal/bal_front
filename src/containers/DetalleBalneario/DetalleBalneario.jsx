@@ -1,14 +1,15 @@
 import React from 'react'
 // Material
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 // Components
 import CardLab from "../../components/CardBal"
 import Search from "../../components/Search"
 import Carousel from '../../components/Carousel'
 import Button from '../../components/Button'
 import ItemSelected from '../../components/ItemSelected'
-
+import Typography from '../../components/Typography'
+import Selected from '../../components/Selected'
+// Assets
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 
 const itemsCard = [1,2,3];
@@ -103,7 +104,7 @@ const useStyles = makeStyles(theme => ({
   },
   slider: {
     width: '60%',
-    height: 450,
+    height: 460,
     background: 'green',
     '@media (max-width: 960px)': {
       width: '100%',
@@ -124,7 +125,7 @@ const useStyles = makeStyles(theme => ({
   imageBackground: {
     width: '100wv!important',
     height: '100%',
-    minHeight: 452,
+    minHeight: 460,
     background: 'pink',
   },
   detalleTop: {
@@ -150,23 +151,33 @@ const useStyles = makeStyles(theme => ({
   gridRow: {
     width: '100%',
     height: 'auto',
-    display: 'flex'
+    display: 'flex',
   },
   cardPrecio: {
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     boxSizing: 'border-box',
+    alignItems: 'center',
 
     '@media (max-width: 960px)': {
       'box-shadow': '0 2px 2px 3px rgba(0,0,0,.1)',
       background: 'white',
       alignItems: 'center',
       position: 'fixed',
+      padding: 15,
       bottom: 0,
       zIndex: 3,
       left: 0
 		}
+  },
+  title: {
+    color: theme.palette.secondary,
+    margin: '15px 0'
+  },
+  subTitle: {
+    margin: '5px 0',
+    color: theme.palette.secondary.light
   },
 }))
 
@@ -183,7 +194,7 @@ const DetalleBalneario = () => {
       </div>
       <div className={classes.contentBanners}>
         <div className={classes.container}>
-          <Typography varian="h2">Titulo</Typography>
+        <Typography fontWeight={700} fontSize={25} textAlign="center" className={classes.title} varian="h2">Balneario</Typography>
           <div className={classes.contentDetalle}>
             <div className={classes.slider}>
               <Carousel>
@@ -195,22 +206,28 @@ const DetalleBalneario = () => {
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
                 <div className={classes.gridColumn}>
-                  <p>titulo</p>
-                  <p>titulo</p>
-                  <p>titulo</p>
+                  <Typography fontSize={23} className={classes.subTitle}  variant="h4">Balnearios Santa Catalina</Typography>
+                  <Typography fontSize={18} color="grey" variant="p">Mar del Plata</Typography>
+                  <Typography fontSize={16} variant="p" color="grey">Balneario N° 11, Complejo Punta Mogotes, Mar del Plata</Typography>
                 </div>
                 <div className={classes.gridRow}>
                   <ItemSelected />
                   <ItemSelected active icon={IconCarpAzul} title="Alquilar Carpa" precio={400} />
                 </div>
+                <div className={classes.gridRow}>
+                  <Selected />
+                </div>
               </div>
               <div className={classes.detalleBottom}>
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
-                    <p>precio</p>
-                    <h3>Total</h3>
+                    <Typography variant="p">
+                      <Typography color="black" variant="span">$</Typography>
+                      <Typography fontWeight={700} fontSize={25} color="black" variant="b">1850</Typography>
+                    </Typography>
+                    <Typography fontSize={14} fontWeight={700} color="black" variant="p">del 10 al 13 de Enero</Typography>
                   </div>
-                  <Button width={200}> 
+                  <Button height={48} width={200}> 
                     ALQUILAR
                   </Button>
                 </div>
@@ -223,18 +240,18 @@ const DetalleBalneario = () => {
             </div>
           </div>
           <div className={classes.contentDetalleColumn}>
-            <Typography varian="h3">Titulo</Typography>
-            <p>
+            <Typography fontWeight={700} fontSize={20} varian="h3">Titulo</Typography>
+            <Typography fontSize={16} color="black" lineHeight={'30px'}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a 
               galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
               but also the leap into electronic typesetting, remaining essentially unchanged. 
               It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
               and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+            </Typography>
           </div>
           <div className={classes.contentDetalleColumn}>
-            <Typography varian="h2">Titulo</Typography>
+          <Typography fontWeight={700} fontSize={20} varian="h3">Titulo</Typography>
             <div>
               {itemsCard.map((id) => {
                 return(<CardLab key={id} />)

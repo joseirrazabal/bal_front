@@ -110,13 +110,14 @@ const ItemSelected = ({
   checkout = false,
   icon = IconSomb,
   title = 'Alquilar Sombrilla',
-  precio = '1200'
+  precio = '1200',
+  className
 }) => {
 
   const classes = useStyles();
 
   return (
-    <div className={`${checkout ? classes.checkoutSelected : !active ? classes.itemSelected : classes.selected }`}>
+    <div className={`${className} ${checkout ? classes.checkoutSelected : !active ? classes.itemSelected : classes.selected }`}>
       <div>
         <SimpleImage
           height={45}

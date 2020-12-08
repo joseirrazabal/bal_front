@@ -1,13 +1,13 @@
 {
   "name": "client",
-  "hash": "af5b05527576050dc505",
+  "hash": "125ac7969c1a3267987d",
   "version": "5.6.0",
   "publicPath": "/",
-  "outputPath": "/Users/lucianorechini/works/balnearios/bal_front/dist/client",
+  "outputPath": "/Users/lucianorechini/works/alamar/alamar_front/dist/client",
   "assetsByChunkName": {
     "client-src_a": [
       "client-src_a.js",
-      "client-src_a.f728575c00e4875cb8bb.hot-update.js"
+      "client-src_a.82444a26ddc680ec9f85.hot-update.js"
     ],
     "react": [
       "react.js"
@@ -41,7 +41,7 @@
     {
       "type": "asset",
       "name": "client-node_modules_h.js",
-      "size": 2546968,
+      "size": 2543029,
       "chunkNames": [
         "client-node_modules_h"
       ],
@@ -62,7 +62,7 @@
         {
           "type": "gzipped",
           "name": "client-node_modules_h.js.gz",
-          "size": 706648,
+          "size": 706220,
           "chunkNames": [],
           "chunkIdHints": [],
           "auxiliaryChunkNames": [],
@@ -135,7 +135,7 @@
     {
       "type": "asset",
       "name": "client-node_modules_o.js",
-      "size": 1717776,
+      "size": 1715282,
       "chunkNames": [
         "client-node_modules_o"
       ],
@@ -156,7 +156,7 @@
         {
           "type": "gzipped",
           "name": "client-node_modules_o.js.gz",
-          "size": 505549,
+          "size": 504898,
           "chunkNames": [],
           "chunkIdHints": [],
           "auxiliaryChunkNames": [],
@@ -229,7 +229,7 @@
     {
       "type": "asset",
       "name": "client-node_modules_c.js",
-      "size": 846187,
+      "size": 845243,
       "chunkNames": [
         "client-node_modules_c"
       ],
@@ -250,7 +250,7 @@
         {
           "type": "gzipped",
           "name": "client-node_modules_c.js.gz",
-          "size": 196265,
+          "size": 196116,
           "chunkNames": [],
           "chunkIdHints": [],
           "auxiliaryChunkNames": [],
@@ -323,7 +323,7 @@
     {
       "type": "asset",
       "name": "client-src_a.js",
-      "size": 228136,
+      "size": 264056,
       "chunkNames": [
         "client-src_a"
       ],
@@ -344,7 +344,7 @@
         {
           "type": "gzipped",
           "name": "client-src_a.js.gz",
-          "size": 52136,
+          "size": 59594,
           "chunkNames": [],
           "chunkIdHints": [],
           "auxiliaryChunkNames": [],
@@ -465,6 +465,56 @@
     },
     {
       "type": "asset",
+      "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js",
+      "size": 27831,
+      "chunkNames": [
+        "client-src_a"
+      ],
+      "chunkIdHints": [],
+      "auxiliaryChunkNames": [],
+      "auxiliaryChunkIdHints": [],
+      "emitted": false,
+      "comparedForEmit": false,
+      "cached": true,
+      "info": {
+        "hotModuleReplacement": true,
+        "immutable": true,
+        "fullhash": "82444a26ddc680ec9f85",
+        "related": {
+          "gzipped": "client-src_a.82444a26ddc680ec9f85.hot-update.js.gz"
+        }
+      },
+      "filteredRelated": 0,
+      "related": [
+        {
+          "type": "gzipped",
+          "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js.gz",
+          "size": 7487,
+          "chunkNames": [],
+          "chunkIdHints": [],
+          "auxiliaryChunkNames": [],
+          "auxiliaryChunkIdHints": [],
+          "emitted": false,
+          "comparedForEmit": false,
+          "cached": true,
+          "info": {
+            "compressed": true,
+            "immutable": true
+          },
+          "related": {},
+          "chunks": [],
+          "auxiliaryChunks": [],
+          "isOverSizeLimit": false
+        }
+      ],
+      "chunks": [
+        "client-src_a"
+      ],
+      "auxiliaryChunks": [],
+      "isOverSizeLimit": false
+    },
+    {
+      "type": "asset",
       "name": "images/fondo.jpg",
       "size": 25297,
       "chunkNames": [],
@@ -508,56 +558,6 @@
       "auxiliaryChunks": [
         "client-src_a"
       ],
-      "isOverSizeLimit": false
-    },
-    {
-      "type": "asset",
-      "name": "client-src_a.f728575c00e4875cb8bb.hot-update.js",
-      "size": 22893,
-      "chunkNames": [
-        "client-src_a"
-      ],
-      "chunkIdHints": [],
-      "auxiliaryChunkNames": [],
-      "auxiliaryChunkIdHints": [],
-      "emitted": false,
-      "comparedForEmit": false,
-      "cached": true,
-      "info": {
-        "hotModuleReplacement": true,
-        "immutable": true,
-        "fullhash": "f728575c00e4875cb8bb",
-        "related": {
-          "gzipped": "client-src_a.f728575c00e4875cb8bb.hot-update.js.gz"
-        }
-      },
-      "filteredRelated": 0,
-      "related": [
-        {
-          "type": "gzipped",
-          "name": "client-src_a.f728575c00e4875cb8bb.hot-update.js.gz",
-          "size": 6012,
-          "chunkNames": [],
-          "chunkIdHints": [],
-          "auxiliaryChunkNames": [],
-          "auxiliaryChunkIdHints": [],
-          "emitted": false,
-          "comparedForEmit": false,
-          "cached": true,
-          "info": {
-            "compressed": true,
-            "immutable": true
-          },
-          "related": {},
-          "chunks": [],
-          "auxiliaryChunks": [],
-          "isOverSizeLimit": false
-        }
-      ],
-      "chunks": [
-        "client-src_a"
-      ],
-      "auxiliaryChunks": [],
       "isOverSizeLimit": false
     },
     {
@@ -1301,6 +1301,53 @@
     },
     {
       "type": "asset",
+      "name": "images/img-mercadopago.jpg",
+      "size": 685,
+      "chunkNames": [],
+      "chunkIdHints": [],
+      "auxiliaryChunkNames": [
+        "client-src_a"
+      ],
+      "auxiliaryChunkIdHints": [],
+      "emitted": false,
+      "comparedForEmit": false,
+      "cached": true,
+      "info": {
+        "sourceFilename": "src/assets/img-mercadopago.jpg",
+        "related": {
+          "gzipped": "images/img-mercadopago.jpg.gz"
+        }
+      },
+      "filteredRelated": 0,
+      "related": [
+        {
+          "type": "gzipped",
+          "name": "images/img-mercadopago.jpg.gz",
+          "size": 481,
+          "chunkNames": [],
+          "chunkIdHints": [],
+          "auxiliaryChunkNames": [],
+          "auxiliaryChunkIdHints": [],
+          "emitted": false,
+          "comparedForEmit": false,
+          "cached": true,
+          "info": {
+            "compressed": true
+          },
+          "related": {},
+          "chunks": [],
+          "auxiliaryChunks": [],
+          "isOverSizeLimit": false
+        }
+      ],
+      "chunks": [],
+      "auxiliaryChunks": [
+        "client-src_a"
+      ],
+      "isOverSizeLimit": false
+    },
+    {
+      "type": "asset",
       "name": "images/icon-carpa.svg",
       "size": 625,
       "chunkNames": [],
@@ -1348,7 +1395,7 @@
     },
     {
       "type": "asset",
-      "name": "f728575c00e4875cb8bb.hot-update.json",
+      "name": "82444a26ddc680ec9f85.hot-update.json",
       "size": 36,
       "chunkNames": [],
       "chunkIdHints": [],
@@ -1360,7 +1407,7 @@
       "info": {
         "hotModuleReplacement": true,
         "immutable": true,
-        "fullhash": "f728575c00e4875cb8bb"
+        "fullhash": "82444a26ddc680ec9f85"
       },
       "related": {},
       "chunks": [],
@@ -1415,7 +1462,7 @@
           "name": "client-src_a.js"
         },
         {
-          "name": "client-src_a.f728575c00e4875cb8bb.hot-update.js"
+          "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js"
         }
       ],
       "filteredAssets": 0,
@@ -1435,6 +1482,9 @@
         },
         {
           "name": "images/icon-sombri.svg"
+        },
+        {
+          "name": "images/img-mercadopago.jpg"
         },
         {
           "name": "images/roboto-latin-100-italic.woff"
@@ -1563,7 +1613,7 @@
           "name": "client-src_a.js"
         },
         {
-          "name": "client-src_a.f728575c00e4875cb8bb.hot-update.js"
+          "name": "client-src_a.82444a26ddc680ec9f85.hot-update.js"
         }
       ],
       "filteredAssets": 0,
@@ -1583,6 +1633,9 @@
         },
         {
           "name": "images/icon-sombri.svg"
+        },
+        {
+          "name": "images/img-mercadopago.jpg"
         },
         {
           "name": "images/roboto-latin-100-italic.woff"
