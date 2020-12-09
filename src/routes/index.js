@@ -1,24 +1,24 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-// Containers
+
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
+
 import Home from 'src/containers/Home/Home'
 import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
 import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnearios'
-// Components
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 
 const routes = [
   {
-    path: '/list',
+    path: '/list/:ciudad',
     Component: ListBalnearios,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/detalle',
+    path: '/detalle/:id',
     Component: DetalleBalneario,
     Props: {},
     useLayout: false,
@@ -37,7 +37,7 @@ const routes = [
     Props: {},
     useLayout: false,
     isPrivate: false,
-  }
+  },
 ]
 
 export const MainRoutes = () => (
@@ -51,7 +51,6 @@ export const MainRoutes = () => (
         </Route>
       )
     })}
-    {/* <Redirect from='/' to='/home' /> */}
   </Switch>
 )
 

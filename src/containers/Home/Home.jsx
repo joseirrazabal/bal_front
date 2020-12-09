@@ -1,12 +1,15 @@
-import React from 'react'
-// Material
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-// Components
-import Search from "../../components/Search"
-import CardBal from '../../components/CardBal'
+import { useLazyQuery } from '@apollo/client'
+import get from 'lodash/get'
+
 import Typography from '../../components/Typography'
-// Assets
+import Search from '../../components/Search'
+import CardBal from '../../components/CardBal'
+
 import imageBackground from '../../assets/fondo.jpg'
+
+import BALNEARIO_LIST from 'gql/balneario/list'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -26,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    margin: 10
+    margin: 10,
   },
   containerMobile: {
     margin: '0 auto',
@@ -37,10 +40,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-
-/*     '@media (max-width: 960px)': {
-      
-    }, */
   },
   contentSearch: {
     width: '100vw',
@@ -85,21 +84,20 @@ const useStyles = makeStyles(theme => ({
       padding: 0,
 
       '@media (max-width: 960px)': {
-        width: '1000px'
+        width: '1000px',
       },
 
       '& li': {
         width: '100%',
-        margin: 5
+        margin: 5,
       },
-
     },
 
-		'@media (max-width: 960px)': {
-			overflowX: 'scroll',
+    '@media (max-width: 960px)': {
+      overflowX: 'scroll',
       whiteSpace: 'nowrap',
-      display: 'box'
-		}
+      display: 'box',
+    },
   },
   shadow: {
     background: 'rgba(0,0,0,.3)',
@@ -107,11 +105,11 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     left: 0,
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   subTitle: {
     color: theme.palette.secondary,
-    margin: '5px 0'
+    margin: '5px 0',
   },
   title: {
     position: 'absolute',
@@ -124,41 +122,97 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
 
     '@media (max-width: 960px)': {
-      display: 'none'
-		}
-  }
+      display: 'none',
+    },
+  },
 }))
 
 const Home = () => {
-
   const classes = useStyles()
+
+  const [loading, setLoading] = useState(true)
+
+  const [getData, { data }] = useLazyQuery(BALNEARIO_LIST, {
+    ssr: false,
+    fetchPolicy: 'no-cache',
+  })
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  useEffect(() => {
+    if (get(data, 'balnearioListFront')) {
+      setLoading(false)
+    }
+  }, [data])
 
   return (
     <div className={classes.contentFull}>
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
-          <Typography className={classes.title} varian="h1">
-            ALQUILER DE CARPAS 
-            Y SOMBRILLAS
+          <Typography className={classes.title} varian='h1'>
+            ALQUILER DE CARPAS Y SOMBRILLAS
           </Typography>
-          <Search styles={{
-            position: 'absolute'
-          }} />
+          <Search
+            styles={{
+              position: 'absolute',
+            }}
+          />
         </div>
       </div>
-      <div className={classes.contentBanners}>
-        <div className={classes.containerMobile}>
-          <Typography fontWeight={700} fontSize={25} textAlign="center" className={classes.subTitle} varian="h2">Mejores Balnearios</Typography>
-          <div className={classes.contentSlider}>
-            <ul>
-              <li><CardBal moludar /></li>
-              <li><CardBal moludar /></li>
-              <li><CardBal moludar /></li>
-            </ul>
+
+      {loading ? (
+        <div className={classes.contentBanners}>
+          <div className={classes.containerMobile}>
+            <Typography
+              fontWeight={700}
+              fontSize={25}
+              textAlign='center'
+              className={classes.subTitle}
+              varian='h2'
+            >
+              Mejores Balnearios
+            </Typography>
+            <div className={classes.contentSlider}>
+              <ul>
+                <li>
+                  <CardBal moludar item={{ nombre: 'nombre' }} />
+                </li>
+                <li>
+                  <CardBal moludar item={{ nombre: 'nombre' }} />
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className={classes.contentBanners}>
+          <div className={classes.containerMobile}>
+            <Typography
+              fontWeight={700}
+              fontSize={25}
+              textAlign='center'
+              className={classes.subTitle}
+              varian='h2'
+            >
+              Mejores Balnearios
+            </Typography>
+            <div className={classes.contentSlider}>
+              <ul>
+                {get(data, 'balnearioListFront').map((item, i) => {
+                  return (
+                    <li key={i}>
+                      <CardBal moludar item={item} />
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

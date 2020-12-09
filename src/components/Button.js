@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 
-const useStyles = makeStyles((theme) => ({
-  buttonStyles: ({border, width, height}) => ({
+const useStyles = makeStyles(theme => ({
+  buttonStyles: ({ border, width, height }) => ({
     height: height || 60,
     fontSize: 14,
     width: width || '100%',
@@ -11,16 +11,30 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     color: 'white',
     background: theme.palette.secondary.main,
-    borderRadius: border || 6
-  })
-}));
+    borderRadius: border || 6,
+  }),
+}))
 
-const ButtonComponent = ({children, onClick, border, width, size = 'small', height}) => {
+const ButtonComponent = ({
+  children,
+  type = 'button',
+  onClick,
+  border,
+  width,
+  size = 'small',
+  height,
+}) => {
+  const classes = useStyles({ border, width, height })
 
-  const classes = useStyles({border, width, height});
-  
-  return(
-    <Button size={size} onClick={onClick} variant="contained" color="secondary" className={classes.buttonStyles}>
+  return (
+    <Button
+      type={type}
+      size={size}
+      onClick={onClick}
+      variant='contained'
+      color='secondary'
+      className={classes.buttonStyles}
+    >
       {children}
     </Button>
   )

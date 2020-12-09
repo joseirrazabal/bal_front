@@ -1,16 +1,22 @@
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-// Components
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import { makeStyles } from '@material-ui/core/styles'
+import get from 'lodash/get'
+import { useForm, Controller } from 'react-hook-form'
+
 import Button from './Button'
 import SimpleImage from './SimpleImage'
 import AutocompleteComponent from './Autocomplete'
 import Calendar from './Calendar'
-// Icons
+
 import IconSomb from '../assets/icon-sombri.svg'
 import IconCalendar from '../assets/icon-calendar.svg'
 import IconLupa from '../assets/icon-lupa.svg'
 
-const useStyles = makeStyles((theme) => ({
+import CIUDAD_LIST from 'gql/ciudad/list'
+
+const useStyles = makeStyles(theme => ({
   contentSearchCenter: {
     background: 'white',
     width: '100%',
@@ -25,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
     '@media (max-width: 960px)': {
       margin: '0 10px',
-      border: `1px solid ${theme.palette.secondary.main}`
-		}
+      border: `1px solid ${theme.palette.secondary.main}`,
+    },
   },
   box: {
     padding: 3,
@@ -36,74 +42,85 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
 
     '@media (max-width: 960px)': {
-			display: 'none'
-		}
+      display: 'none',
+    },
   },
   boxButton: {
     display: 'block',
 
     '@media (max-width: 960px)': {
-			display: 'none'
-		}
+      display: 'none',
+    },
   },
   gridRow: {
     width: '100%',
     height: 'auto',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   border: {
     border: '1px solid gray',
     boxSizing: 'border-box',
     margin: '0 10px',
+  },
+}))
+
+const Search = ({ styles }) => {
+  const history = useHistory()
+  const classes = useStyles()
+
+  const { register, control, handleSubmit, errors, setValue } = useForm()
+
+  const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
+
+  const onSubmit = data => {
+    history.push(`/list/${get(data, 'ciudad._id')}/${get(data, 'desde')}//${get(data, 'hasta')}`)
   }
-}));
 
-const Search = ({styles}) => {
+  useEffect(() => {
+    register('ciudad')
+    register('desde')
+    register('hasta')
+  }, [])
 
-  const classes = useStyles();
+  if (loading) {
+    return <div>loading</div>
+  }
 
   return (
-    <div style={styles} className={`${classes.contentSearchCenter}`}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={styles}
+      className={`${classes.contentSearchCenter}`}
+      noValidate
+    >
       <div className={classes.box}>
-        <div style={{marginLeft: 10}}>
-          <SimpleImage
-            height={30}
-            alt="Alquiler de Carpas en Balnearios"
-            image={IconSomb}
-          />
+        <div style={{ marginLeft: 10 }}>
+          <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
         </div>
-        <div style={{margin: '0 10px', width: '100%'}}>
-          <AutocompleteComponent />
+        <div style={{ margin: '0 10px', width: '100%' }}>
+          <AutocompleteComponent options={get(ciudades, 'ciudadListFront')} setValue={setValue} />
         </div>
       </div>
       <div className={classes.box}>
-        <SimpleImage
-          height={30}
-          alt="Alquiler de Carpas en Balnearios"
-          image={IconCalendar}
-        />
+        <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
         <div className={`${classes.gridRow} ${classes.border}`}>
           <div>
-            <Calendar />
+            <Calendar name='desde' setValue={setValue} />
           </div>
           <p>Hasta</p>
           <div>
-            <Calendar />
+            <Calendar name='hasta' setValue={setValue} />
           </div>
         </div>
       </div>
       <div className={classes.boxButton}>
-        <Button width={100} border="0 6px 6px 0">
-          <SimpleImage
-            height={28}
-            alt="Alquiler de Carpas en Balnearios"
-            image={IconLupa}
-          />
+        <Button type='submit' width={100} border='0 6px 6px 0'>
+          <SimpleImage height={28} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
         </Button>
       </div>
-      <div></div>
-    </div>
-  );
-};
-export default Search;
+    </form>
+  )
+}
+
+export default Search
