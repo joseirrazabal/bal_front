@@ -1,14 +1,13 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import { makeStyles } from "@material-ui/core/styles"
-// Components
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { useHistory, useParams } from 'react-router-dom'
+import get from 'lodash/get'
+
 import Button from './Button'
 import Typography from './Typography'
 
-const imageBackground = 'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=37&tipoEscala=stretch&width=2000&height=1119';
-
 const useStyles = makeStyles({
-  cardBal: ({moludar  = false}) => ({
+  cardBal: ({ moludar = false }) => ({
     float: 'left',
     width: !moludar ? 'calc(100% / 3 - 10px)' : '100%',
     height: 'auto',
@@ -23,18 +22,18 @@ const useStyles = makeStyles({
       'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)',
     },
     '@media (max-width: 960px)': {
-			width: 'calc(100% / 2 - 10px)',
+      width: 'calc(100% / 2 - 10px)',
     },
     '@media (max-width: 750px)': {
-			width: 'calc(100% / 1 - 10px)',
-		}
+      width: 'calc(100% / 1 - 10px)',
+    },
   }),
-  image: {
+  image: ({ image }) => ({
     width: '100%',
     height: 170,
-    backgroundImage: `url(${imageBackground})`,
-    backgroundSize: 'cover'
-  },
+    backgroundImage: `url(${image})`,
+    backgroundSize: 'cover',
+  }),
   content: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -54,34 +53,42 @@ const useStyles = makeStyles({
     },
     '& p': {
       fontSize: 12,
-      fontStyle: 'italic'
+      fontStyle: 'italic',
     },
-  }
-});
+  },
+})
 
-const CardBal = ({ moludar, className }) => {
+const CardBal = ({ moludar, item, className }) => {
+  const image = get(
+    item,
+    'imagenes.0.url',
+    'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=37&tipoEscala=stretch&width=2000&height=1119'
+  )
 
-  const classes = useStyles({moludar});
+  const classes = useStyles({ moludar, image })
+  const history = useHistory()
 
   return (
     <div className={`${className} ${classes.cardBal}`}>
-      <div className={classes.image}>
-
-      </div>
+      <div className={classes.image}></div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <Typography variant="h2" fontWeight="500">Titulo del balneario</Typography>
-          <Typography color="black" variant="p">Playa del mismo</Typography>
+          <Typography variant="h2" fontWeight="500">{get(item, 'nombre')}</Typography>
+          <Typography color="black" variant="p">{get(item, 'ciudad.nombre')}</Typography>
         </div>
         <div>
-          <Link to="detalle">
-            <Button size="small" height="auto">
-              DETALLE
-            </Button>
-          </Link>
+          <Button
+            size='small'
+            height='auto'
+            onClick={() => {
+              history.push(`/detalle/${get(item, '_id')}`)
+            }}
+          >
+            DETALLE
+          </Button>
         </div>
       </div>
     </div>
-  );
-};
-export default CardBal;
+  )
+}
+export default React.memo(CardBal)

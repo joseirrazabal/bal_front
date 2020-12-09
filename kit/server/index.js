@@ -21,7 +21,7 @@ const render = async (url, context) => {
 
   const server = new ApolloClient({
     ssrMode: true,
-    cache: cache().cache,
+    cache: cache(),
     link: ApolloLink.from(linksServer),
   })
 

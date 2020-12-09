@@ -11,13 +11,6 @@ const Html = ({ html, head, material, loadableState, apolloState }) => {
         {/* preload fuente roboto */}
         <link
           rel='preload'
-          href='images/roboto-latin-400-normal.woff2'
-          as='font'
-          type='font/woff2'
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preload'
           href='images/roboto-latin-500-normal.woff2'
           as='font'
           type='font/woff2'
