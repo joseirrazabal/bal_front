@@ -1,6 +1,7 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import { createServer } from 'http'
 import express from 'express'
 import expressStaticGzip from 'express-static-gzip'
@@ -9,11 +10,6 @@ import appRootDir from 'app-root-dir'
 import path from 'path'
 import compression from 'compression'
 import dotenv from 'dotenv'
-
-// import { SubscriptionServer } from 'subscriptions-transport-ws'
-// import { execute, subscribe } from 'graphql'
-// import withApolloMiddleware, { getSchema } from './apollo/apollo-server-middleware'
-import withApolloMiddleware from './apollo/apollo-server-middleware'
 
 dotenv.config({ path: `${appRootDir.get()}/.env` })
 
@@ -35,7 +31,13 @@ const checkForHTML = req => {
 }
 
 const start = async () => {
-	await withApolloMiddleware(app)
+  app.use(
+    '/graphql',
+    createProxyMiddleware({
+      target: 'http://localhost:9007',
+      changeOrigin: true,
+    })
+  );
 
 	app.disable('x-powered-by')
 
