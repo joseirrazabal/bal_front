@@ -5,6 +5,8 @@ import Button from './Button'
 import SimpleImage from './SimpleImage'
 import AutocompleteComponent from './Autocomplete'
 import Calendar from './Calendar'
+import Typography from "./Typography"
+import FullScreenDialog from './Dialog'
 // Icons
 import IconSomb from '../assets/icon-sombri.svg'
 import IconCalendar from '../assets/icon-calendar.svg'
@@ -26,6 +28,18 @@ const useStyles = makeStyles((theme) => ({
     '@media (max-width: 960px)': {
       margin: '0 10px',
       border: `1px solid ${theme.palette.secondary.main}`
+		}
+  },
+  mobile: {
+    display: 'none',
+    width: '100%',
+    padding: '0 20px',
+
+    '@media (max-width: 960px)': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      cursor: 'pointer'
 		}
   },
   box: {
@@ -62,6 +76,15 @@ const useStyles = makeStyles((theme) => ({
 const Search = ({styles}) => {
 
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div style={styles} className={`${classes.contentSearchCenter}`}>
@@ -102,7 +125,34 @@ const Search = ({styles}) => {
           />
         </Button>
       </div>
-      <div></div>
+      <div className={classes.mobile} onClick={handleClickOpen}>
+        <div style={{marginRight: 10}}>
+          <SimpleImage
+            height={30}
+            alt="Alquiler de Carpas en Balnearios"
+            image={IconCalendar}
+          />
+        </div>
+        <div>
+          <Typography textAlign="cemter" fontSize={25} variant="h2">
+            Seleccionar Balneario
+          </Typography>
+        </div>
+      </div>
+      <FullScreenDialog open={open} handleClose={handleClose}> 
+        <div>
+          <AutocompleteComponent />
+        </div>
+        <div className={`${classes.gridRow} ${classes.border}`}>
+          <div>
+            <Calendar />
+          </div>
+          <p>Hasta</p>
+          <div>
+            <Calendar />
+          </div>
+        </div>
+      </FullScreenDialog>
     </div>
   );
 };

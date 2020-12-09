@@ -70,8 +70,8 @@ const CardBal = ({ moludar, className }) => {
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <Typography variant="h2">Titulo del balneario</Typography>
-          <Typography variant="p">Playa del mismo</Typography>
+          <Typography variant="h2" fontWeight="500">Titulo del balneario</Typography>
+          <Typography color="black" variant="p">Playa del mismo</Typography>
         </div>
         <div>
           <Link to="detalle">

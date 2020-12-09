@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     margin: '0 auto',
     width: '100%',
-    maxWidth: 1280,
+    // maxWidth: 1280,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

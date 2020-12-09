@@ -41,14 +41,15 @@ const useStyles = makeStyles((theme) => ({
   contentLogo: {
     cursor: 'pointer',
 
-    "@media (max-width: 960px)": {
-    },
+    /* "@media (max-width: 960px)": {
+    }, */
   },
   nav: {
     display: 'flex',
     listStyle: 'none',
     color: 'black',
     alignItems: 'center',
+    padding: 0,
 
     '& li': {
       margin: '0 10px',
@@ -58,8 +59,12 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
           textDecoration: 'underline'
         }
+      },
+
+      "@media (max-width: 960px)": {
+
       }
-    }
+    },
   }
 }));
 
@@ -83,7 +88,6 @@ const Header = () => {
         <ul className={classes.nav}>
           <li><Link to="list"><Typography color="black">balnearios</Typography></Link></li>
           <li><Link to="#"><Typography color="black">ayuda</Typography></Link></li>
-          <li><Link to="#"><Typography color="black">covid-19</Typography></Link></li>
         </ul>
       </div>
     </div>
