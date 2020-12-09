@@ -40,6 +40,10 @@ const useStyles = makeStyles({
     padding: 10,
     boxSizing: 'border-box',
     background: '#F9F8F7',
+
+    '& a': {
+      textDecoration: 'none'
+    },
   },
   data: {
     '& h2': {
