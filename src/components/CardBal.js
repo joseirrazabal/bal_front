@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import get from 'lodash/get'
 
 import Button from './Button'
+import Typography from './Typography'
 
 const useStyles = makeStyles({
   cardBal: ({ moludar = false }) => ({
@@ -72,8 +73,8 @@ const CardBal = ({ moludar, item, className }) => {
       <div className={classes.image}></div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <h2>{get(item, 'nombre')}</h2>
-          <p>{get(item, 'ciudad.nombre')}</p>
+          <Typography variant="h2">{get(item, 'nombre')}</Typography>
+          <Typography variant="p">{get(item, 'ciudad.nombre')}</Typography>
         </div>
         <div>
           <Button
