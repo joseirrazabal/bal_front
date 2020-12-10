@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { makeStyles } from '@material-ui/core/styles'
@@ -9,7 +9,7 @@ import Button from './Button'
 import SimpleImage from './SimpleImage'
 import AutocompleteComponent from './Autocomplete'
 import Calendar from './Calendar'
-import Typography from "./Typography"
+import Typography from './Typography'
 import FullScreenDialog from './Dialog'
 // Icons
 import IconSomb from '../assets/icon-sombri.svg'
@@ -45,8 +45,8 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      cursor: 'pointer'
-		}
+      cursor: 'pointer',
+    },
   },
   box: {
     padding: 3,
@@ -79,17 +79,19 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Search = ({ styles }) => {
+const Search = ({ styles, valueDefault = null }) => {
   const history = useHistory()
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false)
+  const [ciudadDefault, setCiudadDefault] = useState(null)
+  const [loading2, setLoading2] = useState(true)
 
   const { register, control, handleSubmit, errors, setValue } = useForm()
 
   const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
 
   const onSubmit = data => {
-    history.push(`/list/${get(data, 'ciudad._id')}/${get(data, 'desde')}//${get(data, 'hasta')}`)
+    history.push(`/list/${get(data, 'ciudad._id')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
   }
 
   useEffect(() => {
@@ -99,14 +101,27 @@ const Search = ({ styles }) => {
   }, [])
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  if (loading) {
+  useEffect(() => {
+    if (valueDefault) {
+      const ciudadesA = get(ciudades, 'ciudadListFront', []) || []
+      const result = ciudadesA.find(item => {
+        return item._id === valueDefault
+      })
+      if (result) {
+        setCiudadDefault(result)
+      }
+    }
+    setLoading2(false)
+  }, [ciudades])
+
+  if (loading || loading2) {
     return <div>loading</div>
   }
 
@@ -122,7 +137,7 @@ const Search = ({ styles }) => {
           <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
         </div>
         <div style={{ margin: '0 10px', width: '100%' }}>
-          <AutocompleteComponent options={get(ciudades, 'ciudadListFront')} setValue={setValue} />
+          <AutocompleteComponent valueDefault={ciudadDefault} options={get(ciudades, 'ciudadListFront')} setValue={setValue} />
         </div>
       </div>
       <div className={classes.box}>
@@ -143,20 +158,16 @@ const Search = ({ styles }) => {
         </Button>
       </div>
       <div className={classes.mobile} onClick={handleClickOpen}>
-        <div style={{marginRight: 10}}>
-          <SimpleImage
-            height={30}
-            alt="Alquiler de Carpas en Balnearios"
-            image={IconCalendar}
-          />
+        <div style={{ marginRight: 10 }}>
+          <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
         </div>
         <div>
-          <Typography textAlign="cemter" fontSize={25} variant="h2">
+          <Typography textAlign='cemter' fontSize={25} variant='h2'>
             Seleccionar Balneario
           </Typography>
         </div>
       </div>
-      <FullScreenDialog open={open} handleClose={handleClose}> 
+      <FullScreenDialog open={open} handleClose={handleClose}>
         <div>
           <AutocompleteComponent />
         </div>
@@ -171,6 +182,6 @@ const Search = ({ styles }) => {
         </div>
       </FullScreenDialog>
     </form>
-  );
-};
-export default Search;
+  )
+}
+export default Search

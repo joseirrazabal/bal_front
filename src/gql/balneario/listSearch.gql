@@ -1,5 +1,5 @@
-query balnearioListFront {
-  balnearioListFront {
+query balnearioListSearch($ciudad: String) {
+  balnearioListSearch(ciudad: $ciudad) {
     _id
     nombre
     descripcion
@@ -13,3 +13,4 @@ query balnearioListFront {
     }
   }
 }
+

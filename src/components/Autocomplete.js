@@ -1,6 +1,7 @@
 import React from 'react'
 import useAutocomplete from '@material-ui/lab/useAutocomplete'
 import { makeStyles } from '@material-ui/core/styles'
+import get from 'lodash/get'
 
 const useStyles = makeStyles(theme => ({
   label: {
@@ -39,8 +40,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const AutocompleteComponent = ({ options, setValue}) => {
+const AutocompleteComponent = ({ valueDefault = null, options, setValue}) => {
   const classes = useStyles()
+
   const {
     getRootProps,
     getInputLabelProps,
@@ -50,6 +52,7 @@ const AutocompleteComponent = ({ options, setValue}) => {
     groupedOptions,
   } = useAutocomplete({
     id: 'use-autocomplete-demo',
+    defaultValue: valueDefault,
     options: options,
     onChange: (event, newValue) => {
     	setValue('ciudad', newValue)

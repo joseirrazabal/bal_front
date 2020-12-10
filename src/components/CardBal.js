@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useHistory, useParams } from 'react-router-dom'
 import get from 'lodash/get'
 
 import Button from './Button'
@@ -43,7 +42,7 @@ const useStyles = makeStyles({
     background: '#F9F8F7',
 
     '& a': {
-      textDecoration: 'none'
+      textDecoration: 'none',
     },
   },
   data: {
@@ -58,7 +57,7 @@ const useStyles = makeStyles({
   },
 })
 
-const CardBal = ({ moludar, item, className }) => {
+const CardBal = ({ moludar, item, className, onClick = () => {} }) => {
   const image = get(
     item,
     'imagenes.0.url',
@@ -66,24 +65,21 @@ const CardBal = ({ moludar, item, className }) => {
   )
 
   const classes = useStyles({ moludar, image })
-  const history = useHistory()
 
   return (
     <div className={`${className} ${classes.cardBal}`}>
       <div className={classes.image}></div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <Typography variant="h2" fontWeight="500">{get(item, 'nombre')}</Typography>
-          <Typography color="black" variant="p">{get(item, 'ciudad.nombre')}</Typography>
+          <Typography variant='h2' fontWeight='500'>
+            {get(item, 'nombre')}
+          </Typography>
+          <Typography color='black' variant='p'>
+            {get(item, 'ciudad.nombre')}
+          </Typography>
         </div>
         <div>
-          <Button
-            size='small'
-            height='auto'
-            onClick={() => {
-              history.push(`/detalle/${get(item, '_id')}`)
-            }}
-          >
+          <Button size='small' height='auto' onClick={onClick}>
             DETALLE
           </Button>
         </div>
