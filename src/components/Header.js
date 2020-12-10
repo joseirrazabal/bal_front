@@ -4,7 +4,7 @@ import { useHistory, Link } from "react-router-dom"
 
 import SimpleImage from "./SimpleImage"
 import LogoAlamar from "../assets/almar-logo.svg"
-import Typography from "./Typography";
+import Typography from "./Typography"
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -86,8 +86,8 @@ const Header = () => {
           </Link>
         </div>
         <ul className={classes.nav}>
-          <li><Link to="list"><Typography color="black">balnearios</Typography></Link></li>
-          <li><Link to="#"><Typography color="black">ayuda</Typography></Link></li>
+          <li><Link to="list"><Typography variant="p" color="black">balnearios</Typography></Link></li>
+          <li><Link to="#"><Typography variant="p" color="black">ayuda</Typography></Link></li>
         </ul>
       </div>
     </div>
