@@ -25,7 +25,7 @@ const Typography = ({
   return React.createElement(
     variant,
     {
-      className: `${className} ${classes.Typography}`,
+      className: `${classes.Typography} ${className} `,
       style: {
         fontSize: fontSize,
         fontWeight: fontWeight,

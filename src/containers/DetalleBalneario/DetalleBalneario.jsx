@@ -191,6 +191,7 @@ const DetalleBalneario = () => {
   const { id, ciudad, desde, hasta } = useParams()
 
   const [balneario, setBalneario] = useState({})
+  const [imagenes, setImagenes] = useState([])
 
   const { data, loading } = useQuery(BALNEARIO_GET, {
     variables: {
@@ -200,6 +201,7 @@ const DetalleBalneario = () => {
 
   useEffect(() => {
     setBalneario(get(data, 'balnearioGetFront', {}) || {})
+    setImagenes(get(data, 'balnearioGetFront.imagenes', []) || [])
   }, [data])
 
   if (loading) {
@@ -227,7 +229,7 @@ const DetalleBalneario = () => {
           <div className={classes.contentDetalle}>
             <div className={classes.slider}>
               <Carousel>
-                {get(balneario, 'imagenes', []).map((item, i) => {
+                {imagenes.map((item, i) => {
                   return (
                     <div className={classes.imageBackground} key={i}>
                       <img src={item.url} />

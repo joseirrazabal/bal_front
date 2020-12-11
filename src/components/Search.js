@@ -133,7 +133,15 @@ const Search = ({ styles, valueDefault = null }) => {
           <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
         </div>
         <div style={{ margin: '0 10px', width: '100%' }}>
-          <AutocompleteComponent valueDefault={ciudadDefault} options={get(ciudades, 'ciudadListFront')} setValue={setValue} />
+          {loading2 ? (
+            <div>loading...</div>
+          ) : (
+            <AutocompleteComponent
+              valueDefault={ciudadDefault}
+              options={get(ciudades, 'ciudadListFront')}
+              setValue={setValue}
+            />
+          )}
         </div>
       </div>
       <div className={classes.box}>

@@ -107,23 +107,15 @@ const ListBalnearios = () => {
   const history = useHistory()
   const { ciudad, desde, hasta } = useParams()
 
-  const [balnearios, setBalnearios] = useState([])
-
   const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
     variables: {
       ciudad,
     },
   })
 
-  useEffect(() => {
-    setBalnearios(get(data, 'balnearioListSearch', []) || [])
-  }, [data])
-
   if (loading) {
     return <div>loading...</div>
   }
-
-  console.log("jose ciudad", ciudad)
 
   return (
     <div className={classes.contentFull}>
@@ -148,7 +140,7 @@ const ListBalnearios = () => {
               </Typography>
             </div>
             <div className={classes.gridFull}>
-              {balnearios.map((item, i) => {
+              {get(data, 'balnearioListSearch', []).map((item, i) => {
                 return (
                   <CardLab
                     key={i}
