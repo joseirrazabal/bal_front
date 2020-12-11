@@ -34,7 +34,7 @@ const start = async () => {
   app.use(
     '/graphql',
     createProxyMiddleware({
-      target: 'http://localhost:9007',
+      target: process.env.MICRO,
       changeOrigin: true,
     })
   );
