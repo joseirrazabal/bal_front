@@ -1,13 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { NoSsr } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
-  simpleImage: ({ height, width, circular }) => ({
-    height: height || null,
-    width: width || null,
-    borderRadius: circular && '50%',
-  }),
+  simpleImage: () => ({}),
 }))
 
 const SimpleImage = ({
@@ -20,19 +15,21 @@ const SimpleImage = ({
   className,
   onClick = () => {},
 }) => {
-  
   const classes = useStyles({ image, width, height, circular })
 
   return (
-    <NoSsr>
-      <img
-        className={`${classes.simpleImage} ${className}`}
-        src={image}
-        alt={alt}
-        title={title}
-        onClick={onClick}
-      />
-    </NoSsr>
+    <img
+      className={`${className}`}
+      src={image}
+      alt={alt}
+      title={title}
+      onClick={onClick}
+      style={{
+        height: height || 'auto',
+        width: width || 'auto',
+        borderRadius: circular && '50%',
+      }}
+    />
   )
 }
 

@@ -57,7 +57,7 @@ const Calendar = ({ name = 'fecha', setValue }) => {
         variant='inline'
         format='dd/MM/yyyy'
         value={selectedDate}
-        InputAdornmentProps={{ position: 'start' }}
+        //InputAdornmentProps={{ position: 'start' }}
         onChange={date => {
           setValue(name, dayjs(date).format('DD-MM-YYYY'))
 

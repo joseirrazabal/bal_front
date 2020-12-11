@@ -123,6 +123,8 @@ const ListBalnearios = () => {
     return <div>loading...</div>
   }
 
+  console.log("jose ciudad", ciudad)
+
   return (
     <div className={classes.contentFull}>
       <div className={classes.contentSearch}>
@@ -149,6 +151,7 @@ const ListBalnearios = () => {
               {balnearios.map((item, i) => {
                 return (
                   <CardLab
+                    key={i}
                     item={item}
                     onClick={() => {
                       history.push(`/detalle/${get(item, '_id')}/${ciudad}/${desde}/${hasta}`)

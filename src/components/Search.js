@@ -121,10 +121,6 @@ const Search = ({ styles, valueDefault = null }) => {
     setLoading2(false)
   }, [ciudades])
 
-  if (loading || loading2) {
-    return <div>loading</div>
-  }
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -153,7 +149,7 @@ const Search = ({ styles, valueDefault = null }) => {
         </div>
       </div>
       <div className={classes.boxButton}>
-        <Button type='submit' width={100} border='0 6px 6px 0'>
+        <Button type='submit' width={100} height={60} border='0 6px 6px 0'>
           <SimpleImage height={28} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
         </Button>
       </div>

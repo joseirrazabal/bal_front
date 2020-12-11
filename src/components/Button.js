@@ -4,14 +4,13 @@ import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   buttonStyles: ({ border, width, height }) => ({
-    height: height || 60,
-    fontSize: 14,
-    width: width || '100%',
+    // height: height || 60,
+    // width: width || '100%',
+    fontSize: '14!important',
     maxWidth: 250,
     margin: 0,
-    color: 'white',
+    color: 'white!important',
     background: theme.palette.secondary.main,
-    borderRadius: border || 6,
   }),
 }))
 
@@ -34,9 +33,15 @@ const ButtonComponent = ({
       variant='contained'
       color='secondary'
       className={classes.buttonStyles}
+      style={{
+        height: height || '60px',
+        width: width || '100%',
+        borderRadius: border || 6,
+      }}
     >
       {children}
     </Button>
   )
 }
-export default ButtonComponent
+
+export default React.memo(ButtonComponent)

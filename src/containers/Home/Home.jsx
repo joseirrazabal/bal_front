@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useLazyQuery } from '@apollo/client'
+import { useQuery, useLazyQuery } from '@apollo/client'
+import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
 
 import Typography from '../../components/Typography'
@@ -13,7 +14,7 @@ import BALNEARIO_LIST from 'gql/balneario/list'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
-    width: '100vw',
+    width: '100%',
     height: '100vh',
     background: 'black',
     display: 'flex',
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   contentSearch: {
-    width: '100vw',
+    width: '100%',
     height: '50vh',
     background: 'red',
     backgroundImage: 'url(' + imageBackground + ')',
@@ -59,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   contentBanners: {
-    width: '100vw',
+    width: '100%',
     height: '50vh',
     background: '#f2f2f2',
     display: 'flex',
@@ -113,13 +114,13 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     position: 'absolute',
-    fontSize: 50,
+    fontSize: '50px!important',
     width: '100%',
     lineHeight: '55px',
     maxWidth: 540,
     top: -160,
     left: 160,
-    color: 'white',
+    color: 'white!important',
 
     '@media (max-width: 960px)': {
       display: 'none',
@@ -129,23 +130,9 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
   const classes = useStyles()
+  const history = useHistory()
 
-  const [loading, setLoading] = useState(true)
-
-  const [getData, { data }] = useLazyQuery(BALNEARIO_LIST, {
-    ssr: false,
-    fetchPolicy: 'no-cache',
-  })
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-  useEffect(() => {
-    if (get(data, 'balnearioListFront')) {
-      setLoading(false)
-    }
-  }, [data])
+  const { data, loading } = useQuery(BALNEARIO_LIST)
 
   return (
     <div className={classes.contentFull}>
@@ -163,56 +150,36 @@ const Home = () => {
         </div>
       </div>
 
-      {loading ? (
-        <div className={classes.contentBanners}>
-          <div className={classes.containerMobile}>
-            <Typography
-              fontWeight={700}
-              fontSize={25}
-              textAlign='center'
-              className={classes.subTitle}
-              varian='h2'
-            >
-              Mejores Balnearios
-            </Typography>
-            <div className={classes.contentSlider}>
-              <ul>
-                <li>
-                  <CardBal moludar item={{ nombre: 'nombre' }} />
-                </li>
-                <li>
-                  <CardBal moludar item={{ nombre: 'nombre' }} />
-                </li>
-              </ul>
-            </div>
+      <div className={classes.contentBanners}>
+        <div className={classes.containerMobile}>
+          <Typography
+            fontWeight={700}
+            fontSize={25}
+            textAlign='center'
+            className={classes.subTitle}
+            varian='h2'
+          >
+            Mejores Balnearios
+          </Typography>
+          <div className={classes.contentSlider}>
+            <ul>
+              {get(data, 'balnearioListFront', []).map((item, i) => {
+                return (
+                  <li key={i}>
+                    <CardBal
+                      moludar
+                      item={item}
+                      onClick={() => {
+                        history.push(`/detalle/${get(item, '_id')}`)
+                      }}
+                    />
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </div>
-      ) : (
-        <div className={classes.contentBanners}>
-          <div className={classes.containerMobile}>
-            <Typography
-              fontWeight={700}
-              fontSize={25}
-              textAlign='center'
-              className={classes.subTitle}
-              varian='h2'
-            >
-              Mejores Balnearios
-            </Typography>
-            <div className={classes.contentSlider}>
-              <ul>
-                {get(data, 'balnearioListFront').map((item, i) => {
-                  return (
-                    <li key={i}>
-                      <CardBal moludar item={item} />
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   )
 }

@@ -2,15 +2,9 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  Typography: ({ fontSize, fontWeight, color, fontStyle, margin, textAlign, lineHeight }) => ({
+  Typography: () => ({
     width: '100%',
-    fontSize: fontSize,
-    fontWeight: fontWeight,
-    color: color || theme.palette.secondary.main,
-    margin: margin,
-    textAlign: textAlign,
-    fontStyle: fontStyle,
-    lineHeight: lineHeight,
+    color: theme.palette.secondary.main,
   }),
 }))
 
@@ -26,18 +20,24 @@ const Typography = ({
   margin = 0,
   textAlign = 'left',
 }) => {
-  const classes = useStyles({
-    fontSize,
-    className,
-    fontWeight,
-    color,
-    fontStyle,
-    margin,
-    textAlign,
-    lineHeight,
-  })
+  const classes = useStyles()
 
-  return React.createElement(variant, { className: `${className}  ${classes.Typography}` }, children)
+  return React.createElement(
+    variant,
+    {
+      className: `${className} ${classes.Typography}`,
+      style: {
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+        margin: margin,
+        textAlign: textAlign,
+        fontStyle: fontStyle,
+        lineHeight: lineHeight,
+      },
+    },
+    children
+  )
 }
 
-export default Typography
+export default React.memo(Typography)
