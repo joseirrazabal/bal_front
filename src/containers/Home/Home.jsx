@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentSearch: {
     width: '100%',
-    height: '50vh',
+    height: '35vh',
     background: 'red',
     backgroundImage: 'url(' + imageBackground + ')',
     backgroundSize: 'cover',
@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentBanners: {
     width: '100%',
-    height: '50vh',
+    height: '65vh',
     background: '#f2f2f2',
     display: 'flex',
     justifyContent: 'center',
@@ -114,7 +114,7 @@ const useStyles = makeStyles(theme => ({
   },
   subTitle: {
     color: theme.palette.secondary,
-    margin: '5px 0',
+    margin: '0px 0',
   },
   title: {
     position: 'absolute',
@@ -130,6 +130,23 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  banner: {
+    background: 'silver',
+    marginTop: 25,
+    width: '100%',
+    height: 180,
+    borderRadios: 6,
+    overflow: 'hidden',
+    margin: 10,
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '@media (max-width: 680px)': {
+      height: 140,
+    },
+  }
 }))
 
 const Home = () => {
@@ -156,15 +173,20 @@ const Home = () => {
 
       <div className={classes.contentBanners}>
         <div className={classes.containerMobile}>
-          <Typography
-            fontWeight={700}
-            fontSize={25}
-            textAlign='center'
-            className={classes.subTitle}
-            varian='h2'
-          >
-            Mejores Balnearios
-          </Typography>
+          <div className={classes.banner}>
+            <p>PUBLICIDAD</p>
+          </div>
+          <div>
+            <Typography
+              fontWeight={700}
+              fontSize={20}
+              textAlign='center'
+              className={classes.subTitle}
+              varian='h2'
+            >
+              Mejores Balnearios
+            </Typography>
+          </div>
           <div className={classes.contentSlider}>
             <ul>
               {get(data, 'balnearioListFront', []).map((item, i) => {

@@ -346,4 +346,4 @@ const CheckoutBalnearios = ({theme}) => {
     </div>
   )
 }
-export default CheckoutBalnearios
+export default React.memo(CheckoutBalnearios)

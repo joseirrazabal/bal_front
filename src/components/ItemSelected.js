@@ -133,4 +133,4 @@ const ItemSelected = ({
     </div>
   );
 };
-export default ItemSelected;
+export default React.memo(ItemSelected);

@@ -214,4 +214,4 @@ const Search = ({ styles, valueDefault = null }) => {
     </form>
   )
 }
-export default Search
+export default React.memo(Search)
