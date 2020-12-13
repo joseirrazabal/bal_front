@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useQuery } from '@apollo/client'
 import { useHistory, useParams } from 'react-router-dom'
 import get from 'lodash/get'
-
+// Components
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
@@ -11,12 +11,16 @@ import Button from '../../components/Button'
 import ItemSelected from '../../components/ItemSelected'
 import Typography from '../../components/Typography'
 import Selected from '../../components/Selected'
-
+import FullScreenDialog from '../../components/Dialog'
+import SimpleImage from '../../components/SimpleImage'
+// Assets
 import IconCarpAzul from '../../assets/icon-carpa.svg'
-
+import Plano from '../../assets/fondo.jpg'
+// GraphQl
 import BALNEARIO_GET from 'gql/balneario/get'
 
 const itemsCard = [1, 2, 3]
+/* const plano = require('../../assets/fondo.jpg') */
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -103,11 +107,27 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       marginTop: 0,
-      background: '#f2f2f2',
     },
+
+    '& ul': {
+      listStyle: 'none',
+      padding: 0,
+      width: '100%',
+      display: 'flex',
+
+      '@media (max-width: 768px)': {
+        flexDirection: 'column'
+      },
+
+      '& li': {
+        margin: 5,
+        width: '100%',
+      }
+    }
   },
   slider: {
     width: '60%',
+    position: 'relative',
     height: 460,
     background: 'green',
     '@media (max-width: 960px)': {
@@ -183,15 +203,30 @@ const useStyles = makeStyles(theme => ({
     margin: '5px 0',
     color: theme.palette.secondary.light,
   },
+  verPlano: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10
+  }
 }))
 
 const DetalleBalneario = () => {
+
   const classes = useStyles()
   const history = useHistory()
   const { id, ciudad, desde, hasta } = useParams()
 
   const [balneario, setBalneario] = useState({})
   const [imagenes, setImagenes] = useState([])
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const { data, loading } = useQuery(BALNEARIO_GET, {
     variables: {
@@ -237,6 +272,11 @@ const DetalleBalneario = () => {
                   )
                 })}
               </Carousel>
+              <div className={classes.verPlano}>
+              <Button variant="default" color="black" height={30} onClick={handleClickOpen}>
+                VER PLANO
+              </Button>
+              </div>
             </div>
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
@@ -278,10 +318,10 @@ const DetalleBalneario = () => {
                     ALQUILAR
                   </Button>
                 </div>
-                <div className={classes.gridColumn}>
-                  <p>titulo</p>
-                  <p>titulo</p>
-                  <p>titulo</p>
+                <div className={classes.gridColumn} style={{marginTop: 15}}>
+                  <Typography color='black' variant='h3'>Información importante</Typography>
+                  <Typography color='green' variant='p'>Checkin:</Typography>
+                  <Typography color='red' variant='p'>Checkout:</Typography>
                 </div>
               </div>
             </div>
@@ -296,21 +336,27 @@ const DetalleBalneario = () => {
           </div>
           <div className={classes.contentDetalleColumn}>
             <Typography fontWeight={700} fontSize={20} varian='h3'>
-              Titulo
+              Otros Balnearios en {get(balneario, 'ciudad.nombre')}
             </Typography>
-            <div>
+            <ul>
               {itemsCard.map(id => {
                 return (
-                  <CardLab
-                    key={id}
-                    onClick={() => {
-                      history.push(`/detalle/${get(item, '_id')}`)
-                    }}
-                  />
+                  <li>
+                    <CardLab
+                      moludar
+                      key={id}
+                      onClick={() => {
+                        history.push(`/detalle/${get(item, '_id')}`)
+                      }}
+                    />
+                  </li>
                 )
               })}
-            </div>
+            </ul>
           </div>
+          <FullScreenDialog title="Plano Balneario" open={open} handleClose={handleClose}>
+            <SimpleImage width="100%" image={Plano} />
+          </FullScreenDialog>
         </div>
       </div>
     </div>

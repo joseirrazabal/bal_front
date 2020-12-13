@@ -8,9 +8,10 @@ import Typography from './Typography'
 const useStyles = makeStyles({
   cardBal: ({ moludar = false }) => ({
     float: 'left',
-    width: !moludar ? 'calc(100% / 3 - 10px)' : '100%',
+    //width: !moludar ? 'calc(100% / 3 - 10px)' : '100%',
+    width: '100%',
     height: 'auto',
-    margin: 5,
+    //margin: 5,
     borderRadius: 6,
     overflow: 'hidden',
     boxSizing: 'border-box',
@@ -21,10 +22,10 @@ const useStyles = makeStyles({
       'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)',
     },
     '@media (max-width: 960px)': {
-      width: 'calc(100% / 2 - 10px)',
+      width: !moludar ? 'calc(100% / 2 - 10px)' : '100%',
     },
-    '@media (max-width: 750px)': {
-      width: 'calc(100% / 1 - 10px)',
+    '@media (max-width: 600px)': {
+      width: !moludar ? 'calc(100% / 1 - 10px)' : '100%',
     },
   }),
   image: ({ image }) => ({

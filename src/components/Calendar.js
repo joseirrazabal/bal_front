@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
   calendar: {
     padding: 0,
+    width: '100%',
     margin: 0,
     textAlign: 'center',
     display: 'flex',
@@ -23,8 +24,16 @@ const useStyles = makeStyles(theme => ({
     '& div': {
       marginTop: 9,
       paddingBottom: 4,
+      width: '100%',
+
+      '@media (max-width: 680px)': {
+        border: '1px solid gray',
+        boxSizing: 'border-box',
+      },
+
       '& input': {
         textAlign: 'center',
+        width: '100%',
       },
     },
 

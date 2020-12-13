@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    border: `2px solid ${theme.palette.secondary.main}`,
+    border: `3px solid #55C443`,
     boxSizing: 'border-box',
     'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)',
     cursor: 'pointer',
@@ -108,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
 const ItemSelected = ({
   active = false,
   checkout = false,
+  dias = 3,
   icon = IconSomb,
   title = 'Alquilar Sombrilla',
   precio = '1200',
@@ -127,7 +128,7 @@ const ItemSelected = ({
       </div>
       <div>
         <h2>{title}</h2>
-        <p>${precio} por dia</p>
+        <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p>
       </div>
     </div>
   );

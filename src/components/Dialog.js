@@ -27,7 +27,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog({open, handleClose, children }) {
+export default function FullScreenDialog({
+  open, 
+  handleClose, 
+  children,
+  title = 'Buscar'
+}) {
   const classes = useStyles();
 /*   const [open, setOpen] = React.useState(true);
 
@@ -44,7 +49,7 @@ export default function FullScreenDialog({open, handleClose, children }) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Buscar
+              {title}
             </Typography>
           </Toolbar>
         </AppBar>

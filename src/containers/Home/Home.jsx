@@ -84,17 +84,21 @@ const useStyles = makeStyles(theme => ({
       width: '100%',
       padding: 0,
 
-      '@media (max-width: 960px)': {
-        width: '1000px',
-      },
+/*       '@media (max-width: 960px)': {
+        //width: '1000px',
+      }, */
 
       '& li': {
         width: '100%',
         margin: 5,
+
+        '@media (max-width: 600px)': {
+          width: '325px',
+        }
       },
     },
 
-    '@media (max-width: 960px)': {
+    '@media (max-width: 600px)': {
       overflowX: 'scroll',
       whiteSpace: 'nowrap',
       display: 'box',

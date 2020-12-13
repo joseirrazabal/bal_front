@@ -66,6 +66,11 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  gridColumn: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
   gridRow: {
     width: '100%',
     height: 'auto',
@@ -76,7 +81,16 @@ const useStyles = makeStyles(theme => ({
     border: '1px solid gray',
     boxSizing: 'border-box',
     margin: '0 10px',
+
+    '@media (max-width: 680px)': {
+      margin: 0,
+      border: 'none'
+    },
   },
+  contentSearMobile: {
+    padding: 10,
+    boxSizing: 'border-box'
+  }
 }))
 
 const Search = ({ styles, valueDefault = null }) => {
@@ -167,21 +181,33 @@ const Search = ({ styles, valueDefault = null }) => {
         </div>
         <div>
           <Typography textAlign='cemter' fontSize={25} variant='h2'>
-            Seleccionar Balneario
+            Buscar Balneario
           </Typography>
         </div>
       </div>
+      {/* Search Mobile */}
       <FullScreenDialog open={open} handleClose={handleClose}>
-        <div>
-          <AutocompleteComponent />
-        </div>
-        <div className={`${classes.gridRow} ${classes.border}`}>
+        <div className={classes.contentSearMobile}>
           <div>
-            <Calendar />
+            <AutocompleteComponent />
           </div>
-          <p>Hasta</p>
+          <div className={`${classes.gridColumn} ${classes.border}`}>
+            <div style={{width: '100%', marginBottom: 10}}>
+              <Calendar />
+            </div>
+            <div style={{width: '100%', marginTop: 10, marginBottom: 10}}>
+            <Typography textAlign="center" fontSize={18} variant='p' color="black">
+             hasta
+            </Typography>
+            </div>
+            <div style={{width: '100%', marginBottom: 10}}>
+              <Calendar />
+            </div>
+          </div>
           <div>
-            <Calendar />
+          <Button type='submit' fullWidth height={48}>
+            Buscar
+          </Button>
           </div>
         </div>
       </FullScreenDialog>

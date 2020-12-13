@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
   input: {
     width: '100%',
     height: 40,
+    boxSizing: 'border-box'
   },
   listbox: {
     width: '100%',

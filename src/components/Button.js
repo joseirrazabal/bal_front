@@ -3,14 +3,17 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
-  buttonStyles: ({ border, width, height }) => ({
+  buttonStyles: ({ color }) => ({
     // height: height || 60,
     // width: width || '100%',
     fontSize: '14!important',
-    maxWidth: 250,
+    // maxWidth: 250,
     margin: 0,
-    color: 'white!important',
     background: theme.palette.secondary.main,
+
+    '& span': {
+      color: color || 'white!important',
+    }
   }),
 }))
 
@@ -22,8 +25,10 @@ const ButtonComponent = ({
   width,
   size = 'small',
   height,
+  color, 
+  variant = 'secondary'
 }) => {
-  const classes = useStyles({ border, width, height })
+  const classes = useStyles({ border, width, height, color })
 
   return (
     <Button
@@ -31,7 +36,7 @@ const ButtonComponent = ({
       size={size}
       onClick={onClick}
       variant='contained'
-      color='secondary'
+      color={variant}
       className={classes.buttonStyles}
       style={{
         height: height || '60px',

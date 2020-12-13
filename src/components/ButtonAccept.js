@@ -79,7 +79,7 @@ export default function ButtonAcceptComponent({children}) {
             disabled={loading}
             onClick={handleButtonClick}
           >
-            {children}
+            {success ? 'Redireccionando...' : children}
           </Button>
           {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
         </div>

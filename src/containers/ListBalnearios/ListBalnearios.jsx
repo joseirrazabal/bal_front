@@ -75,6 +75,22 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%',
   },
+  ul: {
+    listStyle: 'none',
+    padding: 0,
+    width: '100%',
+    display: 'flex',
+
+
+    '@media (max-width: 768px)': {
+      flexDirection: 'column'
+    },
+
+    '& li': {
+      margin: 5,
+      width: '100%',
+    }
+  },
   contentList: {
     width: '100%',
     maxWidth: 1280,
@@ -139,19 +155,22 @@ const ListBalnearios = () => {
                 Valnearios en Mar del Plata
               </Typography>
             </div>
-            <div className={classes.gridFull}>
+            <ul className={`${classes.ul} ${classes.gridFull}`}>
               {get(data, 'balnearioListSearch', []).map((item, i) => {
                 return (
-                  <CardLab
-                    key={i}
-                    item={item}
-                    onClick={() => {
-                      history.push(`/detalle/${get(item, '_id')}/${ciudad}/${desde}/${hasta}`)
-                    }}
-                  />
+                  <li>
+                    <CardLab
+                      modular
+                      key={i}
+                      item={item}
+                      onClick={() => {
+                        history.push(`/detalle/${get(item, '_id')}/${ciudad}/${desde}/${hasta}`)
+                      }}
+                    />
+                  </li>
                 )
               })}
-            </div>
+            </ul>
             <div className={classes.gridFull}>
               <Typography varian='body1' align='center'>
                 ver mas
