@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'flex-end',
 
     '@media (max-width: 960px)': {
-      height: '40vh',
+      height: '30vh',
     },
   },
   contentBanners: {
@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
 
     '@media (max-width: 960px)': {
-      height: '60vh',
+      height: '70vh',
     },
   },
   contentSlider: {
@@ -83,10 +83,6 @@ const useStyles = makeStyles(theme => ({
       display: 'inline-flex',
       width: '100%',
       padding: 0,
-
-/*       '@media (max-width: 960px)': {
-        //width: '1000px',
-      }, */
 
       '& li': {
         width: '100%',
