@@ -1,0 +1,10 @@
+query tipoListFront($balneario: String) {
+  tipoListFront(balneario: $balneario) {
+    _id
+    nombre
+    descripcion
+    imagen {
+      url
+    }
+  }
+}

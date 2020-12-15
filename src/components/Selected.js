@@ -1,11 +1,11 @@
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import SimpleImage from "./SimpleImage";
-// Icons
+import React, { useEffect, useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import SimpleImage from './SimpleImage'
+
 import IconSomb from '../assets/icon-sombri.svg'
 import IconCalendar from '../assets/icon-calendar.svg'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   selected: {
     width: '100%',
     margin: 5,
@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
       padding: 10,
 
       '& span': {
-        display: 'none'
-      }
+        display: 'none',
+      },
     },
 
     '&:focus': {
@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
     '& select': {
       border: 'none',
       padding: 10,
-      width: '100%'
+      width: '100%',
     },
 
-    "@media (max-width: 960px)": {
-      margin: '5px 0'
-    }
+    '@media (max-width: 960px)': {
+      margin: '5px 0',
+    },
   },
   selectedError: {
     width: '100%',
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
       '& span': {
         display: 'block',
         color: 'red',
-      }
+      },
     },
 
     '&:focus': {
@@ -79,37 +79,43 @@ const useStyles = makeStyles((theme) => ({
       padding: 10,
       width: '100%',
     },
-    
-    "@media (max-width: 960px)": {
-      margin: '5px 0'
-    }
-  }
-}));
+
+    '@media (max-width: 960px)': {
+      margin: '5px 0',
+    },
+  },
+}))
 
 const Selected = ({
+  loading = true,
+  items = [],
   label = 'Nombre',
   value = 'Ingresar Nombre',
   errorMessage = 'error',
-  error = false
+  error = false,
 }) => {
+  const [name, setName] = React.useState(value)
+  const classes = useStyles()
 
-  const [name, setName] = React.useState(value);
-  const classes = useStyles();
+  const handleChange = event => {
+    setName(event.target.value)
+  }
 
-  const handleChange = (event) => {
-    setName(event.target.value);
-  };
+  if (loading) {
+    return <div>loading...</div>
+  }
 
   return (
     <div className={`${!error ? classes.selected : classes.selectedError}`}>
-      <label><SimpleImage image={IconSomb} /></label>
+      <label>
+        <SimpleImage image={IconSomb} />
+      </label>
       <select onChange={handleChange}>
-        <option> Seleccionar Categoria</option>
-        <option>Principal</option>
-        <option>Centrales</option>
-        <option>Traceras</option>
+        {items.map(item => {
+          return <option>{item.nombre}</option>
+        })}
       </select>
     </div>
-  );
-};
-export default Selected;
+  )
+}
+export default React.memo(Selected)

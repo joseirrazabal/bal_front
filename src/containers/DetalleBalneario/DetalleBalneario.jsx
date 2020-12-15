@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useQuery } from '@apollo/client'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory, useParams } from 'react-router-dom'
 import get from 'lodash/get'
-// Components
+
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
@@ -13,14 +13,13 @@ import Typography from '../../components/Typography'
 import Selected from '../../components/Selected'
 import FullScreenDialog from '../../components/Dialog'
 import SimpleImage from '../../components/SimpleImage'
-// Assets
-import IconCarpAzul from '../../assets/icon-carpa.svg'
-import Plano from '../../assets/fondo.jpg'
-// GraphQl
-import BALNEARIO_GET from 'gql/balneario/get'
 
-const itemsCard = [1, 2, 3]
-/* const plano = require('../../assets/fondo.jpg') */
+import IconCarpAzul from '../../assets/icon-carpa.svg'
+
+import TIPO_LIST from 'gql/tipo/list'
+import BALNEARIO_GET from 'gql/balneario/get'
+import BALNEARIO_LIST from 'gql/balneario/list'
+import CATEGORIA_LIST from 'gql/categoria/list'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -116,14 +115,14 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
 
       '@media (max-width: 768px)': {
-        flexDirection: 'column'
+        flexDirection: 'column',
       },
 
       '& li': {
         margin: 5,
         width: '100%',
-      }
-    }
+      },
+    },
   },
   slider: {
     width: '60%',
@@ -206,16 +205,17 @@ const useStyles = makeStyles(theme => ({
   verPlano: {
     position: 'absolute',
     right: 10,
-    bottom: 10
-  }
+    bottom: 10,
+  },
 }))
 
 const DetalleBalneario = () => {
-
   const classes = useStyles()
   const history = useHistory()
   const { id, ciudad, desde, hasta } = useParams()
 
+  const [tipos, setTipos] = useState([])
+  const [tipoSelected, setTipoSelected] = useState(null)
   const [balneario, setBalneario] = useState({})
   const [imagenes, setImagenes] = useState([])
   const [open, setOpen] = useState(false)
@@ -228,6 +228,22 @@ const DetalleBalneario = () => {
     setOpen(false)
   }
 
+  const { data: dataTipoList, loadingTipoList } = useQuery(TIPO_LIST, {
+    variables: { balneario: id },
+    fetchPolicy: 'no-cache',
+  })
+  const { data: dataList, loadingList } = useQuery(BALNEARIO_LIST, {
+    fetchPolicy: 'no-cache',
+  })
+
+  const [getCategorias, { data: dataCategorias, loading: loadingCategorias }] = useLazyQuery(
+    CATEGORIA_LIST,
+    {
+      variables: { tipo: get(tipoSelected, '_id') },
+      fetchPolicy: 'no-cache',
+    }
+  )
+
   const { data, loading } = useQuery(BALNEARIO_GET, {
     variables: {
       id: `${id}`,
@@ -239,7 +255,17 @@ const DetalleBalneario = () => {
     setImagenes(get(data, 'balnearioGetFront.imagenes', []) || [])
   }, [data])
 
-  if (loading) {
+  useEffect(() => {
+    setTipos(get(dataTipoList, 'tipoListFront', []) || [])
+
+    setTipoSelected(get(dataTipoList, 'tipoListFront.0', {}) || {})
+  }, [dataTipoList])
+
+  useEffect(() => {
+    getCategorias()
+  }, [tipoSelected])
+
+  if (loading || loadingTipoList) {
     return <div>loading...</div>
   }
 
@@ -272,11 +298,13 @@ const DetalleBalneario = () => {
                   )
                 })}
               </Carousel>
-              <div className={classes.verPlano}>
-              <Button variant="default" color="black" height={30} onClick={handleClickOpen}>
-                VER PLANO
-              </Button>
-              </div>
+              {get(balneario, 'planos.0') && (
+                <div className={classes.verPlano}>
+                  <Button variant='default' color='black' height={30} onClick={handleClickOpen}>
+                    VER PLANO
+                  </Button>
+                </div>
+              )}
             </div>
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
@@ -288,15 +316,26 @@ const DetalleBalneario = () => {
                     {get(balneario, 'ciudad.nombre')}
                   </Typography>
                   <Typography fontSize={16} variant='p' color='grey'>
-                    {get(balneario, 'descripcion')}
+                    {get(balneario, 'direccion')}
                   </Typography>
                 </div>
                 <div className={classes.gridRow}>
-                  <ItemSelected />
-                  <ItemSelected active icon={IconCarpAzul} title='Alquilar Carpa' precio={400} />
+                  {tipos.map(item => {
+                    return (
+                      <ItemSelected
+                        active={item.nombre === get(tipoSelected, 'nombre')}
+                        icon={IconCarpAzul}
+                        title={`Alquilar ${item.nombre}`}
+                        precio={400}
+                      />
+                    )
+                  })}
                 </div>
                 <div className={classes.gridRow}>
-                  <Selected />
+                  <Selected
+                    items={get(dataCategorias, 'categoriaListFront')}
+                    loading={loadingCategorias}
+                  />
                 </div>
               </div>
               <div className={classes.detalleBottom}>
@@ -314,14 +353,20 @@ const DetalleBalneario = () => {
                       del 10 al 13 de Enero
                     </Typography>
                   </div>
-                  <Button height={48} width={200}>
+                  <Button height={48} width={200} onClick={() => history.push('/checkout')}>
                     ALQUILAR
                   </Button>
                 </div>
-                <div className={classes.gridColumn} style={{marginTop: 15}}>
-                  <Typography color='black' variant='h3'>Información importante</Typography>
-                  <Typography color='green' variant='p'>Checkin:</Typography>
-                  <Typography color='red' variant='p'>Checkout:</Typography>
+                <div className={classes.gridColumn} style={{ marginTop: 15 }}>
+                  <Typography color='black' variant='h3'>
+                    Información importante
+                  </Typography>
+                  <Typography color='green' variant='p'>
+                    Checkin:
+                  </Typography>
+                  <Typography color='red' variant='p'>
+                    Checkout:
+                  </Typography>
                 </div>
               </div>
             </div>
@@ -339,23 +384,25 @@ const DetalleBalneario = () => {
               Otros Balnearios en {get(balneario, 'ciudad.nombre')}
             </Typography>
             <ul>
-              {itemsCard.map(id => {
-                return (
-                  <li>
-                    <CardLab
-                      moludar
-                      key={id}
-                      onClick={() => {
-                        history.push(`/detalle/${get(item, '_id')}`)
-                      }}
-                    />
-                  </li>
-                )
-              })}
+              {get(dataList, 'balnearioListFront', [])
+                .slice(0, 3)
+                .map((item, i) => {
+                  return (
+                    <li key={i}>
+                      <CardLab
+                        moludar
+                        item={item}
+                        onClick={() => {
+                          history.push(`/detalle/${get(item, '_id')}`)
+                        }}
+                      />
+                    </li>
+                  )
+                })}
             </ul>
           </div>
-          <FullScreenDialog title="Plano Balneario" open={open} handleClose={handleClose}>
-            <SimpleImage width="100%" image={Plano} />
+          <FullScreenDialog title='Plano Balneario' open={open} handleClose={handleClose}>
+            <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
           </FullScreenDialog>
         </div>
       </div>

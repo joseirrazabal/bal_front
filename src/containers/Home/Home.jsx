@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
 
         '@media (max-width: 600px)': {
           width: '325px',
-        }
+        },
       },
     },
 
@@ -142,7 +142,7 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 680px)': {
       height: 140,
     },
-  }
+  },
 }))
 
 const Home = () => {
@@ -185,19 +185,21 @@ const Home = () => {
           </div>
           <div className={classes.contentSlider}>
             <ul>
-              {get(data, 'balnearioListFront', []).map((item, i) => {
-                return (
-                  <li key={i}>
-                    <CardBal
-                      moludar
-                      item={item}
-                      onClick={() => {
-                        history.push(`/detalle/${get(item, '_id')}`)
-                      }}
-                    />
-                  </li>
-                )
-              })}
+              {get(data, 'balnearioListFront', [])
+                .slice(0, 3)
+                .map((item, i) => {
+                  return (
+                    <li key={i}>
+                      <CardBal
+                        moludar
+                        item={item}
+                        onClick={() => {
+                          history.push(`/detalle/${get(item, '_id')}`)
+                        }}
+                      />
+                    </li>
+                  )
+                })}
             </ul>
           </div>
         </div>

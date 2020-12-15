@@ -1,0 +1,7 @@
+query categoriaListFront($tipo: String) {
+  categoriaListFront(tipo: $tipo) {
+    _id
+    nombre
+    descripcion
+  }
+}
