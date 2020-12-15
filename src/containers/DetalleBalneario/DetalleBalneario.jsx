@@ -320,13 +320,17 @@ const DetalleBalneario = () => {
                   </Typography>
                 </div>
                 <div className={classes.gridRow}>
-                  {tipos.map(item => {
+                  {tipos.map((item, i) => {
                     return (
                       <ItemSelected
+                        key={i}
                         active={item.nombre === get(tipoSelected, 'nombre')}
                         icon={IconCarpAzul}
                         title={`Alquilar ${item.nombre}`}
                         precio={400}
+                        onClick={() => {
+                          setTipoSelected(item)
+                        }}
                       />
                     )
                   })}

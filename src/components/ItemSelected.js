@@ -1,11 +1,11 @@
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-// Components
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+
 import SimpleImage from './SimpleImage'
-// Assets
+
 import IconSomb from '../assets/icon-sombri.svg'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   itemSelected: {
     width: '100%',
     height: 130,
@@ -19,26 +19,26 @@ const useStyles = makeStyles((theme) => ({
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
     cursor: 'pointer',
 
-    '&:hover':{
+    '&:hover': {
       border: `2px solid ${theme.palette.secondary.main}`,
-      'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)'
-    }, 
+      'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)',
+    },
 
     '& h2': {
       margin: 0,
       fontSize: 18,
       fontWeight: 400,
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.main,
     },
 
     '& p': {
       margin: 0,
       fontSize: 14,
       fontWeight: 400,
-      color: 'gray'
+      color: 'gray',
     },
 
-    "@media (max-width: 1024px)": {
+    '@media (max-width: 1024px)': {
       /* flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center', */
@@ -59,21 +59,21 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
 
     '& img': {
-      marginRight: 20
+      marginRight: 20,
     },
 
     '& h2': {
       margin: 0,
       fontSize: 18,
       fontWeight: 400,
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.main,
     },
 
     '& p': {
       margin: 0,
       fontSize: 14,
       fontWeight: 300,
-      color: 'gray'
+      color: 'gray',
     },
   },
   selected: {
@@ -93,17 +93,17 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
       fontSize: 18,
       fontWeight: 700,
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.main,
     },
 
     '& p': {
       margin: 0,
       fontSize: 14,
       fontWeight: 700,
-      color: 'gray'
+      color: 'gray',
     },
-  }
-}));
+  },
+}))
 
 const ItemSelected = ({
   active = false,
@@ -112,25 +112,26 @@ const ItemSelected = ({
   icon = IconSomb,
   title = 'Alquilar Sombrilla',
   precio = '1200',
-  className
+  className,
+  onClick = () => {},
 }) => {
-
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
-    <div className={`${className} ${checkout ? classes.checkoutSelected : !active ? classes.itemSelected : classes.selected }`}>
+    <div
+      className={`${className} ${
+        checkout ? classes.checkoutSelected : !active ? classes.itemSelected : classes.selected
+      }`}
+      onClick={onClick}
+    >
       <div>
-        <SimpleImage
-          height={45}
-          alt="Alquiler de Carpas en Balnearios"
-          image={icon}
-        />
+        <SimpleImage height={45} alt='Alquiler de Carpas en Balnearios' image={icon} />
       </div>
       <div>
         <h2>{title}</h2>
-        <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p>
+        {/* <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p> */}
       </div>
     </div>
-  );
-};
-export default React.memo(ItemSelected);
+  )
+}
+export default React.memo(ItemSelected)

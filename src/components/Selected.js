@@ -111,8 +111,8 @@ const Selected = ({
         <SimpleImage image={IconSomb} />
       </label>
       <select onChange={handleChange}>
-        {items.map(item => {
-          return <option>{item.nombre}</option>
+        {items.map((item, i) => {
+          return <option key={i}>{item.nombre}</option>
         })}
       </select>
     </div>
