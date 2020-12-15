@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
 
 import SimpleImage from './SimpleImage'
-
-// const logoVerticalCopoApps = require('../assets/logo_copoApps_desktop.svg')
+// Assets
+import Image from '../assets/icono-carpa.svg'
 
 const useStyles = makeStyles({
   loadingStyle: {
@@ -62,12 +62,12 @@ const Loading = () => {
   return (
     <div className={classes.loadingStyle}>
       <div className={classes.centerContent}>
-        {/* <SimpleImage
+        <SimpleImage
           height={80}
-          alt='cotizar aplicación gratis'
-          title='Cotizar aplicación gratis'
-          image={logoVerticalCopoApps}
-        /> */}
+          title='Alamar - Alquiler de carpas en balnearios'
+          title='Alamar - Alquiler de carpas en balnearios'
+          image={Image}
+        />
         <LinearProgress className={classes.line} variant='determinate' value={progress} />
       </div>
     </div>

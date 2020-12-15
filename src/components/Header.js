@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { useHistory, Link } from "react-router-dom"
 
 import SimpleImage from "./SimpleImage"
-import LogoAlamar from "../assets/almar-logo.svg"
+import LogoAlamar from "../assets/alamar-logo-white.svg"
 import Typography from "./Typography"
 
 const useStyles = makeStyles((theme) => ({
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     height: 60,
     top: 0,
     left: 0,
-    background: theme.palette.primary.main,
+    background: theme.palette.secondary.main,
     position: "absolute",
     zIndex: 2,
     display: "flex",
@@ -78,7 +78,7 @@ const Header = () => {
         <div className={classes.contentLogo}>
           <Link to="/">
             <SimpleImage
-              height={60}
+              height={40}
               alt="Alamar"
               image={LogoAlamar}
               onClick={() => history.push("/")}
@@ -86,8 +86,8 @@ const Header = () => {
           </Link>
         </div>
         <ul className={classes.nav}>
-          <li><Link to="list"><Typography variant="p" color="black">balnearios</Typography></Link></li>
-          <li><Link to="#"><Typography variant="p" color="black">ayuda</Typography></Link></li>
+          <li><Link to="list"><Typography variant="p" color="white">balnearios</Typography></Link></li>
+          <li><Link to="#"><Typography variant="p" color="white">ayuda</Typography></Link></li>
         </ul>
       </div>
     </div>
