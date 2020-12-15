@@ -89,6 +89,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentSearMobile: {
     padding: 10,
+    background: '#f2f2f2',
     boxSizing: 'border-box'
   }
 }))
@@ -188,8 +189,18 @@ const Search = ({ styles, valueDefault = null }) => {
       {/* Search Mobile */}
       <FullScreenDialog open={open} handleClose={handleClose}>
         <div className={classes.contentSearMobile}>
+          <div style={{marginBottom: 10}}>
+            <Typography textAlign="left" fontSize={18} variant='p' color="black">
+             Ingresar Playa
+            </Typography>
+          </div>
           <div>
             <AutocompleteComponent />
+          </div>
+          <div style={{marginTop: 10, marginBottom: 5}}>
+            <Typography textAlign="left" fontSize={18} variant='p' color="black">
+             Seleccionar Fecha
+            </Typography>
           </div>
           <div className={`${classes.gridColumn} ${classes.border}`}>
             <div style={{width: '100%', marginBottom: 10}}>

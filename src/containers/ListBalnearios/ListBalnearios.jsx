@@ -77,14 +77,10 @@ const useStyles = makeStyles(theme => ({
   },
   ul: {
     listStyle: 'none',
+    minHeight: 500,
     padding: 0,
     width: '100%',
-    display: 'flex',
-
-
-    '@media (max-width: 768px)': {
-      flexDirection: 'column'
-    },
+    float: 'left',
 
     '& li': {
       margin: 5,
@@ -152,7 +148,7 @@ const ListBalnearios = () => {
                 className={classes.title}
                 varian='h2'
               >
-                Valnearios en Mar del Plata
+                Balnearios en
               </Typography>
             </div>
             <ul className={`${classes.ul} ${classes.gridFull}`}>
@@ -171,11 +167,11 @@ const ListBalnearios = () => {
                 )
               })}
             </ul>
-            <div className={classes.gridFull}>
+            {/* <div className={classes.gridFull}>
               <Typography varian='body1' align='center'>
                 ver mas
               </Typography>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

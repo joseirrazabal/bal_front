@@ -4,6 +4,8 @@ import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory, useParams } from 'react-router-dom'
 import get from 'lodash/get'
 
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
@@ -266,7 +268,11 @@ const DetalleBalneario = () => {
   }, [tipoSelected])
 
   if (loading || loadingTipoList) {
-    return <div>loading...</div>
+    return (
+      <div style={{height: 40}}>
+        <CircularProgress color="secondary" />
+      </div>
+      )
   }
 
   return (

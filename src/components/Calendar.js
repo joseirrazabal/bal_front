@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
       marginTop: 9,
       paddingBottom: 4,
       width: '100%',
+      background: 'white',
 
       '@media (max-width: 680px)': {
         border: '1px solid gray',
