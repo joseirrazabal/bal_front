@@ -93,13 +93,9 @@ const Selected = ({
   value = 'Ingresar Nombre',
   errorMessage = 'error',
   error = false,
+  onChange = () => {},
 }) => {
-  const [name, setName] = React.useState(value)
   const classes = useStyles()
-
-  const handleChange = event => {
-    setName(event.target.value)
-  }
 
   if (loading) {
     return <div>loading...</div>
@@ -110,9 +106,13 @@ const Selected = ({
       <label>
         <SimpleImage image={IconSomb} />
       </label>
-      <select onChange={handleChange}>
+      <select onChange={onChange}>
         {items.map((item, i) => {
-          return <option key={i}>{item.nombre}</option>
+          return (
+            <option key={i} value={item._id}>
+              {item.nombre}
+            </option>
+          )
         })}
       </select>
     </div>
