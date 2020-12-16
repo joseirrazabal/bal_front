@@ -6,6 +6,8 @@ import get from 'lodash/get'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
@@ -287,7 +289,11 @@ const DetalleBalneario = () => {
   }, [categoria])
 
   if (loading || loadingTipoList) {
-    return <div>loading...</div>
+    return (
+      <div style={{height: 40}}>
+        <CircularProgress color="secondary" />
+      </div>
+      )
   }
 
   return (
