@@ -290,10 +290,10 @@ const DetalleBalneario = () => {
 
   if (loading || loadingTipoList) {
     return (
-      <div style={{height: 40}}>
-        <CircularProgress color="secondary" />
+      <div style={{ height: 40 }}>
+        <CircularProgress color='secondary' />
       </div>
-      )
+    )
   }
 
   return (
@@ -317,14 +317,13 @@ const DetalleBalneario = () => {
           <div className={classes.contentDetalle}>
             <div className={classes.slider}>
               <Carousel>
+                {imagenes.length === 0 && (
+                  <div className={classes.imageBackground}>
+                    <p>sin iamgen</p>
+                  </div>
+                )}
+
                 {imagenes.map((item, i) => {
-                  if(imagenes === 0) {
-                    return (
-                    <div className={classes.imageBackground}>
-                      <p>sin iamgen</p>
-                    </div>
-                    )
-                  } else
                   return (
                     <div className={classes.imageBackground} key={i}>
                       <img src={item.url} />
