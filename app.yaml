@@ -1,4 +1,4 @@
-# service: eurekafront
+service: default
 runtime: nodejs12
 entrypoint: npm run prod
 
@@ -8,5 +8,3 @@ network:
 
 env_variables:
   NODE_ENV: 'production'
-  MICRO: 'https://eurekamicro-dot-desafios-294202.uc.r.appspot.com'
-  LINKS: 'https://eurekamicro-dot-desafios-294202.uc.r.appspot.com'
