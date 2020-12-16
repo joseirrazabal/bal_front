@@ -13,11 +13,12 @@ const useStyles = makeStyles(theme => ({
 
     '& span': {
       color: color || 'white!important',
-    }
+    },
   }),
 }))
 
 const ButtonComponent = ({
+  disabled = false,
   children,
   type = 'button',
   onClick,
@@ -25,13 +26,14 @@ const ButtonComponent = ({
   width,
   size = 'small',
   height,
-  color, 
-  variant = 'secondary'
+  color,
+  variant = 'secondary',
 }) => {
   const classes = useStyles({ border, width, height, color })
 
   return (
     <Button
+      disabled={disabled}
       type={type}
       size={size}
       onClick={onClick}

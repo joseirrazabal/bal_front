@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory, useParams } from 'react-router-dom'
 import get from 'lodash/get'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
@@ -20,6 +22,9 @@ import TIPO_LIST from 'gql/tipo/list'
 import BALNEARIO_GET from 'gql/balneario/get'
 import BALNEARIO_LIST from 'gql/balneario/list'
 import CATEGORIA_LIST from 'gql/categoria/list'
+import PRECIO_GET from 'gql/precio/get'
+
+dayjs.extend(customParseFormat)
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -214,11 +219,15 @@ const DetalleBalneario = () => {
   const history = useHistory()
   const { id, ciudad, desde, hasta } = useParams()
 
+  const [categoria, setCategoria] = useState({})
   const [tipos, setTipos] = useState([])
   const [tipoSelected, setTipoSelected] = useState(null)
   const [balneario, setBalneario] = useState({})
   const [imagenes, setImagenes] = useState([])
   const [open, setOpen] = useState(false)
+
+  const date1 = dayjs(hasta, 'DD-MM-YYYY')
+  const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day')
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -243,6 +252,10 @@ const DetalleBalneario = () => {
       fetchPolicy: 'no-cache',
     }
   )
+  const [getPrecio, { data: dataPrecio, loading: loadingPrecio }] = useLazyQuery(PRECIO_GET, {
+    variables: { categoria: categoria, desde, hasta },
+    fetchPolicy: 'no-cache',
+  })
 
   const { data, loading } = useQuery(BALNEARIO_GET, {
     variables: {
@@ -264,6 +277,14 @@ const DetalleBalneario = () => {
   useEffect(() => {
     getCategorias()
   }, [tipoSelected])
+
+  useEffect(() => {
+    setCategoria(get(dataCategorias, 'categoriaListFront.0'))
+  }, [dataCategorias])
+
+  useEffect(() => {
+    getPrecio()
+  }, [categoria])
 
   if (loading || loadingTipoList) {
     return <div>loading...</div>
@@ -339,6 +360,9 @@ const DetalleBalneario = () => {
                   <Selected
                     items={get(dataCategorias, 'categoriaListFront')}
                     loading={loadingCategorias}
+                    onChange={e => {
+                      setCategoria(e.target.value)
+                    }}
                   />
                 </div>
               </div>
@@ -350,14 +374,23 @@ const DetalleBalneario = () => {
                         $
                       </Typography>
                       <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                        1850
+                        {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
                       </Typography>
                     </Typography>
-                    <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                      del 10 al 13 de Enero
-                    </Typography>
+                    {/* <Typography fontSize={14} fontWeight={700} color='black' variant='p'> */}
+                    {/*   del 10 al 13 de Enero */}
+                    {/* </Typography> */}
                   </div>
-                  <Button height={48} width={200} onClick={() => history.push('/checkout')}>
+                  <Button
+                    disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
+                    height={48}
+                    width={200}
+                    onClick={() =>
+                      history.push(
+                        `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
+                      )
+                    }
+                  >
                     ALQUILAR
                   </Button>
                 </div>

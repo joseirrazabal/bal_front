@@ -1,0 +1,26 @@
+query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: String) {
+  precioGetFront(id: $id, categoria: $categoria, desde: $desde, hasta: $hasta) {
+    _id
+    precio
+    articulo {
+      _id
+      nombre
+      categoria {
+        _id
+        nombre
+        tipo {
+          _id
+          nombre
+        }
+        balneario {
+          _id
+          nombre
+          ciudad {
+            _id
+            nombre
+          }
+        }
+      }
+    }
+  }
+}

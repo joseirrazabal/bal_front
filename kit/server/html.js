@@ -17,6 +17,8 @@ const Html = ({ html, head, material, loadableState, apolloState }) => {
           crossOrigin='anonymous'
         />
 
+        <script src='https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js' />
+
         {head.title.toComponent()}
         {head.meta.toComponent()}
         {head.link.toComponent()}

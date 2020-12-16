@@ -1,0 +1,8 @@
+mutation reservaAdd($id: ID, $input: ReservaInput!) {
+  reservaAdd(id: $id, input: $input) {
+    _id
+    n
+    nModified
+    ok
+  }
+}

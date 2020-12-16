@@ -25,7 +25,7 @@ const routes = [
     isPrivate: false,
   },
   {
-    path: '/checkout',
+    path: '/checkout/:id/:desde/:hasta',
     Component: CheckoutBalnearios,
     Props: {},
     useLayout: false,
