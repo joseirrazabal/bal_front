@@ -72,10 +72,10 @@ const CardBal = ({ moludar, item, className, onClick = () => {} }) => {
       <div className={classes.image}></div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <Typography variant='h2' fontWeight='500'>
+          <Typography variant='h2' fontWeight='400' fontSize={18}>
             {get(item, 'nombre')}
           </Typography>
-          <Typography color='black' variant='p'>
+          <Typography color='black' variant='p' fontSize={13}>
             {get(item, 'ciudad.nombre')}
           </Typography>
         </div>

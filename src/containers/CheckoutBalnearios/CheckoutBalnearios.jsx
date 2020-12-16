@@ -101,7 +101,7 @@ const useStyles = makeStyles(theme => ({
   },
   slider: {
     width: '65%',
-    height: 450,
+    height: 'auto',
     alignItems: 'stretch',
     display: 'flex',
 
@@ -143,7 +143,7 @@ const useStyles = makeStyles(theme => ({
   gridRow: {
     width: '100%',
     height: 'auto',
-    // display: 'flex',
+    display: 'flex',
     '@media (max-width: 960px)': {
       flexDirection: 'column',
     },
@@ -204,7 +204,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.secondary,
-    margin: '15px 0',
+    padding: '15px 0',
   },
   subTitle: {
     margin: '5px 0',
@@ -216,6 +216,84 @@ const useStyles = makeStyles(theme => ({
   contentTyC: {
     margin: 15,
   },
+  input: {
+    width: '100%',
+    margin: 5,
+    background: 'white',
+    borderRadius: 6,
+    display: 'flex',
+    flexDirection: 'column',
+    boxSizing: 'border-box',
+
+    '& label': {
+      fontSize: 12,
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      boxSizing: 'border-box',
+      padding: 10,
+
+      '& span': {
+        display: 'none'
+      }
+    },
+
+    '& input': {
+      border: 'none',
+      borderBottom: '1px solid silver',
+      padding: 10,
+    },
+
+    '& select': {
+      border: 'none',
+      borderBottom: '1px solid silver',
+      padding: 10,
+    },
+
+    "@media (max-width: 960px)": {
+      margin: '5px 0'
+    }
+  },
+  inputError: {
+    width: '100%',
+    margin: 5,
+    background: 'white',
+    borderRadius: 6,
+    display: 'flex',
+    border: '1px solid red',
+    flexDirection: 'column',
+    boxSizing: 'border-box',
+
+    '& label': {
+      fontSize: 12,
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      boxSizing: 'border-box',
+      padding: 10,
+
+      '& span': {
+        display: 'block',
+        color: 'red',
+      }
+    },
+
+    '& input': {
+      border: 'none',
+      borderBottom: '1px solid red',
+      padding: 10,
+    },
+
+    '& select': {
+      border: 'none',
+      borderBottom: '1px solid red',
+      padding: 10,
+    },
+    
+    "@media (max-width: 960px)": {
+      margin: '5px 0'
+    }
+  }
 }))
 
 const CheckoutBalnearios = ({ theme }) => {
@@ -481,76 +559,96 @@ const CheckoutBalnearios = ({ theme }) => {
                     method='post'
                     //id='paymentForm'
                   >
-                    <div className={`${classes.gridRow}`}>
-                      {/* comprador */}
-                      <div>
-                        <label for='email'>E-mail</label>
-                        <input
-                          name='email'
-                          ref={register}
-                          id='email'
-                          type='text'
-                          value='test@test.com'
-                        />
-                      </div>
-
-                      <div>
-                        <label for='docType'>Tipo de documento</label>
-                        <select id='docType' name='docType' ref={register}>
-                          {tipoDocumento.map((tipo, i) => {
-                            return (
-                              <option key={i} value={tipo.id}>
-                                {tipo.name}
-                              </option>
-                            )
-                          })}
-                        </select>
-                      </div>
-                      <div>
-                        <label for='docNumber'>Número de documento</label>
-                        <input
-                          id='docNumber'
-                          name='docNumber'
-                          data-checkout='docNumber'
-                          type='text'
-                          ref={register}
-                        />
-                      </div>
-                      <div>
-                        <label for='cardholderName'>Titular de la tarjeta</label>
-                        <input
-                          id='cardholderName'
-                          ref={cardholderName}
-                          data-checkout='cardholderName'
-                          type='text'
-                        />
-                      </div>
-
-                      {/* tarjeta*/}
-                      <div>
-                        <label for=''>Fecha de vencimiento</label>
-                        <div>
+                    <div>
+                      <div className={`${classes.gridRow}`}>
+                        <div className={classes.input}>
+                          <label for='email'>E-mail</label>
                           <input
+                            name='email'
+                            ref={register}
+                            id='email'
                             type='text'
-                            placeholder='MM'
-                            id='cardExpirationMonth'
-                            ref={cardExpirationMonth}
-                            data-checkout='cardExpirationMonth'
-                            //onSelectStart={() => false}
-                            onPaste={() => false}
-                            onCopy={() => false}
-                            onCut={() => false}
-                            onDrag={() => false}
-                            onDrop={() => false}
-                            autoComplete='off'
+                            value='test@test.com'
                           />
-                          <span className='date-separator'>/</span>
+                        </div>
+                        <div className={classes.input}>
+                          <label for='docType'>Tipo de documento</label>
+                          <select id='docType' name='docType' ref={register}>
+                            {tipoDocumento.map((tipo, i) => {
+                              return (
+                                <option key={i} value={tipo.id}>
+                                  {tipo.name}
+                                </option>
+                              )
+                            })}
+                          </select>
+                        </div>
+                      </div>
+                      <div className={`${classes.gridRow}`}>
+                        <div className={classes.input}>
+                          <label for='docNumber'>Número de documento</label>
                           <input
+                            id='docNumber'
+                            name='docNumber'
+                            data-checkout='docNumber'
                             type='text'
-                            placeholder='YY'
-                            id='cardExpirationYear'
-                            ref={cardExpirationYear}
-                            data-checkout='cardExpirationYear'
+                            ref={register}
+                          />
+                        </div>
+                        <div className={classes.input}>
+                          <label for='cardholderName'>Titular de la tarjeta</label>
+                          <input
+                            id='cardholderName'
+                            ref={cardholderName}
+                            data-checkout='cardholderName'
+                            type='text'
+                          />
+                        </div>
+                      </div>
+
+                      <div className={`${classes.gridRow}`}>
+                        <div className={classes.input}>
+                          <label for=''>Fecha de vencimiento</label>
+                          <div>
+                            <input
+                              type='text'
+                              placeholder='MM'
+                              id='cardExpirationMonth'
+                              ref={cardExpirationMonth}
+                              data-checkout='cardExpirationMonth'
+                              //onSelectStart={() => false}
+                              onPaste={() => false}
+                              onCopy={() => false}
+                              onCut={() => false}
+                              onDrag={() => false}
+                              onDrop={() => false}
+                              autoComplete='off'
+                            />
+                            <span className='date-separator'>/</span>
+                            <input
+                              type='text'
+                              placeholder='YY'
+                              id='cardExpirationYear'
+                              ref={cardExpirationYear}
+                              data-checkout='cardExpirationYear'
+                              //onSelectStart={() => false}
+                              onPaste={() => false}
+                              onCopy={() => false}
+                              onCut={() => false}
+                              onDrag={() => false}
+                              onDrop={() => false}
+                              autoComplete='off'
+                            />
+                          </div>
+                        </div>
+                        <div className={classes.input}>
+                          <label for='cardNumber'>Número de la tarjeta</label>
+                          <input
+                            onChange={handleCardChange}
+                            type='text'
+                            id='cardNumber'
+                            ref={cardNumber}
+                            data-checkout='cardNumber'
                             //onSelectStart={() => false}
                             onPaste={() => false}
                             onCopy={() => false}
@@ -561,81 +659,70 @@ const CheckoutBalnearios = ({ theme }) => {
                           />
                         </div>
                       </div>
-                      <div>
-                        <label for='cardNumber'>Número de la tarjeta</label>
-                        <input
-                          onChange={handleCardChange}
-                          type='text'
-                          id='cardNumber'
-                          ref={cardNumber}
-                          data-checkout='cardNumber'
-                          //onSelectStart={() => false}
-                          onPaste={() => false}
-                          onCopy={() => false}
-                          onCut={() => false}
-                          onDrag={() => false}
-                          onDrop={() => false}
-                          autoComplete='off'
-                        />
-                      </div>
-                      <div>
-                        <label for='securityCode'>Código de seguridad</label>
-                        <input
-                          id='securityCode'
-                          ref={securityCode}
-                          data-checkout='securityCode'
-                          type='text'
-                          //onSelectStart={() => false}
-                          onPaste={() => false}
-                          onCopy={() => false}
-                          onCut={() => false}
-                          onDrag={() => false}
-                          onDrop={() => false}
-                          autoComplete='off'
-                        />
-                      </div>
-                      <div id='issuerInput'>
-                        <label for='issuer'>Banco emisor</label>
-                        <select
-                          name={`issuer`}
-                          ref={register}
-                          onChange={e => {
-                            getInstallments(
-                              paymentMethod,
-                              get(dataPrecio, 'precioGetFront.precio'),
-                              e.target.value
-                            )
-                          }}
-                        >
-                          {issuers.map((isu, i) => {
-                            return (
-                              <option key={i} value={isu.id}>
-                                {isu.name}
-                              </option>
-                            )
-                          })}
-                        </select>
-                      </div>
-                      <div>
-                        <label for='installments'>Cuotas</label>
-                        <select
-                          name={`installments`}
-                          ref={register}
-                          onChange={e => {
-                            setInstallmentSelect(e.target.value)
-                          }}
-                        >
-                          {installments.map((inst, i) => {
-                            return (
-                              <option key={i} value={inst.id}>
-                                {inst.name}
-                              </option>
-                            )
-                          })}
-                        </select>
-                      </div>
-                      <div>
-                        <input ref={register} type='hidden' name='description' id='description' />
+                      <div className={`${classes.gridRow}`}>
+                        <div className={classes.input}>
+                          <label for='securityCode'>Código de seguridad</label>
+                          <input
+                            id='securityCode'
+                            ref={securityCode}
+                            data-checkout='securityCode'
+                            type='text'
+                            //onSelectStart={() => false}
+                            onPaste={() => false}
+                            onCopy={() => false}
+                            onCut={() => false}
+                            onDrag={() => false}
+                            onDrop={() => false}
+                            autoComplete='off'
+                          />
+                        </div>
+                        <div className={`${classes.input}`} id='issuerInput'>
+                          <label for='issuer'>Banco emisor</label>
+                          <select
+                            name={`issuer`}
+                            ref={register}
+                            onChange={e => {
+                              getInstallments(
+                                paymentMethod,
+                                get(dataPrecio, 'precioGetFront.precio'),
+                                e.target.value
+                              )
+                            }}
+                          >
+                            {issuers.map((isu, i) => {
+                              return (
+                                <option key={i} value={isu.id}>
+                                  {isu.name}
+                                </option>
+                              )
+                            })}
+                          </select>
+                        </div>
+                      </div>      
+                      {/* tarjeta*/}
+                     
+                      <div className={`${classes.gridRow}`}>
+                        <div className={`${classes.input}`}>
+                          <label for='installments'>Cuotas</label>
+                          <select
+                            name={`installments`}
+                            ref={register}
+                            onChange={e => {
+                              setInstallmentSelect(e.target.value)
+                            }}
+                          >
+                            {installments.map((inst, i) => {
+                              return (
+                                <option key={i} value={inst.id}>
+                                  {inst.name}
+                                </option>
+                              )
+                            })}
+                          </select>
+                        </div>
+                        <div className={`${classes.gridRow}`}>
+                          <input ref={register} type='hidden' name='description' id='description' />
+                        </div>
                       </div>
                     </div>
                     <div className={classes.gridRowTyC}>
@@ -654,40 +741,29 @@ const CheckoutBalnearios = ({ theme }) => {
                       </div>
                     </div>
 
-                    <ButtonAcceptComponent type='submit' loading={loadingReserva}>
-                      ALQUILAR
-                    </ButtonAcceptComponent>
+                    <div className={`${classes.cardPrecio}`}>
+                      <div style={{width: '100%'}}>
+                        <ButtonAcceptComponent type='submit' loading={loadingReserva}>
+                          ALQUILAR
+                        </ButtonAcceptComponent>
+                      </div>
+                      <div style={{width: '100%'}}>
+                        <Typography variant='p' textAlign="right">
+                          <Typography color='black' variant='span'>
+                            $
+                          </Typography>
+                          <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
+                            ${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}
+                          </Typography>
+                        </Typography>
+                        <Typography fontSize={14} fontWeight={700} color='black' variant='p' textAlign="right">
+                          Total
+                        </Typography>
+                      </div>
+                    </div>
                   </form>
                 </div>
                 <div className={classes.detalleBottom}>
-                  <div className={`${classes.cardPrecio}`}>
-                    <div>
-                      <Typography variant='p'>
-                        <Typography color='black' variant='span'>
-                          $
-                        </Typography>
-                        <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                          ${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}
-                        </Typography>
-                      </Typography>
-                      <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                        Total
-                      </Typography>
-                    </div>
-                    <div>
-                      <Typography variant='p'>
-                        <Typography color='black' variant='span'>
-                          $
-                        </Typography>
-                        <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                          {textoCuota}
-                        </Typography>
-                      </Typography>
-                      <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                        Total
-                      </Typography>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

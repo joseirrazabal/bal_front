@@ -19,6 +19,7 @@ import FullScreenDialog from '../../components/Dialog'
 import SimpleImage from '../../components/SimpleImage'
 
 import IconCarpAzul from '../../assets/icon-carpa.svg'
+import DefaultImage from '../../assets/default-image.jpg'
 
 import TIPO_LIST from 'gql/tipo/list'
 import BALNEARIO_GET from 'gql/balneario/get'
@@ -86,6 +87,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     background: 'white',
     borderRadius: 6,
+    border: '1px solid #ccc',
     overflow: 'hidden',
     boxSizing: 'border-box',
     marginBottom: 20,
@@ -135,9 +137,11 @@ const useStyles = makeStyles(theme => ({
     width: '60%',
     position: 'relative',
     height: 460,
-    background: 'green',
+    //background: 'green',
+
     '@media (max-width: 960px)': {
       width: '100%',
+      height: 'auto',
     },
   },
   detalle: {
@@ -156,7 +160,11 @@ const useStyles = makeStyles(theme => ({
     width: '100wv!important',
     height: '100%',
     minHeight: 460,
-    background: 'pink',
+    //background: 'pink',
+
+    '@media (max-width: 680px)': {
+      minHeight: 'auto',
+    },
   },
   detalleTop: {
     width: '100%',
@@ -203,7 +211,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.secondary,
-    margin: '15px 0',
+    padding: '15px 0',
   },
   subTitle: {
     margin: '5px 0',
@@ -308,6 +316,7 @@ const DetalleBalneario = () => {
           <Typography
             fontWeight={700}
             fontSize={25}
+            color="gray"
             textAlign='center'
             className={classes.title}
             varian='h2'
@@ -319,10 +328,9 @@ const DetalleBalneario = () => {
               <Carousel>
                 {imagenes.length === 0 && (
                   <div className={classes.imageBackground}>
-                    <p>sin iamgen</p>
+                    <SimpleImage width='100%' image={DefaultImage} />
                   </div>
                 )}
-
                 {imagenes.map((item, i) => {
                   return (
                     <div className={classes.imageBackground} key={i}>
@@ -342,7 +350,7 @@ const DetalleBalneario = () => {
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
                 <div className={classes.gridColumn}>
-                  <Typography fontSize={23} className={classes.subTitle} variant='h4'>
+                  <Typography fontSize={23} fontWeight={400} className={classes.subTitle} variant='h4'>
                     {get(balneario, 'nombre')}
                   </Typography>
                   <Typography fontSize={18} color='grey' variant='p'>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 import SimpleImage from './SimpleImage'
 
 import IconSomb from '../assets/icon-sombri.svg'
@@ -98,7 +100,11 @@ const Selected = ({
   const classes = useStyles()
 
   if (loading) {
-    return <div>loading...</div>
+    return (
+      <div style={{height: 40, width: '100%', display: 'flex', justifyContent: 'center'}}> 
+        <CircularProgress color="secondary"/>
+      </div>
+    )
   }
 
   return (
