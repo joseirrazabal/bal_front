@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
+
 import { makeStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 import get from 'lodash/get'
 import { useForm, Controller } from 'react-hook-form'
 
@@ -149,7 +152,7 @@ const Search = ({ styles, valueDefault = null }) => {
         </div>
         <div style={{ margin: '0 10px', width: '100%' }}>
           {loading2 ? (
-            <div>loading...</div>
+            <CircularProgress />
           ) : (
             <AutocompleteComponent
               valueDefault={ciudadDefault}

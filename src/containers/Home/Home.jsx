@@ -4,13 +4,18 @@ import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
 
+import Button from '@material-ui/core/Button'
+
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
 import CardBal from '../../components/CardBal'
-
+import DialogSimpleComponent from '../../components/DialogSimple'
+// Assets
 import imageBackground from '../../assets/fondo.jpg'
+import ImageCoronaVirus from '../../assets/coronavirus_medidas.png'
 
 import BALNEARIO_LIST from 'gql/balneario/list'
+import SimpleImage from '../../components/SimpleImage'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -69,6 +74,7 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       height: '70vh',
+      alignItems: 'flex-start',
     },
   },
   contentSlider: {
@@ -127,7 +133,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   banner: {
-    background: 'silver',
+    background: 'white',
     marginTop: 25,
     width: '100%',
     height: 180,
@@ -135,14 +141,28 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     margin: 10,
     boxSizing: 'border-box',
+    border: '1px solid gray',
+    borderRadius: 6,
+    cursor: 'pointer',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+
+    '& p': {
+      color: 'gray'
+    },
 
     '@media (max-width: 680px)': {
       height: 140,
     },
   },
+  modalContent: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 }))
 
 const Home = () => {
@@ -170,7 +190,7 @@ const Home = () => {
       <div className={classes.contentBanners}>
         <div className={classes.containerMobile}>
           <div className={classes.banner}>
-            <p>PUBLICIDAD</p>
+            <p>BANNER DE PUBLICIDAD (1280x180px)</p>
           </div>
           <div>
             <Typography
@@ -202,6 +222,16 @@ const Home = () => {
                 })}
             </ul>
           </div>
+          <DialogSimpleComponent>
+            <div className={classes.modalContent}>
+              <SimpleImage image={ImageCoronaVirus} width="100%" />
+              <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" target="_blank" width="100%">
+                <Button variant='contained'>
+                  ir al sitio
+                </Button>
+              </a>
+            </div>
+          </DialogSimpleComponent>
         </div>
       </div>
     </div>

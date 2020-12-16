@@ -297,6 +297,13 @@ const DetalleBalneario = () => {
             <div className={classes.slider}>
               <Carousel>
                 {imagenes.map((item, i) => {
+                  if(imagenes === 0) {
+                    return (
+                    <div className={classes.imageBackground}>
+                      <p>sin iamgen</p>
+                    </div>
+                    )
+                  } else
                   return (
                     <div className={classes.imageBackground} key={i}>
                       <img src={item.url} />
