@@ -51,7 +51,6 @@ const useStyles = makeStyles(theme => ({
   contentSearch: {
     width: '100%',
     height: '35vh',
-    // background: 'red',
     backgroundImage: 'url(' + imageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
@@ -155,7 +154,7 @@ const useStyles = makeStyles(theme => ({
     },
 
     '@media (max-width: 680px)': {
-      height: 140,
+      height: 'auto',
     },
   },
   modalContent: {

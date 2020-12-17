@@ -39,7 +39,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   contentLogo: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+
+    "@media (max-width: 680px)": {
+      '& img': {
+        height: '30px!important'
+      }
+    }
   },
   nav: {
     display: 'flex',

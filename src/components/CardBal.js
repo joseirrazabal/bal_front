@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import Button from './Button'
 import Typography from './Typography'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   cardBal: ({ moludar = false }) => ({
     float: 'left',
     //width: !moludar ? 'calc(100% / 3 - 10px)' : '100%',
@@ -29,6 +29,7 @@ const useStyles = makeStyles({
     },
   }),
   image: ({ image }) => ({
+    position: 'relative',
     width: '100%',
     height: 170,
     backgroundImage: `url(${image})`,
@@ -56,7 +57,18 @@ const useStyles = makeStyles({
       fontStyle: 'italic',
     },
   },
-})
+  nuevo: {
+    background: theme.palette.secondary.dark,
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
+    color: 'white',
+    padding: '5px 10px 5px 5px',
+    borderRadius: '0 10px 10px 0',
+    fontSize: 12,
+    position: 'absolute',
+    top: 10,
+    left: 0
+  }
+}))
 
 const CardBal = ({ moludar, item, className, onClick = () => {} }) => {
   const image = get(
@@ -69,7 +81,11 @@ const CardBal = ({ moludar, item, className, onClick = () => {} }) => {
 
   return (
     <div className={`${className} ${classes.cardBal}`}>
-      <div className={classes.image}></div>
+      <div className={classes.image}>
+        <div className={classes.nuevo} >
+          NUEVO
+        </div>
+      </div>
       <div className={classes.content}>
         <div className={classes.data}>
           <Typography variant='h2' fontWeight='400' fontSize={18}>
