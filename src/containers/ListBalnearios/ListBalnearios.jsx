@@ -4,13 +4,15 @@ import { useHistory, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
 
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
+import CIUDAD_LIST from 'gql/ciudad/list'
 
-const itemsCard = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const imageOnline =
   'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=213&tipoEscala=stretch&width=2048&height=978'
 
@@ -119,22 +121,24 @@ const ListBalnearios = () => {
   const history = useHistory()
   const { ciudad, desde, hasta } = useParams()
 
+  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
   const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
     variables: {
       ciudad,
     },
   })
 
-  if (loading) {
+  if (loading || loadingCiudad) {
     return <div>loading...</div>
   }
 
   return (
     <div className={classes.contentFull}>
+      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
-          <Search ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search ciudades={ciudades} ciudad={ciudad} desde={desde} hasta={hasta} />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -167,14 +171,10 @@ const ListBalnearios = () => {
                 )
               })}
             </ul>
-            {/* <div className={classes.gridFull}>
-              <Typography varian='body1' align='center'>
-                ver mas
-              </Typography>
-            </div> */}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

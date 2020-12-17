@@ -10,6 +10,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
 import ButtonAcceptComponent from '../../components/ButtonAccept'
 import Input from '../../components/Input'
 import ItemSelected from '../../components/ItemSelected'
@@ -234,8 +236,8 @@ const useStyles = makeStyles(theme => ({
       padding: 10,
 
       '& span': {
-        display: 'none'
-      }
+        display: 'none',
+      },
     },
 
     '& input': {
@@ -250,9 +252,9 @@ const useStyles = makeStyles(theme => ({
       padding: 10,
     },
 
-    "@media (max-width: 960px)": {
-      margin: '5px 0'
-    }
+    '@media (max-width: 960px)': {
+      margin: '5px 0',
+    },
   },
   inputError: {
     width: '100%',
@@ -275,7 +277,7 @@ const useStyles = makeStyles(theme => ({
       '& span': {
         display: 'block',
         color: 'red',
-      }
+      },
     },
 
     '& input': {
@@ -289,11 +291,11 @@ const useStyles = makeStyles(theme => ({
       borderBottom: '1px solid red',
       padding: 10,
     },
-    
-    "@media (max-width: 960px)": {
-      margin: '5px 0'
-    }
-  }
+
+    '@media (max-width: 960px)': {
+      margin: '5px 0',
+    },
+  },
 }))
 
 const CheckoutBalnearios = ({ theme }) => {
@@ -492,6 +494,7 @@ const CheckoutBalnearios = ({ theme }) => {
   if (errorReserva) {
     return (
       <div className={classes.contentFull}>
+        <Header />
         <div className={classes.contentBanners}>
           <div className={classes.container}>
             <Typography
@@ -698,9 +701,9 @@ const CheckoutBalnearios = ({ theme }) => {
                             })}
                           </select>
                         </div>
-                      </div>      
+                      </div>
                       {/* tarjeta*/}
-                     
+
                       <div className={`${classes.gridRow}`}>
                         <div className={`${classes.input}`}>
                           <label for='installments'>Cuotas</label>
@@ -742,13 +745,13 @@ const CheckoutBalnearios = ({ theme }) => {
                     </div>
 
                     <div className={`${classes.cardPrecio}`}>
-                      <div style={{width: '100%'}}>
+                      <div style={{ width: '100%' }}>
                         <ButtonAcceptComponent type='submit' loading={loadingReserva}>
                           ALQUILAR
                         </ButtonAcceptComponent>
                       </div>
-                      <div style={{width: '100%'}}>
-                        <Typography variant='p' textAlign="right">
+                      <div style={{ width: '100%' }}>
+                        <Typography variant='p' textAlign='right'>
                           <Typography color='black' variant='span'>
                             $
                           </Typography>
@@ -756,15 +759,20 @@ const CheckoutBalnearios = ({ theme }) => {
                             ${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}
                           </Typography>
                         </Typography>
-                        <Typography fontSize={14} fontWeight={700} color='black' variant='p' textAlign="right">
+                        <Typography
+                          fontSize={14}
+                          fontWeight={700}
+                          color='black'
+                          variant='p'
+                          textAlign='right'
+                        >
                           Total
                         </Typography>
                       </div>
                     </div>
                   </form>
                 </div>
-                <div className={classes.detalleBottom}>
-                </div>
+                <div className={classes.detalleBottom}></div>
               </div>
             </div>
             <div className={classes.detalle}>
@@ -805,6 +813,7 @@ const CheckoutBalnearios = ({ theme }) => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
       <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
         <div className={classes.contentTyC}>

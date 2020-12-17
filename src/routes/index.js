@@ -1,9 +1,6 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
-
 import Home from 'src/containers/Home/Home'
 import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
@@ -45,9 +42,7 @@ export const MainRoutes = () => (
     {routes.map(({ path, useLayout, Component, isPrivate, Props }) => {
       return (
         <Route key={path} path={path}>
-          <Header />
           <Component />
-          <Footer />
         </Route>
       )
     })}
