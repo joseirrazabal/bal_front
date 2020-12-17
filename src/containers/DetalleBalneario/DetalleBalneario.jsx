@@ -272,7 +272,7 @@ const DetalleBalneario = () => {
   const [getCategorias, { data: dataCategorias, loading: loadingCategorias }] = useLazyQuery(
     CATEGORIA_LIST,
     {
-      variables: { tipo: get(tipoSelected, '_id') },
+      variables: { tipo: get(tipoSelected, '_id'), balneario: id },
       fetchPolicy: 'no-cache',
     }
   )

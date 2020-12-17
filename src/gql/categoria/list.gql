@@ -1,5 +1,5 @@
-query categoriaListFront($tipo: String) {
-  categoriaListFront(tipo: $tipo) {
+query categoriaListFront($tipo: String, $balneario: String) {
+  categoriaListFront(tipo: $tipo, balneario: $balneario) {
     _id
     nombre
     descripcion
