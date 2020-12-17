@@ -6,7 +6,7 @@ import get from 'lodash/get'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-import CircularProgress from '@material-ui/core/CircularProgress'
+// import CircularProgress from '@material-ui/core/CircularProgress'
 
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
@@ -17,6 +17,7 @@ import Typography from '../../components/Typography'
 import Selected from '../../components/Selected'
 import FullScreenDialog from '../../components/Dialog'
 import SimpleImage from '../../components/SimpleImage'
+import Loading from '../../components/Loading'
 
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 import DefaultImage from '../../assets/default-image.jpg'
@@ -157,10 +158,18 @@ const useStyles = makeStyles(theme => ({
     },
   },
   imageBackground: {
-    width: '100wv!important',
+    position: 'relative',
+    width: '100%',
     height: '100%',
     minHeight: 460,
-    //background: 'pink',
+    background: '#f2f2f2',
+    display: 'flex!important',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+    '& img': {
+      width: '100%'
+    },
 
     '@media (max-width: 680px)': {
       minHeight: 'auto',
@@ -301,7 +310,7 @@ const DetalleBalneario = () => {
   if (loading || loadingTipoList) {
     return (
       <div style={{ height: 40 }}>
-        <CircularProgress color='secondary' />
+        <Loading />
       </div>
     )
   }

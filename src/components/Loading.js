@@ -5,11 +5,11 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 
 import SimpleImage from './SimpleImage'
 // Assets
-import Image from '../assets/icono-carpa.svg'
+import Image from '../assets/icon-carpa.svg'
 
 const useStyles = makeStyles({
   loadingStyle: {
-    position: 'absolute',
+    position: 'fized',
     zIndex: 1,
     width: '100vw',
     height: `100%`,
@@ -68,7 +68,7 @@ const Loading = () => {
           title='Alamar - Alquiler de carpas en balnearios'
           image={Image}
         />
-        <LinearProgress className={classes.line} variant='determinate' value={progress} />
+        <LinearProgress className={classes.line} variant='determinate' color="secondary" value={progress} />
       </div>
     </div>
   )

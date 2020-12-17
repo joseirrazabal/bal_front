@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const CardBal = ({ moludar, item, className, onClick = () => {} }) => {
+const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }) => {
   const image = get(
     item,
     'imagenes.0.url',
@@ -82,9 +82,7 @@ const CardBal = ({ moludar, item, className, onClick = () => {} }) => {
   return (
     <div className={`${className} ${classes.cardBal}`}>
       <div className={classes.image}>
-        <div className={classes.nuevo} >
-          NUEVO
-        </div>
+        {nuevo && <div className={classes.nuevo}> NUEVO</div>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>

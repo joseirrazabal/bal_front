@@ -18,6 +18,8 @@ import ImageBanner from '../../assets/banner.png'
 import BALNEARIO_LIST from 'gql/balneario/list'
 import SimpleImage from '../../components/SimpleImage'
 
+// import './styles.scss'
+
 const useStyles = makeStyles(theme => ({
   contentFull: {
     width: '100%',
@@ -201,7 +203,7 @@ const Home = () => {
               className={classes.subTitle}
               varian='h2'
             >
-              Mejores Balnearios
+              Últimos Balnearios
             </Typography>
           </div>
           <div className={classes.contentSlider}>
@@ -213,6 +215,7 @@ const Home = () => {
                     <li key={i}>
                       <CardBal
                         moludar
+                        nuevo
                         item={item}
                         onClick={() => {
                           history.push(`/detalle/${get(item, '_id')}`)
@@ -226,7 +229,7 @@ const Home = () => {
           <DialogSimpleComponent>
             <div className={classes.modalContent}>
               <SimpleImage image={ImageCoronaVirus} width="100%" />
-              <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" target="_blank" width="100%">
+              <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%">
                 <Button variant='contained'>
                   ir al sitio
                 </Button>
