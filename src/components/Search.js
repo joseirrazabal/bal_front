@@ -201,7 +201,11 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
             </Typography>
           </div>
           <div>
-            <AutocompleteComponent />
+            <AutocompleteComponent
+              valueDefault={ciudadDefault}
+              options={get(ciudades, 'ciudadListFront')}
+              setValue={setValue}
+            />
           </div>
           <div style={{ marginTop: 10, marginBottom: 5 }}>
             <Typography textAlign='left' fontSize={18} variant='p' color='black'>
@@ -210,7 +214,7 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
           </div>
           <div className={`${classes.gridColumn} ${classes.border}`}>
             <div style={{ width: '100%', marginBottom: 10 }}>
-              <Calendar />
+              <Calendar name='desde' setValue={setValue} value={desde} />
             </div>
             <div style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
               <Typography textAlign='center' fontSize={18} variant='p' color='black'>
@@ -218,7 +222,7 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
               </Typography>
             </div>
             <div style={{ width: '100%', marginBottom: 10 }}>
-              <Calendar />
+              <Calendar name='hasta' setValue={setValue} value={hasta} />
             </div>
           </div>
           <div>
