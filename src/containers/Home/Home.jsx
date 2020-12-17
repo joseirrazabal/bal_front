@@ -13,6 +13,7 @@ import DialogSimpleComponent from '../../components/DialogSimple'
 // Assets
 import imageBackground from '../../assets/fondo.jpg'
 import ImageCoronaVirus from '../../assets/coronavirus_medidas.png'
+import ImageBanner from '../../assets/banner.png'
 
 import BALNEARIO_LIST from 'gql/balneario/list'
 import SimpleImage from '../../components/SimpleImage'
@@ -50,8 +51,9 @@ const useStyles = makeStyles(theme => ({
   contentSearch: {
     width: '100%',
     height: '35vh',
-    background: 'red',
+    // background: 'red',
     backgroundImage: 'url(' + imageBackground + ')',
+    backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -136,7 +138,7 @@ const useStyles = makeStyles(theme => ({
     background: 'white',
     marginTop: 25,
     width: '100%',
-    height: 180,
+    height: 'auto',
     borderRadios: 6,
     overflow: 'hidden',
     margin: 10,
@@ -190,7 +192,7 @@ const Home = () => {
       <div className={classes.contentBanners}>
         <div className={classes.containerMobile}>
           <div className={classes.banner}>
-            <p>BANNER DE PUBLICIDAD (1280x180px)</p>
+            <SimpleImage image={ImageBanner} width="100%" />
           </div>
           <div>
             <Typography
