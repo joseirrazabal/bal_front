@@ -52,7 +52,7 @@ const AutocompleteComponent = ({ valueDefault = null, options, setValue }) => {
     getOptionProps,
     groupedOptions,
   } = useAutocomplete({
-    id: 'use-autocomplete-demo',
+    // id: 'use-autocomplete-demo',
     defaultValue: valueDefault,
     options: options,
     onChange: (event, newValue) => {

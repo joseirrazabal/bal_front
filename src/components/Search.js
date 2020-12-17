@@ -104,12 +104,15 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
   const [ciudadDefault, setCiudadDefault] = useState(null)
   const [loading2, setLoading2] = useState(true)
 
-  const { reset, register, control, handleSubmit, errors, setValue } = useForm()
+  const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
 
   const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
 
+  const { ciudad: ciudadInput, desde: desdeInput, hasta: hastaInput } = watch()
+
   const onSubmit = data => {
-    history.push(`/list/${get(data, 'ciudad')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+    // history.push(`/list/${get(data, 'ciudad')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+    history.push(`/list/${ciudadInput}/${desdeInput}/${hastaInput}`)
   }
 
   useEffect(() => {
@@ -224,7 +227,15 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
             </div>
           </div>
           <div>
-            <Button type='submit' fullWidth height={48}>
+            <Button
+              type='submit'
+              fullWidth
+              height={48}
+              onClick={e => {
+                e.preventDefault()
+                onSubmit()
+              }}
+            >
               Buscar
             </Button>
           </div>
