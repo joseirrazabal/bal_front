@@ -6,19 +6,21 @@ import get from 'lodash/get'
 
 import Button from '@material-ui/core/Button'
 
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
 import CardBal from '../../components/CardBal'
 import DialogSimpleComponent from '../../components/DialogSimple'
-// Assets
+
 import imageBackground from '../../assets/fondo.jpg'
 import ImageCoronaVirus from '../../assets/coronavirus_medidas.png'
 import ImageBanner from '../../assets/banner.png'
 
 import BALNEARIO_LIST from 'gql/balneario/list'
-import SimpleImage from '../../components/SimpleImage'
+import CIUDAD_LIST from 'gql/ciudad/list'
 
-// import './styles.scss'
+import SimpleImage from '../../components/SimpleImage'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -152,7 +154,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
 
     '& p': {
-      color: 'gray'
+      color: 'gray',
     },
 
     '@media (max-width: 680px)': {
@@ -164,8 +166,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 }))
 
 const Home = () => {
@@ -173,9 +175,15 @@ const Home = () => {
   const history = useHistory()
 
   const { data, loading } = useQuery(BALNEARIO_LIST)
+  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
+
+  if (loading || loadingCiudad) {
+    return <div>loading...</div>
+  }
 
   return (
     <div className={classes.contentFull}>
+      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
@@ -183,6 +191,7 @@ const Home = () => {
             ALQUILER DE CARPAS Y SOMBRILLAS
           </Typography>
           <Search
+            ciudades={ciudades}
             styles={{
               position: 'absolute',
             }}
@@ -193,7 +202,7 @@ const Home = () => {
       <div className={classes.contentBanners}>
         <div className={classes.containerMobile}>
           <div className={classes.banner}>
-            <SimpleImage image={ImageBanner} width="100%" />
+            <SimpleImage image={ImageBanner} width='100%' />
           </div>
           <div>
             <Typography
@@ -238,6 +247,7 @@ const Home = () => {
           </DialogSimpleComponent>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

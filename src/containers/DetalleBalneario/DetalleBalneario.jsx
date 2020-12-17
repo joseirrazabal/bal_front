@@ -6,8 +6,8 @@ import get from 'lodash/get'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-// import CircularProgress from '@material-ui/core/CircularProgress'
-
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
@@ -27,6 +27,7 @@ import BALNEARIO_GET from 'gql/balneario/get'
 import BALNEARIO_LIST from 'gql/balneario/list'
 import CATEGORIA_LIST from 'gql/categoria/list'
 import PRECIO_GET from 'gql/precio/get'
+import CIUDAD_LIST from 'gql/ciudad/list'
 
 dayjs.extend(customParseFormat)
 
@@ -167,9 +168,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex!important',
     justifyContent: 'center',
     alignItems: 'center',
-    
+
     '& img': {
-      width: '100%'
+      width: '100%',
     },
 
     '@media (max-width: 680px)': {
@@ -257,6 +258,7 @@ const DetalleBalneario = () => {
     setOpen(false)
   }
 
+  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
   const { data: dataTipoList, loadingTipoList } = useQuery(TIPO_LIST, {
     variables: { balneario: id },
     fetchPolicy: 'no-cache',
@@ -308,19 +310,16 @@ const DetalleBalneario = () => {
     getPrecio()
   }, [categoria])
 
-  if (loading || loadingTipoList) {
-    return (
-      <div style={{ height: 40 }}>
-        <Loading />
-      </div>
-    )
+  if (loading || loadingCiudad || loadingTipoList) {
+    return <div>loading...</div>
   }
 
   return (
     <div className={classes.contentFull}>
+      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.container}>
-          <Search ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search ciudades={ciudades} ciudad={ciudad} desde={desde} hasta={hasta} />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -474,6 +473,7 @@ const DetalleBalneario = () => {
           </FullScreenDialog>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

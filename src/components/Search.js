@@ -14,7 +14,7 @@ import AutocompleteComponent from './Autocomplete'
 import Calendar from './Calendar'
 import Typography from './Typography'
 import FullScreenDialog from './Dialog'
-// Icons
+
 import IconSomb from '../assets/icon-sombri.svg'
 import IconCalendar from '../assets/icon-calendar.svg'
 import IconLupa from '../assets/icon-lupa.svg'
@@ -127,19 +127,17 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
   }
 
   useEffect(() => {
-    if (get(ciudades, 'ciudadListFront')) {
-      if (ciudad) {
-        const ciudadesA = get(ciudades, 'ciudadListFront', []) || []
-        const result = ciudadesA.find(item => {
-          return item._id === ciudad
-        })
-        if (result) {
-          setCiudadDefault(result)
-          setValue('ciudad', get(result, '_id'))
-        }
+    if (ciudad) {
+      const ciudadesA = get(ciudades, 'ciudadListFront', []) || []
+      const result = ciudadesA.find(item => {
+        return item._id === ciudad
+      })
+      if (result) {
+        setCiudadDefault(result)
+        setValue('ciudad', get(result, '_id'))
       }
-      setLoading2(false)
     }
+    setLoading2(false)
   }, [ciudades])
 
   return (
