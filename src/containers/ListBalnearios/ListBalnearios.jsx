@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     '& li': {
       margin: 5,
       width: '100%',
-    }
+    },
   },
   contentList: {
     width: '100%',
@@ -134,7 +134,7 @@ const ListBalnearios = () => {
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
-          <Search valueDefault={ciudad} />
+          <Search ciudad={ciudad} desde={desde} hasta={hasta} />
         </div>
       </div>
       <div className={classes.contentBanners}>

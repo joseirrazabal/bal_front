@@ -302,7 +302,7 @@ const CheckoutBalnearios = ({ theme }) => {
   const { id, desde, hasta } = useParams()
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
-  const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day')
+  const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
 
   const [textoCuota, setTextoCuota] = useState(false)
   const [open, setOpen] = useState(false)

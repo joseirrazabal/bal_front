@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   gridColumn: {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   gridRow: {
     width: '100%',
@@ -87,29 +87,29 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 680px)': {
       margin: 0,
-      border: 'none'
+      border: 'none',
     },
   },
   contentSearMobile: {
     padding: 10,
     background: '#f2f2f2',
-    boxSizing: 'border-box'
-  }
+    boxSizing: 'border-box',
+  },
 }))
 
-const Search = ({ styles, valueDefault = null }) => {
+const Search = ({ styles, ciudad = null, desde, hasta }) => {
   const history = useHistory()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [ciudadDefault, setCiudadDefault] = useState(null)
   const [loading2, setLoading2] = useState(true)
 
-  const { register, control, handleSubmit, errors, setValue } = useForm()
+  const { reset, register, control, handleSubmit, errors, setValue } = useForm()
 
   const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
 
   const onSubmit = data => {
-    history.push(`/list/${get(data, 'ciudad._id')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+    history.push(`/list/${get(data, 'ciudad')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
   }
 
   useEffect(() => {
@@ -127,16 +127,19 @@ const Search = ({ styles, valueDefault = null }) => {
   }
 
   useEffect(() => {
-    if (valueDefault) {
-      const ciudadesA = get(ciudades, 'ciudadListFront', []) || []
-      const result = ciudadesA.find(item => {
-        return item._id === valueDefault
-      })
-      if (result) {
-        setCiudadDefault(result)
+    if (get(ciudades, 'ciudadListFront')) {
+      if (ciudad) {
+        const ciudadesA = get(ciudades, 'ciudadListFront', []) || []
+        const result = ciudadesA.find(item => {
+          return item._id === ciudad
+        })
+        if (result) {
+          setCiudadDefault(result)
+          setValue('ciudad', get(result, '_id'))
+        }
       }
+      setLoading2(false)
     }
-    setLoading2(false)
   }, [ciudades])
 
   return (
@@ -166,11 +169,11 @@ const Search = ({ styles, valueDefault = null }) => {
         <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
         <div className={`${classes.gridRow} ${classes.border}`}>
           <div>
-            <Calendar name='desde' setValue={setValue} />
+            <Calendar name='desde' setValue={setValue} value={desde} />
           </div>
           <p>Hasta</p>
           <div>
-            <Calendar name='hasta' setValue={setValue} />
+            <Calendar name='hasta' setValue={setValue} value={hasta} />
           </div>
         </div>
       </div>
@@ -192,36 +195,36 @@ const Search = ({ styles, valueDefault = null }) => {
       {/* Search Mobile */}
       <FullScreenDialog open={open} handleClose={handleClose}>
         <div className={classes.contentSearMobile}>
-          <div style={{marginBottom: 10}}>
-            <Typography textAlign="left" fontSize={18} variant='p' color="black">
-             Ingresar Playa
+          <div style={{ marginBottom: 10 }}>
+            <Typography textAlign='left' fontSize={18} variant='p' color='black'>
+              Ingresar Playa
             </Typography>
           </div>
           <div>
             <AutocompleteComponent />
           </div>
-          <div style={{marginTop: 10, marginBottom: 5}}>
-            <Typography textAlign="left" fontSize={18} variant='p' color="black">
-             Seleccionar Fecha
+          <div style={{ marginTop: 10, marginBottom: 5 }}>
+            <Typography textAlign='left' fontSize={18} variant='p' color='black'>
+              Seleccionar Fecha
             </Typography>
           </div>
           <div className={`${classes.gridColumn} ${classes.border}`}>
-            <div style={{width: '100%', marginBottom: 10}}>
+            <div style={{ width: '100%', marginBottom: 10 }}>
               <Calendar />
             </div>
-            <div style={{width: '100%', marginTop: 10, marginBottom: 10}}>
-            <Typography textAlign="center" fontSize={18} variant='p' color="black">
-             hasta
-            </Typography>
+            <div style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
+              <Typography textAlign='center' fontSize={18} variant='p' color='black'>
+                hasta
+              </Typography>
             </div>
-            <div style={{width: '100%', marginBottom: 10}}>
+            <div style={{ width: '100%', marginBottom: 10 }}>
               <Calendar />
             </div>
           </div>
           <div>
-          <Button type='submit' fullWidth height={48}>
-            Buscar
-          </Button>
+            <Button type='submit' fullWidth height={48}>
+              Buscar
+            </Button>
           </div>
         </div>
       </FullScreenDialog>

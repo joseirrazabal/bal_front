@@ -4,7 +4,6 @@ query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: St
     precio
     articulo {
       _id
-      nombre
       categoria {
         _id
         nombre

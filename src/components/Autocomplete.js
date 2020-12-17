@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   input: {
     width: '100%',
     height: 40,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   listbox: {
     width: '100%',
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const AutocompleteComponent = ({ valueDefault = null, options, setValue}) => {
+const AutocompleteComponent = ({ valueDefault = null, options, setValue }) => {
   const classes = useStyles()
 
   const {
@@ -56,7 +56,7 @@ const AutocompleteComponent = ({ valueDefault = null, options, setValue}) => {
     defaultValue: valueDefault,
     options: options,
     onChange: (event, newValue) => {
-    	setValue('ciudad', newValue)
+      setValue('ciudad', get(newValue, '_id'))
     },
     getOptionLabel: option => {
       return option.nombre

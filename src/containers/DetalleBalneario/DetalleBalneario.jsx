@@ -237,7 +237,7 @@ const DetalleBalneario = () => {
   const [open, setOpen] = useState(false)
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
-  const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day')
+  const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -289,7 +289,9 @@ const DetalleBalneario = () => {
   }, [tipoSelected])
 
   useEffect(() => {
-    setCategoria(get(dataCategorias, 'categoriaListFront.0'))
+    if (get(dataCategorias, 'categoriaListFront')) {
+      setCategoria(get(dataCategorias, 'categoriaListFront.0._id'))
+    }
   }, [dataCategorias])
 
   useEffect(() => {
@@ -308,7 +310,7 @@ const DetalleBalneario = () => {
     <div className={classes.contentFull}>
       <div className={classes.contentSearch}>
         <div className={classes.container}>
-          <Search valueDefault={ciudad} />
+          <Search ciudad={ciudad} desde={desde} hasta={hasta} />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -316,7 +318,7 @@ const DetalleBalneario = () => {
           <Typography
             fontWeight={700}
             fontSize={25}
-            color="gray"
+            color='gray'
             textAlign='center'
             className={classes.title}
             varian='h2'

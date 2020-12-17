@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
+dayjs.extend(customParseFormat)
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -48,8 +51,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Calendar = ({ name = 'fecha', setValue }) => {
-  const [selectedDate, handleDateChange] = useState(new Date())
+const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('DD-MM-YYYY') }) => {
+  const [selectedDate, handleDateChange] = useState(dayjs(value, 'DD-MM-YYYY'))
   const classes = useStyles()
 
   useEffect(() => {
@@ -77,4 +80,6 @@ const Calendar = ({ name = 'fecha', setValue }) => {
     </MuiPickersUtilsProvider>
   )
 }
+
 export default Calendar
+
