@@ -4,11 +4,14 @@ import { useHistory, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
+import NoSsr from '@material-ui/core/NoSsr'
+
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
 import CardLab from '../../components/CardBal'
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
+import Loading from '../../components/Loading'
 
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 import CIUDAD_LIST from 'gql/ciudad/list'
@@ -129,7 +132,11 @@ const ListBalnearios = () => {
   })
 
   if (loading || loadingCiudad) {
-    return <div>loading...</div>
+    return (
+      <NoSsr>
+        <Loading />
+      </NoSsr>
+    )
   }
 
   return (

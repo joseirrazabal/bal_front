@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
 
 import Button from '@material-ui/core/Button'
+import NoSsr from '@material-ui/core/NoSsr'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
@@ -12,6 +13,7 @@ import Typography from '../../components/Typography'
 import Search from '../../components/Search'
 import CardBal from '../../components/CardBal'
 import DialogSimpleComponent from '../../components/DialogSimple'
+import Loading from '../../components/Loading'
 
 import imageBackground from '../../assets/fondo.jpg'
 import ImageCoronaVirus from '../../assets/coronavirus_medidas.png'
@@ -178,7 +180,11 @@ const Home = () => {
   const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
 
   if (loading || loadingCiudad) {
-    return <div>loading...</div>
+    return (
+      <NoSsr>
+        <Loading />
+      </NoSsr>
+    )
   }
 
   return (

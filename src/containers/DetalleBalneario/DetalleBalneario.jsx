@@ -6,6 +6,8 @@ import get from 'lodash/get'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
+import NoSsr from '@material-ui/core/NoSsr'
+
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
 import CardLab from '../../components/CardBal'
@@ -310,7 +312,11 @@ const DetalleBalneario = () => {
   }, [categoria])
 
   if (loading || loadingCiudad || loadingTipoList) {
-    return <div>loading...</div>
+    return (
+      <NoSsr>
+        <Loading />
+      </NoSsr>
+    )
   }
 
   return (

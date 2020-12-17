@@ -9,6 +9,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import NoSsr from '@material-ui/core/NoSsr'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
@@ -18,6 +19,7 @@ import ItemSelected from '../../components/ItemSelected'
 import Typography from '../../components/Typography'
 import SimpleImage from '../../components/SimpleImage'
 import FullScreenDialog from '../../components/Dialog'
+import Loading from '../../components/Loading'
 
 import ImageMp from '../../assets/img-mercadopago.jpg'
 
@@ -487,7 +489,11 @@ const CheckoutBalnearios = ({ theme }) => {
   }
 
   if (loadingPrecio) {
-    return <div>loading...</div>
+    return (
+      <NoSsr>
+        <Loading />
+      </NoSsr>
+    )
   }
 
   // error en la reserva

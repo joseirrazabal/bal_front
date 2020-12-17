@@ -9,7 +9,7 @@ import Image from '../assets/icon-carpa.svg'
 
 const useStyles = makeStyles({
   loadingStyle: {
-    position: 'fized',
+    position: 'fixed',
     zIndex: 1,
     width: '100vw',
     height: `100%`,
