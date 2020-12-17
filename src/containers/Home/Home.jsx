@@ -229,8 +229,8 @@ const Home = () => {
           <DialogSimpleComponent>
             <div className={classes.modalContent}>
               <SimpleImage image={ImageCoronaVirus} width="100%" />
-              <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%">
-                <Button variant='contained'>
+              <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none'}}>
+                <Button color="primary" variant='contained'>
                   ir al sitio
                 </Button>
               </a>
