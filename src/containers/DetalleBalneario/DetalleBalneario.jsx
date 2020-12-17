@@ -109,6 +109,7 @@ const useStyles = makeStyles(theme => ({
     height: 'auto',
     display: 'flex',
     flexDirection: 'column',
+    border: '1px solid #ccc',
     background: 'white',
     borderRadius: 6,
     overflow: 'hidden',
@@ -332,7 +333,6 @@ const DetalleBalneario = () => {
           <Typography
             fontWeight={700}
             fontSize={25}
-            color='gray'
             textAlign='center'
             className={classes.title}
             varian='h2'
