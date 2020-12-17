@@ -23,7 +23,7 @@ const Shared = ({
   useEffect(() => {
     const jssStyles = document.querySelector('#styleServer')
     if (jssStyles) {
-      // jssStyles.parentNode.removeChild(jssStyles)
+      jssStyles.parentNode.removeChild(jssStyles)
     }
   }, [])
 
