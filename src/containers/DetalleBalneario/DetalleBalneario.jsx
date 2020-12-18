@@ -384,7 +384,8 @@ const DetalleBalneario = () => {
                       <ItemSelected
                         key={i}
                         active={item.nombre === get(tipoSelected, 'nombre')}
-                        icon={IconCarpAzul}
+                        //icon={IconCarpAzul}
+                        icon={get(item, 'imagen') || IconCarpAzul}
                         title={`Alquilar ${item.nombre}`}
                         precio={400}
                         onClick={() => {

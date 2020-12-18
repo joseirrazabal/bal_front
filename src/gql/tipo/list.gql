@@ -3,8 +3,6 @@ query tipoListFront($balneario: String) {
     _id
     nombre
     descripcion
-    imagen {
-      url
-    }
+    imagen
   }
 }
