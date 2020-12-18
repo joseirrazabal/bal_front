@@ -3,6 +3,8 @@ query balnearioGetFront($id: ID!) {
     _id
     nombre
     descripcion
+    checkIn
+    checkOut
     imagenes {
       url
       titulo

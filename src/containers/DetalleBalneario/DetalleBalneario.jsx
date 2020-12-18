@@ -437,10 +437,10 @@ const DetalleBalneario = () => {
                     Información importante
                   </Typography>
                   <Typography color='green' variant='p'>
-                    Checkin:
+                    Checkin: {get(balneario, 'checkIn')}
                   </Typography>
                   <Typography color='red' variant='p'>
-                    Checkout:
+                    Checkout: {get(balneario, 'checkOut')}
                   </Typography>
                 </div>
               </div>
