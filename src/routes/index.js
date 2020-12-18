@@ -8,14 +8,14 @@ import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnea
 
 const routes = [
   {
-    path: '/list/:ciudad/:desde/:hasta',
+    path: '/list/:desde/:hasta/:ciudad?',
     Component: ListBalnearios,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/detalle/:id/:ciudad?/:desde?/:hasta?',
+    path: '/detalle/:id/:desde?/:hasta?/:ciudad?',
     Component: DetalleBalneario,
     Props: {},
     useLayout: false,

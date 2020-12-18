@@ -26,7 +26,7 @@ import DefaultImage from '../../assets/default-image.jpg'
 
 import TIPO_LIST from 'gql/tipo/list'
 import BALNEARIO_GET from 'gql/balneario/get'
-import BALNEARIO_LIST from 'gql/balneario/list'
+import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 import CATEGORIA_LIST from 'gql/categoria/list'
 import PRECIO_GET from 'gql/precio/get'
 import CIUDAD_LIST from 'gql/ciudad/list'
@@ -242,7 +242,7 @@ const DetalleBalneario = () => {
   const history = useHistory()
   const { id, ciudad, desde, hasta } = useParams()
 
-  const [categoria, setCategoria] = useState({})
+  const [categoria, setCategoria] = useState()
   const [tipos, setTipos] = useState([])
   const [tipoSelected, setTipoSelected] = useState(null)
   const [balneario, setBalneario] = useState({})
@@ -309,7 +309,9 @@ const DetalleBalneario = () => {
   }, [dataCategorias])
 
   useEffect(() => {
-    getPrecio()
+    if (categoria) {
+      getPrecio()
+    }
   }, [categoria])
 
   if (loading || loadingCiudad || loadingTipoList) {
@@ -457,7 +459,7 @@ const DetalleBalneario = () => {
               Otros Balnearios en {get(balneario, 'ciudad.nombre')}
             </Typography>
             <ul>
-              {get(dataList, 'balnearioListFront', [])
+              {get(dataList, 'balnearioListFrontUltimos', [])
                 .slice(0, 3)
                 .map((item, i) => {
                   return (
@@ -466,7 +468,7 @@ const DetalleBalneario = () => {
                         moludar
                         item={item}
                         onClick={() => {
-                          history.push(`/detalle/${get(item, '_id')}`)
+                          history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}`)
                         }}
                       />
                     </li>

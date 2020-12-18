@@ -1,13 +1,9 @@
-query balnearioGetFront($id: ID!) {
-  balnearioGetFront(id: $id) {
+query balnearioListFrontUltimos {
+  balnearioListFrontUltimos {
     _id
     nombre
     descripcion
     imagenes {
-      url
-      titulo
-    }
-    planos {
       url
       titulo
     }
@@ -17,4 +13,3 @@ query balnearioGetFront($id: ID!) {
     }
   }
 }
-

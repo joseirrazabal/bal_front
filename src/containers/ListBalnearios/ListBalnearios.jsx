@@ -171,7 +171,7 @@ const ListBalnearios = () => {
                       key={i}
                       item={item}
                       onClick={() => {
-                        history.push(`/detalle/${get(item, '_id')}/${ciudad}/${desde}/${hasta}`)
+                        history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}/${ciudad}`)
                       }}
                     />
                   </li>

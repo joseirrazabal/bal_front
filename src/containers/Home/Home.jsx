@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
+import dayjs from 'dayjs'
 
 import Button from '@material-ui/core/Button'
 import NoSsr from '@material-ui/core/NoSsr'
@@ -19,7 +20,7 @@ import imageBackground from '../../assets/fondo.jpg'
 import ImageCoronaVirus from '../../assets/coronavirus_medidas.png'
 import ImageBanner from '../../assets/banner.png'
 
-import BALNEARIO_LIST from 'gql/balneario/list'
+import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
 import SimpleImage from '../../components/SimpleImage'
@@ -223,7 +224,7 @@ const Home = () => {
           </div>
           <div className={classes.contentSlider}>
             <ul>
-              {get(data, 'balnearioListFront', [])
+              {get(data, 'balnearioListFrontUltimos', [])
                 .slice(0, 3)
                 .map((item, i) => {
                   return (
@@ -233,7 +234,8 @@ const Home = () => {
                         nuevo
                         item={item}
                         onClick={() => {
-                          history.push(`/detalle/${get(item, '_id')}`)
+                          const dia = dayjs().format('DD-MM-YYYY')
+                          history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
                         }}
                       />
                     </li>

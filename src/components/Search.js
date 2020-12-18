@@ -112,7 +112,7 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
 
   const onSubmit = data => {
     // history.push(`/list/${get(data, 'ciudad')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
-    history.push(`/list/${ciudadInput}/${desdeInput}/${hastaInput}`)
+    history.push(`/list/${desdeInput}/${hastaInput}${ciudadInput !== undefined ? `/${ciudadInput}` : ''}`)
   }
 
   useEffect(() => {
