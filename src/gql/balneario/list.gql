@@ -2,8 +2,15 @@ query balnearioListFront {
   balnearioListFront {
     _id
     nombre
+    direccion
     descripcion
+    checkIn
+    checkOut
     imagenes {
+      url
+      titulo
+    }
+    planos {
       url
       titulo
     }

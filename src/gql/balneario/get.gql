@@ -2,6 +2,7 @@ query balnearioGetFront($id: ID!) {
   balnearioGetFront(id: $id) {
     _id
     nombre
+    direccion
     descripcion
     checkIn
     checkOut

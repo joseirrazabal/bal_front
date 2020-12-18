@@ -2,8 +2,15 @@ query balnearioListSearch($ciudad: String) {
   balnearioListSearch(ciudad: $ciudad) {
     _id
     nombre
+    direccion
     descripcion
+    checkIn
+    checkOut
     imagenes {
+      url
+      titulo
+    }
+    planos {
       url
       titulo
     }
