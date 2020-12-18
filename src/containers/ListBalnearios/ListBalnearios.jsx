@@ -5,10 +5,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
 import NoSsr from '@material-ui/core/NoSsr'
+import Divider from '@material-ui/core/Divider'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
-import CardLab from '../../components/CardBal'
+import CardBalDetail from '../../components/CardBalDetail'
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
 import Loading from '../../components/Loading'
@@ -18,6 +21,8 @@ import CIUDAD_LIST from 'gql/ciudad/list'
 
 const imageOnline =
   'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=213&tipoEscala=stretch&width=2048&height=978'
+
+const checkListCity = ['Mar del Plata', 'Pinamar', 'Villa Gesell', 'Mar Azul']
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -41,6 +46,19 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  sidebar: {
+    width: '30%',
+    borderRadius: 6,
+    overflow: 'hidden',
+    boxSizing: 'border-box',
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
+    background: '#f2f2f2',
+    border: '1px solid #ccc',
+    marginRight: 10
+  },
+  list: {
+    width: '70%'
   },
   contentSearch: {
     width: '100vw',
@@ -88,7 +106,7 @@ const useStyles = makeStyles(theme => ({
     float: 'left',
 
     '& li': {
-      margin: 5,
+      marginBottom: 15,
       width: '100%',
     },
   },
@@ -111,18 +129,34 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.secondary,
-    margin: '5px 0',
+    padding: '5px 0',
+  },
+  titleFilters: {
+    background: theme.palette.secondary.main,
+    padding: '10px 0'
   },
   gridFull: {
     width: '100%',
     padding: '5px 0',
   },
+  filters: {
+    padding: 10,
+    listStyle: 'none'
+  }
 }))
 
 const ListBalnearios = () => {
   const classes = useStyles()
   const history = useHistory()
   const { ciudad, desde, hasta } = useParams()
+
+  const [state, setState] = React.useState({
+    checkedA: true,
+  });
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
 
   const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
   const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
@@ -162,22 +196,61 @@ const ListBalnearios = () => {
                 Balnearios en
               </Typography>
             </div>
-            <ul className={`${classes.ul} ${classes.gridFull}`}>
-              {get(data, 'balnearioListSearch', []).map((item, i) => {
-                return (
+            <div style={{display: 'flex'}}>
+              <div className={classes.sidebar}>
+                <Typography className={classes.titleFilters} variant='h2' color="white" textAlign="center" fontWeight='400' fontSize={20}>
+                  Filtros
+                </Typography>
+                <Divider />
+                <ul className={classes.filters}>
                   <li>
-                    <CardLab
-                      modular
-                      key={i}
-                      item={item}
-                      onClick={() => {
-                        history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}/${ciudad}`)
-                      }}
-                    />
+                  <Typography
+                    fontWeight={700}
+                    fontSize={16}
+                    textAlign='left'
+                    varian='p'
+                  >
+                    CIUDAD
+                  </Typography>
                   </li>
-                )
-              })}
-            </ul>
+                  {checkListCity.map((item, i) => {
+                    return (
+                      <li>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={state.checkedA}
+                              onChange={handleChange}
+                              name="checkedA"
+                              color="secondary"
+                            />
+                          }
+                          label={item}
+                        />
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+              <div className={classes.list}>
+                <ul className={`${classes.ul} ${classes.gridFull}`} style={{margin: 0, padding: 0}}>
+                  {get(data, 'balnearioListSearch', []).map((item, i) => {
+                    return (
+                      <li>
+                        <CardBalDetail
+                          modular
+                          key={i}
+                          item={item}
+                          onClick={() => {
+                            history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}/${ciudad}`)
+                          }}
+                        />
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
