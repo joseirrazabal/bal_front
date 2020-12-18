@@ -501,15 +501,12 @@ const CheckoutBalnearios = ({ theme }) => {
   // error en la reserva
   if (errorReserva) {
     return (
-      <MessageGeneric 
+      <MessageGeneric
         isTrue={false}
         categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
-        data={`Alquilaste una ${get(
-          dataPrecio,
-          'precioGetFront.articulo.categoria.tipo.nombre'
-        )}`}
+        data={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
       />
     )
   }
@@ -517,14 +514,11 @@ const CheckoutBalnearios = ({ theme }) => {
   // mensaje reserva
   if (dataReserva) {
     return (
-      <MessageGeneric 
+      <MessageGeneric
         categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
-        data={`Alquilaste una ${get(
-          dataPrecio,
-          'precioGetFront.articulo.categoria.tipo.nombre'
-        )}`}
+        data={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
       />
     )
   }
@@ -563,13 +557,7 @@ const CheckoutBalnearios = ({ theme }) => {
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
                           <label for='email'>E-mail</label>
-                          <input
-                            name='email'
-                            ref={register}
-                            id='email'
-                            type='text'
-                            value='test@test.com'
-                          />
+                          <input name='email' ref={register} id='email' type='text' />
                         </div>
                         <div className={classes.input}>
                           <label for='docType'>Tipo de documento</label>
@@ -721,7 +709,13 @@ const CheckoutBalnearios = ({ theme }) => {
                           </select>
                         </div>
                         <div className={`${classes.gridRow}`}>
-                          <input ref={register} type='hidden' name='description' id='description' />
+                          <input
+                            ref={register}
+                            type='hidden'
+                            name='description'
+                            id='description'
+                            value='descripcion del producto'
+                          />
                         </div>
                       </div>
                     </div>
