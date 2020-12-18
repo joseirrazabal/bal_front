@@ -132,7 +132,7 @@ const useStyles = makeStyles(theme => ({
     padding: '5px 0',
   },
   titleFilters: {
-    background: theme.palette.secondary.main,
+    background: theme.palette.secondary.dark,
     padding: '10px 0'
   },
   gridFull: {
@@ -230,6 +230,7 @@ const ListBalnearios = () => {
                       </li>
                     )
                   })}
+                  <Divider />
                 </ul>
               </div>
               <div className={classes.list}>
