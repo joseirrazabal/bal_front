@@ -53,12 +53,19 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     boxSizing: 'border-box',
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
-    background: '#f2f2f2',
+    background: 'white',
     border: '1px solid #ccc',
-    marginRight: 10
+    marginRight: 10,
+
+    '@media (max-width: 960px)': {
+      width: '100%',
+    },
   },
   list: {
-    width: '70%'
+    width: '70%',
+    '@media (max-width: 960px)': {
+      width: '100%',
+    },
   },
   contentSearch: {
     width: '100vw',
@@ -125,6 +132,7 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       marginTop: 0,
       background: '#f2f2f2',
+      padding: 5,
     },
   },
   title: {
@@ -142,6 +150,12 @@ const useStyles = makeStyles(theme => ({
   filters: {
     padding: 10,
     listStyle: 'none'
+  },
+  content: {
+    display: 'flex',
+    '@media (max-width: 680px)': {
+      flexDirection: 'column'
+    }
   }
 }))
 
@@ -196,7 +210,7 @@ const ListBalnearios = () => {
                 Balnearios en
               </Typography>
             </div>
-            <div style={{display: 'flex'}}>
+            <div className={classes.content}>
               <div className={classes.sidebar}>
                 <Typography className={classes.titleFilters} variant='h2' color="white" textAlign="center" fontWeight='400' fontSize={20}>
                   Filtros

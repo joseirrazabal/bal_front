@@ -14,7 +14,7 @@ import NoSsr from '@material-ui/core/NoSsr'
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
 import ButtonAcceptComponent from '../../components/ButtonAccept'
-import Input from '../../components/Input'
+import MessageGeneric from '../../components/MessageGeneric'
 import ItemSelected from '../../components/ItemSelected'
 import Typography from '../../components/Typography'
 import SimpleImage from '../../components/SimpleImage'
@@ -499,48 +499,37 @@ const CheckoutBalnearios = ({ theme }) => {
   // error en la reserva
   if (errorReserva) {
     return (
-      <div className={classes.contentFull}>
-        <Header />
-        <div className={classes.contentBanners}>
-          <div className={classes.container}>
-            <Typography
-              fontWeight={700}
-              fontSize={25}
-              textAlign='center'
-              className={classes.title}
-              varian='h2'
-            >
-              {errorReserva.message}
-            </Typography>
-          </div>
-        </div>
-      </div>
+      <MessageGeneric 
+        isTrue={false}
+        categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
+        direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
+        ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
+        data={`Alquilaste una ${get(
+          dataPrecio,
+          'precioGetFront.articulo.categoria.tipo.nombre'
+        )}`}
+      />
     )
   }
 
   // mensaje reserva
   if (dataReserva) {
     return (
-      <div className={classes.contentFull}>
-        <div className={classes.contentBanners}>
-          <div className={classes.container}>
-            <Typography
-              fontWeight={700}
-              fontSize={25}
-              textAlign='center'
-              className={classes.title}
-              varian='h2'
-            >
-              Reservado
-            </Typography>
-          </div>
-        </div>
-      </div>
+      <MessageGeneric 
+        categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
+        direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
+        ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
+        data={`Alquilaste una ${get(
+          dataPrecio,
+          'precioGetFront.articulo.categoria.tipo.nombre'
+        )}`}
+      />
     )
   }
 
   return (
     <div className={classes.contentFull}>
+      <Header />
       <div className={classes.contentBanners}>
         <div className={classes.container}>
           <Typography

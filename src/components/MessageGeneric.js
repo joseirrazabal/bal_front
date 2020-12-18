@@ -1,12 +1,16 @@
 import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 
 import SimpleImage from './SimpleImage'
+import Typography from './Typography'
+import ItemSelected from './ItemSelected'
 
-import MessageFalse from '../assets/invalid.svg'
-import MessageTrue from '../assets/correct.svg'
+import Succesfull from '../assets/icon-checked.svg'
+import Error from '../assets/icon-error.svg'
+import { calcTimeDelta } from 'react-countdown'
 
 const useStyles = makeStyles({
   loadingStyle: {
@@ -36,51 +40,120 @@ const useStyles = makeStyles({
       textTransform: 'uppercase',
     },
   },
+  detalleMessage: {
+    width: '100vw',
+    height: '100vh',
+    background: '#55C443',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '@media (max-width: 960px)': {
+      paddingTop: 20,
+      justifyContent: 'flex-start',
+      // alignItems: 'flex-start',
+    },
+  },
+  detalleMessageError: {
+    width: '100vw',
+    height: '100vh',
+    background: 'red',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '@media (max-width: 960px)': {
+      paddingTop: 20,
+      justifyContent: 'flex-start',
+      // alignItems: 'flex-start',
+    },
+  },
   submit: {
     marginTop: 20
-  }
+  },
+  column: {
+    boxSizing: 'border-box',
+    background: '#FFFFFF',
+    border: '1px solid #ccc',
+    width: '100%',
+    maxWidth: 500,
+    padding: '40px 10px',
+    marginTop: 15,
+    borderRadius: 10,
+    height: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+
+    '@media (max-width: 680px)': {
+      margin: 5,
+      width: `calc(100% - 10px)`
+    },
+  },
 })
 
-const MessageGeneric = ({ isTrue = true, loading = false }) => {
+const MessageGeneric = ({ 
+  isTrue = true, 
+  precio = 450,
+  loading = false,
+  data,
+  ciudad,
+  direccion,
+  categoria
+}) => {
   
   const classes = useStyles()
 
-  if (loading) {
+  if (!isTrue) {
     return (
-      <div className={classes.loadingStyle}>
-        <div className={classes.centerContent}>
-          <h2>Cargando...</h2>
+      <div className={classes.detalleMessageError}>
+        <div style={{marginBottom: 20}}>
           <SimpleImage
             height={60}
             title='Eureka Desafio de escape'
-            image={'https://www.eurekaleg.com/assets/images/logo_2.png'}
+            image={Error}
           />
         </div>
-      </div>
-    )
-  }
-
-  if (isTrue) {
-    return (
-      <div className={classes.loadingStyle}>
-        <div className={classes.centerContent}>
-          <h2>Codigo Correcto</h2>
-          <SimpleImage
-            height={270}
-            alt='cotizar aplicación gratis'
-            title='Cotizar aplicación gratis'
-            image={MessageTrue}
-          />
-          <Button
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-            onClick={() => {
-              window.location.reload()
-            }}
-          >
-            siguiente nivel
+        <Typography fontSize={25} textAlign="center" color="white" variant='h3'>
+          LO LAMENTAMOS! 
+        </Typography>
+        <Typography fontSize={20} textAlign="center" color="white" variant='h3'>
+          ERROR AL EFECTUARL EL PAGO
+        </Typography>
+        <div className={classes.column}>
+          <div style={{marginBottom: 10}}>
+            <Typography fontSize={21} fontWeight={700} textAlign="center" variant='h4'>
+              RESUMEN DE ALQUILER
+            </Typography>
+            <Divider />
+          </div>
+          <Typography fontSize={20} textAlign="center" className={classes.subTitle} variant='h4'>
+            {categoria}
+          </Typography>
+          <Typography fontSize={18} textAlign="center" color='grey' variant='p'>
+            {ciudad}
+          </Typography>
+          <Typography fontSize={16} textAlign="center" variant='p' color='grey'>
+            {direccion}
+          </Typography>
+          <div style={{marginTop: 10}}>
+            <Typography fontSize={16} fontStyle={'italic'} textAlign="center" variant='p' color='grey'>
+              precio final
+            </Typography>
+            <Typography fontSize={20} fontWeight={700} textAlign="center" variant='p' color='grey'>
+              {`$${precio}`}
+            </Typography>
+          </div>
+          <div style={{marginTop: 10, marginBottom: 20}}>
+            <ItemSelected
+              className={classes.item}
+              checkout
+              title={data}
+            />
+          </div>
+          <Button color="secondary">
+            VOLVER A LA HOME
           </Button>
         </div>
       </div>
@@ -88,25 +161,53 @@ const MessageGeneric = ({ isTrue = true, loading = false }) => {
   }
 
   return (
-    <div className={classes.loadingStyle}>
-      <div className={classes.centerContent}>
-        <h2>Codigo Incorrecto</h2>
+    <div className={classes.detalleMessage}>
+      <div style={{marginBottom: 20}}>
         <SimpleImage
-          height={270}
-          alt='cotizar aplicación gratis'
-          title='Cotizar aplicación gratis'
-          image={MessageFalse}
+          height={60}
+          title='Eureka Desafio de escape'
+          image={Succesfull}
         />
-        <Button
-          fullWidth
-          variant='contained'
-          color='default'
-          className={classes.submit}
-          onClick={() => {
-            window.location.reload()
-          }}
-        >
-          volver a intentarlo
+      </div>
+      <Typography fontSize={25} textAlign="center" color="white" variant='h3'>
+        ¡FELICITACIONES!
+      </Typography>
+      <Typography fontSize={20} textAlign="center" color="white" variant='h3'>
+        ALQUILADO CORRECTAMENTE
+      </Typography>
+      <div className={classes.column}>
+        <div style={{marginBottom: 10}}>
+          <Typography fontSize={21} fontWeight={700} textAlign="center" variant='h4'>
+            RESUMEN DE ALQUILER
+          </Typography>
+          <Divider />
+        </div>
+        <Typography fontSize={20} textAlign="center" className={classes.subTitle} variant='h4'>
+          {categoria}
+        </Typography>
+        <Typography fontSize={18} textAlign="center" color='grey' variant='p'>
+          {ciudad}
+        </Typography>
+        <Typography fontSize={16} textAlign="center" variant='p' color='grey'>
+          {direccion}
+        </Typography>
+        <div style={{marginTop: 10}}>
+          <Typography fontSize={16} fontStyle={'italic'} textAlign="center" variant='p' color='grey'>
+            precio final
+          </Typography>
+          <Typography fontSize={20} fontWeight={700} textAlign="center" variant='p' color='grey'>
+            {`$${precio}`}
+          </Typography>
+        </div>
+        <div style={{marginTop: 10, marginBottom: 20}}>
+          <ItemSelected
+            className={classes.item}
+            checkout
+            title={data}
+          />
+        </div>
+        <Button color="secondary">
+          VOLVER A LA HOME
         </Button>
       </div>
     </div>

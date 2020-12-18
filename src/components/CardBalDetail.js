@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
       width: !moludar ? 'calc(100% / 2 - 10px)' : '100%',
     },
     '@media (max-width: 600px)': {
-      width: !moludar ? 'calc(100% / 1 - 10px)' : '100%',
+      width: '100%',
+      flexDirection: 'column'
     },
   }),
   image: ({ image }) => ({
@@ -38,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
     height: 170,
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
+
+    '@media (max-width: 600px)': {
+      maxWidth: '100%',
+    },
   }),
   content: {
     display: 'flex',
@@ -50,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
     '& a': {
       textDecoration: 'none',
-    },
+    }
   },
   data: {
     '& h2': {
