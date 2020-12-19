@@ -22,6 +22,8 @@ import FullScreenDialog from '../../components/Dialog'
 import Loading from '../../components/Loading'
 
 import ImageMp from '../../assets/img-mercadopago.jpg'
+import CreditCard1 from '../../assets/cards1.png'
+import CreditCard2 from '../../assets/cards2.png'
 
 import PRECIO_GET from 'gql/precio/get'
 import RESERVA_ADD from 'gql/reserva/save'
@@ -787,6 +789,14 @@ const CheckoutBalnearios = ({ theme }) => {
                   </Typography>
                   <div>
                     <SimpleImage className={classes.imageMpClass} image={ImageMp} />
+                  </div>
+                </div>
+                <div className={classes.gridColumn}>
+                  <div>
+                    <SimpleImage image={CreditCard1} />
+                  </div>
+                  <div>
+                    <SimpleImage image={CreditCard2} />
                   </div>
                 </div>
               </div>
