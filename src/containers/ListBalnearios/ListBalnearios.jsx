@@ -19,8 +19,7 @@ import Loading from '../../components/Loading'
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
-const imageOnline =
-  'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=213&tipoEscala=stretch&width=2048&height=978'
+import imageBackground from '../../assets/fondo.jpg'
 
 const checkListCity = ['Mar del Plata', 'Pinamar', 'Villa Gesell', 'Mar Azul']
 
@@ -71,7 +70,8 @@ const useStyles = makeStyles(theme => ({
     width: '100vw',
     height: 300,
     background: 'red',
-    backgroundImage: 'url(' + imageOnline + ')',
+    backgroundImage: 'url(' + imageBackground + ')',
+    backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -125,6 +125,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     background: 'white',
+    borderRadius: '10px 10px 0 0',
     padding: 15,
     boxSizing: 'border-box',
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',

@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
 import SimpleImage from './SimpleImage'
-import LogoAlamar from '../assets/alamar-logo-white.svg'
+import LogoAlamar from '../assets/alamar-logo-2.svg'
 import Typography from './Typography'
 
 const useStyles = makeStyles(theme => ({
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     height: 60,
     top: 0,
     left: 0,
-    background: theme.palette.secondary.main,
+    background: theme.palette.secondary.dark,
     position: 'absolute',
     zIndex: 2,
     display: 'flex',
@@ -80,7 +80,7 @@ const Header = () => {
       <div className={classes.container}>
         <div className={classes.contentLogo}>
           <Link to='/'>
-            <SimpleImage height={40} alt='Alamar' image={LogoAlamar} onClick={() => history.push('/')} />
+            <SimpleImage height={30} alt='Alamar' image={LogoAlamar} onClick={() => history.push('/')} />
           </Link>
         </div>
         <ul className={classes.nav}>

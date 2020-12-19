@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
 import dayjs from 'dayjs'
@@ -38,7 +38,6 @@ const useStyles = makeStyles(theme => ({
   container: {
     margin: '0 auto',
     width: '100%',
-    // maxWidth: 1280,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -189,74 +188,75 @@ const Home = () => {
   }
 
   return (
-    <div className={classes.contentFull}>
+    <React.Fragment>
       <Header />
-      <div className={classes.contentSearch}>
-        <div className={classes.shadow} />
-        <div className={classes.container}>
-          <Typography className={classes.title} varian='h1'>
-            ALQUILER DE CARPAS Y SOMBRILLAS
-          </Typography>
-          <Search
-            ciudades={ciudades}
-            styles={{
-              position: 'absolute',
-            }}
-          />
-        </div>
-      </div>
-
-      <div className={classes.contentBanners}>
-        <div className={classes.containerMobile}>
-          <div className={classes.banner}>
-            <SimpleImage image={ImageBanner} width='100%' />
-          </div>
-          <div>
-            <Typography
-              fontWeight={700}
-              fontSize={20}
-              textAlign='center'
-              className={classes.subTitle}
-              varian='h2'
-            >
-              Últimos Balnearios
+      <div className={classes.contentFull}>   
+        <div className={classes.contentSearch}>
+          <div className={classes.shadow} />
+          <div className={classes.container}>
+            <Typography className={classes.title} varian='h1'>
+              ALQUILER DE CARPAS Y SOMBRILLAS
             </Typography>
+            <Search
+              ciudades={ciudades}
+              styles={{
+                position: 'absolute',
+              }}
+            />
           </div>
-          <div className={classes.contentSlider}>
-            <ul>
-              {get(data, 'balnearioListFrontUltimos', [])
-                .slice(0, 3)
-                .map((item, i) => {
-                  return (
-                    <li key={i}>
-                      <CardBal
-                        moludar
-                        nuevo
-                        item={item}
-                        onClick={() => {
-                          const dia = dayjs().format('DD-MM-YYYY')
-                          history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
-                        }}
-                      />
-                    </li>
-                  )
-                })}
-            </ul>
-          </div>
-          <DialogSimpleComponent>
-            <div className={classes.modalContent}>
-              <SimpleImage image={ImageCoronaVirus} width="100%" />
-              <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none'}}>
-                <Button color="primary" variant='contained'>
-                  ir al sitio
-                </Button>
-              </a>
+        </div>
+        <div className={classes.contentBanners}>
+          <div className={classes.containerMobile}>
+            <div className={classes.banner}>
+              <SimpleImage image={ImageBanner} width='100%' />
             </div>
-          </DialogSimpleComponent>
+            <div>
+              <Typography
+                fontWeight={700}
+                fontSize={20}
+                textAlign='center'
+                className={classes.subTitle}
+                varian='h2'
+              >
+                Últimos Balnearios
+              </Typography>
+            </div>
+            <div className={classes.contentSlider}>
+              <ul>
+                {get(data, 'balnearioListFrontUltimos', [])
+                  .slice(0, 3)
+                  .map((item, i) => {
+                    return (
+                      <li key={i}>
+                        <CardBal
+                          moludar
+                          nuevo
+                          item={item}
+                          onClick={() => {
+                            const dia = dayjs().format('DD-MM-YYYY')
+                            history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
+                          }}
+                        />
+                      </li>
+                    )
+                  })}
+              </ul>
+            </div>
+            <DialogSimpleComponent>
+              <div className={classes.modalContent}>
+                <SimpleImage image={ImageCoronaVirus} width="100%" />
+                <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none'}}>
+                  <Button color="primary" variant='contained'>
+                    ir al sitio
+                  </Button>
+                </a>
+              </div>
+            </DialogSimpleComponent>
+          </div>
         </div>
       </div>
       <Footer />
-    </div>
+    </React.Fragment>
   )
 }
 
