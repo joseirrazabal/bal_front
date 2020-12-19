@@ -473,7 +473,7 @@ const CheckoutBalnearios = ({ theme }) => {
               ...data,
               desde,
               hasta,
-              description: get(dataPrecio, 'precioGetFront.articulo.nombre'),
+              description: get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre'),
               cantidad: cantidad,
               precio: id,
               dias: cantidadDias,
@@ -705,15 +705,6 @@ const CheckoutBalnearios = ({ theme }) => {
                               )
                             })}
                           </select>
-                        </div>
-                        <div className={`${classes.gridRow}`}>
-                          <input
-                            ref={register}
-                            type='hidden'
-                            name='description'
-                            id='description'
-                            value='descripcion del producto'
-                          />
                         </div>
                       </div>
                     </div>
