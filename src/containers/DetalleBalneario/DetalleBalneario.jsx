@@ -415,10 +415,13 @@ const DetalleBalneario = () => {
                       <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
                         {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
                       </Typography>
+                      <Typography fontWeight={400} fontSize={16} color='black' variant='span'>
+                         Total 
+                      </Typography>
                     </Typography>
-                    {/* <Typography fontSize={14} fontWeight={700} color='black' variant='p'> */}
-                    {/*   del 10 al 13 de Enero */}
-                    {/* </Typography> */}
+                    <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                      dias: 4
+                    </Typography>
                   </div>
                   <Button
                     disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
