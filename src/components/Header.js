@@ -87,14 +87,14 @@ const Header = () => {
           <li>
             <Link to={`/list/${dia}/${dia}`}>
               <Typography variant='p' color='white'>
-                balnearios
+                Balnearios
               </Typography>
             </Link>
           </li>
           <li>
             <Link to='/'>
               <Typography variant='p' color='white'>
-                ayuda
+                Ayuda
               </Typography>
             </Link>
           </li>
