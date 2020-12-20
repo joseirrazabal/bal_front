@@ -472,8 +472,8 @@ const CheckoutBalnearios = ({ theme }) => {
           variables: {
             input: {
               ...data,
-              desde,
-              hasta,
+              desde: dayjs(desde, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+              hasta: dayjs(hasta, 'DD-MM-YYYY').format('YYYY-MM-DD'),
               description: get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre'),
               cantidad: cantidad,
               precio: id,
