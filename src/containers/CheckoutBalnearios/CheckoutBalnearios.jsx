@@ -321,7 +321,7 @@ const CheckoutBalnearios = ({ theme }) => {
   )
 
   const { data: dataPrecio, loading: loadingPrecio } = useQuery(PRECIO_GET, {
-    variables: { id: id },
+    variables: { id: id, dias: cantidadDias },
     fetchPolicy: 'no-cache',
   })
 
