@@ -555,11 +555,11 @@ const CheckoutBalnearios = ({ theme }) => {
                     <div>
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
-                          <label for='email'>E-mail</label>
+                          <label htmlFor='email'>E-mail</label>
                           <input name='email' ref={register} id='email' type='text' />
                         </div>
                         <div className={classes.input}>
-                          <label for='docType'>Tipo de documento</label>
+                          <label htmlFor='docType'>Tipo de documento</label>
                           <select id='docType' name='docType' ref={register}>
                             {tipoDocumento.map((tipo, i) => {
                               return (
@@ -573,7 +573,7 @@ const CheckoutBalnearios = ({ theme }) => {
                       </div>
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
-                          <label for='docNumber'>Número de documento</label>
+                          <label htmlFor='docNumber'>Número de documento</label>
                           <input
                             id='docNumber'
                             name='docNumber'
@@ -583,7 +583,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           />
                         </div>
                         <div className={classes.input}>
-                          <label for='cardholderName'>Titular de la tarjeta</label>
+                          <label htmlFor='cardholderName'>Titular de la tarjeta</label>
                           <input
                             id='cardholderName'
                             ref={cardholderName}
@@ -595,7 +595,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
-                          <label for=''>Fecha de vencimiento</label>
+                          <label htmlFor=''>Fecha de vencimiento</label>
                           <div>
                             <input
                               type='text'
@@ -629,7 +629,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           </div>
                         </div>
                         <div className={classes.input}>
-                          <label for='cardNumber'>Número de la tarjeta</label>
+                          <label htmlFor='cardNumber'>Número de la tarjeta</label>
                           <input
                             onChange={handleCardChange}
                             type='text'
@@ -648,7 +648,7 @@ const CheckoutBalnearios = ({ theme }) => {
                       </div>
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
-                          <label for='securityCode'>Código de seguridad</label>
+                          <label htmlFor='securityCode'>Código de seguridad</label>
                           <input
                             id='securityCode'
                             ref={securityCode}
@@ -664,7 +664,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           />
                         </div>
                         <div className={`${classes.input}`} id='issuerInput'>
-                          <label for='issuer'>Banco emisor</label>
+                          <label htmlFor='issuer'>Banco emisor</label>
                           <select
                             name={`issuer`}
                             ref={register}
@@ -690,7 +690,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
                       <div className={`${classes.gridRow}`}>
                         <div className={`${classes.input}`}>
-                          <label for='installments'>Cuotas</label>
+                          <label htmlFor='installments'>Cuotas</label>
                           <select
                             name={`installments`}
                             ref={register}
