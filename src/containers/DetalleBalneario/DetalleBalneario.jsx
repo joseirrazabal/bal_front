@@ -248,6 +248,7 @@ const DetalleBalneario = () => {
   const [balneario, setBalneario] = useState({})
   const [imagenes, setImagenes] = useState([])
   const [open, setOpen] = useState(false)
+  const [otros, setOtros] = useState([])
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
   const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
@@ -286,6 +287,12 @@ const DetalleBalneario = () => {
       id: `${id}`,
     },
   })
+
+  useEffect(() => {
+    if (get(dataList, 'balnearioListFrontUltimos', []).length) {
+      setOtros(get(dataList, 'balnearioListFrontUltimos'))
+    }
+  }, [dataList])
 
   useEffect(() => {
     setBalneario(get(data, 'balnearioGetFront', {}) || {})
@@ -408,7 +415,7 @@ const DetalleBalneario = () => {
               <div className={classes.detalleBottom}>
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
-                    <Typography variant='p'>
+                    <Typography variant='span'>
                       <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
                         Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
                       </Typography>
@@ -463,10 +470,12 @@ const DetalleBalneario = () => {
           </div>
           <div className={classes.contentDetalleColumn}>
             <Typography fontWeight={700} fontSize={20} varian='h3'>
-              Otros Balnearios en {get(balneario, 'ciudad.nombre')}
+              Otros Balnearios
+              {/* en {get(balneario, 'ciudad.nombre')} */}
             </Typography>
             <ul>
-              {get(dataList, 'balnearioListFrontUltimos', [])
+              {otros
+                .filter(item => `${item._id}` !== `${id}`)
                 .slice(0, 3)
                 .map((item, i) => {
                   return (
