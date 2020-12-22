@@ -31,8 +31,6 @@ import CATEGORIA_LIST from 'gql/categoria/list'
 import PRECIO_GET from 'gql/precio/get'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
-import style from './styles'
-
 dayjs.extend(customParseFormat)
 
 const useStyles = makeStyles(theme => ({
@@ -333,7 +331,6 @@ const DetalleBalneario = () => {
         </div>
       </div>
       <div className={classes.contentBanners}>
-        <div className={style.prueba}>asdfasdf</div>
         <div className={classes.container}>
           <Typography
             fontWeight={700}

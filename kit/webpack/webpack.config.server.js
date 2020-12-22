@@ -74,14 +74,15 @@ const config = {
       {
         test: /\.(scss|css)$/,
         include: [path.join(appRootDir.get(), 'src'), path.join(appRootDir.get(), 'css')],
-        exclude: /node_modules/,
+        exclude: [/node_modules/, path.join(appRootDir.get(), 'src', 'styles.css')],
+        // exclude: /node_modules/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              // hmr: !IS_PRODUCTION,
-              // reloadAll: true,
-            },
+            //options: {
+            // hmr: !IS_PRODUCTION,
+            // reloadAll: true,
+            //},
           },
           {
             loader: 'css-loader',
@@ -99,23 +100,25 @@ const config = {
         ],
       },
       {
+        test: /\.(css)$/,
+        include: [path.join(appRootDir.get(), 'src', 'styles.css')],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: !IS_PRODUCTION
+              ? {
+                  sourceMap: true,
+                }
+              : undefined,
+          },
+        ],
+      },
+      {
         test: /\.(scss|css)$/,
         include: /node_modules/,
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              // onlyLocals: true,
-              importLoaders: 1,
-              modules: {
-                localIdentName: !IS_PRODUCTION
-                  ? '[name]_[local]_[hash:base64:3]'
-                  : '[local]_[hash:base64:3]',
-              },
-            },
-          },
-          'sass-loader',
-        ],
+        use: ['css-loader', 'sass-loader'],
       },
       {
         test: /.*\.(eot|woff|woff2|ttf|svg|png|jpg|jpeg|gif|ico|webp)$/i,
@@ -175,8 +178,8 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: !IS_PRODUCTION ? '[name].css' : '[name].[fullhash].css',
-      chunkFilename: !IS_PRODUCTION ? '[id].css' : '[id].[fullhash].css',
+      // filename: !IS_PRODUCTION ? '[name].css' : '[name].[fullhash].css',
+      // chunkFilename: !IS_PRODUCTION ? '[id].css' : '[id].[fullhash].css',
     }),
     new Dotenv(),
     new LoadablePlugin(),

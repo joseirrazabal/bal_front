@@ -2,6 +2,11 @@ service: default
 runtime: nodejs12
 entrypoint: npm run prod
 
+# env: flex
+# automatic_scaling:
+#   min_num_instances: 1
+#   max_num_instances: 5
+
 network:
   forwarded_ports:
     - 8080/tcp

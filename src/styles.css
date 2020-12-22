@@ -1,0 +1,10 @@
+h2 {
+  background: red;
+}
+
+
+.slick-prev {
+  left: 25px!important;
+  z-index: 2!important;
+}
+
