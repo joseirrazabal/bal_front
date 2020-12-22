@@ -142,7 +142,7 @@ const useStyles = makeStyles(theme => ({
   },
   titleFilters: {
     background: theme.palette.secondary.dark,
-    padding: '10px 0'
+    padding: '10px 0',
   },
   gridFull: {
     width: '100%',
@@ -150,14 +150,14 @@ const useStyles = makeStyles(theme => ({
   },
   filters: {
     padding: 10,
-    listStyle: 'none'
+    listStyle: 'none',
   },
   content: {
     display: 'flex',
     '@media (max-width: 680px)': {
-      flexDirection: 'column'
-    }
-  }
+      flexDirection: 'column',
+    },
+  },
 }))
 
 const ListBalnearios = () => {
@@ -165,22 +165,72 @@ const ListBalnearios = () => {
   const history = useHistory()
   const { ciudad, desde, hasta } = useParams()
 
-  const [state, setState] = React.useState({
-    checkedA: true,
-  });
+  const [loadingCheck, setLoadingCheck] = useState(true)
+  const [ciudades, setCiudades] = useState([])
+  const [state, setState] = useState({})
+  const [items, setItems] = useState([])
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
-  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
+  const { data: dataCiudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
   const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
-    variables: {
-      ciudad,
-    },
+    // variables: {
+    //   ciudad,
+    // },
   })
 
-  if (loading || loadingCiudad) {
+  useEffect(() => {
+    if (get(data, 'balnearioListSearch')) {
+      setItems(get(data, 'balnearioListSearch', []))
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (get(dataCiudades, 'ciudadListFront')) {
+      setCiudades(get(dataCiudades, 'ciudadListFront', []))
+    } else {
+      setLoadingCheck(false)
+    }
+  }, [dataCiudades])
+
+  useEffect(() => {
+    if (ciudades.length) {
+      const check = {}
+
+      ciudades.map(item => {
+        if (ciudad) {
+          check[ciudad] = true
+        } else {
+          check[item._id] = true
+        }
+      })
+
+      setState(check)
+      setLoadingCheck(false)
+    }
+  }, [ciudades])
+
+  useEffect(() => {
+    const result = async () => {
+      const prueba = await Promise.all(
+        get(data, 'balnearioListSearch').filter(item => {
+          if (state[item.ciudad._id]) {
+            return true
+          }
+          return false
+        })
+      )
+      setItems(prueba)
+    }
+
+    if (!loadingCheck && get(data, 'balnearioListSearch')) {
+      const prueba = result()
+    }
+  }, [state, state])
+
+  const handleChange = event => {
+    setState({ ...state, [event.target.value]: event.target.checked })
+  }
+
+  if (loading || loadingCiudad || loadingCheck) {
     return (
       <NoSsr>
         <Loading />
@@ -194,7 +244,7 @@ const ListBalnearios = () => {
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
-          <Search ciudades={ciudades} ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search ciudades={dataCiudades} ciudad={ciudad} desde={desde} hasta={hasta} />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -213,34 +263,37 @@ const ListBalnearios = () => {
             </div>
             <div className={classes.content}>
               <div className={classes.sidebar}>
-                <Typography className={classes.titleFilters} variant='h2' color="white" textAlign="center" fontWeight='400' fontSize={20}>
+                <Typography
+                  className={classes.titleFilters}
+                  variant='h2'
+                  color='white'
+                  textAlign='center'
+                  fontWeight='400'
+                  fontSize={20}
+                >
                   Filtros
                 </Typography>
                 <Divider />
                 <ul className={classes.filters}>
                   <li>
-                  <Typography
-                    fontWeight={700}
-                    fontSize={16}
-                    textAlign='left'
-                    varian='p'
-                  >
-                    CIUDAD
-                  </Typography>
+                    <Typography fontWeight={700} fontSize={16} textAlign='left' varian='p'>
+                      CIUDAD
+                    </Typography>
                   </li>
-                  {checkListCity.map((item, i) => {
+                  {ciudades.map((item, i) => {
                     return (
-                      <li>
+                      <li key={i}>
                         <FormControlLabel
                           control={
                             <Checkbox
-                              checked={state.checkedA}
+                              checked={state[item._id]}
                               onChange={handleChange}
-                              name="checkedA"
-                              color="secondary"
+                              name='checkedA'
+                              color='secondary'
+                              value={item._id}
                             />
                           }
-                          label={item}
+                          label={item.nombre}
                         />
                       </li>
                     )
@@ -249,10 +302,10 @@ const ListBalnearios = () => {
                 </ul>
               </div>
               <div className={classes.list}>
-                <ul className={`${classes.ul} ${classes.gridFull}`} style={{margin: 0, padding: 0}}>
-                  {get(data, 'balnearioListSearch', []).map((item, i) => {
+                <ul className={`${classes.ul} ${classes.gridFull}`} style={{ margin: 0, padding: 0 }}>
+                  {items.map((item, i) => {
                     return (
-                      <li>
+                      <li key={i}>
                         <CardBalDetail
                           modular
                           key={i}

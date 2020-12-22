@@ -4,6 +4,7 @@ const path = require('path')
 const jsonStableStringify = require('json-stable-stringify')
 const xxHash = require('xxhashjs')
 const nodeExternals = require('webpack-node-externals')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const threadLoader = require('thread-loader')
 const Dotenv = require('dotenv-webpack')
 const LoadablePlugin = require('@loadable/webpack-plugin')
@@ -75,6 +76,13 @@ const config = {
         include: [path.join(appRootDir.get(), 'src'), path.join(appRootDir.get(), 'css')],
         exclude: /node_modules/,
         use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // hmr: !IS_PRODUCTION,
+              // reloadAll: true,
+            },
+          },
           {
             loader: 'css-loader',
             options: {
@@ -166,6 +174,10 @@ const config = {
     },
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: !IS_PRODUCTION ? '[name].css' : '[name].[fullhash].css',
+      chunkFilename: !IS_PRODUCTION ? '[id].css' : '[id].[fullhash].css',
+    }),
     new Dotenv(),
     new LoadablePlugin(),
     new webpack.LoaderOptionsPlugin({

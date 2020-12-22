@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Search = ({ styles, ciudad = null, desde, hasta }) => {
+const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
   const history = useHistory()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -106,13 +106,15 @@ const Search = ({ styles, ciudad = null, desde, hasta }) => {
 
   const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
 
-  const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
+  // const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
 
   const { ciudad: ciudadInput, desde: desdeInput, hasta: hastaInput } = watch()
 
   const onSubmit = data => {
     // history.push(`/list/${get(data, 'ciudad')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
-    history.push(`/list/${desdeInput}/${hastaInput}${ciudadInput !== undefined ? `/${ciudadInput}` : ''}`)
+    history.push(
+      `/list/${desdeInput}/${hastaInput}${ciudadInput !== undefined ? `/${ciudadInput}` : ''}`
+    )
   }
 
   useEffect(() => {
