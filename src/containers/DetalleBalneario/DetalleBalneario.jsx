@@ -99,6 +99,7 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       marginTop: 0,
+      height: 'auto',
       flexDirection: 'column',
       background: '#f2f2f2',
     },

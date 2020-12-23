@@ -14,7 +14,7 @@ import 'styles.scss'
 const App = () => {
   return [
     <Helmet key={1} encodeSpecialCharacters titleTemplate='%s'>
-      <title>Balnearios</title>
+      <title>Alamar</title>
       <meta name='description' content='Juegos de escape' />
       <html lang='es' />
       <meta charSet='utf-8' />

@@ -505,7 +505,7 @@ const CheckoutBalnearios = ({ theme }) => {
         categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
-        data={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
+        precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
       />
     )
   }
@@ -514,10 +514,10 @@ const CheckoutBalnearios = ({ theme }) => {
   if (dataReserva) {
     return (
       <MessageGeneric
-        categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
+        data={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
-        data={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
+        precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
       />
     )
   }
@@ -786,16 +786,8 @@ const CheckoutBalnearios = ({ theme }) => {
                   <Typography fontSize={14} fontStyle='italic' color='grey' variant='p'>
                     Medios de Pago
                   </Typography>
-                  <div>
-                    <SimpleImage className={classes.imageMpClass} image={ImageMp} />
-                  </div>
-                </div>
-                <div className={classes.gridColumn}>
-                  <div>
-                    <SimpleImage image={CreditCard1} />
-                  </div>
-                  <div>
-                    <SimpleImage image={CreditCard2} />
+                  <div style={{marginTop: 10}}>
+                    <SimpleImage width={'100%'} image={'https://imgmp.mlstatic.com/org-img/banners/ar/medios/online/468X60.jpg'} />
                   </div>
                 </div>
               </div>

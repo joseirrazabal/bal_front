@@ -206,7 +206,7 @@ const MessageGeneric = ({
             title={data}
           />
         </div>
-        <Button color="secondary">
+        <Button to={'./'} color="secondary">
           VOLVER A LA HOME
         </Button>
       </div>

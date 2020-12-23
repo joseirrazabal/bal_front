@@ -208,7 +208,9 @@ const Home = () => {
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
             <div className={classes.banner}>
-              <SimpleImage image={ImageBanner} width='100%' />
+              <div>
+                banner
+              </div>
             </div>
             <div>
               <Typography
