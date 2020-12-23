@@ -5,14 +5,12 @@ import Slider from "react-slick";
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
-  carousel: {
+  contentCarousel: {
     position: 'relative'
   },
-  'slick-prev': {
-    left: 10,
-    top: 230,
-    zIndex: 2
-}
+  carousel: {
+    position: 'relative',
+  }
 });
 
 const settings = {
@@ -28,9 +26,11 @@ const Carousel = ({children}) => {
   const classes = useStyles();
 
   return (
-    <Slider {...settings} className={classes.carousel}>
-      {children}
-    </Slider>
+    <div className={classes.contentCarousel}>
+      <Slider {...settings} className={classes.carousel}>
+        {children}
+      </Slider>
+    </div>
   );
 };
 export default Carousel;

@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     padding: '40px 20px',
     display: 'flex',
+    boxSizing: 'border-box',
     justifyContent: 'space-between',
     width: '100%',
     maxWidth: 1200,
@@ -44,7 +45,11 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         margin: 5
       }
-    }
+    },
+
+    '@media (max-width: 680px)': {
+     flexDirection: 'column'
+    },
   },
   itemFooter: {
     display: 'flex',

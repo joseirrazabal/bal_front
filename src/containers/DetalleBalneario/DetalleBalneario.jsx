@@ -86,7 +86,7 @@ const useStyles = makeStyles(theme => ({
   contentDetalle: {
     width: '100%',
     maxWidth: 1280,
-    height: 'auto',
+    height: 500,
     display: 'flex',
     flexDirection: 'row',
     background: 'white',
@@ -141,7 +141,7 @@ const useStyles = makeStyles(theme => ({
   slider: {
     width: '60%',
     position: 'relative',
-    height: 460,
+    height: 'auto',
     //background: 'green',
 
     '@media (max-width: 960px)': {
@@ -163,6 +163,7 @@ const useStyles = makeStyles(theme => ({
   },
   imageBackground: {
     position: 'relative',
+    background: 'red',
     width: '100%',
     height: '100%',
     minHeight: 460,

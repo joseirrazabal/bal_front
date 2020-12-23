@@ -15,13 +15,15 @@ import CardBalDetail from '../../components/CardBalDetail'
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
 import Loading from '../../components/Loading'
+import SimpleImage from '../../components/SimpleImage'
+import FullScreenDialog from '../../components/Dialog'
 
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
 import imageBackground from '../../assets/fondo.jpg'
-
-const checkListCity = ['Mar del Plata', 'Pinamar', 'Villa Gesell', 'Mar Azul']
+import ImageDefault from '../../assets/sin-resultados.jpg'
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -58,6 +60,9 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       width: '100%',
+    },
+    '@media (max-width: 680px)': {
+      display: 'none',
     },
   },
   list: {
@@ -158,6 +163,21 @@ const useStyles = makeStyles(theme => ({
       flexDirection: 'column',
     },
   },
+  mobileFilters: {
+    display: 'none',
+    borderRadius: 20,
+    padding: 10,
+    minWidth: 100,
+
+    '@media (max-width: 680px)': {
+      display: 'flex',
+      justifyContent: 'center',
+      position: 'fixed',
+      bottom: 10,
+      left: '39%',
+      zIndex: 3,
+    },
+  },
 }))
 
 const ListBalnearios = () => {
@@ -169,6 +189,7 @@ const ListBalnearios = () => {
   const [ciudades, setCiudades] = useState([])
   const [state, setState] = useState({})
   const [items, setItems] = useState([])
+  const [open, setOpen] = useState(false)
 
   const { data: dataCiudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
   const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
@@ -176,6 +197,14 @@ const ListBalnearios = () => {
     //   ciudad,
     // },
   })
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   useEffect(() => {
     if (get(data, 'balnearioListSearch')) {
@@ -250,17 +279,6 @@ const ListBalnearios = () => {
       <div className={classes.contentBanners}>
         <div className={classes.container}>
           <div className={classes.contentList}>
-            <div className={classes.gridFull}>
-              <Typography
-                fontWeight={700}
-                fontSize={25}
-                textAlign='center'
-                className={classes.title}
-                varian='h2'
-              >
-                Balnearios en
-              </Typography>
-            </div>
             <div className={classes.content}>
               <div className={classes.sidebar}>
                 <Typography
@@ -299,10 +317,21 @@ const ListBalnearios = () => {
                     )
                   })}
                   <Divider />
-                </ul>
+                </ul>  
               </div>
+              <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.mobileFilters}>FILTROS</Button>
               <div className={classes.list}>
+              <Typography
+                fontWeight={700}
+                fontSize={25}
+                textAlign='center'
+                className={classes.title}
+                varian='h2'
+              >
+                Balnearios
+              </Typography>
                 <ul className={`${classes.ul} ${classes.gridFull}`} style={{ margin: 0, padding: 0 }}>
+                  {items.length == 0 && <SimpleImage width={'100%'} image={ImageDefault} /> }
                   {items.map((item, i) => {
                     return (
                       <li key={i}>
@@ -323,6 +352,34 @@ const ListBalnearios = () => {
           </div>
         </div>
       </div>
+      <FullScreenDialog title='Filtros' open={open} handleClose={handleClose}>
+        <ul className={classes.filters}>
+          <li>
+            <Typography fontWeight={700} fontSize={16} textAlign='left' varian='p'>
+              CIUDAD
+            </Typography>
+          </li>
+          {ciudades.map((item, i) => {
+            return (
+              <li key={i}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state[item._id]}
+                      onChange={handleChange}
+                      name='checkedA'
+                      color='secondary'
+                      value={item._id}
+                    />
+                  }
+                  label={item.nombre}
+                />
+              </li>
+            )
+          })}
+          <Divider />
+        </ul>  
+      </FullScreenDialog>
       <Footer />
     </div>
   )

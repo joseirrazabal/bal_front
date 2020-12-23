@@ -5,6 +5,8 @@ import get from 'lodash/get'
 import Button from './Button'
 import Typography from './Typography'
 
+import ImageDefault from '../assets/default-image.jpg'
+
 const useStyles = makeStyles((theme) => ({
   cardBal: ({ moludar = false }) => ({
     float: 'left',
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     height: 170,
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
+    backgroundPosition: 'center'
   }),
   content: {
     display: 'flex',
@@ -75,7 +78,7 @@ const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }
   const image = get(
     item,
     'imagenes.0.url',
-    'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=37&tipoEscala=stretch&width=2000&height=1119'
+    ImageDefault
   )
 
   const classes = useStyles({ moludar, image })
