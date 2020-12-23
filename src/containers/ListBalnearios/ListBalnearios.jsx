@@ -226,7 +226,7 @@ const ListBalnearios = () => {
         if (ciudad) {
           check[ciudad] = true
         } else {
-          check[item._id] = true
+          check[item._id] = false
         }
       })
 
@@ -314,7 +314,7 @@ const ListBalnearios = () => {
                       </li>
                     )
                   })}
-                  <Divider />
+                  {/* <Divider /> */}
                 </ul>  
               </div>
               <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.mobileFilters}>FILTROS</Button>
@@ -375,7 +375,7 @@ const ListBalnearios = () => {
               </li>
             )
           })}
-          <Divider />
+          {/* <Divider /> */}
         </ul>  
       </FullScreenDialog>
       <Footer />
