@@ -88,7 +88,6 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       height: 80,
-      //background: 'gray',
       padding: '0 10px',
     },
   },
@@ -137,7 +136,6 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       marginTop: 0,
-      //background: '#f2f2f2',
       padding: 5,
     },
   },
