@@ -139,7 +139,7 @@
     "build": "cross-env NODE_ENV=production LOCAL=true webpack --config kit/webpack/index.js && npm run build:app",
     "build:stats": "cross-env NODE_ENV=production LOCAL=true webpack --config kit/webpack/index.js -stats",
     "build:prod": "npm run prod:env && npm run build && npm run prod:copy && cd dist && npm run prod:npm",
-    "build:all": "npm run build && npm run prod:copy && cd dist && npm run prod:npm",
+    "build:all": "npm run prod:env && npm run build && npm run prod:copy && cd dist && npm run prod:npm",
     "prod": "node app.js",
     "dist": "cd dist && gcloud app deploy",
     "prodLocal": "cd dist && cross-env NODE_ENV=production node app.js",
