@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async'
 import theme from './theme'
 import Route from './routes'
 
-import 'slick-carousel/slick/slick.css'
+// import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 import 'styles.css'

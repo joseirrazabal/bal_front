@@ -154,7 +154,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
     >
       <div className={classes.box}>
         <div style={{ marginLeft: 10 }}>
-          <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
+          <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
         </div>
         <div style={{ margin: '0 10px', width: '100%' }}>
           {loading2 ? (
@@ -169,13 +169,17 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
         </div>
       </div>
       <div className={classes.box}>
-        <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
+        <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
         <div className={`${classes.gridRow} ${classes.border}`}>
-          <div>
+          <div style={{width: '100%'}}>
             <Calendar name='desde' setValue={setValue} value={desde} />
           </div>
-          <p>Hasta</p>
           <div>
+            <Typography textAlign='cemter' color="gray" fontSize={12} variant='p'>
+              Hasta
+            </Typography>
+          </div>
+          <div style={{width: '100%'}}>
             <Calendar name='hasta' setValue={setValue} value={hasta} />
           </div>
         </div>

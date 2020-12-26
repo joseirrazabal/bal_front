@@ -142,7 +142,7 @@ const useStyles = makeStyles(theme => ({
   slider: {
     width: '60%',
     position: 'relative',
-    height: 'auto',
+    height: 500,
     //background: 'green',
 
     '@media (max-width: 960px)': {
@@ -166,7 +166,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     background: 'red',
     width: '100%',
-    height: '100%',
+    height: 500,
     minHeight: 460,
     background: '#f2f2f2',
     display: 'flex!important',
@@ -237,6 +237,12 @@ const useStyles = makeStyles(theme => ({
     right: 10,
     bottom: 10,
   },
+  offer: {
+    background: '#55C443',
+    boxSizing: 'border-box',
+    padding: 3,
+    borderRadius: 6
+  }
 }))
 
 const DetalleBalneario = () => {
@@ -417,17 +423,19 @@ const DetalleBalneario = () => {
               <div className={classes.detalleBottom}>
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
-                    <Typography variant='span'>
-                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) !== 0 && (
-                        <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                    {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) !== 0 && (
+                      <div style={{marginBottom: 5}}>
+                        <Typography className={classes.offer} fontSize={11} fontWeight={700} color='white' variant='span'>
                           Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
                           dias
                         </Typography>
-                      )}
+                      </div>
+                    )}
+                    <Typography variant='p'>
                       <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
                         Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
                       </Typography>
-                      <Typography color='black' variant='span'>
+                      <Typography color='black' variant='i'>
                         $
                       </Typography>
                       <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
