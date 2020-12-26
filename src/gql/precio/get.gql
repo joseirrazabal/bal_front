@@ -2,6 +2,7 @@ query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: St
   precioGetFront(id: $id, categoria: $categoria, desde: $desde, hasta: $hasta) {
     _id
     precio
+    dias
     articulo {
       _id
       categoria {

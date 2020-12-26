@@ -2,5 +2,26 @@ mutation reservaAdd($id: ID, $input: ReservaInput!) {
   reservaAdd(id: $id, input: $input) {
     _id
     pago
+    dias
+    amount
+    articulo {
+      _id
+      categoria {
+        _id
+        nombre
+        tipo {
+          _id
+          nombre
+        }
+        balneario {
+          _id
+          nombre
+          ciudad {
+            _id
+            nombre
+          }
+        }
+      }
+    }
   }
 }

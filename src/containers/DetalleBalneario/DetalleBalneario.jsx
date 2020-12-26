@@ -418,6 +418,12 @@ const DetalleBalneario = () => {
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
                     <Typography variant='span'>
+                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) !== 0 && (
+                        <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                          Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
+                          dias
+                        </Typography>
+                      )}
                       <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
                         Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
                       </Typography>

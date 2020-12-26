@@ -489,6 +489,8 @@ const CheckoutBalnearios = ({ theme }) => {
     })
   }
 
+  console.log('todo', dataReserva)
+
   if (loadingPrecio) {
     return (
       <NoSsr>
@@ -501,11 +503,12 @@ const CheckoutBalnearios = ({ theme }) => {
   if (errorReserva) {
     return (
       <MessageGeneric
-        isTrue={false}
+        isError
         categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
         precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
+        pago={get(dataReserva, 'reservaAdd.pago')}
       />
     )
   }
@@ -518,6 +521,7 @@ const CheckoutBalnearios = ({ theme }) => {
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
         precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
+        pago={get(dataReserva, 'reservaAdd.pago')}
       />
     )
   }
@@ -786,8 +790,11 @@ const CheckoutBalnearios = ({ theme }) => {
                   <Typography fontSize={14} fontStyle='italic' color='grey' variant='p'>
                     Medios de Pago
                   </Typography>
-                  <div style={{marginTop: 10}}>
-                    <SimpleImage width={'100%'} image={'https://imgmp.mlstatic.com/org-img/banners/ar/medios/online/468X60.jpg'} />
+                  <div style={{ marginTop: 10 }}>
+                    <SimpleImage
+                      width={'100%'}
+                      image={'https://imgmp.mlstatic.com/org-img/banners/ar/medios/online/468X60.jpg'}
+                    />
                   </div>
                 </div>
               </div>
