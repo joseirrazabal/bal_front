@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     overflow: 'auto',
     maxHeight: 200,
-    border: '1px solid rgba(0,0,0,.25)',
+    border: '1px solid #ccc',
 
     '& li': {
       padding: '10px 0',

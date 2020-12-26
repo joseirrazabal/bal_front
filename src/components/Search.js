@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   border: {
-    border: '1px solid gray',
+    border: '1px solid #ccc',
     boxSizing: 'border-box',
     margin: '0 10px',
 

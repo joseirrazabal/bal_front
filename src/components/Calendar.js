@@ -22,13 +22,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
-    height: 44,
+    height: 38,
 
     '& div': {
-      marginTop: 9,
-      paddingBottom: 4,
+      height: '100%',
       width: '100%',
       background: 'white',
+
+      '&::before': {
+        borderBottom: 'none'
+      },
 
       '@media (max-width: 680px)': {
         border: '1px solid gray',
@@ -38,6 +41,7 @@ const useStyles = makeStyles(theme => ({
       '& input': {
         textAlign: 'center',
         width: '100%',
+        border: 'none'
       },
     },
 

@@ -91,13 +91,13 @@ const Header = () => {
               </Typography>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to='/'>
               <Typography variant='p' color='white'>
                 Ayuda
               </Typography>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
