@@ -3,10 +3,18 @@ steps:
     args: ['install']
 
   - name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'build:prod']
+    args: ['run', 'build:all']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/${_NAME}:latest', '-t', 'gcr.io/$PROJECT_ID/${_NAME}:$SHORT_SHA', '.']
+    args:
+      [
+        'build',
+        '-t',
+        'gcr.io/$PROJECT_ID/${_NAME}:latest',
+        '-t',
+        'gcr.io/$PROJECT_ID/${_NAME}:$SHORT_SHA',
+        '.',
+      ]
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/${_NAME}:$SHORT_SHA']
@@ -14,13 +22,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/${_NAME}:latest']
 
-  - name: 'gcr.io/cloud-builders/kubectl'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
     args:
-      - '--namespace=${_NAMESPACE}'
-      - 'set'
-      - 'image'
-      - 'deployment/${_NAME}'
-      - '${_NAME}=gcr.io/$PROJECT_ID/${_NAME}:$SHORT_SHA'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
+      [
+        '-c',
+        'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy --image-url gcr.io/$PROJECT_ID/${_NAME}:latest',
+      ]
+
+timeout: '1600s'
+
