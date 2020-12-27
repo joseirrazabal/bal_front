@@ -223,21 +223,22 @@ const ListBalnearios = () => {
       const check = {}
 
       ciudades.map(item => {
-        if (ciudad) {
-          check[ciudad] = true
-        } else {
-          check[item._id] = false
-        }
+        check[item._id] = false
       })
 
-      setState(check)
+      if (ciudad) {
+        check[ciudad] = true
+      }
+
       setLoadingCheck(false)
+      setState(check)
     }
   }, [ciudades])
 
   useEffect(() => {
     const seleccionado = () => {
       let algoSeleccionado = false
+
       for (const item in state) {
         if (state[item]) {
           algoSeleccionado = true
@@ -258,12 +259,14 @@ const ListBalnearios = () => {
       setItems(prueba)
     }
 
-    if (!loadingCheck && get(data, 'balnearioListSearch')) {
+    if (!loadingCheck && !loading) {
       if (seleccionado()) {
-        const prueba = result()
+        result()
+      } else {
+        setItems(get(data, 'balnearioListSearch'))
       }
     }
-  }, [state])
+  }, [state, loadingCheck, loading])
 
   const handleChange = event => {
     setState({ ...state, [event.target.value]: event.target.checked })
