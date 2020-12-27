@@ -468,13 +468,22 @@ const CheckoutBalnearios = ({ theme }) => {
         console.log('Verify filled data!\n' + JSON.stringify(response, null, 4))
         return false
       } else {
+        const descrip = `alamar: ${get(
+          dataPrecio,
+          'precioGetFront.articulo.categoria.tipo.nombre'
+        )} ${get(dataPrecio, 'precioGetFront.articulo.categoria.nombre')} desde:${dayjs(
+          desde,
+          'DD-MM-YYYY'
+        ).format('YYYY-MM-DD')} hasta:${dayjs(desde, 'DD-MM-YYYY').format('YYYY-MM-DD')}
+        `
+
         reservaAdd({
           variables: {
             input: {
               ...data,
               desde: dayjs(desde, 'DD-MM-YYYY').format('YYYY-MM-DD'),
               hasta: dayjs(hasta, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-              description: get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre'),
+              description: descrip,
               cantidad: cantidad,
               precio: id,
               dias: cantidadDias,
@@ -488,8 +497,6 @@ const CheckoutBalnearios = ({ theme }) => {
       }
     })
   }
-
-  console.log('todo', dataReserva)
 
   if (loadingPrecio) {
     return (
@@ -508,7 +515,8 @@ const CheckoutBalnearios = ({ theme }) => {
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
         precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
-        pago={get(dataReserva, 'reservaAdd.pago')}
+        pagoStatus={get(dataReserva, 'reservaAdd.pago.status', false)}
+        pagoMessage={get(dataReserva, 'reservaAdd.pago.message')}
       />
     )
   }
@@ -521,7 +529,8 @@ const CheckoutBalnearios = ({ theme }) => {
         direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
         ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
         precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
-        pago={get(dataReserva, 'reservaAdd.pago')}
+        pagoStatus={get(dataReserva, 'reservaAdd.pago.status')}
+        pagoMessage={get(dataReserva, 'reservaAdd.pago.message')}
       />
     )
   }

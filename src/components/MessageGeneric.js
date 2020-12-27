@@ -94,6 +94,42 @@ const useStyles = makeStyles({
   },
 })
 
+const Message = ({ pagoStatus, pagoMessage }) => {
+  if (!pagoStatus) {
+    return (
+      <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='red'>
+        No se pudo realizar el pago
+      </Typography>
+    )
+  }
+
+  if (pagoStatus === 'rejected') {
+    return (
+      <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='red'>
+        {pagoMessage}
+      </Typography>
+    )
+  }
+
+  if (pagoStatus === 'in_process') {
+    return (
+      <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='yellow'>
+        {pagoMessage}
+      </Typography>
+    )
+  }
+
+  if (pagoStatus === 'approved') {
+    return (
+      <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='green'>
+        {pagoMessage}
+      </Typography>
+    )
+  }
+
+  return <div></div>
+}
+
 const MessageGeneric = ({
   isError = false,
   precio = 450,
@@ -102,7 +138,8 @@ const MessageGeneric = ({
   ciudad,
   direccion,
   categoria,
-  pago,
+  pagoStatus = false,
+  pagoMessage = '',
 }) => {
   const history = useHistory()
   const classes = useStyles()
@@ -193,15 +230,7 @@ const MessageGeneric = ({
           <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='grey'>
             {`$${precio}`}
           </Typography>
-          {pago ? (
-            <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='grey'>
-              pago: {`$${get(pago, 'status')}`}
-            </Typography>
-          ) : (
-            <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='grey'>
-              No se pudo realizar el pago
-            </Typography>
-          )}
+          <Message pagoStatus={pagoStatus} pagoMessage={pagoMessage} />
         </div>
         <div style={{ marginTop: 10, marginBottom: 20 }}>
           <ItemSelected className={classes.item} checkout title={data} />
