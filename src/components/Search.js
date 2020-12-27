@@ -27,12 +27,16 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     maxWidth: 960,
     boxSizing: 'border-box',
-    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
     height: 60,
     borderRadius: 6,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+
+    '&:hover': {
+      boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    },
 
     '@media (max-width: 960px)': {
       margin: '0 10px',

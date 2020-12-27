@@ -23,6 +23,7 @@ import Loading from '../../components/Loading'
 
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 import DefaultImage from '../../assets/default-image.jpg'
+import ImageBackground from '../../assets/fondo.jpg'
 
 import TIPO_LIST from 'gql/tipo/list'
 import BALNEARIO_GET from 'gql/balneario/get'
@@ -58,7 +59,11 @@ const useStyles = makeStyles(theme => ({
   contentSearch: {
     width: '100vw',
     height: 80,
-    background: '#e0e0e0',
+    backgroundImage: 'url(' + ImageBackground + ')',
+    backgroundAttachment: 'fixed',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
@@ -68,7 +73,6 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       height: 80,
-      background: '#e0e0e0',
       padding: '0 10px',
       marginTop: 0,
     },
@@ -152,7 +156,7 @@ const useStyles = makeStyles(theme => ({
   },
   detalle: {
     width: '40%',
-    background: 'red',
+    // background: 'red',
     position: 'relative',
     display: 'flex',
     alignSelf: 'strech',
@@ -164,7 +168,7 @@ const useStyles = makeStyles(theme => ({
   },
   imageBackground: {
     position: 'relative',
-    background: 'red',
+    // background: 'red',
     width: '100%',
     height: 500,
     minHeight: 460,
@@ -179,6 +183,7 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 680px)': {
       minHeight: 'auto',
+      height: 'auto',
     },
   },
   detalleTop: {
