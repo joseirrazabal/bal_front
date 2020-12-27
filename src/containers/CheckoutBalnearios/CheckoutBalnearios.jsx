@@ -709,7 +709,7 @@ const CheckoutBalnearios = ({ theme }) => {
                             onChange={e => {
                               getInstallments(
                                 paymentMethod,
-                                get(dataPrecio, 'precioGetFront.precio'),
+                                parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias,
                                 e.target.value
                               )
                             }}
