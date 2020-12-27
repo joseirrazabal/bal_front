@@ -428,7 +428,7 @@ const DetalleBalneario = () => {
               <div className={classes.detalleBottom}>
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
-                    {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) !== 0 && (
+                    {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
                       <div style={{marginBottom: 5}}>
                         <Typography className={classes.offer} fontSize={11} fontWeight={700} color='white' variant='span'>
                           Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
