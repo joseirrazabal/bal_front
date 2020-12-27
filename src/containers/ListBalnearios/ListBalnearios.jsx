@@ -236,6 +236,16 @@ const ListBalnearios = () => {
   }, [ciudades])
 
   useEffect(() => {
+    const seleccionado = () => {
+      let algoSeleccionado = false
+      for (const item in state) {
+        if (state[item]) {
+          algoSeleccionado = true
+        }
+      }
+      return algoSeleccionado
+    }
+
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
@@ -249,9 +259,11 @@ const ListBalnearios = () => {
     }
 
     if (!loadingCheck && get(data, 'balnearioListSearch')) {
-      const prueba = result()
+      if (seleccionado()) {
+        const prueba = result()
+      }
     }
-  }, [state, state])
+  }, [state])
 
   const handleChange = event => {
     setState({ ...state, [event.target.value]: event.target.checked })
@@ -315,21 +327,28 @@ const ListBalnearios = () => {
                     )
                   })}
                   {/* <Divider /> */}
-                </ul>  
+                </ul>
               </div>
-              <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.mobileFilters}>FILTROS</Button>
-              <div className={classes.list}>
-              <Typography
-                fontWeight={700}
-                fontSize={25}
-                textAlign='center'
-                className={classes.title}
-                varian='h2'
+              <Button
+                onClick={handleClickOpen}
+                variant='contained'
+                color='primary'
+                className={classes.mobileFilters}
               >
-                Balnearios
-              </Typography>
+                FILTROS
+              </Button>
+              <div className={classes.list}>
+                <Typography
+                  fontWeight={700}
+                  fontSize={25}
+                  textAlign='center'
+                  className={classes.title}
+                  varian='h2'
+                >
+                  Balnearios
+                </Typography>
                 <ul className={`${classes.ul} ${classes.gridFull}`} style={{ margin: 0, padding: 0 }}>
-                  {items.length == 0 && <SimpleImage width={'100%'} image={ImageDefault} /> }
+                  {items.length == 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
                   {items.map((item, i) => {
                     return (
                       <li key={i}>
@@ -376,7 +395,7 @@ const ListBalnearios = () => {
             )
           })}
           {/* <Divider /> */}
-        </ul>  
+        </ul>
       </FullScreenDialog>
       <Footer />
     </div>
