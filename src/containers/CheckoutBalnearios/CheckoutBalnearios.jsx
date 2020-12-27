@@ -311,9 +311,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
   const [textoCuota, setTextoCuota] = useState(false)
   const [open, setOpen] = useState(false)
-  const [state, setState] = useState({
-    checkedA: true,
-  })
+  const [errorMP, setErrorMP] = useState(false)
 
   const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
   const [reservaAdd, { data: dataReserva, loading: loadingReserva, error: errorReserva }] = useMutation(
@@ -331,10 +329,6 @@ const CheckoutBalnearios = ({ theme }) => {
 
   const handleClose = () => {
     setOpen(false)
-  }
-
-  const handleChange = event => {
-    setState({ ...state, [event.target.name]: event.target.checked })
   }
 
   // ==========
@@ -453,7 +447,7 @@ const CheckoutBalnearios = ({ theme }) => {
   const cardholderName = useRef()
 
   const cantidad = 1
-  const onSubmit = data => {
+  const onSubmit = ({ checkedA, ...data }) => {
     const form = {
       ...data,
       cardExpirationMonth: parseInt(cardExpirationMonth.current.value),
@@ -465,9 +459,12 @@ const CheckoutBalnearios = ({ theme }) => {
 
     Mercadopago.createToken(form, (status, response) => {
       if (status != 200 && status != 201) {
-        console.log('Verify filled data!\n' + JSON.stringify(response, null, 4))
+        console.log('Verify fail', response)
+        setErrorMP(get(response, 'cause.0.description', 'Error con los datos insertados'))
         return false
       } else {
+        setErrorMP(false)
+
         const descrip = `alamar: ${get(
           dataPrecio,
           'precioGetFront.articulo.categoria.tipo.nombre'
@@ -561,19 +558,31 @@ const CheckoutBalnearios = ({ theme }) => {
                   <form
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
-                    noValidate
                     method='post'
+                    //noValidate
                     //id='paymentForm'
                   >
                     <div>
+                      {errorMP && <div style={{ color: 'red' }}>{errorMP}</div>}
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
                           <label htmlFor='email'>E-mail</label>
-                          <input name='email' ref={register} id='email' type='text' />
+                          <input
+                            name='email'
+                            id='email'
+                            type='text'
+                            required
+                            ref={register({ required: 'Campo requerido' })}
+                          />
+                          {errors.email && <div style={{ color: 'red' }}>{errors.email.message}</div>}
                         </div>
                         <div className={classes.input}>
                           <label htmlFor='docType'>Tipo de documento</label>
-                          <select id='docType' name='docType' ref={register}>
+                          <select
+                            id='docType'
+                            name='docType'
+                            ref={register({ required: 'Campo requerido' })}
+                          >
                             {tipoDocumento.map((tipo, i) => {
                               return (
                                 <option key={i} value={tipo.id}>
@@ -582,6 +591,9 @@ const CheckoutBalnearios = ({ theme }) => {
                               )
                             })}
                           </select>
+                          {errors.docType && (
+                            <div style={{ color: 'red' }}>{errors.docType.message}</div>
+                          )}
                         </div>
                       </div>
                       <div className={`${classes.gridRow}`}>
@@ -592,8 +604,12 @@ const CheckoutBalnearios = ({ theme }) => {
                             name='docNumber'
                             data-checkout='docNumber'
                             type='text'
-                            ref={register}
+                            required
+                            ref={register({ required: 'Campo requerido' })}
                           />
+                          {errors.docNumber && (
+                            <div style={{ color: 'red' }}>{errors.docNumber.message}</div>
+                          )}
                         </div>
                         <div className={classes.input}>
                           <label htmlFor='cardholderName'>Titular de la tarjeta</label>
@@ -602,6 +618,7 @@ const CheckoutBalnearios = ({ theme }) => {
                             ref={cardholderName}
                             data-checkout='cardholderName'
                             type='text'
+                            required
                           />
                         </div>
                       </div>
@@ -623,11 +640,14 @@ const CheckoutBalnearios = ({ theme }) => {
                               onDrag={() => false}
                               onDrop={() => false}
                               autoComplete='off'
+                              minLength='2'
+                              maxLength='2'
+                              required
                             />
                             <span className='date-separator'>/</span>
                             <input
                               type='text'
-                              placeholder='YY'
+                              placeholder='YYYY'
                               id='cardExpirationYear'
                               ref={cardExpirationYear}
                               data-checkout='cardExpirationYear'
@@ -638,6 +658,9 @@ const CheckoutBalnearios = ({ theme }) => {
                               onDrag={() => false}
                               onDrop={() => false}
                               autoComplete='off'
+                              minLength='4'
+                              maxLength='4'
+                              required
                             />
                           </div>
                         </div>
@@ -656,6 +679,7 @@ const CheckoutBalnearios = ({ theme }) => {
                             onDrag={() => false}
                             onDrop={() => false}
                             autoComplete='off'
+                            required
                           />
                         </div>
                       </div>
@@ -674,13 +698,14 @@ const CheckoutBalnearios = ({ theme }) => {
                             onDrag={() => false}
                             onDrop={() => false}
                             autoComplete='off'
+                            required
                           />
                         </div>
                         <div className={`${classes.input}`} id='issuerInput'>
                           <label htmlFor='issuer'>Banco emisor</label>
                           <select
                             name={`issuer`}
-                            ref={register}
+                            ref={register({ required: 'Campo requerido' })}
                             onChange={e => {
                               getInstallments(
                                 paymentMethod,
@@ -697,6 +722,7 @@ const CheckoutBalnearios = ({ theme }) => {
                               )
                             })}
                           </select>
+                          {errors.issuer && <div style={{ color: 'red' }}>{errors.issuer.message}</div>}
                         </div>
                       </div>
                       {/* tarjeta*/}
@@ -706,7 +732,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           <label htmlFor='installments'>Cuotas</label>
                           <select
                             name={`installments`}
-                            ref={register}
+                            ref={register({ required: 'Campo requerido' })}
                             onChange={e => {
                               setInstallmentSelect(e.target.value)
                             }}
@@ -719,17 +745,35 @@ const CheckoutBalnearios = ({ theme }) => {
                               )
                             })}
                           </select>
+                          {errors.installments && (
+                            <div style={{ color: 'red' }}>{errors.installments.message}</div>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className={classes.gridRowTyC}>
                       <div>
-                        <FormControlLabel
-                          control={
-                            <Checkbox checked={state.checkedA} onChange={handleChange} name='checkedA' />
-                          }
-                          label={'Leí y acepto los'}
+                        <Controller
+                          name={'checkedA'}
+                          control={control}
+                          defaultValue={false}
+                          rules={{ required: 'Debe aceptar los terminos y condiciones' }}
+                          render={({ onChange, onBlur, value, name, ref }) => (
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  inputRef={ref}
+                                  checked={value}
+                                  onChange={e => onChange(e.target.checked)}
+                                />
+                              }
+                              label={'Leí y acepto los'}
+                            />
+                          )}
                         />
+                        {errors.checkedA && (
+                          <div style={{ color: 'red' }}>{errors.checkedA.message}</div>
+                        )}
                       </div>
                       <div onClick={handleClickOpen}>
                         <Typography fontWeight={700} fontSize={16} variant='b'>
@@ -746,11 +790,8 @@ const CheckoutBalnearios = ({ theme }) => {
                       </div>
                       <div style={{ width: '100%' }}>
                         <Typography variant='p' textAlign='right'>
-                          <Typography color='black' variant='span'>
-                            $
-                          </Typography>
                           <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                            ${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}
+                            {`$ ${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}`}
                           </Typography>
                         </Typography>
                         <Typography
