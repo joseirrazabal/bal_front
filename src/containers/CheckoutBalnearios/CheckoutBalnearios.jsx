@@ -505,17 +505,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
   // error en la reserva
   if (errorReserva) {
-    return (
-      <MessageGeneric
-        isError
-        categoria={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
-        direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
-        ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
-        precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
-        pagoStatus={get(dataReserva, 'reservaAdd.pago.status', false)}
-        pagoMessage={get(dataReserva, 'reservaAdd.pago.message')}
-      />
-    )
+    return <MessageGeneric isError pagoMessage={errorReserva.message} />
   }
 
   // mensaje reserva

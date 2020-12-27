@@ -139,7 +139,7 @@ const MessageGeneric = ({
   direccion,
   categoria,
   pagoStatus = false,
-  pagoMessage = '',
+  pagoMessage = null,
 }) => {
   const history = useHistory()
   const classes = useStyles()
@@ -154,35 +154,9 @@ const MessageGeneric = ({
           LO LAMENTAMOS!
         </Typography>
         <Typography fontSize={20} textAlign='center' color='white' variant='h3'>
-          ERROR AL EFECTUARL EL PAGO
+          {pagoMessage || 'ERROR AL EFECTUARL EL PAGO'}
         </Typography>
         <div className={classes.column}>
-          <div style={{ marginBottom: 10 }}>
-            <Typography fontSize={21} fontWeight={700} textAlign='center' variant='h4'>
-              RESUMEN DE ALQUILER
-            </Typography>
-            <Divider />
-          </div>
-          <Typography fontSize={20} textAlign='center' className={classes.subTitle} variant='h4'>
-            {categoria}
-          </Typography>
-          <Typography fontSize={18} textAlign='center' color='grey' variant='p'>
-            {ciudad}
-          </Typography>
-          <Typography fontSize={16} textAlign='center' variant='p' color='grey'>
-            {direccion}
-          </Typography>
-          <div style={{ marginTop: 10 }}>
-            <Typography fontSize={16} fontStyle={'italic'} textAlign='center' variant='p' color='grey'>
-              precio final
-            </Typography>
-            <Typography fontSize={20} fontWeight={700} textAlign='center' variant='p' color='grey'>
-              {`$${precio}`}
-            </Typography>
-          </div>
-          <div style={{ marginTop: 10, marginBottom: 20 }}>
-            <ItemSelected className={classes.item} checkout title={data} />
-          </div>
           <Button
             onClick={() => {
               history.push('/')
