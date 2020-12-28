@@ -1,0 +1,5 @@
+dispatch:
+  - url: "alamar.ar/*"
+    service: default
+  - url: "backoffice.alamar.ar/*"
+    service: backoffice
