@@ -62,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   nuevo: {
-    background: theme.palette.secondary.dark,
+    background: theme.palette.primary.main,
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
-    color: 'white',
+    color: theme.palette.secondary.dark,
     padding: '5px 10px 5px 5px',
     borderRadius: '0 10px 10px 0',
     fontSize: 12,

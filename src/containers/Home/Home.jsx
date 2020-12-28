@@ -16,9 +16,10 @@ import CardBal from '../../components/CardBal'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
 
-import imageBackground from '../../assets/fondo.jpg'
-import ImageCoronaVirus from '../../assets/coronavirus_medidas.png'
-import ImageBanner from '../../assets/banner.png'
+import imageBackground from '../../assets/banner-fondo.jpg'
+import ImageCoronaVirus from '../../assets/pop-up.jpg'
+import ImageBanner from '../../assets/banner-MP-compu.jpg'
+import ImageBannerMobile from '../../assets/banner-MP-celu.jpg'
 
 import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 import CIUDAD_LIST from 'gql/ciudad/list'
@@ -39,10 +40,12 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     width: '100%',
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    margin: 10,
+    margin: '40px 10px 10px 10px',
+
   },
   containerMobile: {
     margin: '0 auto',
@@ -64,8 +67,9 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     position: 'relative',
     display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
 
     '@media (max-width: 960px)': {
       height: '30vh',
@@ -126,13 +130,12 @@ const useStyles = makeStyles(theme => ({
     margin: '0px 0',
   },
   title: {
-    position: 'absolute',
     fontSize: '50px!important',
+    position: 'relative',
+    zIndex: 2,
     width: '100%',
     lineHeight: '55px',
     maxWidth: 540,
-    top: -160,
-    left: 160,
     color: 'white!important',
 
     '@media (max-width: 960px)': {
@@ -140,7 +143,24 @@ const useStyles = makeStyles(theme => ({
     },
   },
   banner: {
-    background: 'white',
+    marginTop: 25,
+    width: '100%',
+    maxWidth: 960,
+    marginTop: -50,
+    height: 'auto',
+    borderRadios: 6,
+    overflow: 'hidden',
+    margin: 10,
+    boxSizing: 'border-box',
+    borderRadius: 6,
+    cursor: 'pointer',
+    display: 'block',
+
+    '@media (max-width: 680px)': {
+      display: 'none',
+    },
+  },
+  bannerMobile: {
     marginTop: 25,
     width: '100%',
     height: 'auto',
@@ -148,19 +168,12 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     margin: 10,
     boxSizing: 'border-box',
-    border: '1px solid gray',
     borderRadius: 6,
     cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    '& p': {
-      color: 'gray',
-    },
-
+    display: 'none',
+    
     '@media (max-width: 680px)': {
-      height: 'auto',
+      display: 'block',
     },
   },
   modalContent: {
@@ -193,24 +206,23 @@ const Home = () => {
       <div className={classes.contentFull}>   
         <div className={classes.contentSearch}>
           <div className={classes.shadow} />
+          
           <div className={classes.container}>
-            <Typography className={classes.title} varian='h1'>
-              ALQUILER DE CARPAS Y SOMBRILLAS
+            <Typography fontWeight="900" className={classes.title} varian='h1'>
+              DISFRUTAR MI LUGAR
             </Typography>
             <Search
               ciudades={ciudades}
-              styles={{
-                position: 'absolute',
-              }}
             />
           </div>
         </div>
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
             <div className={classes.banner}>
-              <div>
-                banner
-              </div>
+              <SimpleImage image={ImageBanner} width={'100%'} />
+            </div>
+            <div className={classes.bannerMobile}>
+              <SimpleImage image={ImageBannerMobile} height={120} />
             </div>
             <div>
               <Typography
@@ -247,7 +259,7 @@ const Home = () => {
             <DialogSimpleComponent>
               <div className={classes.modalContent}>
                 <SimpleImage image={ImageCoronaVirus} width="100%" />
-                <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none'}}>
+                <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none', marginTop: 15}}>
                   <Button color="primary" variant='contained'>
                     ir al sitio
                   </Button>
