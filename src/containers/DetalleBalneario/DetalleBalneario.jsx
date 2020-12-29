@@ -36,7 +36,7 @@ dayjs.extend(customParseFormat)
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
-    width: '100vw',
+    width: '100%',
     background: 'black',
     display: 'flex',
     flexDirection: 'column',
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   contentSearch: {
-    width: '100vw',
+    width: '100%',
     height: 80,
     backgroundImage: 'url(' + ImageBackground + ')',
     backgroundAttachment: 'fixed',
@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   contentBanners: {
-    width: '100vw',
+    width: '100%',
     height: 'auto',
     background: '#f2f2f2',
     position: 'relative',
