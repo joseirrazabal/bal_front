@@ -18,8 +18,8 @@ import Loading from '../../components/Loading'
 
 import imageBackground from '../../assets/banner-fondo.jpg'
 import ImageCoronaVirus from '../../assets/pop-up.jpg'
-import ImageBanner from '../../assets/banner-MP-compu.jpg'
-import ImageBannerMobile from '../../assets/banner-MP-celu.jpg'
+import ImageBanner from '../../assets/banner-MP-compu.png'
+import ImageBannerMobile from '../../assets/banner-MP-celu.png'
 
 import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 import CIUDAD_LIST from 'gql/ciudad/list'
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     margin: '0 auto',
-    width: '100%',
+    width: 'calc(100% - 20px)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentSearch: {
     width: '100%',
-    height: '35vh',
+    height: '45vh',
     backgroundImage: 'url(' + imageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
@@ -71,17 +71,25 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
 
+    '@media (max-width: 1450px)': {
+      height: '35vh',
+    },
+
     '@media (max-width: 960px)': {
       height: '30vh',
     },
   },
   contentBanners: {
     width: '100%',
-    height: '65vh',
+    height: '55vh',
     background: '#f2f2f2',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+
+    '@media (max-width: 1450px)': {
+      height: '65vh',
+    },
 
     '@media (max-width: 960px)': {
       height: '70vh',
@@ -145,7 +153,7 @@ const useStyles = makeStyles(theme => ({
   banner: {
     marginTop: 25,
     width: '100%',
-    maxWidth: 960,
+    maxWidth: 1280,
     marginTop: -50,
     height: 'auto',
     borderRadios: 6,
@@ -206,7 +214,6 @@ const Home = () => {
       <div className={classes.contentFull}>   
         <div className={classes.contentSearch}>
           <div className={classes.shadow} />
-          
           <div className={classes.container}>
             <Typography fontWeight="900" className={classes.title} varian='h1'>
               DISFRUTAR MI LUGAR
@@ -222,7 +229,7 @@ const Home = () => {
               <SimpleImage image={ImageBanner} width={'100%'} />
             </div>
             <div className={classes.bannerMobile}>
-              <SimpleImage image={ImageBannerMobile} height={120} />
+              <SimpleImage image={ImageBannerMobile} width={'100%'} />
             </div>
             <div>
               <Typography
