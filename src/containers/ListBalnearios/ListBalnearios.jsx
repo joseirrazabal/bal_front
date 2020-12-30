@@ -27,7 +27,7 @@ import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
-    width: '100vw',
+    width: '100%',
     background: 'black',
     display: 'flex',
     flexDirection: 'column',
@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   contentSearch: {
-    width: '100vw',
+    width: '100%',
     height: 300,
     background: 'red',
     backgroundImage: 'url(' + imageBackground + ')',
@@ -92,7 +92,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   contentBanners: {
-    width: '100vw',
+    width: '100%',
     height: 'auto',
     background: '#f2f2f2',
     position: 'relative',
