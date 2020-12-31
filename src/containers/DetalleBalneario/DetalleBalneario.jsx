@@ -246,8 +246,8 @@ const useStyles = makeStyles(theme => ({
     background: '#55C443',
     boxSizing: 'border-box',
     padding: 3,
-    borderRadius: 6
-  }
+    borderRadius: 6,
+  },
 }))
 
 const DetalleBalneario = () => {
@@ -429,14 +429,23 @@ const DetalleBalneario = () => {
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
                     {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
-                      <div style={{marginBottom: 5}}>
-                        <Typography className={classes.offer} fontSize={11} fontWeight={700} color='white' variant='span'>
+                      <div style={{ marginBottom: 5 }}>
+                        <Typography
+                          className={classes.offer}
+                          fontSize={11}
+                          fontWeight={700}
+                          color='white'
+                          variant='span'
+                        >
                           Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
                           dias
                         </Typography>
                       </div>
                     )}
                     <Typography variant='p'>
+                      <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                        Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
+                      </Typography>
                       <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
                         Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
                       </Typography>
