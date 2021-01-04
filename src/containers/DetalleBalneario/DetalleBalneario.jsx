@@ -391,10 +391,10 @@ const DetalleBalneario = () => {
                   <Typography fontSize={23} fontWeight={400} className={classes.subTitle} variant='h4'>
                     {get(balneario, 'nombre')}
                   </Typography>
-                  <Typography fontSize={18} color='grey' variant='p'>
+                  <Typography fontSize={16} color='grey' variant='p'>
                     {get(balneario, 'ciudad.nombre')}
                   </Typography>
-                  <Typography fontSize={16} variant='p' color='grey'>
+                  <Typography fontSize={14} variant='p' color='grey'>
                     {get(balneario, 'direccion')}
                   </Typography>
                 </div>

@@ -8,7 +8,7 @@ import IconSomb from '../assets/icon-sombri.svg'
 const useStyles = makeStyles(theme => ({
   itemSelected: {
     width: '100%',
-    height: 130,
+    height: 110,
     margin: 5,
     border: '1px solid #ECEAEA',
     boxSizing: 'border-box',
@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
   },
   selected: {
     width: '100%',
-    height: 130,
+    height: 110,
     margin: 5,
     display: 'flex',
     flexDirection: 'column',
