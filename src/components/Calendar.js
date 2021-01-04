@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
+import esLocale from "date-fns/locale/es"
 import DateFnsUtils from '@date-io/date-fns'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -67,9 +68,10 @@ const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('DD-MM-YYYY
   }, [])
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
       <DatePicker
         disableToolbar
+        disablePast
         className={classes.calendar}
         autoOk
         variant='inline'
