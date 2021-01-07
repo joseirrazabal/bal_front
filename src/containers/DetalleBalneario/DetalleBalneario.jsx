@@ -566,7 +566,9 @@ const DetalleBalneario = () => {
             </ul>
           </div>
           <FullScreenDialog title='Plano Balneario' open={open} handleClose={handleClose}>
-            <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
+            <div style={{margin: '0 auto', maxWidth: 850, width: '100%'}}>
+              <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
+            </div>
           </FullScreenDialog>
         </div>
       </div>
