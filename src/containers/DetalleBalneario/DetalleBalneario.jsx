@@ -252,7 +252,7 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
 
     '@media (max-width: 680px)': {
-      display: 'block'
+      display: 'block',
     },
   },
   offer: {
@@ -407,7 +407,7 @@ const DetalleBalneario = () => {
                   {imagenes.map((item, i) => {
                     return (
                       <div key={i}>
-                        <img style={{width: '100%'}} src={item.url} />
+                        <img style={{ width: '100%' }} src={item.url} />
                       </div>
                     )
                   })}
@@ -458,79 +458,84 @@ const DetalleBalneario = () => {
                     )
                   })}
                 </div>
-                <div className={classes.gridRow}>
-                  <Selected
-                    items={get(dataCategorias, 'categoriaListFront')}
-                    loading={loadingCategorias}
-                    onChange={e => {
-                      setCategoria(e.target.value)
-                    }}
-                  />
-                </div>
+                {get(dataCategorias, 'categoriaListFront.0') && (
+                  <div className={classes.gridRow}>
+                    <Selected
+                      items={get(dataCategorias, 'categoriaListFront')}
+                      loading={loadingCategorias}
+                      onChange={e => {
+                        setCategoria(e.target.value)
+                      }}
+                    />
+                  </div>
+                )}
               </div>
-              <div className={classes.detalleBottom}>
-                <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
-                  <div>
-                    {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
-                      <div style={{ marginBottom: 5 }}>
-                        <Typography
-                          className={classes.offer}
-                          fontSize={11}
-                          fontWeight={700}
-                          color='white'
-                          variant='span'
-                        >
-                          Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
-                          dias
+
+              {get(dataPrecio, 'precioGetFront.precio') && (
+                <div className={classes.detalleBottom}>
+                  <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
+                    <div>
+                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
+                        <div style={{ marginBottom: 5 }}>
+                          <Typography
+                            className={classes.offer}
+                            fontSize={11}
+                            fontWeight={700}
+                            color='white'
+                            variant='span'
+                          >
+                            Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
+                            dias
+                          </Typography>
+                        </div>
+                      )}
+                      <Typography variant='p'>
+                        <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                          Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                         </Typography>
-                      </div>
-                    )}
-                    <Typography variant='p'>
-                      <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                        Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
+                        <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                          Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
+                        </Typography>
+                        <Typography color='black' variant='i'>
+                          $
+                        </Typography>
+                        <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
+                          {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
+                        </Typography>
+                        <Typography fontWeight={400} fontSize={16} color='black' variant='span'>
+                          Total
+                        </Typography>
                       </Typography>
                       <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                        Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
+                        dias:{cantidadDias}
                       </Typography>
-                      <Typography color='black' variant='i'>
-                        $
-                      </Typography>
-                      <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                        {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
-                      </Typography>
-                      <Typography fontWeight={400} fontSize={16} color='black' variant='span'>
-                        Total
-                      </Typography>
+                    </div>
+                    <Button
+                      disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
+                      height={48}
+                      width={200}
+                      onClick={() =>
+                        history.push(
+                          `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
+                        )
+                      }
+                    >
+                      ALQUILAR
+                    </Button>
+                  </div>
+                  <div className={classes.gridColumn} style={{ marginTop: 15 }}>
+                    <Typography color='black' variant='h3'>
+                      Información importante
                     </Typography>
-                    <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                      dias:{cantidadDias}
+                    <Typography color='green' variant='p'>
+                      Checkin: {get(balneario, 'checkIn')}
+                    </Typography>
+                    <Typography color='red' variant='p'>
+                      Checkout: {get(balneario, 'checkOut')}
                     </Typography>
                   </div>
-                  <Button
-                    disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
-                    height={48}
-                    width={200}
-                    onClick={() =>
-                      history.push(
-                        `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
-                      )
-                    }
-                  >
-                    ALQUILAR
-                  </Button>
                 </div>
-                <div className={classes.gridColumn} style={{ marginTop: 15 }}>
-                  <Typography color='black' variant='h3'>
-                    Información importante
-                  </Typography>
-                  <Typography color='green' variant='p'>
-                    Checkin: {get(balneario, 'checkIn')}
-                  </Typography>
-                  <Typography color='red' variant='p'>
-                    Checkout: {get(balneario, 'checkOut')}
-                  </Typography>
-                </div>
-              </div>
+              )}
             </div>
           </div>
           <div className={classes.contentDetalleColumn}>
@@ -538,7 +543,11 @@ const DetalleBalneario = () => {
               {get(balneario, 'nombre')}
             </Typography>
             <Typography fontSize={16} color='black' lineHeight={'30px'}>
-              {get(balneario, 'descripcion')}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: get(balneario, 'descripcion'),
+                }}
+              />
             </Typography>
           </div>
           <div className={classes.contentDetalleColumn}>
