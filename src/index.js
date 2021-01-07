@@ -15,7 +15,7 @@ const App = () => {
   return [
     <Helmet key={1} encodeSpecialCharacters titleTemplate='%s'>
       <title>Alamar</title>
-      <meta name='description' content='Alamar - Sitio web' />
+      <meta name='description' content='Alamar - Sitio Web' />
       <html lang='es' />
       <meta charSet='utf-8' />
       <meta httpEquiv='x-ua-compatible' content='ie=edge,chrome=1' />
