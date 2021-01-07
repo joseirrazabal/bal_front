@@ -168,7 +168,6 @@ const useStyles = makeStyles(theme => ({
   },
   imageBackground: {
     position: 'relative',
-    // background: 'red',
     width: '100%',
     height: 500,
     minHeight: 460,
@@ -179,11 +178,15 @@ const useStyles = makeStyles(theme => ({
 
     '& img': {
       width: '100%',
+
+      /* '@media (max-width: 680px)': {
+        height: 300,
+      }, */
     },
 
     '@media (max-width: 680px)': {
       minHeight: 'auto',
-      height: 'auto',
+      height: 300,
     },
   },
   detalleTop: {
@@ -242,6 +245,16 @@ const useStyles = makeStyles(theme => ({
     right: 10,
     bottom: 10,
   },
+  verFotos: {
+    position: 'absolute',
+    left: 10,
+    bottom: 10,
+    display: 'none',
+
+    '@media (max-width: 680px)': {
+      display: 'block'
+    },
+  },
   offer: {
     background: '#55C443',
     boxSizing: 'border-box',
@@ -261,6 +274,7 @@ const DetalleBalneario = () => {
   const [balneario, setBalneario] = useState({})
   const [imagenes, setImagenes] = useState([])
   const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
   const [otros, setOtros] = useState([])
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
@@ -269,9 +283,15 @@ const DetalleBalneario = () => {
   const handleClickOpen = () => {
     setOpen(true)
   }
+  const handleClickOpen2 = () => {
+    setOpen2(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
+  }
+  const handleClose2 = () => {
+    setOpen2(false)
   }
 
   const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
@@ -377,6 +397,29 @@ const DetalleBalneario = () => {
                   )
                 })}
               </Carousel>
+              <FullScreenDialog title='fotos del Balneario' open={open2} handleClose={handleClose2}>
+                <Carousel>
+                  {imagenes.length === 0 && (
+                    <div>
+                      <SimpleImage width='100%' image={DefaultImage} />
+                    </div>
+                  )}
+                  {imagenes.map((item, i) => {
+                    return (
+                      <div key={i}>
+                        <img style={{width: '100%'}} src={item.url} />
+                      </div>
+                    )
+                  })}
+                </Carousel>
+              </FullScreenDialog>
+              {imagenes.length != 0 && (
+                <div className={classes.verFotos}>
+                  <Button variant='secondary' height={30} onClick={handleClickOpen2}>
+                    AMPLIAR FOTOS
+                  </Button>
+                </div>
+              )}
               {get(balneario, 'planos.0') && (
                 <div className={classes.verPlano}>
                   <Button variant='default' color='black' height={30} onClick={handleClickOpen}>
