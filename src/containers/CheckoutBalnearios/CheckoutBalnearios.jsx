@@ -26,6 +26,7 @@ import Term from '../TyC/Term'
 import ImageMp from '../../assets/img-mercadopago.jpg'
 import CreditCard1 from '../../assets/cards1.png'
 import CreditCard2 from '../../assets/cards2.png'
+import ErrorMsg from './errorMP'
 
 import PRECIO_GET from 'gql/precio/get'
 import RESERVA_ADD from 'gql/reserva/save'
@@ -457,10 +458,11 @@ const CheckoutBalnearios = ({ theme }) => {
       cardholderName: cardholderName.current.value,
     }
 
+    Mercadopago.clearSession()
+
     Mercadopago.createToken(form, (status, response) => {
       if (status != 200 && status != 201) {
-        console.log('Verify fail', response)
-        setErrorMP(get(response, 'cause.0.description', 'Error con los datos insertados'))
+        setErrorMP(get(response, 'cause', [{ code: 2 }]))
         return false
       } else {
         setErrorMP(false)
@@ -553,7 +555,10 @@ const CheckoutBalnearios = ({ theme }) => {
                     //id='paymentForm'
                   >
                     <div>
-                      {errorMP && <div style={{ color: 'red' }}>{errorMP}</div>}
+                      {errorMP &&
+                        errorMP.map(item => {
+                          return <div style={{ color: 'red' }}>{ErrorMsg(item.code)}</div>
+                        })}
                       <div className={`${classes.gridRow}`}>
                         <div className={classes.input}>
                           <label htmlFor='email'>E-mail</label>
