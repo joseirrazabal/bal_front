@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useHistory } from 'react-router-dom'
 import SimpleImage from './SimpleImage'
 import Typography from './Typography'
 import FullScreenDialog from './Dialog'
@@ -8,8 +7,8 @@ import FullScreenDialog from './Dialog'
 import Facebook from '../assets/icon-facebook.svg'
 import Phone from '../assets/icon-phone.svg'
 import Instagram from '../assets/icon-instagram.svg'
-import Whatsapp from '../assets/icon-whatsapp.svg'
-import Location from '../assets/icon-pin-white.svg'
+// import Whatsapp from '../assets/icon-whatsapp.svg'
+// import Location from '../assets/icon-pin-white.svg'
 
 import Term from '../containers/TyC/Term'
 
@@ -80,26 +79,26 @@ const Footer = () => {
           <Typography variant="h4" color="white">Info de contacto:</Typography>
           <ul style={{flexDirection: 'column'}}>
             <a>
-              <li className={classes.itemFooter}><SimpleImage image={Phone} height={20} /> <Typography variant="p" color="white" fontSize={12}>(011) - 119998-4567</Typography></li>
+              <li className={classes.itemFooter}><SimpleImage image={Phone} height={20} /> <Typography variant="p" color="white" fontSize={12}>alamar.info.ar@gmail.com</Typography></li>
             </a>
-            <a>
+           {/*  <a>
               <li className={classes.itemFooter}><SimpleImage image={Location} height={25} /> <Typography variant="p" color="white" fontSize={12}>Direccion de ejmplo 123 - Buenos Aires</Typography></li>
-            </a>
+            </a> */}
           </ul>
         </div>
         <div>
           <Typography variant="h4" color="white">Nos podes encontrar en:</Typography>
           <ul>
-            <a ><li className={classes.itemFooter}><SimpleImage image={Facebook} height={25} /></li></a>
-            <a ><li className={classes.itemFooter}><SimpleImage image={Instagram} height={25} /></li></a>
-            <a ><li className={classes.itemFooter}><SimpleImage image={Whatsapp} height={25} /></li></a>
+            <a href="#"><li className={classes.itemFooter}><SimpleImage image={Facebook} height={25} /></li></a>
+            <a href="#"><li className={classes.itemFooter}><SimpleImage image={Instagram} height={25} /></li></a>
+            {/* <a ><li className={classes.itemFooter}><SimpleImage image={Whatsapp} height={25} /></li></a> */}
           </ul>
         </div>
         <div>
           <Typography variant="h4" color="white">¿Dudas?</Typography>
           <ul style={{flexDirection: 'column'}}>
-            <li><Typography variant="p" color="white" fontSize={12}>sobre nosotros</Typography></li>
-            <li onClick={handleClickOpen}><Typography variant="p" color="white" fontSize={12}>terminos y condicioness</Typography></li>
+            {/* <li><Typography variant="p" color="white" fontSize={12}>sobre nosotros</Typography></li> */}
+            <li onClick={handleClickOpen}><Typography variant="p" color="white" fontSize={12}>terminos y condiciones</Typography></li>
           </ul>
         </div>
       </div>
