@@ -268,7 +268,7 @@ const Home = () => {
                 <SimpleImage image={ImageCoronaVirus} width="100%" />
                 <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none', marginTop: 15}}>
                   <Button color="primary" variant='contained'>
-                    ir al sitio
+                    ver protocolos
                   </Button>
                 </a>
               </div>
