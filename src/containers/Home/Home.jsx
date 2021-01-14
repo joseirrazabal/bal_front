@@ -16,7 +16,7 @@ import CardBal from '../../components/CardBal'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
 
-import imageBackground from '../../assets/banner-fondo.jpg'
+import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageCoronaVirus from '../../assets/pop-up.jpg'
 import ImageBanner from '../../assets/banner-MP-compu.png'
 import ImageBannerMobile from '../../assets/banner-MP-celu.png'
@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(' + imageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundPosition: 'bottom',
     backgroundRepeat: 'no-repeat',
     position: 'relative',
     display: 'flex',

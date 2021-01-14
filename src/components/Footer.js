@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
 
     '& p': {
-      paddingLeft: 10
+      //paddingLeft: 10
     }
   }
 }))
@@ -79,7 +79,7 @@ const Footer = () => {
           <Typography variant="h4" color="white">Info de contacto:</Typography>
           <ul style={{flexDirection: 'column'}}>
             <a>
-              <li className={classes.itemFooter}><SimpleImage image={Phone} height={20} /> <Typography variant="p" color="white" fontSize={12}>alamar.info.ar@gmail.com</Typography></li>
+              <li className={classes.itemFooter}>{/* <SimpleImage image={Phone} height={20} /> */} <Typography variant="p" color="white" fontSize={12}>alamarargentina@gmail.com</Typography></li>
             </a>
            {/*  <a>
               <li className={classes.itemFooter}><SimpleImage image={Location} height={25} /> <Typography variant="p" color="white" fontSize={12}>Direccion de ejmplo 123 - Buenos Aires</Typography></li>
