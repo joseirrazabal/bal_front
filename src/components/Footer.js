@@ -89,8 +89,8 @@ const Footer = () => {
         <div>
           <Typography variant="h4" color="white">Nos podes encontrar en:</Typography>
           <ul>
-            <a href="#"><li className={classes.itemFooter}><SimpleImage image={Facebook} height={25} /></li></a>
-            <a href="#"><li className={classes.itemFooter}><SimpleImage image={Instagram} height={25} /></li></a>
+            <a href="#" target="_blank"><li className={classes.itemFooter}><SimpleImage image={Facebook} height={25} /></li></a>
+            <a href="https://www.instagram.com/alamar_ar/" target="_blank"><li className={classes.itemFooter}><SimpleImage image={Instagram} height={25} /></li></a>
             {/* <a ><li className={classes.itemFooter}><SimpleImage image={Whatsapp} height={25} /></li></a> */}
           </ul>
         </div>
