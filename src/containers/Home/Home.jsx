@@ -15,6 +15,7 @@ import Search from '../../components/Search'
 import CardBal from '../../components/CardBal'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
+import Slider from "react-slick"
 
 import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageCoronaVirus from '../../assets/pop-up.jpg'
@@ -25,6 +26,31 @@ import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
 import SimpleImage from '../../components/SimpleImage'
+
+const settings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 2.5,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1.2,
+        slidesToScroll: 1
+      }
+    }
+  ]
+};
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -102,20 +128,20 @@ const useStyles = makeStyles(theme => ({
   },
   contentSlider: {
     width: '100%',
-    display: 'flex',
+    /* display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'strech',
+    alignItems: 'strech', */
     boxSizing: 'border-box',
 
     '& ul': {
       listStyle: 'none',
-      display: 'inline-flex',
+      // display: 'inline-flex',
       width: '100%',
       padding: 0,
 
       '& li': {
         width: '100%',
-        margin: 5,
+        listStyle: 'none',
 
         '@media (max-width: 600px)': {
           width: '325px',
@@ -248,23 +274,27 @@ const Home = () => {
             </div>
             <div className={classes.contentSlider}>
               <ul>
-                {get(data, 'balnearioListFrontUltimos', [])
-                  .slice(0, 3)
-                  .map((item, i) => {
-                    return (
-                      <li key={i}>
-                        <CardBal
-                          moludar
-                          nuevo
-                          item={item}
-                          onClick={() => {
-                            const dia = dayjs().format('DD-MM-YYYY')
-                            history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
-                          }}
-                        />
-                      </li>
-                    )
-                  })}
+                <Slider {...settings}>
+                  {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
+                      return (
+                        <div>
+                          <div style={{margin: 5}}>
+                            <li key={i}>
+                              <CardBal
+                                moludar
+                                nuevo
+                                item={item}
+                                onClick={() => {
+                                  const dia = dayjs().format('DD-MM-YYYY')
+                                  history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
+                                }}
+                              />
+                            </li>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </Slider>
               </ul>
             </div>
             <DialogSimpleComponent>
