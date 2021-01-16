@@ -78,6 +78,10 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       height: '30vh',
     },
+    '@media (max-width: 680px)': {
+      backgroundSize: 680,
+      backgroundPosition: 'top center',
+    },
   },
   contentBanners: {
     width: '100%',
