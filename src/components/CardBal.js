@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)',
     },
-    '@media (max-width: 960px)': {
+    /* '@media (max-width: 960px)': {
       width: !moludar ? 'calc(100% / 2 - 10px)' : '100%',
-    },
+    }, */
     '@media (max-width: 600px)': {
       width: !moludar ? 'calc(100% / 1 - 10px)' : '100%',
     },

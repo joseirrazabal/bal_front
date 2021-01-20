@@ -484,17 +484,17 @@ const DetalleBalneario = () => {
                             color='white'
                             variant='span'
                           >
-                            Oferta por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
+                            Descuento por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
                             dias
                           </Typography>
                         </div>
                       )}
-                      <Typography variant='p'>
-                        <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                      <div>
+                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
                           Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                         </Typography>
-                        <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
-                          Precio por dia {parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
+                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
+                          Precio por dia ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
                         </Typography>
                         <Typography color='black' variant='i'>
                           $
@@ -502,11 +502,11 @@ const DetalleBalneario = () => {
                         <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
                           {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
                         </Typography>
-                        <Typography fontWeight={400} fontSize={16} color='black' variant='span'>
+                        <Typography fontWeight={400} fontSize={16} color='black' variant='span' fontStyle="italic">
                           Total
                         </Typography>
-                      </Typography>
-                      <Typography fontSize={14} fontWeight={700} color='black' variant='p'>
+                      </div>
+                      <Typography fontSize={12} fontStyle="italic" fontWeight={400} color='black' variant='p'>
                         dias:{cantidadDias}
                       </Typography>
                     </div>

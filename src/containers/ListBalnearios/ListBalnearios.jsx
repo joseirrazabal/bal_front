@@ -21,7 +21,7 @@ import FullScreenDialog from '../../components/Dialog'
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
-import imageBackground from '../../assets/fondo.jpg'
+import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageDefault from '../../assets/sin-resultados.jpg'
 import { Button } from '@material-ui/core'
 
@@ -60,6 +60,7 @@ const useStyles = makeStyles(theme => ({
 
     '@media (max-width: 960px)': {
       width: '100%',
+      display: 'none',
     },
     '@media (max-width: 680px)': {
       display: 'none',
@@ -74,11 +75,10 @@ const useStyles = makeStyles(theme => ({
   contentSearch: {
     width: '100%',
     height: 300,
-    background: 'red',
     backgroundImage: 'url(' + imageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
     position: 'relative',
     display: 'flex',
@@ -157,6 +157,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     display: 'flex',
+
     '@media (max-width: 680px)': {
       flexDirection: 'column',
     },
@@ -167,7 +168,7 @@ const useStyles = makeStyles(theme => ({
     padding: 10,
     minWidth: 100,
 
-    '@media (max-width: 680px)': {
+    '@media (max-width: 960px)': {
       display: 'flex',
       justifyContent: 'center',
       position: 'fixed',
