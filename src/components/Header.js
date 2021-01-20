@@ -7,6 +7,8 @@ import SimpleImage from './SimpleImage'
 import LogoAlamar from '../assets/alamar-logo-2.svg'
 import Typography from './Typography'
 
+import IconPlaya from '../assets/icon-playa.svg'
+
 const useStyles = makeStyles(theme => ({
   header: {
     width: '100%',
@@ -60,6 +62,13 @@ const useStyles = makeStyles(theme => ({
 
       '& a': {
         textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+
+        '& img': {
+          marginRight: 5
+        },
+
         '&:hover': {
           textDecoration: 'underline',
         },
@@ -86,7 +95,8 @@ const Header = () => {
         <ul className={classes.nav}>
           <li>
             <Link to={`/list/${dia}/${dia}`}>
-              <Typography variant='p' color='white'>
+              <SimpleImage height={30} image={IconPlaya} />
+              <Typography variant='p' color='white' fontWeight={400}>
                 Balnearios
               </Typography>
             </Link>
