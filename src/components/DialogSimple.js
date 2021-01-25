@@ -32,7 +32,6 @@ export default function DialogSimpleComponent({children}) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        {/* <DialogTitle id="alert-dialog-slide-title">{"COVID-19"}</DialogTitle> */}
         <DialogContent>
           {children}
         </DialogContent>

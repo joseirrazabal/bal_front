@@ -128,14 +128,10 @@ const useStyles = makeStyles(theme => ({
   },
   contentSlider: {
     width: '100%',
-    /* display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'strech', */
     boxSizing: 'border-box',
 
     '& ul': {
       listStyle: 'none',
-      // display: 'inline-flex',
       width: '100%',
       padding: 0,
 
@@ -256,7 +252,7 @@ const Home = () => {
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
             <div className={classes.banner}>
-              <SimpleImage image={ImageBanner} width={'100%'} />
+              <SimpleImage alt="Alamar - Balnearios Costa Atlantica" image={ImageBanner} width={'100%'} />
             </div>
             <div className={classes.bannerMobile}>
               <SimpleImage image={ImageBannerMobile} width={'100%'} />

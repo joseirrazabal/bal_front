@@ -21,6 +21,7 @@ const App = () => {
       <meta httpEquiv='x-ua-compatible' content='ie=edge,chrome=1' />
       <meta name='viewport' content='width=device-width,initial-scale=1' />
       <meta name='theme-color' content={get(theme, 'palette.primary.main', 'transparent')} />
+      <meta name="description" content="Alquileres en Balnearios de la Costa Atlantica" />
       <link rel='manifest' href='/manifest.json' />
     </Helmet>,
     <Route key={2} />,

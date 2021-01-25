@@ -10,13 +10,10 @@ import ImageDefault from '../assets/default-image.jpg'
 const useStyles = makeStyles((theme) => ({
   cardBal: ({ moludar = false }) => ({
     float: 'left',
-    //width: !moludar ? 'calc(100% / 3 - 10px)' : '100%',
     width: '100%',
     height: 'auto',
-    //margin: 5,
     borderRadius: 6,
     overflow: 'hidden',
-    //boxSizing: 'border-box',
     border: '1px solid #ccc',
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
     cursor: 'pointer',
@@ -24,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       'box-shadow': '0 3px 6px 0 rgba(0,0,0,.1)',
     },
-    /* '@media (max-width: 960px)': {
-      width: !moludar ? 'calc(100% / 2 - 10px)' : '100%',
-    }, */
     '@media (max-width: 600px)': {
       width: !moludar ? 'calc(100% / 1 - 10px)' : '100%',
     },

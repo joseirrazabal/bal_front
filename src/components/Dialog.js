@@ -33,12 +33,8 @@ export default function FullScreenDialog({
   children,
   title = 'Buscar'
 }) {
+  
   const classes = useStyles();
-/*   const [open, setOpen] = React.useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  }; */
 
   return (
     <div>

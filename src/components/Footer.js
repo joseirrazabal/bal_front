@@ -78,7 +78,7 @@ const Footer = () => {
         <div>
           <Typography variant="h4" color="white">Info de contacto:</Typography>
           <ul style={{flexDirection: 'column'}}>
-            <a>
+            <a alt="Alamar - Balnearios Costa Atlantica">
               <li className={classes.itemFooter}>{/* <SimpleImage image={Phone} height={20} /> */} <Typography variant="p" color="white" fontSize={12}>alamarargentina@gmail.com</Typography></li>
             </a>
            {/*  <a>

@@ -89,13 +89,13 @@ const Header = () => {
       <div className={classes.container}>
         <div className={classes.contentLogo}>
           <Link to='/'>
-            <SimpleImage height={30} alt='Alamar' image={LogoAlamar} onClick={() => history.push('/')} />
+            <SimpleImage alt="Alamar - Balnearios Costa Atlantica" height={30} alt='Alamar' image={LogoAlamar} onClick={() => history.push('/')} />
           </Link>
         </div>
         <ul className={classes.nav}>
           <li>
             <Link to={`/list/${dia}/${dia}`}>
-              <SimpleImage height={30} image={IconPlaya} />
+              <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={30} image={IconPlaya} />
               <Typography variant='p' color='white' fontWeight={400}>
                 Balnearios
               </Typography>

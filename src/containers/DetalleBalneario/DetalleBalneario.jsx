@@ -386,7 +386,7 @@ const DetalleBalneario = () => {
               <Carousel>
                 {imagenes.length === 0 && (
                   <div className={classes.imageBackground}>
-                    <SimpleImage width='100%' image={DefaultImage} />
+                    <SimpleImage alt="Alquilar Balneario Costa Atlantica" width='100%' image={DefaultImage} />
                   </div>
                 )}
                 {imagenes.map((item, i) => {
@@ -401,7 +401,7 @@ const DetalleBalneario = () => {
                 <Carousel>
                   {imagenes.length === 0 && (
                     <div>
-                      <SimpleImage width='100%' image={DefaultImage} />
+                      <SimpleImage alt="Alquilar Balneario Costa Atlantica" width='100%' image={DefaultImage} />
                     </div>
                   )}
                   {imagenes.map((item, i) => {

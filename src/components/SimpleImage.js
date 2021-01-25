@@ -7,7 +7,7 @@ const useStyles = makeStyles(() => ({
 
 const SimpleImage = ({
   image = 'https://netb.tmsimg.com/assets/s10021_lw_h3_ab.png',
-  alt = 'Alamar',
+  alt = "Alamar - Balnearios Costa Atlantica",
   title = null,
   width,
   height,
