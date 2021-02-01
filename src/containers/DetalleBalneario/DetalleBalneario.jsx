@@ -504,6 +504,9 @@ const DetalleBalneario = () => {
                         </div>
                       )}
                       <div>
+                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
+                          Precio normal ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}
+                        </Typography>
                         <Typography fontSize={12} fontWeight={400} variant='p'>
                           Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                         </Typography>

@@ -4,6 +4,7 @@ query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: St
     precio
     dias
     stock
+    precioCero
     articulo {
       _id
       categoria {
@@ -20,6 +21,7 @@ query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: St
             _id
             nombre
           }
+          keyPublic
         }
       }
     }

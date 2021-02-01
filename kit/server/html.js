@@ -7,6 +7,19 @@ const GTM_ID = process.env.GTM_ID
 const Html = ({ html, head, material, loadableState, apolloState }) => {
   return (
     <html lang='es'>
+      <div
+        style={{ display: 'none' }}
+        dangerouslySetInnerHTML={{
+          __html: `
+            <!-- 
+            desarrollado por: 
+              - joseirrazabal@gmail.com 
+              - reqini@gmail.com 
+            -->
+        `,
+        }}
+      />
+
       <head>
         {/* preload fuente roboto */}
         <link

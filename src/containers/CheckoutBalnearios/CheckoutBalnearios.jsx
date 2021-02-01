@@ -33,7 +33,7 @@ import RESERVA_ADD from 'gql/reserva/save'
 
 dayjs.extend(customParseFormat)
 
-const { MERCADO_PAGO_PUBLIC_KEY } = process.env
+// const { MERCADO_PAGO_PUBLIC_KEY } = process.env
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -310,6 +310,7 @@ const CheckoutBalnearios = ({ theme }) => {
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
   const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
 
+  const [keyPublic, setKeyPublic] = useState(false)
   const [textoCuota, setTextoCuota] = useState(false)
   const [open, setOpen] = useState(false)
   const [errorMP, setErrorMP] = useState(false)
@@ -331,6 +332,12 @@ const CheckoutBalnearios = ({ theme }) => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  useEffect(() => {
+    if (get(dataPrecio, 'precioGetFront.precio')) {
+      setKeyPublic(get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.keyPublic'))
+    }
+  }, [dataPrecio])
 
   // ==========
   const [issuers, setIssuers] = useState([])
@@ -356,11 +363,13 @@ const CheckoutBalnearios = ({ theme }) => {
   }, [installmentSelect])
 
   useEffect(() => {
-    Mercadopago.setPublishableKey(MERCADO_PAGO_PUBLIC_KEY)
-    Mercadopago.getIdentificationTypes((status, response) => {
-      setTipoDocument(response)
-    })
-  }, [])
+    if (keyPublic) {
+      Mercadopago.setPublishableKey(keyPublic)
+      Mercadopago.getIdentificationTypes((status, response) => {
+        setTipoDocument(response)
+      })
+    }
+  }, [keyPublic])
 
   const handleCardChange = event => {
     if (event.target.value.length >= 6) {
