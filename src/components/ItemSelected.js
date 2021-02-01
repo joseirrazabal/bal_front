@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import SimpleImage from './SimpleImage'
-
+import Typography from './Typography'
 import IconSomb from '../assets/icon-sombri.svg'
 
 const useStyles = makeStyles(theme => ({
@@ -113,6 +113,7 @@ const ItemSelected = ({
   title = 'Alquilar Sombrilla',
   precio = '1200',
   className,
+  // disponibles,
   onClick = () => {},
 }) => {
   const classes = useStyles()
@@ -129,6 +130,7 @@ const ItemSelected = ({
       </div>
       <div>
         <h2>{title}</h2>
+        {/* <Typography textAlign="center" variant="p" fontSize={12} color="black">Disponibles: {disponibles}</Typography> */}
         {/* <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p> */}
       </div>
     </div>

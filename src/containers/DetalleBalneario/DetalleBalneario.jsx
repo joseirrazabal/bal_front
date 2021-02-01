@@ -99,6 +99,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     boxSizing: 'border-box',
     marginBottom: 20,
+    marginTop: 20,
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
 
     '@media (max-width: 960px)': {
@@ -261,6 +262,18 @@ const useStyles = makeStyles(theme => ({
     padding: 3,
     borderRadius: 6,
   },
+  description: {
+    '& p': {
+      lineHeight: '28px!important',
+      fontSize: '18px!important',
+      fontFamily: 'Oswald, sans-serif',
+    }
+  },
+  flexCenter: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  }
 }))
 
 const DetalleBalneario = () => {
@@ -372,7 +385,7 @@ const DetalleBalneario = () => {
       </div>
       <div className={classes.contentBanners}>
         <div className={classes.container}>
-          <Typography
+          {/* <Typography
             fontWeight={700}
             fontSize={25}
             textAlign='center'
@@ -380,7 +393,7 @@ const DetalleBalneario = () => {
             varian='h2'
           >
             Balneario
-          </Typography>
+          </Typography> */}
           <div className={classes.contentDetalle}>
             <div className={classes.slider}>
               <Carousel>
@@ -431,7 +444,7 @@ const DetalleBalneario = () => {
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
                 <div className={classes.gridColumn}>
-                  <Typography fontSize={23} fontWeight={400} className={classes.subTitle} variant='h4'>
+                  <Typography fontSize={23} fontWeight={700} className={classes.subTitle} variant='h4'>
                     {get(balneario, 'nombre')}
                   </Typography>
                   <Typography fontSize={16} color='grey' variant='p'>
@@ -451,6 +464,7 @@ const DetalleBalneario = () => {
                         icon={get(item, 'imagen') || IconCarpAzul}
                         title={`Alquilar ${item.nombre}`}
                         precio={400}
+                        // disponibles={get(dataPrecio, 'precioGetFront.stock', 0)}
                         onClick={() => {
                           setTipoSelected(item)
                         }}
@@ -490,25 +504,27 @@ const DetalleBalneario = () => {
                         </div>
                       )}
                       <div>
-                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
+                        <Typography fontSize={12} fontWeight={400} variant='p'>
                           Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                         </Typography>
                         <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
                           Precio por dia ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
                         </Typography>
-                        <Typography color='black' variant='i'>
-                          $
-                        </Typography>
-                        <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                          {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
-                        </Typography>
-                        <Typography fontWeight={400} fontSize={16} color='black' variant='span' fontStyle="italic">
-                          Total
-                        </Typography>
+                        <div className={classes.flexCenter}> 
+                          {/* <Typography color='black' variant='i'>
+                            $
+                          </Typography> */}
+                          <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
+                            ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
+                          </Typography>
+                          <Typography fontWeight={400} fontSize={16} color='black' variant='span' fontStyle="italic">
+                            Total
+                          </Typography>
+                        </div>
                       </div>
-                      <Typography fontSize={12} fontStyle="italic" fontWeight={400} color='black' variant='p'>
+                      {/* <Typography fontSize={12} fontStyle="italic" fontWeight={400} color='black' variant='p'>
                         dias:{cantidadDias}
-                      </Typography>
+                      </Typography> */}
                     </div>
                     <Button
                       disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
@@ -520,30 +536,33 @@ const DetalleBalneario = () => {
                         )
                       }
                     >
-                      ALQUILAR
+                      ALQUILAR X {cantidadDias} DIA/S
                     </Button>
                   </div>
                   <div className={classes.gridColumn} style={{ marginTop: 15 }}>
                     <Typography color='black' variant='h3'>
                       Información importante
                     </Typography>
-                    <Typography color='green' variant='p'>
-                      Checkin: {get(balneario, 'checkIn')}
-                    </Typography>
-                    <Typography color='red' variant='p'>
-                      Checkout: {get(balneario, 'checkOut')}
-                    </Typography>
+                    <div style={{paddingTop: 10}}>
+                      <Typography color='green' variant='p' fontSize={13}>
+                        <b>Checkin:</b> {get(balneario, 'checkIn')}
+                      </Typography>
+                      <Typography color='red' variant='p' fontSize={13}>
+                        <b>Checkout:</b> {get(balneario, 'checkOut')}
+                      </Typography>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
           </div>
           <div className={classes.contentDetalleColumn}>
-            <Typography fontWeight={700} fontSize={20} varian='h3'>
+            <Typography fontWeight={700} fontSize={20} variant='h3'>
               {get(balneario, 'nombre')}
             </Typography>
-            <Typography fontSize={16} color='black' lineHeight={'30px'}>
+            <Typography fontSize={16} color='black' variant='p'>
               <div
+                className={classes.description}
                 dangerouslySetInnerHTML={{
                   __html: get(balneario, 'descripcion'),
                 }}

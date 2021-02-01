@@ -97,7 +97,7 @@ const CardBalDetail = ({ moludar, item, className, nuevo = false, onClick = () =
   const classes = useStyles({ moludar, image })
 
   return (
-    <div className={`${className} ${classes.cardBal}`}>
+    <div className={`${className} ${classes.cardBal}`} onClick={onClick}>
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
       </div>
@@ -123,7 +123,7 @@ const CardBalDetail = ({ moludar, item, className, nuevo = false, onClick = () =
         }
         </div>
         <div>
-          <Button size='small' height='auto' onClick={onClick}>
+          <Button size='small' height='auto'>
             VER BALNEARIO
           </Button>
         </div>
