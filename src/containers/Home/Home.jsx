@@ -164,7 +164,7 @@ const useStyles = makeStyles(theme => ({
     margin: '0px 0',
   },
   title: {
-    fontSize: '48px!important',
+    fontSize: '44px!important',
     position: 'relative',
     zIndex: 2,
     width: '100%',
