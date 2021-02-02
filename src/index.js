@@ -17,6 +17,7 @@ const App = () => {
       <html lang='es' />
       <meta charSet='utf-8' />
       <meta httpEquiv='x-ua-compatible' content='ie=edge,chrome=1' />
+      <meta name="google-site-verification" content="q0sqyvU89qu2Svgj4IKp3QyiNG7WeYdapCqRg1iQGXQ" />
       <meta name='viewport' content='width=device-width,initial-scale=1' />
       <meta name='theme-color' content={get(theme, 'palette.primary.main', 'transparent')} />
       <meta name="description" content="Busca y encontra Balnearios en la Costa Atlantica" />
