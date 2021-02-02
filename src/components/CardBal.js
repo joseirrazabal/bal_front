@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }) => {
+
   const image = get(
     item,
     'imagenes.0.url',
@@ -92,6 +93,12 @@ const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }
           </Typography>
         </div>
         <div>
+          {/* <Typography variant='span' fontSize={10} color="black" fontWeight='400'>
+            Precio por dia
+          </Typography>
+          <Typography variant='p' color="black" fontWeight='500' fontSize={18}>
+            ${get(item, 'precio')}
+          </Typography> */}
           <Button size='small' height='auto'>
             DETALLE
           </Button>
