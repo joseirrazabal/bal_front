@@ -257,10 +257,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   offer: {
-    background: '#55C443',
     boxSizing: 'border-box',
-    padding: 3,
-    borderRadius: 6,
   },
   description: {
     '& p': {
@@ -489,36 +486,17 @@ const DetalleBalneario = () => {
                 <div className={classes.detalleBottom}>
                   <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                     <div>
-                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
-                        <div style={{ marginBottom: 5 }}>
-                          <Typography
-                            className={classes.offer}
-                            fontSize={11}
-                            fontWeight={700}
-                            color='white'
-                            variant='span'
-                          >
-                            Descuento por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
-                            dias
-                          </Typography>
-                        </div>
-                      )}
                       <div>
-                        {parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 &&
-                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
-                          Precio normal ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}
-                        </Typography>
-                        }
                         <Typography fontSize={12} fontWeight={400} variant='p'>
                           Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                         </Typography>
                         <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
-                          Precio por dia ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}
+                          {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`} 
+                          {parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 &&
+                            <Typography fontSize={11} fontWeight={400} color='black' variant="span" textDecoration="line-through"> ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}</Typography>
+                          }
                         </Typography>
-                        <div className={classes.flexCenter}> 
-                          {/* <Typography color='black' variant='i'>
-                            $
-                          </Typography> */}
+                        <div> 
                           <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
                             ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
                           </Typography>
@@ -527,22 +505,35 @@ const DetalleBalneario = () => {
                           </Typography>
                         </div>
                       </div>
-                      {/* <Typography fontSize={12} fontStyle="italic" fontWeight={400} color='black' variant='p'>
-                        dias:{cantidadDias}
-                      </Typography> */}
                     </div>
-                    <Button
-                      disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
-                      height={48}
-                      width={200}
-                      onClick={() =>
-                        history.push(
-                          `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
-                        )
-                      }
-                    >
-                      ALQUILAR X {cantidadDias} DIA/S
-                    </Button>
+                    <div>
+                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
+                        <div style={{ marginBottom: 5 }}>
+                          <Typography
+                            className={classes.offer}
+                            fontSize={11}
+                            fontWeight={400}
+                            color='#55C443'
+                            variant='span'
+                          >
+                            Descuento por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
+                            dias
+                          </Typography>
+                        </div>
+                      )}
+                      <Button
+                        disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
+                        height={40}
+                        width={200}
+                        onClick={() =>
+                          history.push(
+                            `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
+                          )
+                        }
+                      >
+                        ALQUILAR X {cantidadDias} DIA/S
+                      </Button>
+                    </div>
                   </div>
                   <div className={classes.gridColumn} style={{ marginTop: 15 }}>
                     <Typography color='black' variant='h3'>

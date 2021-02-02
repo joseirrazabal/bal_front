@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  Typography: ({ fontSize, fontWeight, color, margin, textAlign, fontStyle, lineHeight }) => ({
+  Typography: () => ({
     width: '100%',
   }),
 }))
@@ -14,6 +14,7 @@ const Typography = ({
   fontSize = 18,
   fontWeight = 300,
   lineHeight = null,
+  textDecoration = 'none',
   color,
   fontStyle = 'normal',
   margin = 0,
@@ -27,6 +28,7 @@ const Typography = ({
     textAlign,
     fontStyle,
     lineHeight,
+    textDecoration
   })
 
   return React.createElement(
@@ -34,6 +36,7 @@ const Typography = ({
     {
       className: `${classes.Typography} ${className}`,
       style: {
+        textDecoration: textDecoration,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color || '#00b0ff',
