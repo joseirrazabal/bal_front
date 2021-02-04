@@ -492,7 +492,8 @@ const DetalleBalneario = () => {
                         </Typography>
                         <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
                           {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`} 
-                          {parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 &&
+
+                          {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 && parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 &&
                             <Typography fontSize={11} fontWeight={400} color='black' variant="span" textDecoration="line-through"> ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}</Typography>
                           }
                         </Typography>
@@ -507,7 +508,7 @@ const DetalleBalneario = () => {
                       </div>
                     </div>
                     <div>
-                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
+                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 && parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
                         <div style={{ marginBottom: 5 }}>
                           <Typography
                             className={classes.offer}
@@ -522,7 +523,7 @@ const DetalleBalneario = () => {
                         </div>
                       )}
                       <Button
-                        disabled={!get(dataPrecio, 'precioGetFront.precio', 0)}
+                        disabled={!get(dataPrecio, 'precioGetFront.precio', 0) || !get(dataPrecio, 'precioGetFront.stock', 0)}
                         height={40}
                         width={200}
                         onClick={() =>
