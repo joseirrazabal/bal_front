@@ -24,6 +24,7 @@ import Loading from '../../components/Loading'
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 import DefaultImage from '../../assets/default-image.jpg'
 import ImageBackground from '../../assets/fondo.jpg'
+import MapaDefault from '../../assets/mapaDefault.jpg'
 
 import TIPO_LIST from 'gql/tipo/list'
 import BALNEARIO_GET from 'gql/balneario/get'
@@ -270,6 +271,31 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center'
+  },
+  contentMap: {
+    height: 250,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: 'url(' + MapaDefault + ')',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    position: 'relative',
+  },
+  absolute: {
+    background: 'rgba(0,0,0,.4)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
+  },
+  centerContentMap: {
+    maxWidth: 200,
+    padding: 10,
+    position: 'relative',
+    zIndex: 2
   }
 }))
 
@@ -285,6 +311,7 @@ const DetalleBalneario = () => {
   const [imagenes, setImagenes] = useState([])
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
+  const [open3, setOpen3] = useState(false)
   const [otros, setOtros] = useState([])
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
@@ -296,12 +323,18 @@ const DetalleBalneario = () => {
   const handleClickOpen2 = () => {
     setOpen2(true)
   }
+  const handleClickOpen3 = () => {
+    setOpen3(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
   }
   const handleClose2 = () => {
     setOpen2(false)
+  }
+  const handleClose3 = () => {
+    setOpen3(false)
   }
 
   const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
@@ -382,15 +415,6 @@ const DetalleBalneario = () => {
       </div>
       <div className={classes.contentBanners}>
         <div className={classes.container}>
-          {/* <Typography
-            fontWeight={700}
-            fontSize={25}
-            textAlign='center'
-            className={classes.title}
-            varian='h2'
-          >
-            Balneario
-          </Typography> */}
           <div className={classes.contentDetalle}>
             <div className={classes.slider}>
               <Carousel>
@@ -566,10 +590,26 @@ const DetalleBalneario = () => {
               />
             </Typography>
           </div>
+          <div className={`${classes.contentDetalleColumn} ${classes.contentMap}`}>
+            <div className={classes.absolute} />
+            <div className={classes.centerContentMap}>
+              <Typography textAlign="center" color="white" fontWeight={700} fontSize={18} variant='h4'>{get(balneario, 'ciudad.nombre')}</Typography>
+              <Typography textAlign="center" color="white" fontSize={14} variant='p'>{get(balneario, 'direccion')}</Typography>
+              <div style={{marginTop: 10}}>
+                <Button height={40} width={200} onClick={handleClickOpen3}>
+                  VER MAPA
+                </Button>
+              </div>
+            </div>
+            <FullScreenDialog title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
+              <div style={{margin: '0 auto', maxWidth: 850, width: '100%'}}>
+                <SimpleImage width='100%' image={MapaDefault} />
+              </div>
+            </FullScreenDialog>
+          </div>
           <div className={classes.contentDetalleColumn}>
             <Typography fontWeight={700} fontSize={20} varian='h3'>
               Otros Balnearios
-              {/* en {get(balneario, 'ciudad.nombre')} */}
             </Typography>
             <ul>
               {otros
@@ -590,7 +630,7 @@ const DetalleBalneario = () => {
                 })}
             </ul>
           </div>
-          <FullScreenDialog title='Plano Balneario' open={open} handleClose={handleClose}>
+          <FullScreenDialog fullScreen={false} title='Plano Balneario' open={open} handleClose={handleClose}>
             <div style={{margin: '0 auto', maxWidth: 850, width: '100%'}}>
               <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
             </div>

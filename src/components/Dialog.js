@@ -31,14 +31,15 @@ export default function FullScreenDialog({
   open, 
   handleClose, 
   children,
-  title = 'Buscar'
+  title = 'Buscar',
+  fullScreen = false
 }) {
   
   const classes = useStyles();
 
   return (
     <div>
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">

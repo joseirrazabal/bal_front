@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
   buttonStyles: ({ color }) => ({
     fontSize: '14!important',
     margin: 0,
-    background: theme.palette.secondary.main,
+    //background: theme.palette.secondary.main,
 
     '& span': {
       color: color || 'white!important',
@@ -24,9 +24,10 @@ const ButtonComponent = ({
   size = 'small',
   height,
   color,
-  variant = 'secondary',
+  colorBg = 'secondary',
+  variant = 'contained',
 }) => {
-  const classes = useStyles({ border, width, height, color })
+  const classes = useStyles({ border, width, height, color, variant, colorBg })
 
   return (
     <Button
@@ -34,8 +35,8 @@ const ButtonComponent = ({
       type={type}
       size={size}
       onClick={onClick}
-      variant='contained'
-      color={variant}
+      variant={variant}
+      color={colorBg}
       className={classes.buttonStyles}
       style={{
         height: height || '60px',
