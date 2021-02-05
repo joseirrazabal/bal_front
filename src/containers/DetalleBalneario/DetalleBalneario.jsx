@@ -20,6 +20,7 @@ import Selected from '../../components/Selected'
 import FullScreenDialog from '../../components/Dialog'
 import SimpleImage from '../../components/SimpleImage'
 import Loading from '../../components/Loading'
+import MyMap from '../../components/Map'
 
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 import DefaultImage from '../../assets/default-image.jpg'
@@ -34,6 +35,8 @@ import PRECIO_GET from 'gql/precio/get'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
 dayjs.extend(customParseFormat)
+
+const key = 'AIzaSyDqmMaF9eTJtA2x-a_xYSK2sF5giJTlkCo'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -265,19 +268,20 @@ const useStyles = makeStyles(theme => ({
       lineHeight: '28px!important',
       fontSize: '18px!important',
       fontFamily: 'Oswald, sans-serif',
-    }
+    },
   },
   flexCenter: {
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   contentMap: {
-    height: 250,
+    height: 400,
     display: 'flex',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundImage: 'url(' + MapaDefault + ')',
+    // backgroundImage: 'url(' + MapaDefault + ')',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -289,17 +293,23 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     left: 0,
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   centerContentMap: {
     maxWidth: 200,
     padding: 10,
-    position: 'relative',
-    zIndex: 2
-  }
+    position: 'absolute',
+    zIndex: 2,
+  },
 }))
 
 const DetalleBalneario = () => {
+  const [widthNav, setWidthNav] = useState(null)
+
+  useEffect(() => {
+    setWidthNav(window.innerWidth)
+  }, [])
+
   const classes = useStyles()
   const history = useHistory()
   const { id, ciudad, desde, hasta } = useParams()
@@ -420,7 +430,11 @@ const DetalleBalneario = () => {
               <Carousel>
                 {imagenes.length === 0 && (
                   <div className={classes.imageBackground}>
-                    <SimpleImage alt="Alquilar Balneario Costa Atlantica" width='100%' image={DefaultImage} />
+                    <SimpleImage
+                      alt='Alquilar Balneario Costa Atlantica'
+                      width='100%'
+                      image={DefaultImage}
+                    />
                   </div>
                 )}
                 {imagenes.map((item, i) => {
@@ -435,7 +449,11 @@ const DetalleBalneario = () => {
                 <Carousel>
                   {imagenes.length === 0 && (
                     <div>
-                      <SimpleImage alt="Alquilar Balneario Costa Atlantica" width='100%' image={DefaultImage} />
+                      <SimpleImage
+                        alt='Alquilar Balneario Costa Atlantica'
+                        width='100%'
+                        image={DefaultImage}
+                      />
                     </div>
                   )}
                   {imagenes.map((item, i) => {
@@ -515,39 +533,59 @@ const DetalleBalneario = () => {
                           Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                         </Typography>
                         <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
-                          {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`} 
+                          {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`}
 
-                          {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 && parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 &&
-                            <Typography fontSize={11} fontWeight={400} color='black' variant="span" textDecoration="line-through"> ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}</Typography>
-                          }
+                          {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 &&
+                            parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 && (
+                              <Typography
+                                fontSize={11}
+                                fontWeight={400}
+                                color='black'
+                                variant='span'
+                                textDecoration='line-through'
+                              >
+                                {' '}
+                                ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}
+                              </Typography>
+                            )}
                         </Typography>
-                        <div> 
+                        <div>
                           <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
                             ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
                           </Typography>
-                          <Typography fontWeight={400} fontSize={16} color='black' variant='span' fontStyle="italic">
+                          <Typography
+                            fontWeight={400}
+                            fontSize={16}
+                            color='black'
+                            variant='span'
+                            fontStyle='italic'
+                          >
                             Total
                           </Typography>
                         </div>
                       </div>
                     </div>
                     <div>
-                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 && parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
-                        <div style={{ marginBottom: 5 }}>
-                          <Typography
-                            className={classes.offer}
-                            fontSize={11}
-                            fontWeight={400}
-                            color='#55C443'
-                            variant='span'
-                          >
-                            Descuento por seleccionar {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))}{' '}
-                            dias
-                          </Typography>
-                        </div>
-                      )}
+                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 &&
+                        parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
+                          <div style={{ marginBottom: 5 }}>
+                            <Typography
+                              className={classes.offer}
+                              fontSize={11}
+                              fontWeight={400}
+                              color='#55C443'
+                              variant='span'
+                            >
+                              Descuento por seleccionar{' '}
+                              {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))} dias
+                            </Typography>
+                          </div>
+                        )}
                       <Button
-                        disabled={!get(dataPrecio, 'precioGetFront.precio', 0) || !get(dataPrecio, 'precioGetFront.stock', 0)}
+                        disabled={
+                          !get(dataPrecio, 'precioGetFront.precio', 0) ||
+                          !get(dataPrecio, 'precioGetFront.stock', 0)
+                        }
                         height={40}
                         width={200}
                         onClick={() =>
@@ -564,7 +602,7 @@ const DetalleBalneario = () => {
                     <Typography color='black' variant='h3'>
                       Información importante
                     </Typography>
-                    <div style={{paddingTop: 10}}>
+                    <div style={{ paddingTop: 10 }}>
                       <Typography color='green' variant='p' fontSize={13}>
                         <b>Checkin:</b> {get(balneario, 'checkIn')}
                       </Typography>
@@ -592,20 +630,35 @@ const DetalleBalneario = () => {
           </div>
           <div className={`${classes.contentDetalleColumn} ${classes.contentMap}`}>
             <div className={classes.absolute} />
+
             <div className={classes.centerContentMap}>
-              <Typography textAlign="center" color="white" fontWeight={700} fontSize={18} variant='h4'>{get(balneario, 'ciudad.nombre')}</Typography>
-              <Typography textAlign="center" color="white" fontSize={14} variant='p'>{get(balneario, 'direccion')}</Typography>
-              <div style={{marginTop: 10}}>
+              <Typography textAlign='center' color='white' fontWeight={700} fontSize={18} variant='h4'>
+                {get(balneario, 'ciudad.nombre')}
+              </Typography>
+              <Typography textAlign='center' color='white' fontSize={14} variant='p'>
+                {get(balneario, 'direccion')}
+              </Typography>
+              <div style={{ marginTop: 10 }}>
                 <Button height={40} width={200} onClick={handleClickOpen3}>
                   VER MAPA
                 </Button>
               </div>
             </div>
-            <FullScreenDialog title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
-              <div style={{margin: '0 auto', maxWidth: 850, width: '100%'}}>
-                <SimpleImage width='100%' image={MapaDefault} />
-              </div>
-            </FullScreenDialog>
+
+            <img
+              style={widthNav > 600 ? { width: '100%', height: '100%' } : {}}
+              src={`https://maps.googleapis.com/maps/api/staticmap?center=${get(
+                balneario,
+                'geoLocation.lat'
+              )}, ${get(balneario, 'geoLocation.lng')}&zoom=14&size=${
+                widthNav > 600 ? '640x400' : '400x400'
+              }&scale=${
+                widthNav > 600 ? '2' : '1'
+              }&maptype=roadmap&markers=color:red%7Clabel:Balneario%7C${get(
+                balneario,
+                'geoLocation.lat'
+              )},${get(balneario, 'geoLocation.lng')}&key=${key}`}
+            />
           </div>
           <div className={classes.contentDetalleColumn}>
             <Typography fontWeight={700} fontSize={20} varian='h3'>
@@ -630,8 +683,24 @@ const DetalleBalneario = () => {
                 })}
             </ul>
           </div>
-          <FullScreenDialog fullScreen={false} title='Plano Balneario' open={open} handleClose={handleClose}>
-            <div style={{margin: '0 auto', maxWidth: 850, width: '100%'}}>
+
+          <FullScreenDialog title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
+            <div style={{ width: widthNav > 600 ? 600 : '100%', height: 500 }}>
+              <MyMap
+                onDragMarker={() => {}}
+                center={get(balneario, 'geoLocation')}
+                marks={[{ position: get(balneario, 'geoLocation') }]}
+              />
+            </div>
+          </FullScreenDialog>
+
+          <FullScreenDialog
+            fullScreen={false}
+            title='Plano Balneario'
+            open={open}
+            handleClose={handleClose}
+          >
+            <div style={{ margin: '0 auto', maxWidth: 850, width: '100%' }}>
               <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
             </div>
           </FullScreenDialog>
