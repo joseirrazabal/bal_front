@@ -476,10 +476,10 @@ const CheckoutBalnearios = ({ theme }) => {
       } else {
         setErrorMP(false)
 
-        const descrip = `alamar: ${get(
+        const descrip = `alamar: ${get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')} - ${get(
           dataPrecio,
           'precioGetFront.articulo.categoria.tipo.nombre'
-        )} ${get(dataPrecio, 'precioGetFront.articulo.categoria.nombre')} desde:${dayjs(
+        )} - ${get(dataPrecio, 'precioGetFront.articulo.categoria.nombre')} desde:${dayjs(
           desde,
           'DD-MM-YYYY'
         ).format('YYYY-MM-DD')} hasta:${dayjs(desde, 'DD-MM-YYYY').format('YYYY-MM-DD')}
