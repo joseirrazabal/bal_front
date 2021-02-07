@@ -685,8 +685,8 @@ const DetalleBalneario = () => {
             </ul>
           </div>
 
-          <FullScreenDialog title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
-            <div style={{ width: widthNav > 600 ? 600 : '100%', height: 500 }}>
+          <FullScreenDialog fullScreen={widthNav < 600} title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
+            <div style={{ width: widthNav > 600 ? 600 : '100%', height: 600 }}>
               <MyMap
                 onDragMarker={() => {}}
                 center={get(balneario, 'geoLocation')}
