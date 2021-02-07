@@ -297,7 +297,11 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   },
   centerContentMap: {
-    maxWidth: 200,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    maxWidth: 300,
     padding: 10,
     position: 'absolute',
     zIndex: 2,
@@ -636,7 +640,7 @@ const DetalleBalneario = () => {
               <Typography textAlign='center' color='white' fontWeight={700} fontSize={18} variant='h4'>
                 {get(balneario, 'ciudad.nombre')}
               </Typography>
-              <Typography textAlign='center' color='white' fontSize={14} variant='p'>
+              <Typography textAlign='center' color='white' fontWeight={500} fontSize={14} variant='p'>
                 {get(balneario, 'direccion')}
               </Typography>
               <div style={{ marginTop: 10 }}>

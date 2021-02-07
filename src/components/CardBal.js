@@ -99,9 +99,9 @@ const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }
           <Typography variant='p' color="black" fontWeight='500' fontSize={18}>
             ${get(item, 'precio')}
           </Typography> */}
-          <Button size='small' height='auto'>
+          {/* <Button size='small' height='auto'>
             DETALLE
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
