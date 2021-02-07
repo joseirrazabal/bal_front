@@ -276,10 +276,11 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   contentMap: {
-    height: 400,
+    height: 280,
     display: 'flex',
+    overflow: 'hidden',
     // justifyContent: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     // backgroundImage: 'url(' + MapaDefault + ')',
     backgroundSize: 'cover',
@@ -646,7 +647,7 @@ const DetalleBalneario = () => {
             </div>
 
             <img
-              style={widthNav > 600 ? { width: '100%', height: '100%' } : {}}
+              style={widthNav > 600 ? { width: '100%', height: 'auto' } : {}}
               src={`https://maps.googleapis.com/maps/api/staticmap?center=${get(
                 balneario,
                 'geoLocation.lat'
