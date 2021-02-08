@@ -472,14 +472,14 @@ const DetalleBalneario = () => {
               </FullScreenDialog>
               {imagenes.length != 0 && (
                 <div className={classes.verFotos}>
-                  <Button variant='secondary' height={30} onClick={handleClickOpen2}>
+                  <Button colorBg='default' color="black" height={30} onClick={handleClickOpen2}>
                     AMPLIAR FOTOS
                   </Button>
                 </div>
               )}
               {get(balneario, 'planos.0') && (
                 <div className={classes.verPlano}>
-                  <Button variant='default' color='black' height={30} onClick={handleClickOpen}>
+                  <Button colorBg="secondary" height={30} onClick={handleClickOpen}>
                     VER PLANO
                   </Button>
                 </div>
