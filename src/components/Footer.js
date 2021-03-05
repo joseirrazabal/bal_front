@@ -5,12 +5,10 @@ import Typography from './Typography'
 import FullScreenDialog from './Dialog'
 
 import Facebook from '../assets/icon-facebook.svg'
-import Phone from '../assets/icon-phone.svg'
 import Instagram from '../assets/icon-instagram.svg'
-// import Whatsapp from '../assets/icon-whatsapp.svg'
-// import Location from '../assets/icon-pin-white.svg'
 
 import Term from '../containers/TyC/Term'
+import Faqs from '../containers/Faqs/Faqs'
 
 const useStyles = makeStyles(theme => ({
   footer: {
@@ -63,13 +61,20 @@ const Footer = () => {
 
   const classes = useStyles()
   const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
+  const handleClickOpen2 = () => {
+    setOpen2(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
+  }
+  const handleClose2 = () => {
+    setOpen2(false)
   }
 
   return (
@@ -96,13 +101,18 @@ const Footer = () => {
         <div>
           <Typography variant="h4" color="white">¿Dudas?</Typography>
           <ul style={{flexDirection: 'column'}}>
-            {/* <li><Typography variant="p" color="white" fontSize={12}>sobre nosotros</Typography></li> */}
-            <li onClick={handleClickOpen}><Typography variant="p" color="white" fontSize={12}>terminos y condiciones</Typography></li>
+            <li onClick={handleClickOpen2}><Typography variant="p" color="white" fontSize={12}>Preguntas Frecuentes</Typography></li>
+            <li onClick={handleClickOpen}><Typography variant="p" color="white" fontSize={12}>Terminos y condiciones</Typography></li>
           </ul>
         </div>
       </div>
+      {/* Terminos y condiciones */}
       <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
         <Term />
+      </FullScreenDialog>
+      {/* preguntas frecuentes */}
+      <FullScreenDialog title='Preguntas Frecuentes' open={open2} handleClose={handleClose2}>
+        <Faqs />
       </FullScreenDialog>
     </div>
   )

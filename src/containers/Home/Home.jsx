@@ -242,7 +242,7 @@ const Home = () => {
           <div className={classes.shadow} />
           <div className={classes.container}>
             <Typography fontWeight="900" className={classes.title} varian='h1'>
-              DISFRUTAR TU LUGAR
+              DISFRUTA TU LUGAR
             </Typography>
             <Search
               ciudades={ciudades}
