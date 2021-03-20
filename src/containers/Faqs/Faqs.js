@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-
 import Typography from '../../components/Typography'
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +36,6 @@ const Faqs = () => {
         Descuentos y promociones: en la web podés ver todos los beneficios ofrecidos por el balneario, descuentos y
         promociones. Al seleccionar una reserva por más de un día ya se pueden percibir las rebajas sobre el precio.
       </Typography>
-
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         <b>3- ¿Cómo funciona?</b>
       </Typography>
@@ -53,7 +51,6 @@ const Faqs = () => {
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         <b>4- ¿Cómo reservo una carpa o sombrilla?</b>
       </Typography>
-
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         Sencillo.<br />
         - Ingresar al sitio web.<br /> 
@@ -63,15 +60,12 @@ const Faqs = () => {
         - Datos para la facturación.<br />
         - Por último, en menos de un minuto te llegará un mail de confirmación.<br />
       </Typography>
-
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         <b>5-  ¿Puedo ver la localización de mi carpa o sombrilla?</b>
       </Typography>
-
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         Todos los balnearios cuentan con un mapa de ubicación de las carpas y sombrillas, ordenadas por Sector, donde podrán ver su disponibilidad.
       </Typography>
-
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         <b>6- ¿Dónde veo mi reserva?</b>
       </Typography>
@@ -106,7 +100,6 @@ const Faqs = () => {
       <Typography variant="h3" fontWeight="700">
         BALNEARIOS
       </Typography>
-
       <br />
       <Typography fontSize={16} color='black' variant='p' lineHeight='25px'>
         <b>11- No encuentro el balneario que quiero.</b>

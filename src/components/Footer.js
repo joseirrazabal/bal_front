@@ -51,9 +51,9 @@ const useStyles = makeStyles(theme => ({
   itemFooter: {
     display: 'flex',
 
-    '& p': {
-      //paddingLeft: 10
-    }
+    /* '& p': {
+      paddingLeft: 10
+    } */
   }
 }))
 
@@ -106,11 +106,9 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-      {/* Terminos y condiciones */}
       <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
         <Term />
       </FullScreenDialog>
-      {/* preguntas frecuentes */}
       <FullScreenDialog title='Preguntas Frecuentes' open={open2} handleClose={handleClose2}>
         <Faqs />
       </FullScreenDialog>
