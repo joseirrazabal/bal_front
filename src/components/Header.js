@@ -1,10 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
 
 import { useHistory, Link } from 'react-router-dom'
 import dayjs from 'dayjs'
@@ -18,6 +14,11 @@ import SwipeableTemporaryDrawer from './Drawer'
 import IconPlaya from '../assets/icon-playa2.svg'
 import Accepted from '../assets/accepted.svg'
 import Conversation from '../assets/conversation.svg'
+
+import FullScreenDialog from './Dialog'
+
+import Term from '../containers/TyC/Term'
+import Faqs from '../containers/Faqs/Faqs'
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -102,10 +103,27 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = () => {
+
   const history = useHistory()
   const classes = useStyles()
-
   const dia = dayjs().format('DD-MM-YYYY')
+  const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClickOpen2 = () => {
+    setOpen2(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const handleClose2 = () => {
+    setOpen2(false)
+  }
+
   return (
     <div className={classes.header}>
       <div className={classes.container}>
@@ -148,7 +166,7 @@ const Header = () => {
               <Divider />
             </li>
             <li>
-              <Link to='/'>
+              <Link to='/' onClick={handleClickOpen}>
                 <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Accepted} />
                 <Typography variant='p' color='white'>
                   Terminos y Condiciones
@@ -159,7 +177,7 @@ const Header = () => {
               <Divider />
             </li>
             <li>
-              <Link to='/'>
+              <Link to='/' onClick={handleClickOpen2}>
                 <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Conversation} />
                 <Typography variant='p' color='white'>
                   Preguntas Frecuentes
@@ -169,6 +187,12 @@ const Header = () => {
           </ul>
         </SwipeableTemporaryDrawer>
       </div>
+      <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
+        <Term />
+      </FullScreenDialog>
+      <FullScreenDialog title='Preguntas Frecuentes' open={open2} handleClose={handleClose2}>
+        <Faqs />
+      </FullScreenDialog>
     </div>
   )
 }
