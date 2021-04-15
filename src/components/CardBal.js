@@ -81,6 +81,26 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 10,
     left: 0
+  },
+  descuento: {
+    fontSize: 12,
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
+    fontStyle: 'italic',
+    borderRadius: '0 10px 10px 0',
+    padding: '2px 6px',
+    marginRight: 5,
+    background: '#55C443',
+    color: 'white',
+    position: 'absolute',
+    top: 35,
+    left: 0
+  },
+  price: {
+    lineHeight: '14px'
+  },
+  precioAnterior: {
+    color: 'gray',
+    textDecoration: 'line-through!important',
   }
 }))
 
@@ -88,6 +108,9 @@ const CardBal = ({
   moludar, 
   item, 
   className, 
+  price = '1200',
+  oldPrice = '$1400',
+  off = '14',
   nuevo = false, 
   promo = false, 
   onClick = () => {}
@@ -99,13 +122,17 @@ const CardBal = ({
     ImageDefault
   )
 
-  const classes = useStyles({ moludar, image })
+  const classes = useStyles({ 
+    moludar, 
+    image
+   })
 
   return (
     <div className={`${className} ${classes.cardBal}`} onClick={onClick}>
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
         {promo && <div className={classes.promo}> BANCO MACRO</div>}
+        {off && <spam className={classes.descuento}>{off}% off</spam>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
@@ -118,8 +145,11 @@ const CardBal = ({
             </Typography>
           </div>
           <div>
-            <Typography color='black' variant='h2' textAlign="right" fontWeight='400' fontSize={18}>
-              $1250
+            <Typography color='black' variant='h2' textAlign="right" fontWeight='400' fontSize={18} className={classes.price}>
+              ${price}
+            </Typography>
+            <Typography color='red' textStyle="italic" textAlign="right" variant='p' fontSize={11} className={classes.precioAnterior}>
+              {oldPrice}
             </Typography>
             <Typography color='black' textStyle="italic" textAlign="right" variant='p' fontSize={12}>
               carpa x dia

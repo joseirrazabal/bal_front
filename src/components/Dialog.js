@@ -32,7 +32,7 @@ export default function FullScreenDialog({
   handleClose, 
   children,
   title = 'Buscar',
-  fullScreen = true
+  fullScreen = false
 }) {
   
   const classes = useStyles();

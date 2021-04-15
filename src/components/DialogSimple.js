@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function DialogSimpleComponent({children}) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
