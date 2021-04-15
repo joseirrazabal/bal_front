@@ -15,22 +15,20 @@ import Calendar from './Calendar'
 import Typography from './Typography'
 import FullScreenDialog from './Dialog'
 
-import IconSomb from '../assets/icon-sombrilla_azul.svg'
-import IconCalendar from '../assets/icon-calendar-azul.svg'
+import IconSomb from '../assets/icon-sombri.svg'
+import IconCalendar from '../assets/icon-calendar.svg'
 import IconLupa from '../assets/icon-lupa.svg'
-import IdaVuelta from '../assets/de-ida-y-vuelta-azul.svg'
 
 import CIUDAD_LIST from 'gql/ciudad/list'
 
 const useStyles = makeStyles(theme => ({
   contentSearchCenter: {
-    background: '#f2f2f2' /* 'white' */,
+    background: 'white',
     width: '100%',
     maxWidth: 960,
     boxSizing: 'border-box',
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
-    height: 68,
-    padding: 15,
+    height: 60,
     borderRadius: 6,
     display: 'flex',
     justifyContent: 'space-between',
@@ -82,7 +80,6 @@ const useStyles = makeStyles(theme => ({
   },
   gridRow: {
     width: '100%',
-    background: 'white',
     height: 'auto',
     display: 'flex',
     alignItems: 'center',
@@ -182,7 +179,9 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
             <Calendar name='desde' setValue={setValue} value={desde} />
           </div>
           <div>
-            <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
+            <Typography textAlign='cemter' color="gray" fontSize={12} variant='p'>
+              Hasta
+            </Typography>
           </div>
           <div style={{width: '100%'}}>
             <Calendar name='hasta' setValue={setValue} value={hasta} />
@@ -190,15 +189,13 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
         </div>
       </div>
       <div className={classes.boxButton}>
-        <Button type='submit' width={100} height={40} disableElevation border={20}>
-          <SimpleImage height={22} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
+        <Button type='submit' width={100} height={60} border='0 6px 6px 0'>
+          <SimpleImage height={28} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
         </Button>
       </div>
-
-      {/* Mini Search Mobile */}
       <div className={classes.mobile} onClick={handleClickOpen}>
         <div style={{ marginRight: 10 }}>
-          <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
+          <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
         </div>
         <div>
           <Typography textAlign='cemter' fontSize={25} variant='h2'>
@@ -206,8 +203,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
           </Typography>
         </div>
       </div>
-      
-      {/* Search Mobile en Modal */}
+      {/* Search Mobile */}
       <FullScreenDialog open={open} handleClose={handleClose}>
         <div className={classes.contentSearMobile}>
           <div style={{ marginBottom: 10 }}>

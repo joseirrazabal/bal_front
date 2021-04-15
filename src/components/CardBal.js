@@ -46,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   data: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
     '& h2': {
       margin: 0,
       fontSize: 16,
@@ -65,10 +70,28 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 10,
     left: 0
+  },
+  promo: {
+    background: theme.palette.secondary.main,
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
+    color: 'white',
+    padding: '5px 10px 5px 5px',
+    borderRadius: '0 10px 10px 0',
+    fontSize: 12,
+    position: 'absolute',
+    top: 10,
+    left: 0
   }
 }))
 
-const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }) => {
+const CardBal = ({ 
+  moludar, 
+  item, 
+  className, 
+  nuevo = false, 
+  promo = false, 
+  onClick = () => {}
+ }) => {
 
   const image = get(
     item,
@@ -82,26 +105,26 @@ const CardBal = ({ moludar, item, className, nuevo = false, onClick = () => {} }
     <div className={`${className} ${classes.cardBal}`} onClick={onClick}>
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
+        {promo && <div className={classes.promo}> BANCO MACRO</div>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
-          <Typography variant='h2' fontWeight='400' fontSize={18}>
-            {get(item, 'nombre')}
-          </Typography>
-          <Typography color='black' variant='p' fontSize={13}>
-            {get(item, 'ciudad.nombre')}
-          </Typography>
-        </div>
-        <div>
-          {/* <Typography variant='span' fontSize={10} color="black" fontWeight='400'>
-            Precio por dia
-          </Typography>
-          <Typography variant='p' color="black" fontWeight='500' fontSize={18}>
-            ${get(item, 'precio')}
-          </Typography> */}
-          {/* <Button size='small' height='auto'>
-            DETALLE
-          </Button> */}
+          <div>
+            <Typography variant='h2' fontWeight='400' fontSize={18}>
+              {get(item, 'nombre')}
+            </Typography>
+            <Typography color='black' variant='p' fontSize={13}>
+              {get(item, 'ciudad.nombre')}
+            </Typography>
+          </div>
+          <div>
+            <Typography color='black' variant='h2' textAlign="right" fontWeight='400' fontSize={18}>
+              $1250
+            </Typography>
+            <Typography color='black' textStyle="italic" textAlign="right" variant='p' fontSize={12}>
+              carpa x dia
+            </Typography>
+          </div>
         </div>
       </div>
     </div>

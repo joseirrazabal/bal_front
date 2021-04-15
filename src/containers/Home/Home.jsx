@@ -27,11 +27,11 @@ import CIUDAD_LIST from 'gql/ciudad/list'
 
 import SimpleImage from '../../components/SimpleImage'
 
-const settings = {
+const settings = ({slidesToShow}) => ({
   dots: false,
   infinite: false,
   speed: 500,
-  slidesToShow: 3,
+  slidesToShow: slidesToShow && 3,
   slidesToScroll: 1,
   responsive: [
     {
@@ -50,12 +50,12 @@ const settings = {
       }
     }
   ]
-};
+});
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
     width: '100%',
-    height: '100vh',
+    // height: '100vh',
     background: 'black',
     display: 'flex',
     flexDirection: 'column',
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentSearch: {
     width: '100%',
-    height: '45vh',
+    height: 400,
     backgroundImage: 'url(' + imageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
@@ -98,11 +98,11 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
 
     '@media (max-width: 1450px)': {
-      height: '35vh',
+      // height: '35vh',
     },
 
     '@media (max-width: 960px)': {
-      height: '30vh',
+      // height: '30vh',
     },
     '@media (max-width: 680px)': {
       backgroundSize: 680,
@@ -111,18 +111,18 @@ const useStyles = makeStyles(theme => ({
   },
   contentBanners: {
     width: '100%',
-    height: '55vh',
+    // height: '55vh',
     background: '#f2f2f2',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
 
     '@media (max-width: 1450px)': {
-      height: '65vh',
+      // height: '65vh',
     },
 
     '@media (max-width: 960px)': {
-      height: '70vh',
+      // height: '70vh',
       alignItems: 'flex-start',
     },
   },
@@ -152,7 +152,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   shadow: {
-    background: 'rgba(0,0,0,.3)',
+    background: 'rgba(0,0,0,.2)',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -219,7 +219,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Home = () => {
+const Home = ({slidesToShow}) => {
   const classes = useStyles()
   const history = useHistory()
 
@@ -259,7 +259,7 @@ const Home = () => {
             </div>
             <div>
               <Typography
-                fontWeight={700}
+                fontWeight={500}
                 fontSize={20}
                 textAlign='center'
                 className={classes.subTitle}
@@ -270,7 +270,7 @@ const Home = () => {
             </div>
             <div className={classes.contentSlider}>
               <ul>
-                <Slider {...settings}>
+                <Slider {...settings} slidesToShow={3}>
                   {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
                       return (
                         <div>
@@ -279,6 +279,77 @@ const Home = () => {
                               <CardBal
                                 moludar
                                 nuevo
+                                item={item}
+                                onClick={() => {
+                                  const dia = dayjs().format('DD-MM-YYYY')
+                                  history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
+                                }}
+                              />
+                            </li>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </Slider>
+              </ul>
+            </div>
+            <div>
+              <Typography
+                fontWeight={500}
+                fontSize={20}
+                textAlign='center'
+                className={classes.subTitle}
+                varian='h2'
+              >
+                Destacados de Enero
+              </Typography>
+            </div>
+            <div className={classes.contentSlider}>
+              <ul>
+                <Slider {...settings} slidesToShow={2}>
+                  {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
+                      return (
+                        <div>
+                          <div style={{margin: 5}}>
+                            <li key={i}>
+                              <CardBal
+                                moludar
+                                item={item}
+                                onClick={() => {
+                                  const dia = dayjs().format('DD-MM-YYYY')
+                                  history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
+                                }}
+                              />
+                            </li>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </Slider>
+              </ul>
+            </div>
+            <div>
+              <Typography
+                fontWeight={500}
+                fontSize={20}
+                textAlign='center'
+                className={classes.subTitle}
+                varian='h2'
+              >
+                Promo con Banco Macro
+              </Typography>
+            </div>
+            <div className={classes.contentSlider}>
+              <ul>
+                <Slider {...settings} slidesToShow={4}>
+                  {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
+                      return (
+                        <div>
+                          <div style={{margin: 5}}>
+                            <li key={i}>
+                              <CardBal
+                                moludar
+                                promo
                                 item={item}
                                 onClick={() => {
                                   const dia = dayjs().format('DD-MM-YYYY')

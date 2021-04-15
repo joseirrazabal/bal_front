@@ -2,6 +2,11 @@ import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
 
+import ListItemText from '@material-ui/core/ListItemText'
+import Avatar from '@material-ui/core/Avatar'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItem from '@material-ui/core/ListItem'
+
 import { useHistory, Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
@@ -134,26 +139,28 @@ const Header = () => {
         </div>
         <SwipeableTemporaryDrawer>
           <ul className={classes.nav}>
-            {/* <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Luiciano Recchini" src="/static/images/avatar/1.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Biuenvenido"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="white"
-                    >
-                      Luciano Recchini
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem> */}
+            <Link to='/profile'>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar className={classes.large} alt="Luiciano Recchini" src="https://media-exp1.licdn.com/dms/image/C4D03AQHJFBIXlYUrtw/profile-displayphoto-shrink_200_200/0/1615833330750?e=1623888000&v=beta&t=lPpLvHG1iD5SRWswy1R9bdiUEAtkVMvsxPv8Zg12dMU" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Biuenvenido"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        className={classes.inline}
+                        color="white"
+                      >
+                        Luciano Recchini
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            </Link>
             <li>
               <Link to={`/list/${dia}/${dia}`}>
                 <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={IconPlaya} />

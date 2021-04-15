@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 const ButtonComponent = ({
   disabled = false,
+  disableElevation = false,
   children,
   type = 'button',
   onClick,
@@ -32,6 +33,7 @@ const ButtonComponent = ({
   return (
     <Button
       disabled={disabled}
+      disableElevation={disableElevation}
       type={type}
       size={size}
       onClick={onClick}
