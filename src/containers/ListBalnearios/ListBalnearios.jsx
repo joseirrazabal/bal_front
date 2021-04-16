@@ -343,7 +343,7 @@ const ListBalnearios = () => {
               </Button>
               <div className={classes.list}>
                 <Typography
-                  fontWeight={700}
+                  fontWeight={400}
                   fontSize={25}
                   textAlign='center'
                   className={classes.title}
@@ -373,7 +373,7 @@ const ListBalnearios = () => {
           </div>
         </div>
       </div>
-      <FullScreenDialog title='Filtros' open={open} handleClose={handleClose}>
+      <FullScreenDialog fullScreen={true} title='Filtros' open={open} handleClose={handleClose}>
         <ul className={classes.filters}>
           <li>
             <Typography fontWeight={700} fontSize={16} textAlign='left' varian='p'>

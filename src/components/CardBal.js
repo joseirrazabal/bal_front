@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0
   },
   descuento: {
-    fontSize: 12,
+    fontSize: 11,
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
     fontStyle: 'italic',
     borderRadius: '0 10px 10px 0',
@@ -132,7 +132,7 @@ const CardBal = ({
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
         {promo && <div className={classes.promo}> BANCO MACRO</div>}
-        {off && <spam className={classes.descuento}>{off}% off</spam>}
+        {off && <spam className={classes.descuento}>{off}% OFF</spam>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>

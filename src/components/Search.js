@@ -208,7 +208,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
       </div>
       
       {/* Search Mobile en Modal */}
-      <FullScreenDialog open={open} handleClose={handleClose}>
+      <FullScreenDialog fullScreen={true} open={open} handleClose={handleClose}>
         <div className={classes.contentSearMobile}>
           <div style={{ marginBottom: 10 }}>
             <Typography textAlign='left' fontSize={18} variant='p' color='black'>

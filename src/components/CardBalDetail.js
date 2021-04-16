@@ -8,6 +8,9 @@ import SimpleImage from './SimpleImage'
 
 import IconPin from '../assets/icon-pin.svg'
 import IconCity from '../assets/icon-ciudad.svg'
+import IconCarpa from '../assets/icon-carpa_azul.svg'
+import IconSombri from '../assets/icon-sombrilla_azul.svg'
+
 
 const useStyles = makeStyles((theme) => ({
   cardBal: ({ moludar = false }) => ({
@@ -74,6 +77,30 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 5
     },
   },
+  descuento: {
+    fontSize: 11,
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
+    fontStyle: 'italic',
+    borderRadius: '0 10px 10px 0',
+    padding: '2px 6px',
+    marginRight: 5,
+    background: '#55C443',
+    color: 'white',
+    position: 'absolute',
+    top: 35,
+    left: 0
+  },
+  promo: {
+    background: theme.palette.secondary.main,
+    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
+    color: 'white',
+    padding: '5px 10px 5px 5px',
+    borderRadius: '0 10px 10px 0',
+    fontSize: 12,
+    position: 'absolute',
+    top: 10,
+    left: 0
+  },
   nuevo: {
     background: theme.palette.secondary.dark,
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
@@ -84,10 +111,30 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 10,
     left: 0
-  }
+  },
+  price: {
+    lineHeight: '14px'
+  },
+  precioAnterior: {
+    color: 'gray',
+    textDecoration: 'line-through!important',
+  },
+  icon: {
+    margin: 5
+  },
 }))
 
-const CardBalDetail = ({ moludar, item, className, nuevo = false, onClick = () => {} }) => {
+const CardBalDetail = ({ 
+  moludar, 
+  item, 
+  className, 
+  off = '14',
+  nuevo = false, 
+  promo = true, 
+  price = '1200',
+  oldPrice = '1400',
+  onClick = () => {}
+ }) => {
   const image = get(
     item,
     'imagenes.0.url',
@@ -100,6 +147,8 @@ const CardBalDetail = ({ moludar, item, className, nuevo = false, onClick = () =
     <div className={`${className} ${classes.cardBal}`} onClick={onClick}>
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
+        {promo && <div className={classes.promo}> BANCO MACRO</div>}
+        {off && <spam className={classes.descuento}>{off}% OFF</spam>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
@@ -120,12 +169,22 @@ const CardBalDetail = ({ moludar, item, className, nuevo = false, onClick = () =
               {get(item, 'direccion')}
             </Typography>
           </div>
-        }
+          }
+          <div>
+            <SimpleImage height={23} image={IconCarpa} className={classes.icon} />
+            <SimpleImage height={23} image={IconSombri} className={classes.icon} />
+          </div>
         </div>
         <div>
-          <Button size='small' height='auto'>
-            VER BALNEARIO
-          </Button>
+          <Typography color='black' variant='h2' textAlign="right" fontWeight='400' fontSize={18} className={classes.price}>
+            ${price}
+          </Typography>
+          <Typography color='red' textStyle="italic" textAlign="right" variant='p' fontSize={11} className={classes.precioAnterior}>
+            {oldPrice}
+          </Typography>
+          <Typography color='black' textStyle="italic" textAlign="right" variant='p' fontSize={12}>
+            carpa x dia
+          </Typography>
         </div>
       </div>
     </div>
