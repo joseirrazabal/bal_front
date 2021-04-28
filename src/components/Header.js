@@ -173,7 +173,7 @@ const Header = () => {
               <Divider />
             </li>
             <li>
-              <Link to='/' onClick={handleClickOpen}>
+              <Link onClick={handleClickOpen}>
                 <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Accepted} />
                 <Typography variant='p' color='white'>
                   Terminos y Condiciones
@@ -184,7 +184,7 @@ const Header = () => {
               <Divider />
             </li>
             <li>
-              <Link to='/' onClick={handleClickOpen2}>
+              <Link onClick={handleClickOpen2}>
                 <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Conversation} />
                 <Typography variant='p' color='white'>
                   Preguntas Frecuentes
