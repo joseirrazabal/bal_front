@@ -1,0 +1,8 @@
+query homeListFront {
+  homeListFront {
+    id
+    nombre
+    descripcion
+    config
+  }
+}

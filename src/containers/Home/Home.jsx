@@ -1,37 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
 import dayjs from 'dayjs'
+import Slider from 'react-slick'
 
 import Button from '@material-ui/core/Button'
 import NoSsr from '@material-ui/core/NoSsr'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
 import CardBal from '../../components/CardBal'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
-import Slider from "react-slick"
 
 import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageCoronaVirus from '../../assets/pop-up.jpg'
 import ImageBanner from '../../assets/banner-MP-compu.png'
 import ImageBannerMobile from '../../assets/banner-MP-celu.png'
 
-import BALNEARIO_LIST from 'gql/balneario/listUltimos'
+import HOME_LIST from 'gql/home/list'
 import CIUDAD_LIST from 'gql/ciudad/list'
 
 import SimpleImage from '../../components/SimpleImage'
 
-const settings = ({slidesToShow}) => ({
+const settings = ({ slidesToShow }) => ({
   dots: false,
   infinite: false,
   speed: 500,
-  slidesToShow: slidesToShow && 3,
+  slidesToShow: slidesToShow <= 4 || 3,
   slidesToScroll: 1,
   responsive: [
     {
@@ -39,18 +39,18 @@ const settings = ({slidesToShow}) => ({
       settings: {
         slidesToShow: 2.5,
         slidesToScroll: 2,
-        initialSlide: 2
-      }
+        initialSlide: 2,
+      },
     },
     {
       breakpoint: 600,
       settings: {
         slidesToShow: 1.2,
-        slidesToScroll: 1
-      }
-    }
-  ]
-});
+        slidesToScroll: 1,
+      },
+    },
+  ],
+})
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -71,7 +71,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     position: 'relative',
     margin: '40px 10px 10px 10px',
-
   },
   containerMobile: {
     margin: '0 auto',
@@ -205,7 +204,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 6,
     cursor: 'pointer',
     display: 'none',
-    
+
     '@media (max-width: 680px)': {
       display: 'block',
     },
@@ -219,12 +218,20 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Home = ({slidesToShow}) => {
+const Home = () => {
   const classes = useStyles()
   const history = useHistory()
 
-  const { data, loading } = useQuery(BALNEARIO_LIST)
+  const [config, setConfig] = useState([])
+
+  const { data, loading } = useQuery(HOME_LIST)
   const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
+
+  useEffect(() => {
+    if (data) {
+      setConfig(get(data, 'homeListFront.config'))
+    }
+  }, [data])
 
   if (loading || loadingCiudad) {
     return (
@@ -237,138 +244,77 @@ const Home = ({slidesToShow}) => {
   return (
     <React.Fragment>
       <Header />
-      <div className={classes.contentFull}>   
+      <div className={classes.contentFull}>
         <div className={classes.contentSearch}>
           <div className={classes.shadow} />
           <div className={classes.container}>
-            <Typography fontWeight="900" className={classes.title} varian='h1'>
+            <Typography fontWeight='900' className={classes.title} varian='h1'>
               DISFRUTA TU LUGAR
             </Typography>
-            <Search
-              ciudades={ciudades}
-            />
+            <Search ciudades={ciudades} />
           </div>
         </div>
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
             <div className={classes.banner}>
-              <SimpleImage alt="Alamar - Balnearios Costa Atlantica" image={ImageBanner} width={'100%'} />
+              <SimpleImage
+                alt='Alamar - Balnearios Costa Atlantica'
+                image={ImageBanner}
+                width={'100%'}
+              />
             </div>
             <div className={classes.bannerMobile}>
               <SimpleImage image={ImageBannerMobile} width={'100%'} />
             </div>
-            <div>
-              <Typography
-                fontWeight={500}
-                fontSize={20}
-                textAlign='center'
-                className={classes.subTitle}
-                varian='h2'
-              >
-                Últimos Balnearios
-              </Typography>
-            </div>
-            <div className={classes.contentSlider}>
-              <ul>
-                <Slider {...settings} slidesToShow={3}>
-                  {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
-                      return (
-                        <div>
-                          <div style={{margin: 5}}>
-                            <li key={i}>
+
+            {config.map((carousel, carouselIndex) => {
+              return [
+                <div key={carouselIndex}>
+                  <Typography
+                    fontWeight={500}
+                    fontSize={20}
+                    textAlign='center'
+                    className={classes.subTitle}
+                    varian='h2'
+                  >
+                    {carousel.titulo}
+                  </Typography>
+                </div>,
+                <div className={classes.contentSlider} key={`2-${carouselIndex}`}>
+                  <ul>
+                    <Slider {...settings(carousel.items.length)} >
+                      {carousel.items.map((item, itemIndex) => {
+                        return (
+                          <div style={{ margin: 5 }} key={itemIndex}>
+                            <li>
                               <CardBal
                                 moludar
                                 nuevo
                                 item={item}
                                 onClick={() => {
                                   const dia = dayjs().format('DD-MM-YYYY')
-                                  history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
+                                  history.push(`/detalle/${get(item, 'id')}/${dia}/${dia}`)
                                 }}
                               />
                             </li>
                           </div>
-                        </div>
-                      )
-                    })}
-                </Slider>
-              </ul>
-            </div>
-            <div>
-              <Typography
-                fontWeight={500}
-                fontSize={20}
-                textAlign='center'
-                className={classes.subTitle}
-                varian='h2'
-              >
-                Destacados de Enero
-              </Typography>
-            </div>
-            <div className={classes.contentSlider}>
-              <ul>
-                <Slider {...settings} slidesToShow={2}>
-                  {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
-                      return (
-                        <div>
-                          <div style={{margin: 5}}>
-                            <li key={i}>
-                              <CardBal
-                                moludar
-                                item={item}
-                                onClick={() => {
-                                  const dia = dayjs().format('DD-MM-YYYY')
-                                  history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
-                                }}
-                              />
-                            </li>
-                          </div>
-                        </div>
-                      )
-                    })}
-                </Slider>
-              </ul>
-            </div>
-            <div>
-              <Typography
-                fontWeight={500}
-                fontSize={20}
-                textAlign='center'
-                className={classes.subTitle}
-                varian='h2'
-              >
-                Promo con Banco Macro
-              </Typography>
-            </div>
-            <div className={classes.contentSlider}>
-              <ul>
-                <Slider {...settings} slidesToShow={4}>
-                  {get(data, 'balnearioListFrontUltimos', []).map((item, i) => {
-                      return (
-                        <div>
-                          <div style={{margin: 5}}>
-                            <li key={i}>
-                              <CardBal
-                                moludar
-                                promo
-                                item={item}
-                                onClick={() => {
-                                  const dia = dayjs().format('DD-MM-YYYY')
-                                  history.push(`/detalle/${get(item, '_id')}/${dia}/${dia}`)
-                                }}
-                              />
-                            </li>
-                          </div>
-                        </div>
-                      )
-                    })}
-                </Slider>
-              </ul>
-            </div>
+                        )
+                      })}
+                    </Slider>
+                  </ul>
+                </div>,
+              ]
+            })}
+
             <DialogSimpleComponent>
               <div className={classes.modalContent}>
-                <SimpleImage image={ImageCoronaVirus} width="100%" />
-                <a href="https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf" width="100%" style={{textDecoration: 'none', marginTop: 15}}>
-                  <Button color="primary" variant='contained'>
+                <SimpleImage image={ImageCoronaVirus} width='100%' />
+                <a
+                  href='https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf'
+                  width='100%'
+                  style={{ textDecoration: 'none', marginTop: 15 }}
+                >
+                  <Button color='primary' variant='contained'>
                     ver protocolos
                   </Button>
                 </a>

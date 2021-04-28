@@ -7,7 +7,7 @@ import Typography from './Typography'
 
 import ImageDefault from '../assets/default-image.jpg'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   cardBal: ({ moludar = false }) => ({
     float: 'left',
     width: '100%',
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     height: 170,
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
   }),
   content: {
     display: 'flex',
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     position: 'absolute',
     top: 10,
-    left: 0
+    left: 0,
   },
   promo: {
     background: theme.palette.secondary.main,
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     position: 'absolute',
     top: 10,
-    left: 0
+    left: 0,
   },
   descuento: {
     fontSize: 11,
@@ -93,46 +93,41 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     position: 'absolute',
     top: 35,
-    left: 0
+    left: 0,
   },
   price: {
-    lineHeight: '14px'
+    lineHeight: '14px',
   },
   precioAnterior: {
     color: 'gray',
     textDecoration: 'line-through!important',
-  }
+  },
 }))
 
-const CardBal = ({ 
-  moludar, 
-  item, 
-  className, 
+const CardBal = ({
+  moludar,
+  item,
+  className,
   price = '1200',
   oldPrice = '$1400',
   off = '14',
-  nuevo = false, 
-  promo = false, 
-  onClick = () => {}
- }) => {
+  nuevo = false,
+  promo = false,
+  onClick = () => {},
+}) => {
+  const image = get(item, 'categoria.balneario.imagenes.0.url', ImageDefault)
 
-  const image = get(
-    item,
-    'imagenes.0.url',
-    ImageDefault
-  )
-
-  const classes = useStyles({ 
-    moludar, 
-    image
-   })
+  const classes = useStyles({
+    moludar,
+    image,
+  })
 
   return (
     <div className={`${className} ${classes.cardBal}`} onClick={onClick}>
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
         {promo && <div className={classes.promo}> BANCO MACRO</div>}
-        {off && <spam className={classes.descuento}>{off}% OFF</spam>}
+        {off && <span className={classes.descuento}>{off}% OFF</span>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
@@ -145,13 +140,27 @@ const CardBal = ({
             </Typography>
           </div>
           <div>
-            <Typography color='black' variant='h2' textAlign="right" fontWeight='400' fontSize={18} className={classes.price}>
+            <Typography
+              color='black'
+              variant='h2'
+              textAlign='right'
+              fontWeight='400'
+              fontSize={18}
+              className={classes.price}
+            >
               ${price}
             </Typography>
-            <Typography color='red' textStyle="italic" textAlign="right" variant='p' fontSize={11} className={classes.precioAnterior}>
+            <Typography
+              color='red'
+              textStyle='italic'
+              textAlign='right'
+              variant='p'
+              fontSize={11}
+              className={classes.precioAnterior}
+            >
               {oldPrice}
             </Typography>
-            <Typography color='black' textStyle="italic" textAlign="right" variant='p' fontSize={12}>
+            <Typography color='black' textStyle='italic' textAlign='right' variant='p' fontSize={12}>
               carpa x dia
             </Typography>
           </div>

@@ -12,9 +12,14 @@ import compression from 'compression'
 import dotenv from 'dotenv'
 import httpsRedirect from 'express-https-redirect'
 
-dotenv.config({ path: `${appRootDir.get()}/.env` })
-
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
+if (isDevelopment) {
+  dotenv.config({ path: `${appRootDir.get()}/.env.dev` })
+  dotenv.config({ path: `${appRootDir.get()}/.env` })
+} else {
+  dotenv.config({ path: `${appRootDir.get()}/.env.prod` })
+}
 
 const app = express()
 const server = createServer(app)
