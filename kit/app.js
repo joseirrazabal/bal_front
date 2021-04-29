@@ -12,7 +12,7 @@ import compression from 'compression'
 import dotenv from 'dotenv'
 import httpsRedirect from 'express-https-redirect'
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 if (isDevelopment) {
   dotenv.config({ path: `${appRootDir.get()}/.env.dev` })
