@@ -27,31 +27,6 @@ import CIUDAD_LIST from 'gql/ciudad/list'
 
 import SimpleImage from '../../components/SimpleImage'
 
-const settings = ({ slidesToShow }) => ({
-  dots: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: slidesToShow <= 4 || 3,
-  slidesToScroll: 1,
-  responsive: [
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 2.5,
-        slidesToScroll: 2,
-        initialSlide: 2,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 1.2,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-})
-
 const useStyles = makeStyles(theme => ({
   contentFull: {
     width: '100%',
@@ -233,6 +208,31 @@ const Home = () => {
     }
   }, [data])
 
+  const settings = ({ slidesToShow = 3 }) => ({
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: slidesToShow,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2.5,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1.2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  })
+
   if (loading || loadingCiudad) {
     return (
       <NoSsr>
@@ -268,6 +268,7 @@ const Home = () => {
             </div>
 
             {config.map((carousel, carouselIndex) => {
+              console.log('jose', parseInt(carousel.cant_items))
               return [
                 <div key={carouselIndex}>
                   <Typography
@@ -282,21 +283,23 @@ const Home = () => {
                 </div>,
                 <div className={classes.contentSlider} key={`2-${carouselIndex}`}>
                   <ul>
-                    <Slider {...settings(carousel.items.length)} >
+                    <Slider {...settings({ slidesToShow: parseInt(carousel.cant_items) || 3 })}>
                       {carousel.items.map((item, itemIndex) => {
                         return (
-                          <div style={{ margin: 5 }} key={itemIndex}>
-                            <li>
-                              <CardBal
-                                moludar
-                                nuevo
-                                item={item}
-                                onClick={() => {
-                                  const dia = dayjs().format('DD-MM-YYYY')
-                                  history.push(`/detalle/${get(item, 'id')}/${dia}/${dia}`)
-                                }}
-                              />
-                            </li>
+                          <div key={itemIndex}>
+                            <div style={{ margin: 5 }}>
+                              <li>
+                                <CardBal
+                                  moludar
+                                  nuevo
+                                  item={item}
+                                  onClick={() => {
+                                    const dia = dayjs().format('DD-MM-YYYY')
+                                    history.push(`/detalle/${get(item, 'id')}/${dia}/${dia}`)
+                                  }}
+                                />
+                              </li>
+                            </div>
                           </div>
                         )
                       })}

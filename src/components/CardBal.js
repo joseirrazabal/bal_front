@@ -122,12 +122,17 @@ const CardBal = ({
     image,
   })
 
+  const clasesDisponibles = ['nuevo', 'promo', 'descuento']
+
   return (
     <div className={`${className} ${classes.cardBal}`} onClick={onClick}>
       <div className={classes.image}>
-        {nuevo && <div className={classes.nuevo}> NUEVO</div>}
-        {promo && <div className={classes.promo}> BANCO MACRO</div>}
-        {off && <span className={classes.descuento}>{off}% OFF</span>}
+        {get(item, 'precio.tag.nombre') && (
+          <div className={classes[(clasesDisponibles.includes(item.clase) && item.clase) || 'nuevo']}>
+            {' '}
+            {get(item, 'precio.tag.nombre')}
+          </div>
+        )}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
@@ -148,18 +153,22 @@ const CardBal = ({
               fontSize={18}
               className={classes.price}
             >
-              ${price}
+              ${get(item, 'precio.precio')}
             </Typography>
-            <Typography
-              color='red'
-              textStyle='italic'
-              textAlign='right'
-              variant='p'
-              fontSize={11}
-              className={classes.precioAnterior}
-            >
-              {oldPrice}
-            </Typography>
+
+            {get(item, 'precio.precioOld') && (
+              <Typography
+                color='red'
+                textStyle='italic'
+                textAlign='right'
+                variant='p'
+                fontSize={11}
+                className={classes.precioAnterior}
+              >
+                ${get(item, 'precio.precio')}
+              </Typography>
+            )}
+
             <Typography color='black' textStyle='italic' textAlign='right' variant='p' fontSize={12}>
               carpa x dia
             </Typography>
