@@ -130,7 +130,10 @@ const CardBal = ({
         {get(item, 'precio.tag.nombre') && (
           <div className={classes[(clasesDisponibles.includes(item.clase) && item.clase) || 'nuevo']}>
             {' '}
-            {get(item, 'precio.tag.nombre')}
+            {get(item, 'precio.tag.texto')}
+            {get(item, 'precio.tag.imagen') && (
+              <img src={get(item, 'precio.tag.imagen')} width={50} height={50} />
+            )}
           </div>
         )}
       </div>
