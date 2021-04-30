@@ -268,7 +268,6 @@ const Home = () => {
             </div>
 
             {config.map((carousel, carouselIndex) => {
-              console.log('jose', parseInt(carousel.cant_items))
               return [
                 <div key={carouselIndex}>
                   <Typography

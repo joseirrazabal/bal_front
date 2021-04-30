@@ -1,6 +1,7 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
+import fs from 'fs'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { createServer } from 'http'
 import express from 'express'
@@ -15,8 +16,11 @@ import httpsRedirect from 'express-https-redirect'
 const isDevelopment = process.env.NODE_ENV === 'development'
 
 if (isDevelopment) {
-  dotenv.config({ path: `${appRootDir.get()}/.env.dev` })
-  dotenv.config({ path: `${appRootDir.get()}/.env` })
+  if (fs.existsSync('.env')) {
+    dotenv.config({ path: `${appRootDir.get()}/.env` })
+  } else {
+    dotenv.config({ path: `${appRootDir.get()}/.env.dev` })
+  }
 } else {
   dotenv.config({ path: `${appRootDir.get()}/.env.prod` })
 }

@@ -108,8 +108,8 @@ const CardBal = ({
   moludar,
   item,
   className,
-  price = '1200',
-  oldPrice = '$1400',
+  price = '0',
+  oldPrice = '0',
   off = '14',
   nuevo = false,
   promo = false,
@@ -147,35 +147,37 @@ const CardBal = ({
               {get(item, 'ciudad.nombre')}
             </Typography>
           </div>
-          <div>
-            <Typography
-              color='black'
-              variant='h2'
-              textAlign='right'
-              fontWeight='400'
-              fontSize={18}
-              className={classes.price}
-            >
-              ${get(item, 'precio.precio')}
-            </Typography>
-
-            {get(item, 'precio.precioOld') && (
+          {get(item, 'precioFinal') > 0 && (
+            <div>
               <Typography
-                color='red'
-                textStyle='italic'
+                color='black'
+                variant='h2'
                 textAlign='right'
-                variant='p'
-                fontSize={11}
-                className={classes.precioAnterior}
+                fontWeight='400'
+                fontSize={18}
+                className={classes.price}
               >
-                ${get(item, 'precio.precio')}
+                ${get(item, 'precioFinal')}
               </Typography>
-            )}
 
-            <Typography color='black' textStyle='italic' textAlign='right' variant='p' fontSize={12}>
-              carpa x dia
-            </Typography>
-          </div>
+              {get(item, 'precioOld') > 0 && (
+                <Typography
+                  color='red'
+                  textStyle='italic'
+                  textAlign='right'
+                  variant='p'
+                  fontSize={11}
+                  className={classes.precioAnterior}
+                >
+                  ${get(item, 'precioOld')}
+                </Typography>
+              )}
+
+              <Typography color='black' textStyle='italic' textAlign='right' variant='p' fontSize={12}>
+                {get(item, 'categoria.tipo.nombre')} x dia
+              </Typography>
+            </div>
+          )}
         </div>
       </div>
     </div>
