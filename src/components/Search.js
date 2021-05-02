@@ -140,7 +140,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
 
   useEffect(() => {
     if (ciudad) {
-      const ciudadesA = get(ciudades, 'ciudadListFront', []) || []
+      const ciudadesA = get(ciudades, 'searchListFront', []) || []
       const result = ciudadesA.find(item => {
         return item._id === ciudad
       })
@@ -169,7 +169,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
           ) : (
             <AutocompleteComponent
               valueDefault={ciudadDefault}
-              options={get(ciudades, 'ciudadListFront')}
+              options={get(ciudades, 'searchListFront')}
               setValue={setValue}
             />
           )}
@@ -218,7 +218,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
           <div>
             <AutocompleteComponent
               valueDefault={ciudadDefault}
-              options={get(ciudades, 'ciudadListFront')}
+              options={get(ciudades, 'searchListFront')}
               setValue={setValue}
             />
           </div>

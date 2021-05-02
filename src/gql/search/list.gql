@@ -1,0 +1,7 @@
+query searchListFront {
+  searchListFront {
+    slug
+    nombre
+    category
+  }
+}

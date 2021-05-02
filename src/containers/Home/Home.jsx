@@ -23,7 +23,7 @@ import ImageBanner from '../../assets/banner-MP-compu.png'
 import ImageBannerMobile from '../../assets/banner-MP-celu.png'
 
 import HOME_LIST from 'gql/home/list'
-import CIUDAD_LIST from 'gql/ciudad/list'
+import SEARCH_LIST from 'gql/search/list'
 
 import SimpleImage from '../../components/SimpleImage'
 
@@ -200,7 +200,7 @@ const Home = () => {
   const [config, setConfig] = useState([])
 
   const { data, loading } = useQuery(HOME_LIST)
-  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
+  const { data: dataSearch, loading: loadingCiudad } = useQuery(SEARCH_LIST)
 
   useEffect(() => {
     if (data) {
@@ -251,7 +251,7 @@ const Home = () => {
             <Typography fontWeight='900' className={classes.title} varian='h1'>
               DISFRUTA TU LUGAR
             </Typography>
-            <Search ciudades={ciudades} />
+            <Search ciudades={dataSearch} />
           </div>
         </div>
         <div className={classes.contentBanners}>
