@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentSearch: {
     width: '100%',
-    height: 80,
+    height: 180,
     backgroundImage: 'url(' + ImageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',

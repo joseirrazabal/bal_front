@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 
 import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import get from 'lodash/get'
 import { useForm, Controller } from 'react-hook-form'
@@ -24,26 +25,30 @@ import CIUDAD_LIST from 'gql/ciudad/list'
 
 const useStyles = makeStyles(theme => ({
   contentSearchCenter: {
-    background: '#f2f2f2' /* 'white' */,
+    background: theme.palette.primary.light/* '#f2f2f2' */ /* 'white' */,
     width: '100%',
     maxWidth: 960,
     boxSizing: 'border-box',
     'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
-    height: 68,
+    height: 125,
     padding: 15,
     borderRadius: 6,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
 
+    '@media (max-width: 960px)': {
+      height: 'auto',
+    },
+
     '&:hover': {
       boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     },
 
-    '@media (max-width: 960px)': {
+    /* '@media (max-width: 960px)': {
       margin: '0 10px',
       border: `1px solid ${theme.palette.secondary.main}`,
-    },
+    }, */
   },
   mobile: {
     display: 'none',
@@ -65,7 +70,28 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
 
     '@media (max-width: 960px)': {
+      flexDirection: 'column',
       display: 'none',
+    },
+  },
+  boxEnd: {
+    width: '100%',
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  boxColumn: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    '@media (max-width: 960px)': {
+      display: 'none',
+    },
+  },
+  icon: {
+    '@media (max-width: 960px)': {
+      display: 'none'
     },
   },
   boxButton: {
@@ -88,9 +114,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   border: {
-    border: '1px solid #ccc',
+    border: '1px solid #FFFFFF',
     boxSizing: 'border-box',
     margin: '0 10px',
+
+    '&:hover': {
+      'box-shadow': '0 1px 4px 0 rgba(0,0,0,.1)',
+    },
 
     '@media (max-width: 680px)': {
       margin: 0,
@@ -110,6 +140,11 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
   const [open, setOpen] = useState(false)
   const [ciudadDefault, setCiudadDefault] = useState(null)
   const [loading2, setLoading2] = useState(true)
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
 
@@ -159,49 +194,69 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
       className={`${classes.contentSearchCenter}`}
       noValidate
     >
-      <div className={classes.box}>
-        <div style={{ marginLeft: 10 }}>
-          <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
+      <div className={classes.boxColumn}> 
+        {/* <div className={classes.boxEnd}>
+          <Typography color="gray" textAlign='left' fontSize={18} variant='p'>
+            Busca y reserva en donde quieras
+          </Typography>
+        </div> */}
+        <div className={classes.box}>
+          <div className={classes.box}>
+            <div className={classes.icon}>
+              <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
+            </div>
+            <div style={{ margin: '0 10px', width: '100%' }}>
+              {loading2 ? (
+                <CircularProgress />
+              ) : (
+                <AutocompleteComponent
+                  valueDefault={ciudadDefault}
+                  options={get(ciudades, 'ciudadListFront')}
+                  setValue={setValue}
+                />
+              )}
+            </div>
+          </div>
+          <div className={classes.box}>
+            <div className={classes.icon}>
+              <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
+            </div>
+            <div className={`${classes.gridRow} ${classes.border}`}>
+              <div style={{width: '100%'}}>
+                <Calendar name='desde' setValue={setValue} value={desde} />
+              </div>
+              <div>
+                <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
+              </div>
+              <div style={{width: '100%'}}>
+                <Calendar name='hasta' setValue={setValue} value={hasta} />
+              </div>
+            </div>
+          </div>
+          <div className={classes.boxButton}>
+            <Button fullWidth type='submit' width={100} height={40} disableElevation border={20}>
+              <SimpleImage height={22} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
+            </Button>
+          </div>
         </div>
-        <div style={{ margin: '0 10px', width: '100%' }}>
-          {loading2 ? (
-            <CircularProgress />
-          ) : (
-            <AutocompleteComponent
-              valueDefault={ciudadDefault}
-              options={get(ciudades, 'ciudadListFront')}
-              setValue={setValue}
-            />
-          )}
+        <div className={classes.box}>
+          <Checkbox
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+          />
+          <Typography color="gray" textAlign='cemter' fontSize={13} variant='p'>
+            Seleccionar varios dias
+          </Typography>
         </div>
       </div>
-      <div className={classes.box}>
-        <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
-        <div className={`${classes.gridRow} ${classes.border}`}>
-          <div style={{width: '100%'}}>
-            <Calendar name='desde' setValue={setValue} value={desde} />
-          </div>
-          <div>
-            <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
-          </div>
-          <div style={{width: '100%'}}>
-            <Calendar name='hasta' setValue={setValue} value={hasta} />
-          </div>
-        </div>
-      </div>
-      <div className={classes.boxButton}>
-        <Button type='submit' width={100} height={40} disableElevation border={20}>
-          <SimpleImage height={22} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
-        </Button>
-      </div>
-
       {/* Mini Search Mobile */}
       <div className={classes.mobile} onClick={handleClickOpen}>
         <div style={{ marginRight: 10 }}>
           <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
         </div>
         <div>
-          <Typography textAlign='cemter' fontSize={25} variant='h2'>
+          <Typography color="gray" textAlign='cemter' fontSize={25} variant='h2'>
             Buscar Balneario
           </Typography>
         </div>

@@ -17,7 +17,7 @@ import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
 import Slider from "react-slick"
 
-import imageBackground from '../../assets/banner-fondo.jpeg'
+import imageBackground from '../../assets/mar.jpg'
 import ImageCoronaVirus from '../../assets/pop-up.jpg'
 import ImageBanner from '../../assets/banner-MP-compu.png'
 import ImageBannerMobile from '../../assets/banner-MP-celu.png'
@@ -55,7 +55,6 @@ const settings = ({slidesToShow}) => ({
 const useStyles = makeStyles(theme => ({
   contentFull: {
     width: '100%',
-    // height: '100vh',
     background: 'black',
     display: 'flex',
     flexDirection: 'column',
@@ -87,7 +86,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 400,
     backgroundImage: 'url(' + imageBackground + ')',
-    backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     backgroundPosition: 'bottom',
     backgroundRepeat: 'no-repeat',
@@ -104,14 +102,15 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       // height: '30vh',
     },
+    
     '@media (max-width: 680px)': {
       backgroundSize: 680,
-      backgroundPosition: 'top center',
+      backgroundPosition: 'center',
+      height: 200,
     },
   },
   contentBanners: {
     width: '100%',
-    // height: '55vh',
     background: '#f2f2f2',
     display: 'flex',
     justifyContent: 'center',
@@ -219,7 +218,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Home = ({slidesToShow}) => {
+const Home = () => {
   const classes = useStyles()
   const history = useHistory()
 

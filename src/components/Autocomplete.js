@@ -11,7 +11,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 40,
     boxSizing: 'border-box',
-    border: '1px solid #ccc'
+    border: '1px solid #FFFFFF',
+
+    '&:hover': {
+      'box-shadow': '0 1px 4px 0 rgba(0,0,0,.1)',
+    },
   },
   listbox: {
     width: '100%',
