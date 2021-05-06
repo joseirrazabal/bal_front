@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
 
@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
 
         '& img': {
-          marginRight: 15
+          marginRight: 15,
         },
 
         '&:hover': {
@@ -108,7 +108,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = () => {
-
   const history = useHistory()
   const classes = useStyles()
   const dia = dayjs().format('DD-MM-YYYY')
@@ -134,25 +133,35 @@ const Header = () => {
       <div className={classes.container}>
         <div className={classes.contentLogo}>
           <Link to='/'>
-            <SimpleImage alt="Alamar - Balnearios Costa Atlantica" height={30} alt='Alamar' image={LogoAlamar} onClick={() => history.push('/')} />
+            <SimpleImage
+              alt='Alamar - Balnearios Costa Atlantica'
+              height={30}
+              alt='Alamar'
+              image={LogoAlamar}
+              onClick={() => history.push('/')}
+            />
           </Link>
         </div>
         <SwipeableTemporaryDrawer>
           <ul className={classes.nav}>
             <Link to='/profile'>
-              <ListItem alignItems="flex-start">
+              <ListItem alignItems='flex-start'>
                 <ListItemAvatar>
-                  <Avatar className={classes.large} alt="Luiciano Recchini" src="https://media-exp1.licdn.com/dms/image/C4D03AQHJFBIXlYUrtw/profile-displayphoto-shrink_200_200/0/1615833330750?e=1623888000&v=beta&t=lPpLvHG1iD5SRWswy1R9bdiUEAtkVMvsxPv8Zg12dMU" />
+                  <Avatar
+                    className={classes.large}
+                    alt='Luiciano Recchini'
+                    src='https://media-exp1.licdn.com/dms/image/C4D03AQHJFBIXlYUrtw/profile-displayphoto-shrink_200_200/0/1615833330750?e=1623888000&v=beta&t=lPpLvHG1iD5SRWswy1R9bdiUEAtkVMvsxPv8Zg12dMU'
+                  />
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Biuenvenido"
+                  primary='Biuenvenido'
                   secondary={
                     <React.Fragment>
                       <Typography
-                        component="span"
-                        variant="body2"
+                        component='span'
+                        variant='body2'
                         className={classes.inline}
-                        color="white"
+                        color='white'
                       >
                         Luciano Recchini
                       </Typography>
@@ -163,7 +172,7 @@ const Header = () => {
             </Link>
             <li>
               <Link to={`/list/${dia}/${dia}`}>
-                <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={IconPlaya} />
+                <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={IconPlaya} />
                 <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
                   Balnearios
                 </Typography>
@@ -173,23 +182,27 @@ const Header = () => {
               <Divider />
             </li>
             <li>
-              <Link onClick={handleClickOpen}>
-                <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Accepted} />
+              {/* <Link onClick={handleClickOpen}> */}
+              <div onClick={handleClickOpen}>
+                <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Accepted} />
                 <Typography variant='p' color='white'>
                   Terminos y Condiciones
                 </Typography>
-              </Link>
+              </div>
+              {/* </Link> */}
             </li>
             <li>
               <Divider />
             </li>
             <li>
-              <Link onClick={handleClickOpen2}>
-                <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Conversation} />
+              {/* <Link onClick={handleClickOpen2}> */}
+              <div onClick={handleClickOpen2}>
+                <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Conversation} />
                 <Typography variant='p' color='white'>
                   Preguntas Frecuentes
                 </Typography>
-              </Link>
+              </div>
+              {/* </Link> */}
             </li>
           </ul>
         </SwipeableTemporaryDrawer>
