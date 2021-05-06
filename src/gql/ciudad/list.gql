@@ -1,6 +1,7 @@
 query ciudadListFront {
   ciudadListFront {
-    _id
+    id
+    slug
     nombre
     descripcion
   }

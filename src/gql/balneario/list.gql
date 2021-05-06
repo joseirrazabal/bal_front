@@ -1,6 +1,7 @@
 query balnearioListFront {
   balnearioListFront {
-    _id
+    id
+    slug
     nombre
     direccion
     descripcion
@@ -8,14 +9,15 @@ query balnearioListFront {
     checkOut
     imagenes {
       url
-      titulo
+      title
     }
     planos {
       url
-      titulo
+      title
     }
     ciudad {
-      _id
+      id
+      slug
       nombre
     }
   }

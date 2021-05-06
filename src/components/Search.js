@@ -25,7 +25,7 @@ import CIUDAD_LIST from 'gql/ciudad/list'
 
 const useStyles = makeStyles(theme => ({
   contentSearchCenter: {
-    background: theme.palette.primary.light/* '#f2f2f2' */ /* 'white' */,
+    background: theme.palette.primary.light /* '#f2f2f2' */ /* 'white' */,
     width: '100%',
     maxWidth: 960,
     boxSizing: 'border-box',
@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
     boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   boxColumn: {
     width: '100%',
@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     '@media (max-width: 960px)': {
-      display: 'none'
+      display: 'none',
     },
   },
   boxButton: {
@@ -140,23 +140,27 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
   const [open, setOpen] = useState(false)
   const [ciudadDefault, setCiudadDefault] = useState(null)
   const [loading2, setLoading2] = useState(true)
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(true)
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+  const handleChange = event => {
+    setChecked(event.target.checked)
+  }
 
   const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
 
   // const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
 
-  const { ciudad: ciudadInput, desde: desdeInput, hasta: hastaInput } = watch()
+  // const { ciudad: ciudadInput, desde: desdeInput, hasta: hastaInput } = watch()
 
   const onSubmit = data => {
-    // history.push(`/list/${get(data, 'ciudad')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     history.push(
-      `/list/${desdeInput}/${hastaInput}${ciudadInput !== undefined ? `/${ciudadInput}` : ''}`
+      `/list/${get(data, 'desde')}/${get(data, 'hasta')}/${
+        get(data, 'ciudad') !== undefined ? `${get(data, 'ciudad')}` : ''
+      }`
     )
+    // history.push(
+    //   `/list/${desdeInput}/${hastaInput}/${ciudadInput !== undefined ? `${ciudadInput}` : ''}`
+    // )
   }
 
   useEffect(() => {
@@ -194,7 +198,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
       className={`${classes.contentSearchCenter}`}
       noValidate
     >
-      <div className={classes.boxColumn}> 
+      <div className={classes.boxColumn}>
         {/* <div className={classes.boxEnd}>
           <Typography color="gray" textAlign='left' fontSize={18} variant='p'>
             Busca y reserva en donde quieras
@@ -222,13 +226,13 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
               <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
             </div>
             <div className={`${classes.gridRow} ${classes.border}`}>
-              <div style={{width: '100%'}}>
+              <div style={{ width: '100%' }}>
                 <Calendar name='desde' setValue={setValue} value={desde} />
               </div>
               <div>
                 <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
               </div>
-              <div style={{width: '100%'}}>
+              <div style={{ width: '100%' }}>
                 <Calendar name='hasta' setValue={setValue} value={hasta} />
               </div>
             </div>
@@ -245,7 +249,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
             onChange={handleChange}
             inputProps={{ 'aria-label': 'primary checkbox' }}
           />
-          <Typography color="gray" textAlign='cemter' fontSize={13} variant='p'>
+          <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
             Seleccionar varios dias
           </Typography>
         </div>
@@ -256,12 +260,12 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
           <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
         </div>
         <div>
-          <Typography color="gray" textAlign='cemter' fontSize={25} variant='h2'>
+          <Typography color='gray' textAlign='cemter' fontSize={25} variant='h2'>
             Buscar Balneario
           </Typography>
         </div>
       </div>
-      
+
       {/* Search Mobile en Modal */}
       <FullScreenDialog fullScreen={true} open={open} handleClose={handleClose}>
         <div className={classes.contentSearMobile}>

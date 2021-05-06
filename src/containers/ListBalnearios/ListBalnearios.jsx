@@ -318,11 +318,11 @@ const ListBalnearios = () => {
                         <FormControlLabel
                           control={
                             <Checkbox
-                              checked={state[item._id]}
+                              checked={state[item.id]}
                               onChange={handleChange}
                               name='checkedA'
                               color='secondary'
-                              value={item._id}
+                              value={item.id}
                             />
                           }
                           label={item.nombre}
@@ -361,7 +361,7 @@ const ListBalnearios = () => {
                           key={i}
                           item={item}
                           onClick={() => {
-                            history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}/${ciudad}`)
+                            history.push(`/detalle/${get(item, 'id')}/${desde}/${hasta}/${ciudad}`)
                           }}
                         />
                       </li>
@@ -386,11 +386,11 @@ const ListBalnearios = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state[item._id]}
+                      checked={state[item.id]}
                       onChange={handleChange}
                       name='checkedA'
                       color='secondary'
-                      value={item._id}
+                      value={item.id}
                     />
                   }
                   label={item.nombre}

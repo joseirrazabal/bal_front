@@ -49,8 +49,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], setValue }) => {
+const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], setValue: setData }) => {
   const classes = useStyles()
+  const [value, setValue] = React.useState()
 
   const options = options1.map(option => {
     return option
@@ -64,6 +65,11 @@ const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], se
       getOptionLabel={option => option.nombre}
       style={{ width: 300 }}
       renderInput={params => <TextField {...params} label='Buscar' variant='outlined' />}
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue)
+        setData('ciudad', get(newValue, 'slug'))
+      }}
     />
   )
 
