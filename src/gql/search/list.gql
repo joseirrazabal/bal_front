@@ -3,5 +3,6 @@ query searchListFront {
     slug
     nombre
     category
+    ciudad
   }
 }

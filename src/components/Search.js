@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -20,8 +19,6 @@ import IconSomb from '../assets/icon-sombrilla_azul.svg'
 import IconCalendar from '../assets/icon-calendar-azul.svg'
 import IconLupa from '../assets/icon-lupa.svg'
 import IdaVuelta from '../assets/de-ida-y-vuelta-azul.svg'
-
-import CIUDAD_LIST from 'gql/ciudad/list'
 
 const useStyles = makeStyles(theme => ({
   contentSearchCenter: {
@@ -134,8 +131,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
-  const history = useHistory()
+const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [ciudadDefault, setCiudadDefault] = useState(null)
@@ -146,21 +142,10 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
     setChecked(event.target.checked)
   }
 
-  const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
-
-  // const { data: ciudades, loading } = useQuery(CIUDAD_LIST)
-
-  // const { ciudad: ciudadInput, desde: desdeInput, hasta: hastaInput } = watch()
+  const { reset, register, control, handleSubmit, errors, setValue } = useForm()
 
   const onSubmit = data => {
-    history.push(
-      `/list/${get(data, 'desde')}/${get(data, 'hasta')}/${
-        get(data, 'ciudad') !== undefined ? `${get(data, 'ciudad')}` : ''
-      }`
-    )
-    // history.push(
-    //   `/list/${desdeInput}/${hastaInput}/${ciudadInput !== undefined ? `${ciudadInput}` : ''}`
-    // )
+    handleOnSubmit(data)
   }
 
   useEffect(() => {
@@ -181,15 +166,15 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta }) => {
     if (ciudad) {
       const ciudadesA = get(ciudades, 'searchListFront', []) || []
       const result = ciudadesA.find(item => {
-        return item._id === ciudad
+        return item.slug === get(ciudad, 'slug')
       })
       if (result) {
         setCiudadDefault(result)
-        setValue('ciudad', get(result, '_id'))
+        setValue('ciudad', result)
       }
     }
     setLoading2(false)
-  }, [ciudades])
+  }, [ciudades, ciudad])
 
   return (
     <form

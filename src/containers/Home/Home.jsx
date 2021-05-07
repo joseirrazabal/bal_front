@@ -192,14 +192,46 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const settings = ({ slidesToShow = 3 }) => ({
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: slidesToShow,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 2.5,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1.2,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+})
+
 const Home = () => {
   const classes = useStyles()
   const history = useHistory()
 
-  const [config, setConfig] = useState([])
-
   const { data, loading } = useQuery(HOME_LIST)
   const { data: dataSearch, loading: loadingCiudad } = useQuery(SEARCH_LIST)
+
+  const [config, setConfig] = useState([])
+  const [ciudadSelect, setCiudadSelect] = useState(null)
+
+  useEffect(() => {
+    if (localStorage.getItem('search')) {
+      setCiudadSelect(JSON.parse(localStorage.getItem('search')))
+    }
+  }, [])
 
   useEffect(() => {
     if (data) {
@@ -207,30 +239,23 @@ const Home = () => {
     }
   }, [data])
 
-  const settings = ({ slidesToShow = 3 }) => ({
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: slidesToShow,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2.5,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1.2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  })
+  const onSubmitSearch = data => {
+    if (get(data, 'ciudad.ciudad')) {
+      history.push(
+        `/list/${get(data, 'desde')}/${get(data, 'hasta')}/${get(data, 'ciudad.ciudad')}/${get(
+          data,
+          'ciudad.slug'
+        )}
+        `
+      )
+    } else {
+      history.push(
+        `/list/${get(data, 'desde')}/${get(data, 'hasta')}/${
+          get(data, 'ciudad.slug') !== undefined ? `${get(data, 'ciudad.slug')}` : ''
+        }`
+      )
+    }
+  }
 
   if (loading || loadingCiudad) {
     return <Loading />
@@ -246,7 +271,7 @@ const Home = () => {
             <Typography fontWeight='900' className={classes.title} varian='h1'>
               DISFRUTA TU LUGAR
             </Typography>
-            <Search ciudades={dataSearch} />
+            <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
           </div>
         </div>
         <div className={classes.contentBanners}>

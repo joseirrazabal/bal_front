@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
@@ -51,15 +51,21 @@ const useStyles = makeStyles(theme => ({
 
 const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], setValue: setData }) => {
   const classes = useStyles()
-  const [value, setValue] = React.useState()
+  const [value, setValue] = React.useState(valueDefault)
 
   const options = options1.map(option => {
     return option
   })
 
+  useEffect(() => {
+    if (valueDefault) {
+      setValue(valueDefault)
+    }
+  }, [valueDefault])
+
   return (
     <Autocomplete
-      id='grouped-demo'
+      id='ciudad'
       options={options.sort((a, b) => b.category.localeCompare(a.category))}
       groupBy={option => option.category}
       getOptionLabel={option => option.nombre}
@@ -67,46 +73,14 @@ const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], se
       renderInput={params => <TextField {...params} label='Buscar' variant='outlined' />}
       value={value}
       onChange={(event, newValue) => {
+        localStorage.setItem('search', JSON.stringify(newValue))
+
         setValue(newValue)
-        setData('ciudad', get(newValue, 'slug'))
+        // setData('ciudad', get(newValue, 'slug'))
+        setData('ciudad', newValue)
       }}
     />
   )
-
-  // const {
-  //   getRootProps,
-  //   getInputLabelProps,
-  //   getInputProps,
-  //   getListboxProps,
-  //   getOptionProps,
-  //   groupedOptions,
-  // } = useAutocomplete({
-  //   // id: 'use-autocomplete-demo',
-  //   defaultValue: valueDefault,
-  //   options: options,
-  //   onChange: (event, newValue) => {
-  //     setValue('ciudad', get(newValue, '_id'))
-  //   },
-  //   getOptionLabel: option => {
-  //     return option.nombre
-  //   },
-  // })
-
-  // return (
-  //   <div style={{ width: '100%' }}>
-  //     <div {...getRootProps()}>
-  //       <input className={classes.input} {...getInputProps()} />
-  //     </div>
-  //
-  //     {groupedOptions.length > 0 && (
-  //       <ul className={classes.listbox} {...getListboxProps()}>
-  //         {groupedOptions.map((option, index) => (
-  //           <li {...getOptionProps({ option, index })}>{option.nombre}</li>
-  //         ))}
-  //       </ul>
-  //     )}
-  //   </div>
-  // )
 }
 
 export default React.memo(AutocompleteComponent)

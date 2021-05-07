@@ -148,7 +148,7 @@ const CardBalDetail = ({
       <div className={classes.image}>
         {nuevo && <div className={classes.nuevo}> NUEVO</div>}
         {promo && <div className={classes.promo}> BANCO MACRO</div>}
-        {off && <spam className={classes.descuento}>{off}% OFF</spam>}
+        {off && <span className={classes.descuento}>{off}% OFF</span>}
       </div>
       <div className={classes.content}>
         <div className={classes.data}>
