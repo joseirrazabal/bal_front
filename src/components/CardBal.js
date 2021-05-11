@@ -115,7 +115,7 @@ const CardBal = ({
   promo = false,
   onClick = () => {},
 }) => {
-  const image = get(item, 'categoria.balneario.imagenes.0.url', ImageDefault)
+  const image = get(item, 'image', ImageDefault)
 
   const classes = useStyles({
     moludar,
@@ -141,10 +141,10 @@ const CardBal = ({
         <div className={classes.data}>
           <div>
             <Typography variant='h2' fontWeight='400' fontSize={18}>
-              {get(item, 'nombre')}
+              {get(item, 'name')}
             </Typography>
             <Typography color='black' variant='p' fontSize={13}>
-              {get(item, 'ciudad.nombre')}
+              {get(item, 'city')}
             </Typography>
           </div>
           {get(item, 'precioFinal') > 0 && (
@@ -174,7 +174,7 @@ const CardBal = ({
               )}
 
               <Typography color='black' textStyle='italic' textAlign='right' variant='p' fontSize={12}>
-                {get(item, 'categoria.tipo.nombre')} x dia
+                {get(item, 'category')} x dia
               </Typography>
             </div>
           )}
