@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
-    height: 38,
+    height: 50,
 
     '& div': {
       height: '100%',

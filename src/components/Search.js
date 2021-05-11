@@ -223,7 +223,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit 
             </div>
           </div>
           <div className={classes.boxButton}>
-            <Button fullWidth type='submit' width={100} height={40} disableElevation border={20}>
+            <Button fullWidth type='submit' width={100} height={50} disableElevation border={20}>
               <SimpleImage height={22} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
             </Button>
           </div>
