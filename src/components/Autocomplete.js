@@ -12,9 +12,9 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     width: '100%',
-    height: 40,
+    height: 55,
     boxSizing: 'border-box',
-    border: '1px solid #FFFFFF',
+    background: 'white',
 
     '&:hover': {
       'box-shadow': '0 1px 4px 0 rgba(0,0,0,.1)',
@@ -64,22 +64,25 @@ const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], se
   }, [valueDefault])
 
   return (
-    <Autocomplete
-      id='ciudad'
-      options={options.sort((a, b) => b.category.localeCompare(a.category))}
-      groupBy={option => option.category}
-      getOptionLabel={option => option.nombre}
-      style={{ width: 300 }}
-      renderInput={params => <TextField {...params} label='Buscar' variant='outlined' />}
-      value={value}
-      onChange={(event, newValue) => {
-        localStorage.setItem('search', JSON.stringify(newValue))
+    <div className={classes.input}> 
+      <Autocomplete
+        classes={classes.input}
+        id='ciudad'
+        color="secondary"
+        options={options.sort((a, b) => b.category.localeCompare(a.category))}
+        groupBy={option => option.category}
+        getOptionLabel={option => option.nombre}
+        renderInput={params => <TextField {...params} label='Buscar' variant='outlined' />}
+        value={value}
+        onChange={(event, newValue) => {
+          localStorage.setItem('search', JSON.stringify(newValue))
 
-        setValue(newValue)
-        // setData('ciudad', get(newValue, 'slug'))
-        setData('ciudad', newValue)
-      }}
-    />
+          setValue(newValue)
+          // setData('ciudad', get(newValue, 'slug'))
+          setData('ciudad', newValue)
+        }}
+      />
+    </div>
   )
 }
 
