@@ -13,7 +13,8 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
-import CardBal from '../../components/CardBal'
+// import CardBal from '../../components/CardBal'
+import CardBal from '@joseirrazabal/copo/Atoms/Cards/Card'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
 
@@ -309,12 +310,20 @@ const Home = () => {
                             <div style={{ margin: 5 }}>
                               <li>
                                 <CardBal
-                                  moludar
-                                  nuevo
-                                  item={item}
+                                  modular
+                                  tag={get(item, 'precio.tag.nombre')}
+                                  tagTexto={get(item, 'precio.tag.texto')}
+                                  tagImagen={get(item, 'precio.tag.imagen')}
+                                  price={get(item, 'precioFinal')}
+                                  oldPrice={get(item, 'precioOld')}
+                                  name={get(item, 'name')}
+                                  city={get(item, 'city')}
+                                  image={get(item, 'image')}
+                                  category={get(item, 'category')}
+                                  //item={item}
                                   onClick={() => {
                                     const dia = dayjs().format('DD-MM-YYYY')
-                                    history.push(`/detalle/${get(item, 'id')}/${dia}/${dia}`)
+                                    history.push(`/detalle/${get(item, 'slug')}/${dia}/${dia}`)
                                   }}
                                 />
                               </li>
