@@ -313,7 +313,11 @@ const Home = () => {
                                   modular
                                   tag={get(item, 'precio.tag.nombre')}
                                   tagTexto={get(item, 'precio.tag.texto')}
-                                  tagImagen={get(item, 'precio.tag.imagen')}
+                                  tagImagen={
+                                    get(item, 'precio.tag.imagen') !== 'false'
+                                      ? get(item, 'precio.tag.imagen')
+                                      : false
+                                  }
                                   price={get(item, 'precioFinal')}
                                   oldPrice={get(item, 'precioOld')}
                                   name={get(item, 'name')}
