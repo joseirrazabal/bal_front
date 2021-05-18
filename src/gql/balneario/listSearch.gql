@@ -1,6 +1,7 @@
 query balnearioListSearch($ciudad: String) {
   balnearioListSearch(ciudad: $ciudad) {
     id
+    slug
     nombre
     direccion
     descripcion

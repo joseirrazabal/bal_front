@@ -149,7 +149,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit 
   }
 
   useEffect(() => {
-    register('ciudad')
+    register('ciudad', { required: true })
     register('desde')
     register('hasta')
   }, [])

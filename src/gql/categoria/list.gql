@@ -1,7 +1,16 @@
 query categoriaListFront($tipo: String, $balneario: String) {
   categoriaListFront(tipo: $tipo, balneario: $balneario) {
-    _id
+    id
+    slug
     nombre
     descripcion
+    balneario {
+      slug
+      nombre
+    }
+    tipo {
+      slug
+      nombre
+    }
   }
 }

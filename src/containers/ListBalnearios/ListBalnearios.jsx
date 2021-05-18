@@ -19,7 +19,7 @@ import SimpleImage from '../../components/SimpleImage'
 import FullScreenDialog from '../../components/Dialog'
 
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
-import CIUDAD_LIST from 'gql/ciudad/list'
+import SEARCH_LIST from 'gql/search/list'
 
 import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageDefault from '../../assets/sin-resultados.jpg'
@@ -190,12 +190,8 @@ const ListBalnearios = () => {
   const [items, setItems] = useState([])
   const [open, setOpen] = useState(false)
 
-  const { data: dataCiudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
-  const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
-    // variables: {
-    //   ciudad,
-    // },
-  })
+  const { data: dataCiudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
+  const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -212,8 +208,8 @@ const ListBalnearios = () => {
   }, [data])
 
   useEffect(() => {
-    if (get(dataCiudades, 'ciudadListFront')) {
-      setCiudades(get(dataCiudades, 'ciudadListFront', []))
+    if (get(dataCiudades, 'searchListFront')) {
+      setCiudades(get(dataCiudades, 'searchListFront', []))
     } else {
       setLoadingCheck(false)
     }
@@ -251,7 +247,7 @@ const ListBalnearios = () => {
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
-          if (state[item.ciudad._id]) {
+          if (state[item.ciudad.slug]) {
             return true
           }
           return false
@@ -273,7 +269,15 @@ const ListBalnearios = () => {
     setState({ ...state, [event.target.value]: event.target.checked })
   }
 
+  const onSubmitSearch = data => {
+    history.push(
+      `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
+        `
+    )
+  }
+
   if (loading || loadingCiudad || loadingCheck) {
+    // return <Loading />
     return (
       <NoSsr>
         <Loading />
@@ -287,7 +291,13 @@ const ListBalnearios = () => {
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
-          <Search ciudades={dataCiudades} ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search
+            ciudades={dataCiudades}
+            ciudad={{ slug: ciudad }}
+            desde={desde}
+            hasta={hasta}
+            handleOnSubmit={onSubmitSearch}
+          />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -312,24 +322,26 @@ const ListBalnearios = () => {
                       CIUDAD
                     </Typography>
                   </li>
-                  {ciudades.map((item, i) => {
-                    return (
-                      <li key={i}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={state[item.id]}
-                              onChange={handleChange}
-                              name='checkedA'
-                              color='secondary'
-                              value={item.id}
-                            />
-                          }
-                          label={item.nombre}
-                        />
-                      </li>
-                    )
-                  })}
+                  {ciudades
+                    .filter(item => item.category === 'ciudad')
+                    .map((item, i) => {
+                      return (
+                        <li key={i}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={state[item.slug]}
+                                onChange={handleChange}
+                                name='checkedA'
+                                color='secondary'
+                                value={item.slug}
+                              />
+                            }
+                            label={item.nombre}
+                          />
+                        </li>
+                      )
+                    })}
                   {/* <Divider /> */}
                 </ul>
               </div>
@@ -361,7 +373,7 @@ const ListBalnearios = () => {
                           key={i}
                           item={item}
                           onClick={() => {
-                            history.push(`/detalle/${get(item, 'id')}/${desde}/${hasta}/${ciudad}`)
+                            history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
                           }}
                         />
                       </li>
@@ -386,11 +398,11 @@ const ListBalnearios = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state[item.id]}
+                      checked={state[item.slug]}
                       onChange={handleChange}
                       name='checkedA'
                       color='secondary'
-                      value={item.id}
+                      value={item.slug}
                     />
                   }
                   label={item.nombre}

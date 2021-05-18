@@ -10,7 +10,7 @@ import NoSsr from '@material-ui/core/NoSsr'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
-import CardLab from '../../components/CardBal'
+import CardBal from '@joseirrazabal/copo/Atoms/Cards/Card'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
 import Button from '../../components/Button'
@@ -32,7 +32,7 @@ import BALNEARIO_GET from 'gql/balneario/get'
 import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 import CATEGORIA_LIST from 'gql/categoria/list'
 import PRECIO_GET from 'gql/precio/get'
-import CIUDAD_LIST from 'gql/ciudad/list'
+import SEARCH_LIST from 'gql/search/list'
 
 dayjs.extend(customParseFormat)
 
@@ -317,13 +317,16 @@ const DetalleBalneario = () => {
 
   const classes = useStyles()
   const history = useHistory()
-  const { id, ciudad, desde, hasta } = useParams()
+  const { slug, desde, hasta } = useParams()
 
-  const [categoria, setCategoria] = useState()
+  const [balneario, setBalneario] = useState({})
+  const [categoriasAll, setCategoriasAll] = useState([])
+  const [categorias, setCategorias] = useState([])
+  const [categoriaSelected, setCategoriaSelected] = useState()
   const [tipos, setTipos] = useState([])
   const [tipoSelected, setTipoSelected] = useState(null)
-  const [balneario, setBalneario] = useState({})
   const [imagenes, setImagenes] = useState([])
+
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
@@ -352,32 +355,44 @@ const DetalleBalneario = () => {
     setOpen3(false)
   }
 
-  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
-  const { data: dataTipoList, loadingTipoList } = useQuery(TIPO_LIST, {
-    variables: { balneario: id },
-    fetchPolicy: 'no-cache',
+  const { data: ciudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
+
+  const { data, loading } = useQuery(BALNEARIO_GET, {
+    variables: {
+      slug: `${slug}`,
+    },
   })
+
   const { data: dataList, loadingList } = useQuery(BALNEARIO_LIST, {
     fetchPolicy: 'no-cache',
   })
 
-  const [getCategorias, { data: dataCategorias, loading: loadingCategorias }] = useLazyQuery(
-    CATEGORIA_LIST,
-    {
-      variables: { tipo: get(tipoSelected, '_id'), balneario: id },
-      fetchPolicy: 'no-cache',
-    }
-  )
   const [getPrecio, { data: dataPrecio, loading: loadingPrecio }] = useLazyQuery(PRECIO_GET, {
-    variables: { categoria: categoria, desde, hasta },
+    variables: { categoria: categoriaSelected, desde, hasta },
     fetchPolicy: 'no-cache',
   })
 
-  const { data, loading } = useQuery(BALNEARIO_GET, {
-    variables: {
-      id: `${id}`,
-    },
-  })
+  useEffect(() => {
+    if (get(data, 'balnearioGetFront')) {
+      setBalneario(get(data, 'balnearioGetFront', {}) || {})
+      setImagenes(get(data, 'balnearioGetFront.imagenes', []) || [])
+
+      setCategoriasAll(get(data, 'balnearioGetFront.Categoria'))
+
+      const aTipos = []
+      get(data, 'balnearioGetFront.Categoria', []).map(item => {
+        aTipos[item.tipo.slug] = item.tipo
+      })
+
+      const aTipos2 = []
+      for (const item in aTipos) {
+        aTipos2.push(aTipos[item])
+      }
+
+      setTipos(aTipos2)
+      setTipoSelected(aTipos2[0])
+    }
+  }, [data])
 
   useEffect(() => {
     if (get(dataList, 'balnearioListFrontUltimos', []).length) {
@@ -386,33 +401,35 @@ const DetalleBalneario = () => {
   }, [dataList])
 
   useEffect(() => {
-    setBalneario(get(data, 'balnearioGetFront', {}) || {})
-    setImagenes(get(data, 'balnearioGetFront.imagenes', []) || [])
-  }, [data])
-
-  useEffect(() => {
-    setTipos(get(dataTipoList, 'tipoListFront', []) || [])
-
-    setTipoSelected(get(dataTipoList, 'tipoListFront.0', {}) || {})
-  }, [dataTipoList])
-
-  useEffect(() => {
-    getCategorias()
+    const aCategorias = categoriasAll.filter(item => item.tipo.slug === tipoSelected.slug)
+    setCategorias(aCategorias)
   }, [tipoSelected])
 
   useEffect(() => {
-    if (get(dataCategorias, 'categoriaListFront')) {
-      setCategoria(get(dataCategorias, 'categoriaListFront.0._id'))
-    }
-  }, [dataCategorias])
+    setCategoriaSelected(categorias[0])
+  }, [categorias])
 
   useEffect(() => {
-    if (categoria) {
+    if (categoriaSelected) {
       getPrecio()
     }
-  }, [categoria])
+  }, [categoriaSelected, desde, hasta])
 
-  if (loading || loadingCiudad || loadingTipoList) {
+  const onSubmitSearch = data => {
+    if (data.ciudad.slug === slug) {
+      history.push(
+        `/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
+        `
+      )
+    } else {
+      history.push(
+        `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
+        `
+      )
+    }
+  }
+
+  if (loading || loadingCiudad) {
     return (
       <NoSsr>
         <Loading />
@@ -425,7 +442,13 @@ const DetalleBalneario = () => {
       <Header />
       <div className={classes.contentSearch}>
         <div className={classes.container}>
-          <Search ciudades={ciudades} ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search
+            ciudades={ciudades}
+            ciudad={{ slug: slug }}
+            desde={desde}
+            hasta={hasta}
+            handleOnSubmit={onSubmitSearch}
+          />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -472,14 +495,14 @@ const DetalleBalneario = () => {
               </FullScreenDialog>
               {imagenes.length != 0 && (
                 <div className={classes.verFotos}>
-                  <Button colorBg='default' color="black" height={30} onClick={handleClickOpen2}>
+                  <Button colorBg='default' color='black' height={30} onClick={handleClickOpen2}>
                     AMPLIAR FOTOS
                   </Button>
                 </div>
               )}
               {get(balneario, 'planos.0') && (
                 <div className={classes.verPlano}>
-                  <Button colorBg="secondary" height={30} onClick={handleClickOpen}>
+                  <Button colorBg='secondary' height={30} onClick={handleClickOpen}>
                     VER PLANO
                   </Button>
                 </div>
@@ -516,17 +539,15 @@ const DetalleBalneario = () => {
                     )
                   })}
                 </div>
-                {get(dataCategorias, 'categoriaListFront.0') && (
-                  <div className={classes.gridRow}>
-                    <Selected
-                      items={get(dataCategorias, 'categoriaListFront')}
-                      loading={loadingCategorias}
-                      onChange={e => {
-                        setCategoria(e.target.value)
-                      }}
-                    />
-                  </div>
-                )}
+                <div className={classes.gridRow}>
+                  <Selected
+                    items={categorias}
+                    loading={false}
+                    onChange={e => {
+                      setCategoriaSelected(e.target.value)
+                    }}
+                  />
+                </div>
               </div>
 
               {get(dataPrecio, 'precioGetFront.precio') && (
@@ -595,7 +616,7 @@ const DetalleBalneario = () => {
                         width={200}
                         onClick={() =>
                           history.push(
-                            `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
+                            `/checkout/${get(dataPrecio, 'precioGetFront.slug')}/${desde}/${hasta}`
                           )
                         }
                       >
@@ -671,16 +692,18 @@ const DetalleBalneario = () => {
             </Typography>
             <ul>
               {otros
-                .filter(item => `${item._id}` !== `${id}`)
+                .filter(item => `${item.slug}` !== `${slug}`)
                 .slice(0, 3)
                 .map((item, i) => {
                   return (
                     <li key={i}>
-                      <CardLab
-                        moludar
-                        item={item}
+                      <CardBal
+                        modular
+                        name={get(item, 'nombre')}
+                        city={get(item, 'ciudad.nombre')}
+                        image={get(item, 'imagenes.0.url')}
                         onClick={() => {
-                          history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}`)
+                          history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
                         }}
                       />
                     </li>
@@ -689,7 +712,12 @@ const DetalleBalneario = () => {
             </ul>
           </div>
 
-          <FullScreenDialog fullScreen={widthNav < 600} title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
+          <FullScreenDialog
+            fullScreen={widthNav < 600}
+            title='Nuestra Ubicación'
+            open={open3}
+            handleClose={handleClose3}
+          >
             <div style={{ width: widthNav > 600 ? 600 : '100%', height: 600 }}>
               <MyMap
                 onDragMarker={() => {}}

@@ -1,6 +1,7 @@
 query balnearioListFrontUltimos {
   balnearioListFrontUltimos {
-    _id
+    id
+    slug
     nombre
     direccion
     descripcion
@@ -8,14 +9,13 @@ query balnearioListFrontUltimos {
     checkOut
     imagenes {
       url
-      titulo
     }
     planos {
       url
-      titulo
     }
     ciudad {
-      _id
+      id
+      slug
       nombre
     }
   }

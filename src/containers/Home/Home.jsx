@@ -241,21 +241,10 @@ const Home = () => {
   }, [data])
 
   const onSubmitSearch = data => {
-    if (get(data, 'ciudad.ciudad')) {
-      history.push(
-        `/list/${get(data, 'desde')}/${get(data, 'hasta')}/${get(data, 'ciudad.ciudad')}/${get(
-          data,
-          'ciudad.slug'
-        )}
+    history.push(
+      `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
         `
-      )
-    } else {
-      history.push(
-        `/list/${get(data, 'desde')}/${get(data, 'hasta')}/${
-          get(data, 'ciudad.slug') !== undefined ? `${get(data, 'ciudad.slug')}` : ''
-        }`
-      )
-    }
+    )
   }
 
   if (loading || loadingCiudad) {

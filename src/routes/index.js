@@ -10,21 +10,21 @@ import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnea
 
 const routes = [
   {
-    path: '/list/:desde/:hasta/:ciudad?',
+    path: '/list/:ciudad/:desde/:hasta',
     Component: ListBalnearios,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/detalle/:id/:desde?/:hasta?/:ciudad?',
+    path: '/detalle/:slug/:desde?/:hasta?/:ciudad?',
     Component: DetalleBalneario,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/checkout/:id/:desde/:hasta',
+    path: '/checkout/:slug/:desde/:hasta',
     Component: CheckoutBalnearios,
     Props: {},
     useLayout: false,

@@ -1,24 +1,27 @@
 query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: String) {
   precioGetFront(id: $id, categoria: $categoria, desde: $desde, hasta: $hasta) {
-    _id
+    id
     precio
     dias
     stock
     precioCero
     articulo {
-      _id
+      id
       categoria {
-        _id
+        id
+        slug
         nombre
         tipo {
-          _id
+          id
+          slug
           nombre
         }
         balneario {
-          _id
+          id
+          slug
           nombre
           ciudad {
-            _id
+            id
             nombre
           }
           keyPublic

@@ -9,11 +9,9 @@ query balnearioListFront {
     checkOut
     imagenes {
       url
-      title
     }
     planos {
       url
-      title
     }
     ciudad {
       id
