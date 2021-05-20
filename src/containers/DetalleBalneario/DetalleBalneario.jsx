@@ -27,15 +27,15 @@ import DefaultImage from '../../assets/default-image.jpg'
 import ImageBackground from '../../assets/fondo.jpg'
 import MapaDefault from '../../assets/mapaDefault.jpg'
 
-import TIPO_LIST from 'gql/tipo/list'
-import BALNEARIO_GET from 'gql/balneario/get'
-import BALNEARIO_LIST from 'gql/balneario/listUltimos'
-import CATEGORIA_LIST from 'gql/categoria/list'
-import PRECIO_GET from 'gql/precio/get'
 import SEARCH_LIST from 'gql/search/list'
+import BALNEARIO_GET from 'gql/balneario/get'
+import PRECIO_GET from 'gql/precio/get'
+
+import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 
 dayjs.extend(customParseFormat)
 
+// googleMaps static image key
 const key = 'AIzaSyDqmMaF9eTJtA2x-a_xYSK2sF5giJTlkCo'
 
 const useStyles = makeStyles(theme => ({

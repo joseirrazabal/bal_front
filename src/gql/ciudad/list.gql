@@ -1,9 +1,0 @@
-query ciudadListFront {
-  ciudadListFront {
-    id
-    slug
-    nombre
-    descripcion
-  }
-}
-

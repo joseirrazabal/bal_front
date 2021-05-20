@@ -1,25 +1,18 @@
-query balnearioListSearch($ciudad: String) {
-  balnearioListSearch(ciudad: $ciudad) {
-    id
+query balnearioListSearch($ciudad: String, $desde: String, $hasta: String) {
+  balnearioListSearch(ciudad: $ciudad, desde: $desde, hasta: $hasta) {
     slug
     nombre
-    direccion
-    descripcion
-    checkIn
-    checkOut
-    imagenes {
-      url
-      title
-    }
-    planos {
-      url
-      title
-    }
-    ciudad {
-      id
-      slug
-      nombre
-    }
+    ciudad
+    ciudadSlug
+    categoria
+    tipo
+    articulo
+    oldPrecio
+    precio
+    tagNombre
+    tagTexto
+    tagClase
+    tagImagen
+    imagen
   }
 }
-

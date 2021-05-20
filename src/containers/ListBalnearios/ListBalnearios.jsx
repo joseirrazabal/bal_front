@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
@@ -8,22 +8,23 @@ import NoSsr from '@material-ui/core/NoSsr'
 import Divider from '@material-ui/core/Divider'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import { Button } from '@material-ui/core'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
-import CardBalDetail from '../../components/CardBalDetail'
+// import CardBalDetail from '../../components/CardBalDetail'
+import CardBal from '@joseirrazabal/copo/Atoms/Cards/Card'
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
 import Loading from '../../components/Loading'
 import SimpleImage from '../../components/SimpleImage'
 import FullScreenDialog from '../../components/Dialog'
 
-import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
-import SEARCH_LIST from 'gql/search/list'
-
 import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageDefault from '../../assets/sin-resultados.jpg'
-import { Button } from '@material-ui/core'
+
+import SEARCH_LIST from 'gql/search/list'
+import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -191,7 +192,11 @@ const ListBalnearios = () => {
   const [open, setOpen] = useState(false)
 
   const { data: dataCiudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
-  const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH)
+
+  const [getBalnearioSearch, { data, loading }] = useLazyQuery(BALNEARIO_LIST_SEARCH, {
+    variables: { desde, hasta },
+    fetchPolicy: 'no-cache',
+  })
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -202,10 +207,14 @@ const ListBalnearios = () => {
   }
 
   useEffect(() => {
-    if (get(data, 'balnearioListSearch')) {
-      setItems(get(data, 'balnearioListSearch', []))
-    }
-  }, [data])
+    getBalnearioSearch()
+  }, [desde, hasta])
+
+  // useEffect(() => {
+  //   if (get(data, 'balnearioListSearch')) {
+  //     setItems(get(data, 'balnearioListSearch', []))
+  //   }
+  // }, [data])
 
   useEffect(() => {
     if (get(dataCiudades, 'searchListFront')) {
@@ -247,7 +256,8 @@ const ListBalnearios = () => {
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
-          if (state[item.ciudad.slug]) {
+          console.log('jose 01', item)
+          if (state[item.ciudadSlug]) {
             return true
           }
           return false
@@ -256,14 +266,16 @@ const ListBalnearios = () => {
       setItems(prueba)
     }
 
-    if (!loadingCheck && !loading) {
+    if (!loadingCheck) {
       if (seleccionado()) {
-        result()
+        if (get(data, 'balnearioListSearch')) {
+          result()
+        }
       } else {
         setItems(get(data, 'balnearioListSearch'))
       }
     }
-  }, [state, loadingCheck, loading])
+  }, [state, loadingCheck, data])
 
   const handleChange = event => {
     setState({ ...state, [event.target.value]: event.target.checked })
@@ -364,14 +376,26 @@ const ListBalnearios = () => {
                   Balnearios
                 </Typography>
                 <ul className={`${classes.ul} ${classes.gridFull}`} style={{ margin: 0, padding: 0 }}>
-                  {items.length == 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
+                  {items.length === 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
                   {items.map((item, i) => {
+
+                    const precioOld =
+                      get(item, 'precio', 0) !== get(item, 'oldPrecio')
+                        ? parseFloat(get(item, 'oldPrecio')).toFixed(2)
+                        : 0
                     return (
                       <li key={i}>
-                        <CardBalDetail
+                        <CardBal
                           modular
-                          key={i}
-                          item={item}
+                          tag={get(item, 'tagNombre')}
+                          tagTexto={get(item, 'tagTexto')}
+                          tagImagen={get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false}
+                          price={parseFloat(get(item, 'precio')).toFixed(2)}
+                          oldPrice={precioOld}
+                          name={get(item, 'nombre')}
+                          city={get(item, 'ciudad')}
+                          image={get(item, 'imagen')}
+                          category={get(item, 'tipo')}
                           onClick={() => {
                             history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
                           }}

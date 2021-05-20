@@ -315,7 +315,8 @@ const Home = () => {
                                   category={get(item, 'category')}
                                   //item={item}
                                   onClick={() => {
-                                    const dia = dayjs().format('DD-MM-YYYY')
+                                    // const dia = dayjs().format('DD-MM-YYYY')
+                                    const dia = dayjs().format('YYYY-MM-DD')
                                     history.push(`/detalle/${get(item, 'slug')}/${dia}/${dia}`)
                                   }}
                                 />
