@@ -248,7 +248,11 @@ const Home = () => {
   }
 
   if (loading || loadingCiudad) {
-    return <Loading />
+    return (
+      <NoSsr>
+        <Loading />
+      </NoSsr>
+    )
   }
 
   return (

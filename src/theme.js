@@ -1,6 +1,8 @@
 import { createMuiTheme } from '@material-ui/core/styles'
+import copoTheme from '@joseirrazabal/copo/theme/DefaultTheme'
 
 const theme = createMuiTheme({
+  ...copoTheme,
   palette: {
     primary: {
       dark: '#b2a300',

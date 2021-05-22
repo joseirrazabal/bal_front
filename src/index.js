@@ -4,11 +4,11 @@ import { Helmet } from 'react-helmet-async'
 
 import theme from './theme'
 import Route from './routes'
-
-import 'slick-carousel/slick/slick-theme.css'
+import './i18n'
 
 import 'styles.css'
 import 'styles.scss'
+import 'slick-carousel/slick/slick-theme.css'
 
 const App = () => {
   return [
