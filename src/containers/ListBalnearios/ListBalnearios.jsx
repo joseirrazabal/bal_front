@@ -9,6 +9,10 @@ import Divider from '@material-ui/core/Divider'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import { Button } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Box from '@material-ui/core/Box'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
@@ -180,6 +184,19 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const TabPanel = ({ children, value, index }) => {
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </div>
+  )
+}
+
 const ListBalnearios = () => {
   const classes = useStyles()
   const history = useHistory()
@@ -190,6 +207,7 @@ const ListBalnearios = () => {
   const [state, setState] = useState({})
   const [items, setItems] = useState([])
   const [open, setOpen] = useState(false)
+  const [tipos, setTipos] = useState([])
 
   const { data: dataCiudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
 
@@ -256,7 +274,6 @@ const ListBalnearios = () => {
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
-          console.log('jose 01', item)
           if (state[item.ciudadSlug]) {
             return true
           }
@@ -270,6 +287,11 @@ const ListBalnearios = () => {
       if (seleccionado()) {
         if (get(data, 'balnearioListSearch')) {
           result()
+          const objTipos = {}
+          get(data, 'balnearioListSearch').filter(item => {
+            objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
+          })
+          setTipos(Object.values(objTipos))
         }
       } else {
         setItems(get(data, 'balnearioListSearch'))
@@ -286,6 +308,12 @@ const ListBalnearios = () => {
       `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
         `
     )
+  }
+
+  const [value, setValue] = React.useState(0)
+
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue)
   }
 
   if (loading || loadingCiudad || loadingCheck) {
@@ -375,35 +403,54 @@ const ListBalnearios = () => {
                 >
                   Balnearios
                 </Typography>
-                <ul className={`${classes.ul} ${classes.gridFull}`} style={{ margin: 0, padding: 0 }}>
-                  {items.length === 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
-                  {items.map((item, i) => {
-
-                    const precioOld =
-                      get(item, 'precio', 0) !== get(item, 'oldPrecio')
-                        ? parseFloat(get(item, 'oldPrecio')).toFixed(2)
-                        : 0
-                    return (
-                      <li key={i}>
-                        <CardBal
-                          modular
-                          tag={get(item, 'tagNombre')}
-                          tagTexto={get(item, 'tagTexto')}
-                          tagImagen={get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false}
-                          price={parseFloat(get(item, 'precio')).toFixed(2)}
-                          oldPrice={precioOld}
-                          name={get(item, 'nombre')}
-                          city={get(item, 'ciudad')}
-                          image={get(item, 'imagen')}
-                          category={get(item, 'tipo')}
-                          onClick={() => {
-                            history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
-                          }}
-                        />
-                      </li>
-                    )
-                  })}
-                </ul>
+                <AppBar position='static'>
+                  <Tabs value={value} onChange={handleChangeTab} aria-label='simple tabs example'>
+                    {tipos.map((tipo, i) => {
+                      return <Tab key={i} label={tipo.nombre} />
+                    })}
+                  </Tabs>
+                </AppBar>
+                {tipos.map((tipo, i) => {
+                  return (
+                    <TabPanel key={i} value={value} index={i}>
+                      <ul
+                        className={`${classes.ul} ${classes.gridFull}`}
+                        style={{ margin: 0, padding: 0 }}
+                      >
+                        {items.length === 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
+                        {items
+                          .filter(item => item.tipoSlug === tipo.slug)
+                          .map((item, i) => {
+                            const precioOld =
+                              get(item, 'precio', 0) !== get(item, 'oldPrecio')
+                                ? parseFloat(get(item, 'oldPrecio')).toFixed(2)
+                                : 0
+                            return (
+                              <li key={i}>
+                                <CardBal
+                                  modular
+                                  tag={get(item, 'tagNombre')}
+                                  tagTexto={get(item, 'tagTexto')}
+                                  tagImagen={
+                                    get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
+                                  }
+                                  price={parseFloat(get(item, 'precio')).toFixed(2)}
+                                  oldPrice={precioOld}
+                                  name={get(item, 'nombre')}
+                                  city={get(item, 'ciudad')}
+                                  image={get(item, 'imagen')}
+                                  category={get(item, 'tipo')}
+                                  onClick={() => {
+                                    history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
+                                  }}
+                                />
+                              </li>
+                            )
+                          })}
+                      </ul>
+                    </TabPanel>
+                  )
+                })}
               </div>
             </div>
           </div>

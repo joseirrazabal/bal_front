@@ -6,6 +6,7 @@ query balnearioListSearch($ciudad: String, $desde: String, $hasta: String) {
     ciudadSlug
     categoria
     tipo
+    tipoSlug
     articulo
     oldPrecio
     precio
