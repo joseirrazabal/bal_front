@@ -14,7 +14,7 @@ import Footer from '../../components/Footer'
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
 // import CardBal from '../../components/CardBal'
-import CardBal from '@joseirrazabal/copo/Atoms/Cards/Card'
+import CardBal from 'copo/Atoms/Cards/Card'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
 
