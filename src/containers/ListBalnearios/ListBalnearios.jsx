@@ -16,8 +16,8 @@ import Box from '@material-ui/core/Box'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
-// import CardBalDetail from '../../components/CardBalDetail'
-import CardBal from '@joseirrazabal/copo/Atoms/Cards/Card'
+import CardBal from 'copo/Atoms/Cards/CardList/CardList'
+
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
 import Loading from '../../components/Loading'

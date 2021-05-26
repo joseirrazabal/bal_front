@@ -115,7 +115,7 @@ const Selected = ({
       <select onChange={onChange}>
         {items.map((item, i) => {
           return (
-            <option key={i} value={item._id}>
+            <option key={i} value={item.slug}>
               {item.nombre}
             </option>
           )

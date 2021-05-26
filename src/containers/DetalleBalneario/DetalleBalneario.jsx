@@ -10,7 +10,7 @@ import NoSsr from '@material-ui/core/NoSsr'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
-import CardBal from '@joseirrazabal/copo/Atoms/Cards/Card'
+import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
 import Button from '../../components/Button'
@@ -309,23 +309,21 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DetalleBalneario = () => {
-  const [widthNav, setWidthNav] = useState(null)
-
-  useEffect(() => {
-    setWidthNav(window.innerWidth)
-  }, [])
-
   const classes = useStyles()
   const history = useHistory()
   const { slug, desde, hasta } = useParams()
 
   const [balneario, setBalneario] = useState({})
+
   const [categoriasAll, setCategoriasAll] = useState([])
   const [categorias, setCategorias] = useState([])
   const [categoriaSelected, setCategoriaSelected] = useState()
+
   const [tipos, setTipos] = useState([])
   const [tipoSelected, setTipoSelected] = useState(null)
+
   const [imagenes, setImagenes] = useState([])
+  const [widthNav, setWidthNav] = useState(null)
 
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
@@ -334,26 +332,6 @@ const DetalleBalneario = () => {
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
   const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-  const handleClickOpen2 = () => {
-    setOpen2(true)
-  }
-  const handleClickOpen3 = () => {
-    setOpen3(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const handleClose2 = () => {
-    setOpen2(false)
-  }
-  const handleClose3 = () => {
-    setOpen3(false)
-  }
 
   const { data: ciudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
 
@@ -368,9 +346,13 @@ const DetalleBalneario = () => {
   })
 
   const [getPrecio, { data: dataPrecio, loading: loadingPrecio }] = useLazyQuery(PRECIO_GET, {
-    variables: { categoria: categoriaSelected, desde, hasta },
+    variables: { balneario: get(balneario, 'slug'), categoria: categoriaSelected, desde, hasta },
     fetchPolicy: 'no-cache',
   })
+
+  useEffect(() => {
+    setWidthNav(window.innerWidth)
+  }, [])
 
   useEffect(() => {
     if (get(data, 'balnearioGetFront')) {
@@ -406,7 +388,8 @@ const DetalleBalneario = () => {
   }, [tipoSelected])
 
   useEffect(() => {
-    setCategoriaSelected(categorias[0])
+    console.log('jose 01', categorias[0])
+    setCategoriaSelected(get(categorias[0], 'slug'))
   }, [categorias])
 
   useEffect(() => {
@@ -427,6 +410,26 @@ const DetalleBalneario = () => {
         `
       )
     }
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClickOpen2 = () => {
+    setOpen2(true)
+  }
+  const handleClickOpen3 = () => {
+    setOpen3(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const handleClose2 = () => {
+    setOpen2(false)
+  }
+  const handleClose3 = () => {
+    setOpen3(false)
   }
 
   if (loading || loadingCiudad) {
