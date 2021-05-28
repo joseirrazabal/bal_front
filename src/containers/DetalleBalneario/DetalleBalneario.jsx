@@ -351,8 +351,13 @@ const DetalleBalneario = () => {
   })
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     setWidthNav(window.innerWidth)
-  }, [])
+
+    if (categoriaSelected) {
+      getPrecio()
+    }
+  }, [categoriaSelected, desde, hasta])
 
   useEffect(() => {
     if (get(data, 'balnearioGetFront')) {
@@ -388,15 +393,8 @@ const DetalleBalneario = () => {
   }, [tipoSelected])
 
   useEffect(() => {
-    console.log('jose 01', categorias[0])
     setCategoriaSelected(get(categorias[0], 'slug'))
   }, [categorias])
-
-  useEffect(() => {
-    if (categoriaSelected) {
-      getPrecio()
-    }
-  }, [categoriaSelected, desde, hasta])
 
   const onSubmitSearch = data => {
     if (data.ciudad.slug === slug) {
@@ -563,24 +561,12 @@ const DetalleBalneario = () => {
                         </Typography>
                         <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
                           {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`}
-
-                          {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 &&
-                            parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 && (
-                              <Typography
-                                fontSize={11}
-                                fontWeight={400}
-                                color='black'
-                                variant='span'
-                                textDecoration='line-through'
-                              >
-                                {' '}
-                                ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}
-                              </Typography>
-                            )}
                         </Typography>
                         <div>
                           <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                            ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
+                            $
+                            {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) *
+                              parseInt(get(dataPrecio, 'precioGetFront.dias', 1))}
                           </Typography>
                           <Typography
                             fontWeight={400}
@@ -595,8 +581,9 @@ const DetalleBalneario = () => {
                       </div>
                     </div>
                     <div>
-                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 &&
-                        parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
+                      {get(dataPrecio, 'precioGetFront.oldPrecio', 0) !==
+                        get(dataPrecio, 'precioGetFront.precio', 0) &&
+                        parseInt(get(dataPrecio, 'precioGetFront.oldPrecio', 0)) > 0 && (
                           <div style={{ marginBottom: 5 }}>
                             <Typography
                               className={classes.offer}
@@ -611,19 +598,23 @@ const DetalleBalneario = () => {
                           </div>
                         )}
                       <Button
-                        disabled={
-                          !get(dataPrecio, 'precioGetFront.precio', 0) ||
-                          !get(dataPrecio, 'precioGetFront.stock', 0)
-                        }
+                        disable={false}
+                        // disabled={
+                        //   !get(dataPrecio, 'precioGetFront.precio', 0) ||
+                        //   !get(dataPrecio, 'precioGetFront.stock', 0)
+                        // }
                         height={40}
                         width={200}
                         onClick={() =>
                           history.push(
-                            `/checkout/${get(dataPrecio, 'precioGetFront.slug')}/${desde}/${hasta}`
+                            `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
+                              dataPrecio,
+                              'precioGetFront.categoriaSlug'
+                            )}/${desde}/${hasta}`
                           )
                         }
                       >
-                        ALQUILAR X {cantidadDias} DIA/S
+                        ALQUILAR X {get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S
                       </Button>
                     </div>
                   </div>

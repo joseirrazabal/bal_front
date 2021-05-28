@@ -24,7 +24,7 @@ const routes = [
     isPrivate: false,
   },
   {
-    path: '/checkout/:slug/:desde/:hasta',
+    path: '/checkout/:balneario/:categoria/:desde/:hasta',
     Component: CheckoutBalnearios,
     Props: {},
     useLayout: false,

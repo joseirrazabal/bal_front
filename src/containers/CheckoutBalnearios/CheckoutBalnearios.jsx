@@ -33,7 +33,8 @@ import RESERVA_ADD from 'gql/reserva/save'
 
 dayjs.extend(customParseFormat)
 
-// const { MERCADO_PAGO_PUBLIC_KEY } = process.env
+const { MERCADO_PAGO_PUBLIC_KEY } = process.env
+const { NODE_ENV } = process.env
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -305,25 +306,49 @@ const useStyles = makeStyles(theme => ({
 const CheckoutBalnearios = ({ theme }) => {
   const classes = useStyles()
   const history = useHistory()
-  const { id, desde, hasta } = useParams()
-
-  const date1 = dayjs(hasta, 'DD-MM-YYYY')
-  const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
+  const { balneario, categoria, desde, hasta } = useParams()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm()
 
   const [keyPublic, setKeyPublic] = useState(false)
   const [textoCuota, setTextoCuota] = useState(false)
   const [open, setOpen] = useState(false)
   const [errorMP, setErrorMP] = useState(false)
-
-  const { watch, reset, register, control, handleSubmit, errors, setValue } = useForm()
-  const [reservaAdd, { data: dataReserva, loading: loadingReserva, error: errorReserva }] = useMutation(
-    RESERVA_ADD
-  )
+  const [precio, setPrecio] = useState({})
 
   const { data: dataPrecio, loading: loadingPrecio } = useQuery(PRECIO_GET, {
-    variables: { id: id, dias: cantidadDias },
+    variables: { balneario: balneario, categoria: categoria, desde: desde, hasta: hasta },
     fetchPolicy: 'no-cache',
   })
+
+  const [reservaAdd, { data: dataReserva, loading: loadingReserva, error: errorReserva }] =
+    useMutation(RESERVA_ADD)
+
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js'
+    script.async = true
+    document.body.appendChild(script)
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (get(dataPrecio, 'precioGetFront.precio')) {
+      setPrecio(get(dataPrecio, 'precioGetFront'))
+      if (NODE_ENV !== 'production') {
+        console.log('key meli dev')
+        setKeyPublic(MERCADO_PAGO_PUBLIC_KEY)
+      } else {
+        setKeyPublic(get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.keyPublic'))
+      }
+    }
+  }, [dataPrecio])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -332,12 +357,6 @@ const CheckoutBalnearios = ({ theme }) => {
   const handleClose = () => {
     setOpen(false)
   }
-
-  useEffect(() => {
-    if (get(dataPrecio, 'precioGetFront.precio')) {
-      setKeyPublic(get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.keyPublic'))
-    }
-  }, [dataPrecio])
 
   // ==========
   const [issuers, setIssuers] = useState([])
@@ -391,7 +410,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
             getIssuers(paymentMethod.id)
           } else {
-            console.log(`payment method info error: ${response}`)
+            console.log(`payment method info error: ${JSON.stringify(response)}`)
           }
         }
       )
@@ -405,7 +424,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
         getInstallments(
           paymentMethodId,
-          parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias,
+          parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias')),
           issuerSelect
         )
       } else {
@@ -444,7 +463,7 @@ const CheckoutBalnearios = ({ theme }) => {
         value: 1,
         labels: ['CFT_0,00%|TEA_0,00%'],
         recommended_message: `1 cuota de $ ${
-          parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias
+          parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias'))
         }`,
       },
     ]
@@ -456,8 +475,9 @@ const CheckoutBalnearios = ({ theme }) => {
   const securityCode = useRef()
   const cardholderName = useRef()
 
-  const cantidad = 1
   const onSubmit = ({ checkedA, ...data }) => {
+    console.log(data)
+
     const form = {
       ...data,
       cardExpirationMonth: parseInt(cardExpirationMonth.current.value),
@@ -476,29 +496,27 @@ const CheckoutBalnearios = ({ theme }) => {
       } else {
         setErrorMP(false)
 
-        const descrip = `alamar: ${get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')} - ${get(
-          dataPrecio,
-          'precioGetFront.articulo.categoria.tipo.nombre'
-        )} - ${get(dataPrecio, 'precioGetFront.articulo.categoria.nombre')} desde:${dayjs(
-          desde,
-          'DD-MM-YYYY'
-        ).format('YYYY-MM-DD')} hasta:${dayjs(desde, 'DD-MM-YYYY').format('YYYY-MM-DD')}
-        `
+        const descrip = `Alamar: ${get(precio, 'balneario')} - ${get(precio, 'tipo')} - ${get(
+          precio,
+          'categoria'
+        )} desde: ${desde} hasta: ${hasta}`
+
+        console.log('enviando')
 
         reservaAdd({
           variables: {
             input: {
               ...data,
-              desde: dayjs(desde, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-              hasta: dayjs(hasta, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-              description: descrip,
-              cantidad: cantidad,
-              precio: id,
-              dias: cantidadDias,
-              amount: `${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}`,
-              paymentMethodId: paymentMethod,
+              precioId: get(precio, 'id'),
+              balneario: get(precio, 'balnearioSlug'),
+              categoria: get(precio, 'categoriaSlug'),
+              desde: desde,
+              hasta: hasta,
+              precio: get(precio, 'id'),
+              amount: `${parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias'))}`,
               token: response.id,
-              articulo: get(dataPrecio, 'precioGetFront.articulo._id'),
+              paymentMethodId: paymentMethod,
+              description: descrip,
             },
           },
         })
@@ -523,10 +541,10 @@ const CheckoutBalnearios = ({ theme }) => {
   if (dataReserva) {
     return (
       <MessageGeneric
-        data={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
-        direccion={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
-        ciudad={get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
-        precio={`Alquilaste una ${get(dataPrecio, 'precioGetFront.articulo.categoria.tipo.nombre')}`}
+        data={get(precio, 'balneario')}
+        direccion={get(precio, 'direccion')}
+        ciudad={get(precio, 'ciudad')}
+        precio={`Alquilaste una ${get(precio, 'tipo')}`}
         pagoStatus={get(dataReserva, 'reservaAdd.pago.status')}
         pagoMessage={get(dataReserva, 'reservaAdd.pago.message')}
       />
@@ -576,7 +594,7 @@ const CheckoutBalnearios = ({ theme }) => {
                             id='email'
                             type='text'
                             required
-                            ref={register({ required: 'Campo requerido' })}
+                            {...register('email', { required: 'Campo requerido' })}
                           />
                           {errors.email && <div style={{ color: 'red' }}>{errors.email.message}</div>}
                         </div>
@@ -585,7 +603,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           <select
                             id='docType'
                             name='docType'
-                            ref={register({ required: 'Campo requerido' })}
+                            {...register('docType', { required: 'Campo requerido' })}
                           >
                             {tipoDocumento.map((tipo, i) => {
                               return (
@@ -609,7 +627,7 @@ const CheckoutBalnearios = ({ theme }) => {
                             data-checkout='docNumber'
                             type='text'
                             required
-                            ref={register({ required: 'Campo requerido' })}
+                            {...register('docNumber', { required: 'Campo requerido' })}
                           />
                           {errors.docNumber && (
                             <div style={{ color: 'red' }}>{errors.docNumber.message}</div>
@@ -709,11 +727,11 @@ const CheckoutBalnearios = ({ theme }) => {
                           <label htmlFor='issuer'>Banco emisor</label>
                           <select
                             name={`issuer`}
-                            ref={register({ required: 'Campo requerido' })}
+                            {...register('issuer', { required: 'Campo requerido' })}
                             onChange={e => {
                               getInstallments(
                                 paymentMethod,
-                                parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias,
+                                parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias')),
                                 e.target.value
                               )
                             }}
@@ -736,7 +754,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           <label htmlFor='installments'>Cuotas</label>
                           <select
                             name={`installments`}
-                            ref={register({ required: 'Campo requerido' })}
+                            {...register('installments', { required: 'Campo requerido' })}
                             onChange={e => {
                               setInstallmentSelect(e.target.value)
                             }}
@@ -762,13 +780,17 @@ const CheckoutBalnearios = ({ theme }) => {
                           control={control}
                           defaultValue={false}
                           rules={{ required: 'Debe aceptar los terminos y condiciones' }}
-                          render={({ onChange, onBlur, value, name, ref }) => (
+                          render={({ field }) => (
                             <FormControlLabel
                               control={
                                 <Checkbox
-                                  inputRef={ref}
-                                  checked={value}
-                                  onChange={e => onChange(e.target.checked)}
+                                  {...field}
+                                  //inputRef={ref}
+                                  //checked={value}
+                                  //onChange={e => {
+                                  //  console.log("e", e)
+                                  //  onChange(e.target.checked)}
+                                  //}
                                 />
                               }
                               label={'Leí y acepto los'}
@@ -795,7 +817,7 @@ const CheckoutBalnearios = ({ theme }) => {
                       <div style={{ width: '100%' }}>
                         <Typography variant='p' textAlign='right'>
                           <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                            {`$ ${parseInt(get(dataPrecio, 'precioGetFront.precio')) * cantidadDias}`}
+                            {`$ ${parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias'))}`}
                           </Typography>
                         </Typography>
                         <Typography
@@ -821,21 +843,21 @@ const CheckoutBalnearios = ({ theme }) => {
                     RESUMEN
                   </Typography>
                   <Typography fontSize={23} className={classes.subTitle} variant='h4'>
-                    {get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.nombre')}
+                    {get(precio, 'balneario')}
+                  </Typography>
+                  <Typography fontSize={23} className={classes.subTitle} variant='h4'>
+                    {get(precio, 'categoria')}
                   </Typography>
                   <Typography fontSize={18} color='grey' variant='p'>
-                    {get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.ciudad.nombre')}
+                    {get(precio, 'ciudad')}
                   </Typography>
                   <Typography fontSize={16} variant='p' color='grey'>
-                    {get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.direccion')}
+                    {get(precio, 'direccion')}
                   </Typography>
                   <ItemSelected
                     className={classes.item}
                     checkout
-                    title={`Alquilaste una ${get(
-                      dataPrecio,
-                      'precioGetFront.articulo.categoria.tipo.nombre'
-                    )}`}
+                    title={`Alquilaste una ${get(precio, 'tipo')}`}
                   />
                 </div>
               </div>

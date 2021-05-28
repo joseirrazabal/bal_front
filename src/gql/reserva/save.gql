@@ -20,7 +20,7 @@ mutation reservaAdd($id: ID, $input: ReservaInput!) {
           slug
           nombre
           ciudad {
-            _id
+            id
             nombre
           }
         }
