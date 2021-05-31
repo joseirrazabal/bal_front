@@ -235,7 +235,7 @@ const Home = () => {
 
   useEffect(() => {
     if (data) {
-      setConfig(get(data, 'homeListFront.config'))
+      setConfig(get(data, 'homeListFront'))
     }
   }, [data])
 
@@ -295,32 +295,31 @@ const Home = () => {
                 </div>,
                 <div className={classes.contentSlider} key={`2-${carouselIndex}`}>
                   <ul>
-                    <Slider {...settings({ slidesToShow: parseInt(carousel.cant_items) || 3 })}>
-                      {carousel.items.map((item, itemIndex) => {
+                    <Slider {...settings({ slidesToShow: parseInt(carousel.cantItems) || 3 })}>
+                      {carousel.config.map((item, itemIndex) => {
                         return (
                           <div key={itemIndex}>
                             <div style={{ margin: 5 }}>
                               <li>
                                 <CardBal
                                   modular
-                                  tag={get(item, 'precio.tag.nombre')}
-                                  tagTexto={get(item, 'precio.tag.texto')}
+                                  tag={get(item, 'tagNombre')}
+                                  tagTexto={get(item, 'tagTexto')}
                                   tagImagen={
-                                    get(item, 'precio.tag.imagen') !== 'false'
-                                      ? get(item, 'precio.tag.imagen')
-                                      : false
+                                    get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
                                   }
-                                  price={get(item, 'precioFinal')}
-                                  oldPrice={get(item, 'precioOld')}
-                                  name={get(item, 'name')}
-                                  city={get(item, 'city')}
-                                  image={get(item, 'image')}
-                                  category={get(item, 'category')}
-                                  //item={item}
+                                  price={get(item, 'precio')}
+                                  oldPrice={get(item, 'oldPprecio')}
+                                  name={get(item, 'balneario')}
+                                  city={get(item, 'ciudad')}
+                                  image={get(item, 'imagen')}
+                                  category={get(item, 'categoria')}
                                   onClick={() => {
-                                    // const dia = dayjs().format('DD-MM-YYYY')
-                                    const dia = dayjs().format('YYYY-MM-DD')
-                                    history.push(`/detalle/${get(item, 'slug')}/${dia}/${dia}`)
+                                    history.push(
+                                      `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
+                                        'YYYY-MM-DD'
+                                      )}/${dayjs(item.hasta).format('YYYY-MM-DD')}`
+                                    )
                                   }}
                                 />
                               </li>
