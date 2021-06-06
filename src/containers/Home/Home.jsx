@@ -305,6 +305,8 @@ const Home = () => {
                                   modular
                                   tag={get(item, 'tagNombre')}
                                   tagTexto={get(item, 'tagTexto')}
+                                  tagColor={get(item, 'tagColor')}
+                                  tagFontColor={get(item, 'tagFontColor')}
                                   tagImagen={
                                     get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
                                   }
@@ -313,7 +315,7 @@ const Home = () => {
                                   name={get(item, 'balneario')}
                                   city={get(item, 'ciudad')}
                                   image={get(item, 'imagen')}
-                                  category={get(item, 'categoria')}
+                                  category={get(item, 'tipo')}
                                   onClick={() => {
                                     history.push(
                                       `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
