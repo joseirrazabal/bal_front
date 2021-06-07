@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client'
 import { useHistory, Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import { useLazyQuery } from '@apollo/client'
 import dayjs from 'dayjs'
 import get from 'lodash/get'
 
@@ -108,6 +108,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = () => {
+  const apolloClient = useApolloClient()
   const history = useHistory()
   const classes = useStyles()
   // const dia = dayjs().format('DD-MM-YYYY')
@@ -121,6 +122,26 @@ const Header = () => {
     ssr: false,
     fetchPolicy: 'cache',
   })
+
+  useEffect(() => {
+    const querySubscription = apolloClient
+      .watchQuery({
+        query: CURRENT_USER,
+        fetchPolicy: 'cache-only',
+      })
+      .subscribe({
+        next: ({ data }) => {
+          setUser(get(data, 'currentUser', null) || null)
+        },
+        error: e => {
+          console.error('jose error subscribe', e)
+        },
+      })
+
+    return () => {
+      querySubscription.unsubscribe()
+    }
+  }, [])
 
   useEffect(() => {
     if (dataUser) {
@@ -165,28 +186,39 @@ const Header = () => {
         <SwipeableTemporaryDrawer>
           <ul className={classes.nav}>
             {user ? (
-              <Link to='/profile'>
-                <ListItem alignItems='flex-start'>
-                  <ListItemAvatar>
-                    <Avatar className={classes.large} alt={get(user, 'name')} src={get(user, 'image')} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary='Biuenvenido'
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component='span'
-                          variant='span'
-                          className={classes.inline}
-                          color='white'
-                        >
-                          {get(user, 'name')}
-                        </Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-              </Link>
+              <React.Fragment>
+                <Link to='/profile'>
+                  <ListItem alignItems='flex-start'>
+                    <ListItemAvatar>
+                      <Avatar
+                        className={classes.large}
+                        alt={get(user, 'name')}
+                        src={get(user, 'image')}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary='Biuenvenido'
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            component='span'
+                            variant='span'
+                            className={classes.inline}
+                            color='white'
+                          >
+                            {get(user, 'name')}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                </Link>
+                <Link to='/logout'>
+                  <ListItem alignItems='flex-start'>
+                    <ListItemText primary='Logout' />
+                  </ListItem>
+                </Link>
+              </React.Fragment>
             ) : (
               <Link to='/login'>
                 <Typography variant='p' textAlign='left' color='white' fontWeight={400}>

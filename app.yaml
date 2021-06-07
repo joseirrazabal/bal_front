@@ -9,12 +9,13 @@
 #   max_num_instances: 6
 
 # entorno standard, dev
-service: front
+service: default
 entrypoint: npm run prod
 automatic_scaling:
   max_instances: 1
 
 runtime: nodejs14
 env_variables:
-  MICRO: "https://devmicro-dot-alamar-308401.uc.r.appspot.com"
+  MICRO: "https://micro-dot-alamar-308401.uc.r.appspot.com"
+  LOGIN_URL: "https://alamar-308401.uc.r.appspot.com"
 

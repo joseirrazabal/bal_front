@@ -1,6 +1,7 @@
 import Home from 'src/containers/Home/Home'
 import Profile from 'src/containers/Profile/Profile'
 import Login from 'src/containers/Login/Login'
+import Logout from 'src/containers/Login/Logout'
 import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
 import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnearios'
@@ -32,11 +33,18 @@ const routes = [
     component: Profile,
     Props: {},
     useLayout: false,
-    isPrivate: false,
+    isPrivate: true,
   },
   {
     route: '/login',
     component: Login,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/logout',
+    component: Logout,
     Props: {},
     useLayout: false,
     isPrivate: false,

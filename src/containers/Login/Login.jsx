@@ -52,7 +52,7 @@ const Login = () => {
   const [login, { data, error }] = useMutation(LOGIN_MUTATION)
 
   const handleLogIn = provider => {
-    const msg = loginTab(`${process.env.LOGIN_URL}/auth/${provider}`)
+    const msg = loginTab(`${process.env.LOGIN_URL ? process.env.LOGIN_URL: ''}/auth/${provider}`)
     msg.then(user => {
       signIn(get(user, 'jwt'), get(user, 'refreshToken'))
       setUser(user)

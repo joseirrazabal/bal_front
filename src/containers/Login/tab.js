@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 // From https://gist.github.com/gauravtiwari/2ae9f44aee281c759fe5a66d5c2721a2
 // By https://gist.github.com/gauravtiwari
 
@@ -37,7 +38,7 @@ const loginTab = myUrl => {
     eventer(
       messageEvent,
       msg => {
-        if (!~msg.origin.indexOf(`${process.env.LOGIN_URL}`)) {
+        if (!~msg.origin.indexOf(`${process.env.LOGIN_URL ? process.env.LOGIN_URL : ''}`)) {
           authWindow.close()
           reject('Not allowed')
         }
