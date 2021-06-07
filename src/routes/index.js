@@ -1,6 +1,3 @@
-import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-
 import Home from 'src/containers/Home/Home'
 import Profile from 'src/containers/Profile/Profile'
 import Login from 'src/containers/Login/Login'
@@ -10,59 +7,47 @@ import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnea
 
 const routes = [
   {
-    path: '/list/:ciudad/:desde/:hasta',
-    Component: ListBalnearios,
+    route: '/list/:ciudad/:desde/:hasta',
+    component: ListBalnearios,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/detalle/:slug/:desde?/:hasta?/:ciudad?',
-    Component: DetalleBalneario,
+    route: '/detalle/:slug/:desde?/:hasta?/:ciudad?',
+    component: DetalleBalneario,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/checkout/:balneario/:categoria/:desde/:hasta',
-    Component: CheckoutBalnearios,
+    route: '/checkout/:balneario/:categoria/:desde/:hasta',
+    component: CheckoutBalnearios,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/profile',
-    Component: Profile,
+    route: '/profile',
+    component: Profile,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/login',
-    Component: Login,
+    route: '/login',
+    component: Login,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
   {
-    path: '/',
-    Component: Home,
+    route: '/home',
+    component: Home,
     Props: {},
     useLayout: false,
     isPrivate: false,
   },
 ]
 
-export const MainRoutes = () => (
-  <Switch>
-    {routes.map(({ path, useLayout, Component, isPrivate, Props }) => {
-      return (
-        <Route key={path} path={path}>
-          <Component />
-        </Route>
-      )
-    })}
-  </Switch>
-)
-
-export default MainRoutes
+export default routes

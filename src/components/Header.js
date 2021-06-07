@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory, Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import Divider from '@material-ui/core/Divider'
+import { useLazyQuery } from '@apollo/client'
+import dayjs from 'dayjs'
+import get from 'lodash/get'
 
+import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItem from '@material-ui/core/ListItem'
 
-import { useHistory, Link } from 'react-router-dom'
-import dayjs from 'dayjs'
-
 import SimpleImage from './SimpleImage'
 import LogoAlamar from '../assets/alamar-logo-2.svg'
 import Typography from './Typography'
-
 import SwipeableTemporaryDrawer from './Drawer'
-
 import IconPlaya from '../assets/icon-playa2.svg'
 import Accepted from '../assets/accepted.svg'
 import Conversation from '../assets/conversation.svg'
-
 import FullScreenDialog from './Dialog'
-
 import Term from '../containers/TyC/Term'
 import Faqs from '../containers/Faqs/Faqs'
+
+import CURRENT_USER from 'core/gql/user/currentUser'
+import { getToken } from 'kit/login/utils'
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -110,9 +110,29 @@ const useStyles = makeStyles(theme => ({
 const Header = () => {
   const history = useHistory()
   const classes = useStyles()
-  const dia = dayjs().format('DD-MM-YYYY')
+  // const dia = dayjs().format('DD-MM-YYYY')
+  const dia = dayjs().format('YYYY-MM-DD')
+
+  const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
+
+  const [getUser, { data: dataUser, loading: loadingUser }] = useLazyQuery(CURRENT_USER, {
+    ssr: false,
+    fetchPolicy: 'cache',
+  })
+
+  useEffect(() => {
+    if (dataUser) {
+      setUser(get(dataUser, 'currentUser'))
+    }
+  }, [dataUser])
+
+  useEffect(() => {
+    if (getToken()) {
+      getUser()
+    }
+  }, [dataUser])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -144,32 +164,36 @@ const Header = () => {
         </div>
         <SwipeableTemporaryDrawer>
           <ul className={classes.nav}>
-            <Link to='/profile'>
-              <ListItem alignItems='flex-start'>
-                <ListItemAvatar>
-                  <Avatar
-                    className={classes.large}
-                    alt='Luiciano Recchini'
-                    src='https://media-exp1.licdn.com/dms/image/C4D03AQHJFBIXlYUrtw/profile-displayphoto-shrink_200_200/0/1615833330750?e=1623888000&v=beta&t=lPpLvHG1iD5SRWswy1R9bdiUEAtkVMvsxPv8Zg12dMU'
+            {user ? (
+              <Link to='/profile'>
+                <ListItem alignItems='flex-start'>
+                  <ListItemAvatar>
+                    <Avatar className={classes.large} alt={get(user, 'name')} src={get(user, 'image')} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary='Biuenvenido'
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component='span'
+                          variant='span'
+                          className={classes.inline}
+                          color='white'
+                        >
+                          {get(user, 'name')}
+                        </Typography>
+                      </React.Fragment>
+                    }
                   />
-                </ListItemAvatar>
-                <ListItemText
-                  primary='Biuenvenido'
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component='span'
-                        variant='body2'
-                        className={classes.inline}
-                        color='white'
-                      >
-                        Luciano Recchini
-                      </Typography>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            </Link>
+                </ListItem>
+              </Link>
+            ) : (
+              <Link to='/login'>
+                <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                  Login
+                </Typography>
+              </Link>
+            )}
             <li>
               <Link to={`/list/${dia}/${dia}`}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={IconPlaya} />

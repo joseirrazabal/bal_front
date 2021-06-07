@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import get from 'lodash/get'
 import { Helmet } from 'react-helmet-async'
 
+import Route from 'core/routes/limpio'
+import routes from './routes'
 import theme from './theme'
-import Route from './routes'
 import './i18n'
 
 import 'styles.css'
@@ -33,7 +34,7 @@ const App = () => {
       />
       <link rel='manifest' href='/manifest.json' />
     </Helmet>,
-    <Route key={2} />,
+    <Route routes={routes} key={2} />,
   ]
 }
 

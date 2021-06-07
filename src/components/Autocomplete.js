@@ -66,7 +66,7 @@ const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], se
   return (
     <div className={classes.input}> 
       <Autocomplete
-        classes={classes.input}
+        // classes={classes.input}
         id='ciudad'
         color="secondary"
         options={options.sort((a, b) => b.category.localeCompare(a.category))}
