@@ -16,7 +16,8 @@ import Box from '@material-ui/core/Box'
 
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
-import CardBal from 'copo/Atoms/Cards/CardList/CardList'
+
+import CardBalList from 'copo/Atoms/Cards/CardList/CardList'
 
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
@@ -427,8 +428,8 @@ const ListBalnearios = () => {
                                 : 0
                             return (
                               <li key={i}>
-                                <CardBal
-                                  modular
+                                <CardBalList
+                                  nuevo
                                   tag={get(item, 'tagNombre')}
                                   tagTexto={get(item, 'tagTexto')}
                                   tagImagen={
@@ -437,6 +438,7 @@ const ListBalnearios = () => {
                                   price={parseFloat(get(item, 'precio')).toFixed(2)}
                                   oldPrice={precioOld}
                                   name={get(item, 'nombre')}
+                                  locate={get(item, 'direccion')}
                                   city={get(item, 'ciudad')}
                                   image={get(item, 'imagen')}
                                   category={get(item, 'tipo')}

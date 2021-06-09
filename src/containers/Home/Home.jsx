@@ -9,23 +9,23 @@ import Slider from 'react-slick'
 import Button from '@material-ui/core/Button'
 import NoSsr from '@material-ui/core/NoSsr'
 
+import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
+import HomeSlider from 'copo/Atoms/HomeSlider/HomeSlider'
+import SimpleImage from 'copo/Atoms/Images/SimpleImage'
+
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
-import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import DialogSimpleComponent from '../../components/DialogSimple'
 import Loading from '../../components/Loading'
 
-import imageBackground from '../../assets/mar.jpg'
 import ImageCoronaVirus from '../../assets/pop-up.jpg'
 import ImageBanner from '../../assets/banner-MP-compu.png'
 import ImageBannerMobile from '../../assets/banner-MP-celu.png'
 
 import HOME_LIST from 'gql/home/list'
 import SEARCH_LIST from 'gql/search/list'
-
-import SimpleImage from '../../components/SimpleImage'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -36,16 +36,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  container: {
-    margin: '0 auto',
-    width: 'calc(100% - 20px)',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    margin: '40px 10px 10px 10px',
-  },
   containerMobile: {
     margin: '0 auto',
     width: '100%',
@@ -55,33 +45,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-  },
-  contentSearch: {
-    width: '100%',
-    height: 400,
-    backgroundImage: 'url(' + imageBackground + ')',
-    backgroundSize: 'cover',
-    backgroundPosition: 'bottom',
-    backgroundRepeat: 'no-repeat',
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    '@media (max-width: 1450px)': {
-      // height: '35vh',
-    },
-
-    '@media (max-width: 960px)': {
-      // height: '30vh',
-    },
-
-    '@media (max-width: 680px)': {
-      backgroundSize: 680,
-      backgroundPosition: 'center',
-      height: 200,
-    },
   },
   contentBanners: {
     width: '100%',
@@ -123,14 +86,6 @@ const useStyles = makeStyles(theme => ({
       whiteSpace: 'nowrap',
       display: 'box',
     },
-  },
-  shadow: {
-    background: 'rgba(0,0,0,.2)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
   },
   subTitle: {
     color: theme.palette.secondary,
@@ -258,7 +213,13 @@ const Home = () => {
     <React.Fragment>
       <Header />
       <div className={classes.contentFull}>
-        <div className={classes.contentSearch}>
+        <HomeSlider>
+          <Typography fontWeight='900' className={classes.title} varian='h1'>
+            DISFRUTA TU LUGAR
+          </Typography>
+          <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
+        </HomeSlider>
+        {/* <div className={classes.contentSearch}>
           <div className={classes.shadow} />
           <div className={classes.container}>
             <Typography fontWeight='900' className={classes.title} varian='h1'>
@@ -266,7 +227,7 @@ const Home = () => {
             </Typography>
             <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
           </div>
-        </div>
+        </div> */}
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
             <div className={classes.banner}>
