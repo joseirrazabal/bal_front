@@ -209,11 +209,13 @@ const Home = () => {
     )
   }
 
+  console.log(data)
+
   return (
     <React.Fragment>
       <Header />
       <div className={classes.contentFull}>
-        <HomeSlider>
+        <HomeSlider imageBackground={get(config, '0.imagen')}>
           <Typography fontWeight='900' className={classes.title} varian='h1'>
             DISFRUTA TU LUGAR
           </Typography>
@@ -233,7 +235,7 @@ const Home = () => {
             <div className={classes.banner}>
               <SimpleImage
                 alt='Alamar - Balnearios Costa Atlantica'
-                image={ImageBanner}
+                image={get(config, '0.publicidad')}
                 width={'100%'}
               />
             </div>
