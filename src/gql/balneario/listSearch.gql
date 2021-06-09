@@ -2,6 +2,7 @@ query balnearioListSearch($ciudad: String, $desde: String, $hasta: String) {
   balnearioListSearch(ciudad: $ciudad, desde: $desde, hasta: $hasta) {
     slug
     nombre
+    direccion 
     ciudad
     ciudadSlug
     categoria
@@ -14,6 +15,8 @@ query balnearioListSearch($ciudad: String, $desde: String, $hasta: String) {
     tagNombre
     tagTexto
     tagClase
+    tagColor
+    tagFontColor
     tagImagen
     imagen
   }

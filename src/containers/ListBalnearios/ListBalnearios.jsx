@@ -422,6 +422,7 @@ const ListBalnearios = () => {
                         {items
                           .filter(item => item.tipoSlug === tipo.slug)
                           .map((item, i) => {
+                            console.log(item)
                             const precioOld =
                               get(item, 'precio', 0) !== get(item, 'oldPrecio')
                                 ? parseFloat(get(item, 'oldPrecio')).toFixed(2)
@@ -432,6 +433,8 @@ const ListBalnearios = () => {
                                   nuevo
                                   tag={get(item, 'tagNombre')}
                                   tagTexto={get(item, 'tagTexto')}
+                                  tagColor={get(item, 'tagColor')}
+                                  tagFontColor={get(item, 'tagFontColor')}
                                   tagImagen={
                                     get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
                                   }
