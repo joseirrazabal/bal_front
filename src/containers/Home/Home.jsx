@@ -209,8 +209,6 @@ const Home = () => {
     )
   }
 
-  console.log(data)
-
   return (
     <React.Fragment>
       <Header />

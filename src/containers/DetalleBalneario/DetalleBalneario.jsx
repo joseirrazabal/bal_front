@@ -398,15 +398,9 @@ const DetalleBalneario = () => {
 
   const onSubmitSearch = data => {
     if (data.ciudad.slug === slug) {
-      history.push(
-        `/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
-        `
-      )
+      history.push(`/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     } else {
-      history.push(
-        `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
-        `
-      )
+      history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     }
   }
 
@@ -606,12 +600,7 @@ const DetalleBalneario = () => {
                         height={40}
                         width={200}
                         onClick={() =>
-                          history.push(
-                            `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
-                              dataPrecio,
-                              'precioGetFront.categoriaSlug'
-                            )}/${desde}/${hasta}`
-                          )
+                          history.push(`/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(dataPrecio,'precioGetFront.categoriaSlug')}/${desde}/${hasta}`)
                         }
                       >
                         ALQUILAR X {get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S

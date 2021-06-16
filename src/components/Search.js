@@ -136,7 +136,7 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit 
   const [open, setOpen] = useState(false)
   const [ciudadDefault, setCiudadDefault] = useState(null)
   const [loading2, setLoading2] = useState(true)
-  const [checked, setChecked] = React.useState(true)
+  const [checked, setChecked] = useState(true)
 
   const handleChange = event => {
     setChecked(event.target.checked)
@@ -214,12 +214,16 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit 
               <div style={{ width: '100%' }}>
                 <Calendar name='desde' setValue={setValue} value={desde} />
               </div>
-              <div>
-                <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
-              </div>
-              <div style={{ width: '100%' }}>
-                <Calendar name='hasta' setValue={setValue} value={hasta} />
-              </div>
+              {checked && (
+                <React.Fragment>
+                  <div>
+                    <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
+                  </div>
+                  <div style={{ width: '100%' }}>
+                    <Calendar name='hasta' setValue={setValue} value={hasta} />
+                  </div>
+                </React.Fragment>
+              )}
             </div>
           </div>
           <div className={classes.boxButton}>

@@ -305,13 +305,10 @@ const ListBalnearios = () => {
   }
 
   const onSubmitSearch = data => {
-    history.push(
-      `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
-        `
-    )
+    history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
   }
 
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = React.useState(1)
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue)
@@ -422,7 +419,6 @@ const ListBalnearios = () => {
                         {items
                           .filter(item => item.tipoSlug === tipo.slug)
                           .map((item, i) => {
-                            console.log(item)
                             const precioOld =
                               get(item, 'precio', 0) !== get(item, 'oldPrecio')
                                 ? parseFloat(get(item, 'oldPrecio')).toFixed(2)
