@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import dayjs from 'dayjs'
 import get from 'lodash/get'
 
-import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItem from '@material-ui/core/ListItem'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import SimpleImage from './SimpleImage'
 import LogoAlamar from '../assets/alamar-logo-2.svg'
@@ -76,35 +76,62 @@ const useStyles = makeStyles(theme => ({
     listStyle: 'none',
     color: 'black',
     alignItems: 'center',
-    padding: 10,
+    padding: 0,
+    margin: 0,
+    height: '100vh',
+    boxSizing: 'border-box',
 
     '& li': {
-      margin: 5,
+      margin: '1px 0',
       padding: 0,
       width: '100%',
-      color: 'white',
+      background: theme.palette.secondary.light,
+      padding: '0 10px',
+      boxSizing: 'border-box',
+      // color: 'white',
 
       '& hr': {
-        background: 'white',
+        // background: 'white',
       },
 
       '& a': {
         textDecoration: 'none',
         display: 'flex',
         alignItems: 'center',
+        height: 50,
 
         '& img': {
           marginRight: 15,
         },
 
+        '& svg': {
+          marginRight: 15,
+          color: 'white'
+        },
+
         '&:hover': {
-          textDecoration: 'underline',
+          // textDecoration: 'underline',
         },
       },
 
-      '@media (max-width: 960px)': {},
+      '&:hover': {
+        opacity: .7
+      }
     },
   },
+  large: {
+    width: 60,
+    height: 60,
+    marginRight: 10
+  },
+  profile: {
+    width: '100%', 
+    textDecoration: 'none',
+
+    '&:hover': {
+      opacity: .7,
+    },
+  }
 }))
 
 const Header = () => {
@@ -187,44 +214,54 @@ const Header = () => {
           <ul className={classes.nav}>
             {user ? (
               <React.Fragment>
-                <Link to='/profile'>
-                  <ListItem alignItems='flex-start'>
-                    <ListItemAvatar>
+                  <Link to='/profile' className={classes.profile}>
+                    <ListItem style={{ 
+                      height: 100,
+                      display: 'flex',
+                      alignItems: 'cemter!important'
+                      }}>
                       <Avatar
                         className={classes.large}
                         alt={get(user, 'name')}
                         src={get(user, 'image')}
                       />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary='Biuenvenido'
-                      secondary={
-                        <React.Fragment>
-                          <Typography
-                            component='span'
-                            variant='span'
-                            className={classes.inline}
-                            color='white'
-                          >
-                            {get(user, 'name')}
-                          </Typography>
-                        </React.Fragment>
-                      }
-                    />
-                  </ListItem>
-                </Link>
-                <Link to='/logout'>
-                  <ListItem alignItems='flex-start'>
-                    <ListItemText primary='Logout' />
-                  </ListItem>
-                </Link>
+                      <ListItemText
+                        primary='Biuenvenido'
+                        style={{ marginRight: 10 }}
+                        secondary={
+                          <React.Fragment>
+                            <Typography
+                              component='span'
+                              variant='span'
+                              className={classes.inline}
+                              color='white'
+                            >
+                              {get(user, 'name')}
+                            </Typography>
+                          </React.Fragment>
+                        }
+                      />
+                    </ListItem>
+                  </Link>
+                <li>
+                  <Link to='/logout'>
+                    <ListItem alignItems='flex-start'>
+                        <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                          Cerrar Sesion
+                        </Typography>
+                    </ListItem>
+                  </Link>
+                </li>
               </React.Fragment>
             ) : (
-              <Link to='/login'>
-                <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
-                  Login
-                </Typography>
-              </Link>
+              <li>
+                <Link to='/login' className={classes.login}>
+                  <AccountCircleIcon />
+                  <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                    Login
+                  </Typography>
+                </Link>
+              </li>
             )}
             <li>
               <Link to={`/list/${dia}/${dia}`}>
@@ -235,30 +272,20 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Divider />
-            </li>
-            <li>
-              {/* <Link onClick={handleClickOpen}> */}
-              <div onClick={handleClickOpen}>
+              <a className="flex row" onClick={handleClickOpen}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Accepted} />
                 <Typography variant='p' color='white'>
                   Terminos y Condiciones
                 </Typography>
-              </div>
-              {/* </Link> */}
+              </a>
             </li>
             <li>
-              <Divider />
-            </li>
-            <li>
-              {/* <Link onClick={handleClickOpen2}> */}
-              <div onClick={handleClickOpen2}>
+              <a className="flex row" onClick={handleClickOpen2}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Conversation} />
                 <Typography variant='p' color='white'>
                   Preguntas Frecuentes
                 </Typography>
-              </div>
-              {/* </Link> */}
+              </a>
             </li>
           </ul>
         </SwipeableTemporaryDrawer>

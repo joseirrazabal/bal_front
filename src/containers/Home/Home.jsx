@@ -219,24 +219,16 @@ const Home = () => {
           </Typography>
           <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
         </HomeSlider>
-        {/* <div className={classes.contentSearch}>
-          <div className={classes.shadow} />
-          <div className={classes.container}>
-            <Typography fontWeight='900' className={classes.title} varian='h1'>
-              DISFRUTA TU LUGAR
-            </Typography>
-            <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
-          </div>
-        </div> */}
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
+            { get(config, '0.publicidad') ? 
             <div className={classes.banner}>
               <SimpleImage
                 alt='Alamar - Balnearios Costa Atlantica'
                 image={get(config, '0.publicidad')}
                 width={'100%'}
               />
-            </div>
+            </div> : null }
             <div className={classes.bannerMobile}>
               <SimpleImage image={ImageBannerMobile} width={'100%'} />
             </div>
