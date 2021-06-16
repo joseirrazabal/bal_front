@@ -7,10 +7,11 @@ import MenuIcon from '@material-ui/icons/Menu'
 const useStyles = makeStyles((theme) => ({
     root: {
         background: theme.palette.secondary.dark,
-        height: '100vh'
+        height: '100vh',
+        width: 300,
     },
     list: {
-        width: 250,
+        width: 350,
     },
     fullList: {
         width: 'auto',
