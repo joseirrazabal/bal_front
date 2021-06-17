@@ -221,14 +221,15 @@ const Home = () => {
         </HomeSlider>
         <div className={classes.contentBanners}>
           <div className={classes.containerMobile}>
-            { get(config, '0.publicidad') ? 
-            <div className={classes.banner}>
-              <SimpleImage
-                alt='Alamar - Balnearios Costa Atlantica'
-                image={get(config, '0.publicidad')}
-                width={'100%'}
-              />
-            </div> : null }
+            {get(config, '0.publicidad') && (
+              <div className={classes.banner}>
+                <SimpleImage
+                  alt='Alamar - Balnearios Costa Atlantica'
+                  image={get(config, '0.publicidad')}
+                  width={'100%'}
+                />
+              </div>
+            )}
             <div className={classes.bannerMobile}>
               <SimpleImage image={ImageBannerMobile} width={'100%'} />
             </div>
