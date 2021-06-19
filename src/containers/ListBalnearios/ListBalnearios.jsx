@@ -308,7 +308,7 @@ const ListBalnearios = () => {
     history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
   }
 
-  const [value, setValue] = React.useState(1)
+  const [value, setValue] = useState(0)
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue)
@@ -417,6 +417,12 @@ const ListBalnearios = () => {
                       >
                         {items.length === 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
                         {items
+                          .reduce((unique, item) => {
+                            // filtro para que solo haya un precio por balneario
+                            const exist = unique.find(item2 => item2.slug === item.slug)
+                            // return unique.includes(item) ? unique : [...unique, item]
+                            return exist ? unique : [...unique, item]
+                          }, [])
                           .filter(item => item.tipoSlug === tipo.slug)
                           .map((item, i) => {
                             const precioOld =
