@@ -9,6 +9,7 @@ import Logout from 'src/containers/Login/Logout'
 import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
 import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnearios'
+import Qualify from 'src/containers/Qualify/Qualify'
 
 const routes = [
   {
@@ -28,6 +29,13 @@ const routes = [
   {
     route: '/checkout/:balneario/:categoria/:desde/:hasta',
     component: CheckoutBalnearios,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/qualify',
+    component: Qualify,
     Props: {},
     useLayout: false,
     isPrivate: false,
