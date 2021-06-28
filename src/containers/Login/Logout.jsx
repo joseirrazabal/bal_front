@@ -54,7 +54,7 @@ const Logout = ({ cancel }) => {
       <div className={classes.center}>
         <h2>Seguro que quierer salir?</h2>
         <div style={{ display: 'flex' }}>
-          <Button fullWidth variatn='outlined' color='primary' onClick={handleCancel}>
+          <Button fullWidth variatn='outlined' color='secondary' onClick={handleCancel}>
             cancelar
           </Button>
           <Button fullWidth variant='contained' onClick={handleLogout}>

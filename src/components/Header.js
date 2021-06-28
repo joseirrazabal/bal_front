@@ -258,7 +258,7 @@ const Header = () => {
                 <Link to='/login' className={classes.login}>
                   <AccountCircleIcon />
                   <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
-                    Login
+                    Entrar
                   </Typography>
                 </Link>
               </li>

@@ -36,10 +36,20 @@ const useStyles = makeStyles(theme => ({
     background: 'white',
     borderRadius: 6,
     width: '100%',
-    height: 420,
+    height: 250,
     maxWidth: 400,
     padding: 20,
   },
+  envioCorrecto: {
+    background: '#55C443',
+    borderRadius: 6,
+    height: 70,
+    width: '100%',
+    color: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 }))
 
 const Recuperacion = () => {
@@ -104,11 +114,10 @@ const Recuperacion = () => {
                     size='big'
                     color='secondary'
                     style={{ color: 'white' }}
+                    type='submit'
                     disabled={loading}
-                    component={RouterLink}
-                    to='/'
                   >
-                    Cancelar
+                    Enviar
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
@@ -116,15 +125,17 @@ const Recuperacion = () => {
                     variant='contained'
                     fullWidth
                     size='big'
-                    color='secondary'
+                    color='link'
                     style={{ color: 'white' }}
-                    type='submit'
                     disabled={loading}
+                    component={RouterLink}
+                    to='/'
                   >
-                    Registrar
+                    Cancelar
                   </Button>
                 </Grid>
-                {info}
+                
+                {info && <div variant="span" className={classes.envioCorrecto}><p>{info}</p></div>}
               </Grid>
             </div>
           </form>

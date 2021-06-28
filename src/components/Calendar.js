@@ -57,15 +57,12 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-// const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('DD-MM-YYYY') }) => {
-  // const [selectedDate, handleDateChange] = useState(dayjs(value, 'DD-MM-YYYY'))
 const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('YYYY-MM-DD') }) => {
   const [selectedDate, handleDateChange] = useState(dayjs(value, 'YYYY-MM-DD'))
   const classes = useStyles()
 
   useEffect(() => {
     setTimeout(() => {
-      // setValue(name, dayjs(selectedDate).format('DD-MM-YYYY'))
       setValue(name, dayjs(selectedDate).format('YYYY-MM-DD'))
     }, 200)
   }, [])

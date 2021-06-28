@@ -40,6 +40,16 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 400,
     padding: 20,
   },
+  envioCorrecto: {
+    background: '#55C443',
+    borderRadius: 6,
+    height: 70,
+    width: '100%',
+    color: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 }))
 
 const Register = () => {
@@ -138,7 +148,7 @@ const Register = () => {
                     defaultValue=''
                     variant='outlined'
                     {...register('password_repeat', {
-                      validate: value => value === password || 'The passwords do not match',
+                      validate: value => value === password || 'las contraseñas no coinciden',
                     })}
                   />
                   {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
@@ -156,7 +166,7 @@ const Register = () => {
                     Registrar
                   </Button>
                 </Grid>
-                {info}
+                {info && <div variant="span" className={classes.envioCorrecto}><p>{info}</p></div>}
               </Grid>
             </div>
           </form>

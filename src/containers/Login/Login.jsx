@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     background: 'white',
     borderRadius: 6,
     width: '100%',
-    height: 420,
+    height: 470,
     maxWidth: 400,
     padding: 20,
   },
@@ -164,25 +164,20 @@ const Login = () => {
                     onClick={() => handleLogIn('google')}
                     fullWidth
                     variant='contained'
-                    className={classes.google}
+                    style={{ background: '#ea4335', color: 'white' }}
                   >
                     GOOGLE
                   </Button>
-
-                  {/* <Button variant="contained" fullWidth size="big" style={{ background: '#3664a2', color: 'white' }}> */}
-                  {/*   Google */}
-                  {/* </Button> */}
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Button
                     variant='contained'
                     fullWidth
                     size='big'
-                    style={{ background: '#ea4335', color: 'white' }}
                   >
                     Facebook
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
             </div>
           </form>
