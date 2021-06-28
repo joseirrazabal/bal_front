@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { gql, useMutation } from '@apollo/client'
-import { useLocation, Redirect, useParams } from 'react-router-dom'
+import { useHistory, useLocation, Redirect, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
@@ -45,12 +45,14 @@ const useStyles = makeStyles(theme => ({
 const Confirmation = () => {
   const classes = useStyles()
   const location = useLocation()
+  const history = useHistory()
   const { token } = useParams()
   const { from } = location.state || { from: { pathname: '/' } }
 
   const [confirmation, { data, error, loading }] = useMutation(CONFIRMATION_MUTATION)
 
   const [info, setInfo] = useState('Se esta validando el email')
+  const [infoError, setInfoError] = useState()
 
   useEffect(() => {
     confirmation({ variables: { token } })
@@ -59,10 +61,15 @@ const Confirmation = () => {
   useEffect(() => {
     if (get(data, 'signupConfirmation') === true) {
       setInfo('Se verifico correctamente')
+      setTimeout(() => {
+        history.push('/')
+      }, 5000)
     } else if (get(data, 'signupConfirmation') === false) {
-      setInfo('No se pudo verificar el email')
+      setInfo(false)
+      setInfoError('No se pudo verificar el email')
     } else if (error) {
-      setInfo('Se produjo un error')
+      setInfo(false)
+      setInfoError('Se produjo un error')
     }
   }, [data, error])
 
@@ -71,7 +78,9 @@ const Confirmation = () => {
       <Header />
       <div className={classes.contentFull}>
         <div className={classes.centerMode}>
-          <div className={classes.contentProfile}>{info}</div>
+          {loading && <div>Cargando...</div>}
+          {info && <div className={classes.contentProfile}>{info}</div>}
+          {infoError && <div className={classes.contentProfile}>{infoError}</div>}
         </div>
       </div>
       <Footer />
