@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { gql, useMutation } from '@apollo/client'
-import { useLocation, Redirect, Link as RouterLink } from 'react-router-dom'
+import { gql, useMutation, useLazyQuery } from '@apollo/client'
+import { useLocation, useParams, Redirect, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
@@ -19,6 +19,7 @@ import loginTab from './tab'
 import { signIn } from 'kit/login/utils'
 
 import CHANGE_MUTATION from 'src/gql/user/changePassword'
+import CURRENT_USER from 'core/gql/user/currentUser'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -46,6 +47,7 @@ const Password = () => {
   const classes = useStyles()
   const location = useLocation()
   const { from } = location.state || { from: { pathname: '/' } }
+  const { token } = useParams()
 
   const {
     watch,
@@ -58,19 +60,35 @@ const Password = () => {
 
   const [changePassword, { data, error, loading }] = useMutation(CHANGE_MUTATION)
 
+  const [getUser, { data: dataUser, loading: loadingUser }] = useLazyQuery(CURRENT_USER, {
+    ssr: false,
+    fetchPolicy: 'cache',
+  })
+
+  const [user, setUser] = useState(null)
   const [info, setInfo] = useState()
 
-  const onSubmit = data => {
-    resetPassword({ variables: { ...data, url: host } })
-  }
+  useEffect(() => {
+    if (dataUser) {
+      setUser(get(dataUser, 'currentUser'))
+    }
+  }, [dataUser])
 
   useEffect(() => {
-    if (get(data, 'resetPassword')) {
-      setInfo('Se envio un email de recuperacion')
+    if (get(data, 'changePassword')) {
+      setInfo('Se cambio la contraseña')
     } else if (error) {
       setInfo(error.message)
     }
   }, [data, error])
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  const onSubmit = data => {
+    changePassword({ variables: { ...data, token } })
+  }
 
   return (
     <React.Fragment>
@@ -80,6 +98,7 @@ const Password = () => {
           <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
             <div className={classes.contentProfile}>
               <Grid container spacing={2}>
+                {user && <div>Cambiar password de {user.name}</div>}
                 <Grid item xs={12}>
                   <TextField
                     label='Password'
@@ -136,7 +155,7 @@ const Password = () => {
                     type='submit'
                     disabled={loading}
                   >
-                    Registrar
+                    Cambiar
                   </Button>
                 </Grid>
                 {info}

@@ -59,7 +59,7 @@ const Recuperacion = () => {
   const [info, setInfo] = useState()
 
   const onSubmit = data => {
-    var host = window.location.protocol + '//' + window.location.host + '/registro/password'
+    var host = window.location.protocol + '//' + window.location.host + '/recuperacion/password'
     resetPassword({ variables: { ...data, url: host } })
   }
 
@@ -121,7 +121,7 @@ const Recuperacion = () => {
                     type='submit'
                     disabled={loading}
                   >
-                    Registrar
+                    Enviar email
                   </Button>
                 </Grid>
                 {info}
