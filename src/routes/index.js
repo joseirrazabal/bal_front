@@ -55,7 +55,14 @@ const routes = [
   },
   {
     route: '/recuperacion/password/:token',
-    component: Confirmation,
+    component: Password,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/recuperacion/password',
+    component: Password,
     Props: {},
     useLayout: false,
     isPrivate: false,
