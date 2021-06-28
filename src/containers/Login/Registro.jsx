@@ -168,6 +168,7 @@ const Register = () => {
                   </Button>
                 </Grid>
                 {info && <div variant="span" className={classes.envioCorrecto}><p>{info}</p></div>}
+                {infoError && <div variant="span" className={classes.envioCorrecto}><p>{infoError}</p></div>}
               </Grid>
             </div>
           </form>
