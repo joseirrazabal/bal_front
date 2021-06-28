@@ -70,6 +70,7 @@ const Register = () => {
   const [signup, { data, error, loading }] = useMutation(SIGNUP_MUTATION)
 
   const [info, setInfo] = useState()
+  const [infoError, setInfoError] = useState()
 
   const onSubmit = data => {
     var host = window.location.protocol + '//' + window.location.host + '/registro/confirmacion'
@@ -80,7 +81,7 @@ const Register = () => {
     if (get(data, 'signup')) {
       setInfo('Se envio un email de verificacion')
     } else if (error) {
-      setInfo(error.message)
+      setInfoError(error.message)
     }
   }, [data, error])
 
