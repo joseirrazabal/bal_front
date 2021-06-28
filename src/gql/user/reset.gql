@@ -1,0 +1,7 @@
+mutation resetPassword($email: String!, $url: String!) {
+  resetPassword(email: $email, url: $url) {
+    n
+    nModified
+    ok
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { useLocation, Redirect } from 'react-router-dom'
+import { useForm, Controller } from 'react-hook-form'
+import { useLocation, Redirect, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
 
@@ -44,19 +45,35 @@ const useStyles = makeStyles(theme => ({
 const Login = () => {
   const classes = useStyles()
   const location = useLocation()
-
   const { from } = location.state || { from: { pathname: '/' } }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm()
+
+  const [login, { data, error, loading }] = useMutation(LOGIN_MUTATION)
 
   const [user, setUser] = useState()
 
-  const [login, { data, error }] = useMutation(LOGIN_MUTATION)
-
   const handleLogIn = provider => {
-    const msg = loginTab(`${process.env.LOGIN_URL ? process.env.LOGIN_URL: ''}/auth/${provider}`)
+    const msg = loginTab(`${process.env.LOGIN_URL ? process.env.LOGIN_URL : ''}/auth/${provider}`)
     msg.then(user => {
       signIn(get(user, 'jwt'), get(user, 'refreshToken'))
       setUser(user)
     })
+  }
+
+  const onSubmit = data => {
+    console.log('on submit', data)
+    login({ variables: data })
+  }
+
+  if (get(data, 'login.jwt')) {
+    signIn(data.login.jwt, data.login.refreshToken)
+    return <Redirect to={from} />
   }
 
   if (user) {
@@ -68,7 +85,7 @@ const Login = () => {
       <Header />
       <div className={classes.contentFull}>
         <div className={classes.centerMode}>
-          <form className={classes.form}>
+          <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
             <div className={classes.contentProfile}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -76,29 +93,30 @@ const Login = () => {
                     Iniciar Sesion
                   </Typography>
                 </Grid>
+                {error?.message}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    name='email'
-                    id='email'
                     label='Email'
                     color='secondary'
-                    defaultValue='ejemplo@gmail.com'
+                    // defaultValue='ejemplo@gmail.com'
                     variant='outlined'
+                    {...register('email', { required: 'Campo requerido' })}
                   />
                 </Grid>
+                {errors.email && <p>{errors.email.message}</p>}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    name='password'
                     type='password'
-                    id='password'
                     label='password'
                     color='secondary'
-                    defaultValue='password'
+                    // defaultValue='password'
                     variant='outlined'
+                    {...register('password', { required: 'Campo requerido' })}
                   />
                 </Grid>
+                {errors.password && <p>{errors.password.message}</p>}
                 <Grid item xs={12}>
                   <Button
                     variant='contained'
@@ -106,11 +124,30 @@ const Login = () => {
                     size='big'
                     color='secondary'
                     style={{ color: 'white' }}
+                    type='submit'
+                    disabled={loading}
                   >
                     ENTRAR
                   </Button>
-                  <Button variant='outline' fullWidth size='big' color='secondary'>
+                  <Button
+                    variant='outline'
+                    fullWidth
+                    size='big'
+                    color='secondary'
+                    component={RouterLink}
+                    to='/recuperacion'
+                  >
                     olvidaste la clave?
+                  </Button>
+                  <Button
+                    component={RouterLink}
+                    to='/registro'
+                    variant='outline'
+                    fullWidth
+                    size='big'
+                    color='secondary'
+                  >
+                    Registro
                   </Button>
                 </Grid>
                 <Grid item xs={12}>

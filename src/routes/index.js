@@ -1,6 +1,10 @@
 import Home from 'src/containers/Home/Home'
 import Profile from 'src/containers/Profile/Profile'
 import Login from 'src/containers/Login/Login'
+import Registro from 'src/containers/Login/Registro'
+import Confirmation from 'src/containers/Login/Confirmation'
+import Password from 'src/containers/Login/Password'
+import Recuperacion from 'src/containers/Login/Recuperacion'
 import Logout from 'src/containers/Login/Logout'
 import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
@@ -34,6 +38,34 @@ const routes = [
     Props: {},
     useLayout: false,
     isPrivate: true,
+  },
+  {
+    route: '/registro/confirmacion/:token',
+    component: Confirmation,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/registro',
+    component: Registro,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/recuperacion/password/:token',
+    component: Confirmation,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/recuperacion',
+    component: Recuperacion,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
   },
   {
     route: '/login',
