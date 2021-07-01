@@ -10,6 +10,8 @@ import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
 import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnearios'
 import Qualify from 'src/containers/Qualify/Qualify'
+import Notifications from 'src/containers/Profile/Notifications'
+
 
 const routes = [
   {
@@ -36,6 +38,13 @@ const routes = [
   {
     route: '/qualify',
     component: Qualify,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
+    route: '/notifications',
+    component: Notifications,
     Props: {},
     useLayout: false,
     isPrivate: false,

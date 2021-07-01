@@ -64,18 +64,6 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(17),
     height: theme.spacing(17),
     marginRight: 10,
-  },
-  envioCorrecto: {
-    background: '#55C443',
-    borderRadius: 6,
-    height: 70,
-    width: '100%',
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 15,
-    'box-shadow': '0 1px 1px 0 rgba(0,0,0,.1)',
   }
 }))
 
@@ -112,7 +100,6 @@ const Profile = () => {
       <Header />
       <div className={classes.contentFull}>
         <form className={classes.form}>
-          <div variant="span" className={classes.envioCorrecto}><p>Su Perfil ahora esta validado!</p></div>
           <div className={classes.contentProfile}>
             <ListItem alignItems='center' className={classes.listItem}>
               <ListItemAvatar>

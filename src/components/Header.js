@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client'
-import { useHistory, Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import dayjs from 'dayjs'
-import get from 'lodash/get'
+import React, { useState, useEffect } from 'react';
+import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client';
+import { useHistory, Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import dayjs from 'dayjs';
+import get from 'lodash/get';
 
-import ListItemText from '@material-ui/core/ListItemText'
-import Avatar from '@material-ui/core/Avatar'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import SimpleImage from './SimpleImage'
-import LogoAlamar from '../assets/alamar-logo-2.svg'
-import Typography from './Typography'
-import SwipeableTemporaryDrawer from './Drawer'
-import IconPlaya from '../assets/icon-playa2.svg'
-import Accepted from '../assets/accepted.svg'
-import Conversation from '../assets/conversation.svg'
-import FullScreenDialog from './Dialog'
-import Term from '../containers/TyC/Term'
-import Faqs from '../containers/Faqs/Faqs'
+import SimpleImage from './SimpleImage';
+import LogoAlamar from '../assets/alamar-logo-2.svg';
+import Typography from './Typography';
+import SwipeableTemporaryDrawer from './Drawer';
+import IconPlaya from '../assets/icon-playa2.svg';
+import Accepted from '../assets/accepted.svg';
+import Conversation from '../assets/conversation.svg';
+import Notification from '../assets/notification.svg';
+import FullScreenDialog from './Dialog';
+import Term from '../containers/TyC/Term';
+import Faqs from '../containers/Faqs/Faqs';
 
-import CURRENT_USER from 'core/gql/user/currentUser'
-import { getToken } from 'kit/login/utils'
+import CURRENT_USER from 'core/gql/user/currentUser';
+import { getToken } from 'kit/login/utils';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -268,6 +268,14 @@ const Header = () => {
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={IconPlaya} />
                 <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
                   Balnearios
+                </Typography>
+              </Link>
+            </li>
+            <li>
+              <Link to={`/notifications`}>
+                <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Notification} />
+                <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                  Notificaciones
                 </Typography>
               </Link>
             </li>

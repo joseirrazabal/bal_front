@@ -1,8 +1,9 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import Button from '@material-ui/core/Button'
-import MenuIcon from '@material-ui/icons/Menu'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,7 +38,11 @@ export default function SwipeableTemporaryDrawer({children}) {
     <div>
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon /></Button>
+          <Button onClick={toggleDrawer(anchor, true)}>
+            <Badge color="primary" badgeContent={10}>
+              <MenuIcon />
+            </Badge>
+          </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
