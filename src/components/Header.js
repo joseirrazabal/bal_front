@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Badge from '@material-ui/core/Badge';
 
 import SimpleImage from './SimpleImage';
 import LogoAlamar from '../assets/alamar-logo-2.svg';
@@ -274,9 +275,18 @@ const Header = () => {
             <li>
               <Link to={`/notifications`}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Notification} />
-                <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
-                  Notificaciones
-                </Typography>
+                <Badge 
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  color="primary" 
+                  badgeContent={10}
+                >
+                  <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                    Notificaciones
+                  </Typography>
+                </Badge>
               </Link>
             </li>
             <li>
