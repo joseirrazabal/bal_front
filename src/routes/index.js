@@ -12,7 +12,6 @@ import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnea
 import Qualify from 'src/containers/Qualify/Qualify'
 import Notifications from 'src/containers/Profile/Notifications'
 
-
 const routes = [
   {
     route: '/list/:ciudad/:desde/:hasta',

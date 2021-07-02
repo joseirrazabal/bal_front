@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client';
-import { useHistory, Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import dayjs from 'dayjs';
-import get from 'lodash/get';
+import React, { useState, useEffect } from 'react'
+import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client'
+import { useHistory, Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import dayjs from 'dayjs'
+import get from 'lodash/get'
 
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import ListItem from '@material-ui/core/ListItem';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Badge from '@material-ui/core/Badge';
+import ListItemText from '@material-ui/core/ListItemText'
+import Avatar from '@material-ui/core/Avatar'
+import ListItem from '@material-ui/core/ListItem'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import Badge from '@material-ui/core/Badge'
 
-import SimpleImage from './SimpleImage';
-import LogoAlamar from '../assets/alamar-logo-2.svg';
-import Typography from './Typography';
-import SwipeableTemporaryDrawer from './Drawer';
-import IconPlaya from '../assets/icon-playa2.svg';
-import Accepted from '../assets/accepted.svg';
-import Conversation from '../assets/conversation.svg';
-import Notification from '../assets/notification.svg';
-import FullScreenDialog from './Dialog';
-import Term from '../containers/TyC/Term';
-import Faqs from '../containers/Faqs/Faqs';
+import SimpleImage from './SimpleImage'
+import LogoAlamar from '../assets/alamar-logo-2.svg'
+import Typography from './Typography'
+import SwipeableTemporaryDrawer from './Drawer'
+import IconPlaya from '../assets/icon-playa2.svg'
+import Accepted from '../assets/accepted.svg'
+import Conversation from '../assets/conversation.svg'
+import Notification from '../assets/notification.svg'
+import FullScreenDialog from './Dialog'
+import Term from '../containers/TyC/Term'
+import Faqs from '../containers/Faqs/Faqs'
 
-import CURRENT_USER from 'core/gql/user/currentUser';
-import { getToken } from 'kit/login/utils';
+import CURRENT_USER from 'core/gql/user/currentUser'
+import { getToken } from 'kit/login/utils'
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -107,7 +107,7 @@ const useStyles = makeStyles(theme => ({
 
         '& svg': {
           marginRight: 15,
-          color: 'white'
+          color: 'white',
         },
 
         '&:hover': {
@@ -116,23 +116,23 @@ const useStyles = makeStyles(theme => ({
       },
 
       '&:hover': {
-        opacity: .7
-      }
+        opacity: 0.7,
+      },
     },
   },
   large: {
     width: 60,
     height: 60,
-    marginRight: 10
+    marginRight: 10,
   },
   profile: {
-    width: '100%', 
+    width: '100%',
     textDecoration: 'none',
 
     '&:hover': {
-      opacity: .7,
+      opacity: 0.7,
     },
-  }
+  },
 }))
 
 const Header = () => {
@@ -215,41 +215,39 @@ const Header = () => {
           <ul className={classes.nav}>
             {user ? (
               <React.Fragment>
-                  <Link to='/profile' className={classes.profile}>
-                    <ListItem style={{ 
+                <Link to='/profile' className={classes.profile}>
+                  <ListItem
+                    style={{
                       height: 100,
                       display: 'flex',
-                      alignItems: 'cemter!important'
-                      }}>
-                      <Avatar
-                        className={classes.large}
-                        alt={get(user, 'name')}
-                        src={get(user, 'image')}
-                      />
-                      <ListItemText
-                        primary='Biuenvenido'
-                        style={{ marginRight: 10 }}
-                        secondary={
-                          <React.Fragment>
-                            <Typography
-                              component='span'
-                              variant='span'
-                              className={classes.inline}
-                              color='white'
-                            >
-                              {get(user, 'name')}
-                            </Typography>
-                          </React.Fragment>
-                        }
-                      />
-                    </ListItem>
-                  </Link>
+                      alignItems: 'cemter!important',
+                    }}
+                  >
+                    <Avatar className={classes.large} alt={get(user, 'name')} src={get(user, 'image')} />
+                    <ListItemText
+                      primary='Biuenvenido'
+                      style={{ marginRight: 10 }}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            component='span'
+                            variant='span'
+                            className={classes.inline}
+                            color='white'
+                          >
+                            {get(user, 'name')}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                </Link>
                 <li>
                   <Link to='/logout'>
                     <ListItem alignItems='flex-start'>
-                        <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
-                          Cerrar Sesion
-                        </Typography>
+                      <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                        Cerrar Sesion
+                      </Typography>
                     </ListItem>
                   </Link>
                 </li>
@@ -275,12 +273,12 @@ const Header = () => {
             <li>
               <Link to={`/notifications`}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Notification} />
-                <Badge 
+                <Badge
                   anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
                   }}
-                  color="primary" 
+                  color='primary'
                   badgeContent={10}
                 >
                   <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
@@ -290,7 +288,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <a className="flex row" onClick={handleClickOpen}>
+              <a className='flex row' onClick={handleClickOpen}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Accepted} />
                 <Typography variant='p' color='white'>
                   Terminos y Condiciones
@@ -298,7 +296,7 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a className="flex row" onClick={handleClickOpen2}>
+              <a className='flex row' onClick={handleClickOpen2}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Conversation} />
                 <Typography variant='p' color='white'>
                   Preguntas Frecuentes

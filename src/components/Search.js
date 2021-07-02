@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-
-import { makeStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Checkbox from '@material-ui/core/Checkbox'
-
 import get from 'lodash/get'
 import { useForm, Controller } from 'react-hook-form'
+import dayjs from 'dayjs'
+import { makeStyles } from '@material-ui/core/styles'
+
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import Button from './Button'
 import SimpleImage from './SimpleImage'
@@ -131,12 +131,20 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit }) => {
+const Search = ({
+  ciudades,
+  styles,
+  ciudad = null,
+  desde,
+  hasta,
+  handleOnSubmit,
+  variosDias = false,
+}) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [ciudadDefault, setCiudadDefault] = useState(null)
   const [loading2, setLoading2] = useState(true)
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState(variosDias)
 
   const handleChange = event => {
     setChecked(event.target.checked)
@@ -144,9 +152,21 @@ const Search = ({ ciudades, styles, ciudad = null, desde, hasta, handleOnSubmit 
 
   const { reset, register, control, handleSubmit, errors, setValue } = useForm()
 
-  const onSubmit = data => {
-    handleOnSubmit(data)
+  const onSubmit = ({ ciudad, desde, hasta }) => {
+    if (checked) {
+      handleOnSubmit({ ciudad, desde, hasta })
+    } else {
+      handleOnSubmit({ ciudad, desde, hasta: desde })
+    }
   }
+
+  useEffect(() => {
+    const date1 = dayjs(hasta)
+    const dateDiff = date1.diff(desde, 'day')
+    if (dateDiff) {
+      setChecked(true)
+    }
+  }, [desde, hasta])
 
   useEffect(() => {
     register('ciudad', { required: true })
