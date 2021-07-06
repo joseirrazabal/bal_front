@@ -62,7 +62,7 @@ const Confirmation = () => {
     if (get(data, 'signupConfirmation') === true) {
       setInfo('Se verifico correctamente')
       setTimeout(() => {
-        history.push('/')
+        history.push('/profile')
       }, 5000)
     } else if (get(data, 'signupConfirmation') === false) {
       setInfo(false)
