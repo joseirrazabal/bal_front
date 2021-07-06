@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client'
-import get from 'lodash/get'
+import React, { useState, useEffect } from 'react';
+import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client';
+import get from 'lodash/get';
 
-import { makeStyles } from '@material-ui/core/styles'
-import ListItemText from '@material-ui/core/ListItemText'
-import Avatar from '@material-ui/core/Avatar'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import ListItem from '@material-ui/core/ListItem'
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
-import Button from '@material-ui/core/Button'
-import Divider from '@material-ui/core/Divider'
+import { makeStyles } from '@material-ui/core/styles';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItem from '@material-ui/core/ListItem';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import EditIcon from '@material-ui/icons/Edit';
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
-import Typography from '../../components/Typography'
+import Header from 'src/components/Header';
+import Footer from 'src/components/Footer';
+import Typography from '../../components/Typography';
 
-import CURRENT_USER from 'core/gql/user/currentUser'
+import CURRENT_USER from 'core/gql/user/currentUser';
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -63,7 +64,27 @@ const useStyles = makeStyles(theme => ({
   large: {
     width: theme.spacing(17),
     height: theme.spacing(17),
-    marginRight: 10,
+    // marginRight: 10,
+  },
+  editImage: {
+    position: 'absolute',
+    background: 'rgba(255,255,255,.7)',
+    // padding: 10,
+    boxSizing: 'border-box',
+    bottom: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+
+    '&:hover': {
+      background: 'rgba(255,255,255,.9)',
+    },
+
+    '& svg': {
+      color: theme.palette.secondary.main,
+      cursor: 'pointer',
+      padding: 10
+    }
   }
 }))
 
@@ -102,8 +123,9 @@ const Profile = () => {
         <form className={classes.form}>
           <div className={classes.contentProfile}>
             <ListItem alignItems='center' className={classes.listItem}>
-              <ListItemAvatar>
+              <ListItemAvatar style={{ position: 'relative', borderRadius: 50, overflow: 'hidden' }}>
                 <Avatar className={classes.large} src={get(user, 'image')} alt={get(user, 'name')} />
+                <div className={classes.editImage}><EditIcon /></div>
               </ListItemAvatar>
               <ListItemText
                 primary='Biuenvenido'

@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     maxWidth: 800,
     margin: 'auto',
-    paddingTop: 85,
+    padding: '85px 10px 10px 10px',
+    boxSizing: 'border-box',
     minHeight: '100vh',
     background: '#f2f2f2',
   },
@@ -99,7 +100,6 @@ const Notifications = () => {
     <React.Fragment>
       <Header />
       <div className={classes.contentFull}>
-        <form className={classes.form}>
           <div className={classes.contentProfile}>
             <Typography>Notificaciones</Typography>
           </div>
@@ -144,7 +144,6 @@ const Notifications = () => {
               </Grid>
             </Grid>
           </div> */}
-        </form>
       </div>
       <Footer />
     </React.Fragment>
