@@ -203,11 +203,13 @@ const ListBalnearios = () => {
   const history = useHistory()
   const { ciudad, desde, hasta } = useParams()
 
+  const [state, setState] = useState({})
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(0)
+
   const [loadingCheck, setLoadingCheck] = useState(true)
   const [ciudades, setCiudades] = useState([])
-  const [state, setState] = useState({})
   const [items, setItems] = useState([])
-  const [open, setOpen] = useState(false)
   const [tipos, setTipos] = useState([])
 
   const { data: dataCiudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
@@ -229,49 +231,23 @@ const ListBalnearios = () => {
     getBalnearioSearch()
   }, [desde, hasta])
 
-  // useEffect(() => {
-  //   if (get(data, 'balnearioListSearch')) {
-  //     setItems(get(data, 'balnearioListSearch', []))
-  //   }
-  // }, [data])
-
   useEffect(() => {
     if (get(dataCiudades, 'searchListFront')) {
       setCiudades(get(dataCiudades, 'searchListFront', []))
-    } else {
-      setLoadingCheck(false)
     }
   }, [dataCiudades])
 
   useEffect(() => {
-    if (ciudades.length) {
-      const check = {}
-
-      ciudades.map(item => {
-        check[item._id] = false
+    if (get(data, 'balnearioListSearch')) {
+      const objTipos = {}
+      get(data, 'balnearioListSearch').filter(item => {
+        objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
       })
-
-      if (ciudad) {
-        check[ciudad] = true
-      }
-
-      setLoadingCheck(false)
-      setState(check)
+      setTipos(Object.values(objTipos))
     }
-  }, [ciudades])
+  }, [data])
 
   useEffect(() => {
-    const seleccionado = () => {
-      let algoSeleccionado = false
-
-      for (const item in state) {
-        if (state[item]) {
-          algoSeleccionado = true
-        }
-      }
-      return algoSeleccionado
-    }
-
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
@@ -284,21 +260,42 @@ const ListBalnearios = () => {
       setItems(prueba)
     }
 
-    if (!loadingCheck) {
-      if (seleccionado()) {
-        if (get(data, 'balnearioListSearch')) {
-          result()
-          const objTipos = {}
-          get(data, 'balnearioListSearch').filter(item => {
-            objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
-          })
-          setTipos(Object.values(objTipos))
+    const seleccionado = () => {
+      let algoSeleccionado = false
+
+      for (const item in state) {
+        if (state[item]) {
+          algoSeleccionado = true
         }
+      }
+      return algoSeleccionado
+    }
+
+    if (tipos) {
+      if (seleccionado()) {
+        result()
       } else {
-        setItems(get(data, 'balnearioListSearch'))
+        setItems(get(data, 'balnearioListSearch', []))
       }
     }
-  }, [state, loadingCheck, data])
+  }, [tipos, state])
+
+  useEffect(() => {
+    if (ciudades.length) {
+      const check = {}
+
+      ciudades.map(item => {
+        check[item.slug] = false
+      })
+
+      if (ciudad) {
+        check[ciudad] = true
+      }
+
+      setLoadingCheck(false)
+      setState(check)
+    }
+  }, [ciudades])
 
   const handleChange = event => {
     setState({ ...state, [event.target.value]: event.target.checked })
@@ -307,8 +304,6 @@ const ListBalnearios = () => {
   const onSubmitSearch = data => {
     history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
   }
-
-  const [value, setValue] = useState(0)
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue)

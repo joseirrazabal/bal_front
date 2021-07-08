@@ -21,6 +21,13 @@ const routes = [
     isPrivate: false,
   },
   {
+    route: '/list/:desde/:hasta',
+    component: ListBalnearios,
+    Props: {},
+    useLayout: false,
+    isPrivate: false,
+  },
+  {
     route: '/detalle/:slug/:desde?/:hasta?/:ciudad?',
     component: DetalleBalneario,
     Props: {},
