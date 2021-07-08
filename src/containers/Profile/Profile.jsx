@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client';
-import get from 'lodash/get';
+import React, { useState, useEffect } from 'react'
+import { useLazyQuery, gql, useQuery, useMutation, useApolloClient } from '@apollo/client'
+import { useForm, Controller } from 'react-hook-form'
+import get from 'lodash/get'
 
-import { makeStyles } from '@material-ui/core/styles';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItem from '@material-ui/core/ListItem';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import EditIcon from '@material-ui/icons/Edit';
+import { makeStyles } from '@material-ui/core/styles'
+import ListItemText from '@material-ui/core/ListItemText'
+import Avatar from '@material-ui/core/Avatar'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItem from '@material-ui/core/ListItem'
+import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import EditIcon from '@material-ui/icons/Edit'
 
-import Header from 'src/components/Header';
-import Footer from 'src/components/Footer';
-import Typography from '../../components/Typography';
+import Loading from '../../components/Loading'
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
+import Typography from '../../components/Typography'
 
-import CURRENT_USER from 'core/gql/user/currentUser';
+import CURRENT_USER from 'core/gql/user/currentUser'
+import PROFILE_UPDATE from 'core/gql/user/update'
+import SINGLE_UPLOAD_MUTATION from 'core/gql/image'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -83,19 +87,34 @@ const useStyles = makeStyles(theme => ({
     '& svg': {
       color: theme.palette.secondary.main,
       cursor: 'pointer',
-      padding: 10
-    }
-  }
+      padding: 10,
+    },
+  },
+  input: {
+    display: 'none',
+  },
 }))
 
 const Profile = () => {
   const classes = useStyles()
 
+  const {
+    setValue,
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    reset,
+  } = useForm()
+
+  const [profileUpdate, { data: dataAdd }] = useMutation(PROFILE_UPDATE)
+  const [uploadFileMutation, { data: dataFile, loading, error }] = useMutation(SINGLE_UPLOAD_MUTATION)
   const { data: dataUser, loading: loadingUser } = useQuery(CURRENT_USER, {
     ssr: false,
-    fetchPolicy: 'cache',
+    fetchPolicy: 'network-only',
   })
 
+  const [imagen, setImagen] = useState(false)
   const [user, setUser] = useState(null)
   const [state, setState] = useState({
     checkedA: false,
@@ -105,27 +124,66 @@ const Profile = () => {
   useEffect(() => {
     if (dataUser) {
       setUser(get(dataUser, 'currentUser'))
+      setImagen(get(dataUser, 'currentUser.image'))
     }
   }, [dataUser])
 
-  const handleChange = event => {
-    setState({ ...state, [event.target.name]: event.target.checked })
+  useEffect(() => {
+    if (dataFile) {
+      setImagen(dataFile.uploadFile.url)
+    }
+  }, [dataFile])
+
+  const onChangeImage = ({
+    target: {
+      validity,
+      files: [file],
+    },
+  }) => validity.valid && uploadFileMutation({ variables: { file } })
+
+  const onSubmit = params => {
+    console.log(params)
+
+    profileUpdate({ variables: { extras: params, image: imagen } })
   }
 
   if (loadingUser) {
-    return false
+    return <Loading />
   }
 
   return (
     <React.Fragment>
       <Header />
       <div className={classes.contentFull}>
-        <form className={classes.form}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} method='post'>
+          {dataAdd && 'Guardado'}
           <div className={classes.contentProfile}>
             <ListItem alignItems='center' className={classes.listItem}>
               <ListItemAvatar style={{ position: 'relative', borderRadius: 50, overflow: 'hidden' }}>
-                <Avatar className={classes.large} src={get(user, 'image')} alt={get(user, 'name')} />
-                <div className={classes.editImage}><EditIcon /></div>
+                <Avatar className={classes.large} src={imagen} alt={get(user, 'name')} />
+                <div className={`${classes.contentLevel}`}>
+                  <input
+                    id='contained-button-file'
+                    className={classes.input}
+                    type='file'
+                    onChange={onChangeImage}
+                  />
+                  {loading ? (
+                    <label htmlFor='contained-button-file'>
+                      <div className={classes.editImage}>
+                        <div>Loading...</div>
+                      </div>
+                    </label>
+                  ) : (
+                    get(user, 'provider') === 'local' && (
+                      <label htmlFor='contained-button-file'>
+                        <div className={classes.editImage} onClick={onChangeImage}>
+                          <EditIcon />
+                        </div>
+                      </label>
+                    )
+                  )}
+                </div>
               </ListItemAvatar>
               <ListItemText
                 primary='Biuenvenido'
@@ -149,11 +207,10 @@ const Profile = () => {
                 <TextField
                   // error
                   fullWidth
-                  name='name'
-                  id='name'
                   label='Nombre completo'
                   color='secondary'
-                  defaultValue={get(user, 'name')}
+                  //defaultValue={get(user, 'name')}
+                  defaultValue={get(dataUser, 'currentUser.name')}
                   variant='outlined'
                   disabled
                 />
@@ -162,11 +219,10 @@ const Profile = () => {
                 <TextField
                   // error
                   fullWidth
-                  name='email'
-                  id='email'
                   label='Email'
                   color='secondary'
-                  defaultValue={get(user, 'email')}
+                  //defaultValue={get(user, 'email')}
+                  defaultValue={get(dataUser, 'currentUser.email')}
                   variant='outlined'
                   disabled
                 />
@@ -174,14 +230,14 @@ const Profile = () => {
               <Grid item sm={6} xs={12}>
                 <TextField
                   // error
+                  // type='text'
+                  {...register('telefono')}
+                  autoFocus
                   fullWidth
-                  type='number'
-                  name='telefono'
-                  id='telefono'
                   label='Telefono'
                   color='secondary'
-                  defaultValue='Telefono'
                   variant='outlined'
+                  defaultValue={get(dataUser, 'currentUser.extras.telefono')}
                 />
               </Grid>
             </Grid>
@@ -192,36 +248,33 @@ const Profile = () => {
                 <Typography fontWeight={700}>Configuracion</Typography>
               </Grid>
               <Grid item sm={6} xs={12}>
-                <FormControlLabel
-                  control={<Switch checked={state.checkedA} onChange={handleChange} name='checkedA' />}
-                  label='Activar Notificaciones'
+                <Controller
+                  name='recibirEmail'
+                  control={control}
+                  defaultValue={get(dataUser, 'currentUser.extras.recibirEmail', true)}
+                  rules={{}}
+                  render={({ field }) => {
+                    return (
+                      <FormControlLabel
+                        control={<Switch {...field} checked={field.value} />}
+                        label='Quiero recibir Novedades a mi correo'
+                      />
+                    )
+                  }}
                 />
               </Grid>
-              <Grid item sm={6} xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={state.checkedB}
-                      onChange={handleChange}
-                      name='checkedB'
-                      color='secondary'
-                    />
-                  }
-                  label='Quiero recibir Novedades a mi correo'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item sm={6} xs={12}>
-                <Button color='secondary'>Eliminar Cuenta</Button>
-              </Grid>
+              {/* <Grid item xs={12}> */}
+              {/*   <Divider /> */}
+              {/* </Grid> */}
+              {/* <Grid item sm={6} xs={12}> */}
+              {/*   <Button color='secondary'>Eliminar Cuenta</Button> */}
+              {/* </Grid> */}
             </Grid>
           </div>
           <div className={classes.contentProfile}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Button variant='contained' size='small' disabled color='secondary'>
+                <Button variant='contained' size='small' type='submit' color='secondary'>
                   Guardar Cambios
                 </Button>
               </Grid>
