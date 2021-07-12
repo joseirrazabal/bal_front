@@ -49,7 +49,12 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], setValue: setData }) => {
+const AutocompleteComponent = ({
+  valueDefault = null,
+  options: options1 = [],
+  setValue: setData,
+  errors,
+}) => {
   const classes = useStyles()
   const [value, setValue] = React.useState(valueDefault)
 
@@ -64,11 +69,11 @@ const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], se
   }, [valueDefault])
 
   return (
-    <div className={classes.input}> 
+    <div className={classes.input}>
       <Autocomplete
         // classes={classes.input}
         id='ciudad'
-        color="secondary"
+        color='secondary'
         options={options.sort((a, b) => b.category.localeCompare(a.category))}
         groupBy={option => option.category}
         getOptionLabel={option => option.nombre}
@@ -82,8 +87,9 @@ const AutocompleteComponent = ({ valueDefault = null, options: options1 = [], se
           setData('ciudad', newValue)
         }}
       />
+      {!value && errors.ciudad && <div style={{ color: 'red' }}>{errors.ciudad.message}</div>}
     </div>
   )
 }
 
-export default React.memo(AutocompleteComponent)
+export default AutocompleteComponent

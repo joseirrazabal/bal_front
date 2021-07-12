@@ -150,7 +150,14 @@ const Search = ({
     setChecked(event.target.checked)
   }
 
-  const { reset, register, control, handleSubmit, errors, setValue } = useForm()
+  // const { reset, register, control, handleSubmit, errors, setValue } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    setValue,
+  } = useForm()
 
   const onSubmit = ({ ciudad, desde, hasta }) => {
     if (checked) {
@@ -169,7 +176,7 @@ const Search = ({
   }, [desde, hasta])
 
   useEffect(() => {
-    register('ciudad', { required: true })
+    register('ciudad', { required: 'Debe seleccionar algo' })
     register('desde')
     register('hasta')
   }, [])
@@ -201,7 +208,7 @@ const Search = ({
       onSubmit={handleSubmit(onSubmit)}
       style={styles}
       className={`${classes.contentSearchCenter}`}
-      noValidate
+      //noValidate
     >
       <div className={classes.boxColumn}>
         {/* <div className={classes.boxEnd}>
@@ -222,6 +229,7 @@ const Search = ({
                   valueDefault={ciudadDefault}
                   options={get(ciudades, 'searchListFront')}
                   setValue={setValue}
+                  errors={errors}
                 />
               )}
             </div>
@@ -313,10 +321,10 @@ const Search = ({
               type='submit'
               fullWidth
               height={48}
-              onClick={e => {
-                e.preventDefault()
-                onSubmit()
-              }}
+              // onClick={e => {
+              //   e.preventDefault()
+              //   onSubmit()
+              // }}
             >
               Buscar
             </Button>
