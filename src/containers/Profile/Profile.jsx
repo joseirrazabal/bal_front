@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation, useParams, Redirect, Link as RouterLink } from 'react-router-dom'
 import { useLazyQuery, gql, useQuery, useMutation, useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import get from 'lodash/get'
@@ -263,12 +264,24 @@ const Profile = () => {
                   }}
                 />
               </Grid>
-              {/* <Grid item xs={12}> */}
-              {/*   <Divider /> */}
-              {/* </Grid> */}
-              {/* <Grid item sm={6} xs={12}> */}
-              {/*   <Button color='secondary'>Eliminar Cuenta</Button> */}
-              {/* </Grid> */}
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <Grid item sm={6} xs={12}>
+                {/* <Button color='secondary'>Eliminar Cuenta</Button> */}
+                <Button
+                  variant='contained'
+                  //fullWidth
+                  //size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  disabled={loading}
+                  component={RouterLink}
+                  to='/profile/password'
+                >
+                  Cambiar password
+                </Button>
+              </Grid>
             </Grid>
           </div>
           <div className={classes.contentProfile}>

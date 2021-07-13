@@ -14,11 +14,9 @@ import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
-import loginTab from './tab'
-
 import { signIn } from 'kit/login/utils'
 
-import CHANGE_MUTATION from 'src/gql/user/changePassword'
+import CHANGE_MUTATION from 'src/gql/user/changePasswordUser'
 import CURRENT_USER from 'core/gql/user/currentUser'
 
 const useStyles = makeStyles(theme => ({
@@ -75,7 +73,7 @@ const Password = () => {
   }, [dataUser])
 
   useEffect(() => {
-    if (get(data, 'changePassword')) {
+    if (get(data, 'changePasswordUser')) {
       setInfo('Se cambio la contraseña')
     } else if (error) {
       setInfo(error.message)
@@ -87,21 +85,9 @@ const Password = () => {
   }, [])
 
   const onSubmit = data => {
-    changePassword({ variables: { ...data, token } })
-  }
-
-  if (user) {
-    return (
-      <React.Fragment>
-        <Header />
-        <div className={classes.contentFull}>
-          <div className={classes.centerMode}>
-            <div>Debe hacer logout para reestablecer la contraseña</div>
-          </div>
-        </div>
-        <Footer />
-      </React.Fragment>
-    )
+    changePassword({
+      variables: { password: get(data, 'old_password'), newPassword: get(data, 'password') },
+    })
   }
 
   return (
@@ -115,14 +101,29 @@ const Password = () => {
                 {user && <div>Cambiar password de {user.name}</div>}
                 <Grid item xs={12}>
                   <TextField
-                    label='Password'
+                    label='Contraseña actual'
+                    // autoComplete='off'
+                    inputProps={{
+                      autoComplete: 'old_password',
+                    }}
+                    fullWidth
+                    type='password'
+                    color='secondary'
+                    defaultValue=''
+                    variant='outlined'
+                    {...register('old_password', { required: 'Campo requerido' })}
+                  />
+                  {errors.old_password && <p>{errors.old_password.message}</p>}
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label='nueva contraseña'
                     // autoComplete='off'
                     inputProps={{
                       autoComplete: 'new-password',
                     }}
                     fullWidth
                     type='password'
-                    id='password'
                     color='secondary'
                     defaultValue=''
                     variant='outlined'
@@ -132,14 +133,14 @@ const Password = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    label='Repetir password'
+                    label='Repetir contraseña'
                     fullWidth
                     type='password'
                     color='secondary'
                     defaultValue=''
                     variant='outlined'
                     {...register('password_repeat', {
-                      validate: value => value === password || 'The passwords do not match',
+                      validate: value => value === password || 'Las contraseñas deben ser iguales',
                     })}
                   />
                   {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
@@ -154,7 +155,7 @@ const Password = () => {
                     style={{ color: 'white' }}
                     disabled={loading}
                     component={RouterLink}
-                    to='/'
+                    to='/profile'
                   >
                     Cancelar
                   </Button>

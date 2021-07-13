@@ -1,4 +1,5 @@
 import Home from 'src/containers/Home/Home'
+import ChangePassword from 'src/containers/Profile/Password'
 import Profile from 'src/containers/Profile/Profile'
 import Login from 'src/containers/Login/Login'
 import Registro from 'src/containers/Login/Registro'
@@ -55,13 +56,7 @@ const routes = [
     useLayout: false,
     isPrivate: false,
   },
-  {
-    route: '/profile',
-    component: Profile,
-    Props: {},
-    useLayout: false,
-    isPrivate: true,
-  },
+
   {
     route: '/registro/confirmacion/:token',
     component: Confirmation,
@@ -96,6 +91,20 @@ const routes = [
     Props: {},
     useLayout: false,
     isPrivate: false,
+  },
+  {
+    route: '/profile/password',
+    component: ChangePassword,
+    Props: {},
+    useLayout: false,
+    isPrivate: true,
+  },
+  {
+    route: '/profile',
+    component: Profile,
+    Props: {},
+    useLayout: false,
+    isPrivate: true,
   },
   {
     route: '/login',
