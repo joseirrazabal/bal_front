@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { useLocation, useParams, Redirect, Link as RouterLink } from 'react-router-dom'
+import { useLazyQuery, gql, useQuery, useMutation, useApolloClient } from '@apollo/client'
+import { useForm, Controller } from 'react-hook-form'
+import get from 'lodash/get'
 
-import { makeStyles } from '@material-ui/core/styles';
-/* import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button'; */
+import Loading from 'src/components/Loading'
+import Header from 'src/components/Header'
+import Footer from 'src/components/Footer'
+import Typography from '../../components/Typography'
+import SimpleImage from '../../components/SimpleImage'
 
-import Header from 'src/components/Header';
-import Footer from 'src/components/Footer';
-import Typography from '../../components/Typography';
-import SimpleImage from '../../components/SimpleImage';
+import NotiImage from '../../assets/campana.svg'
 
-import NotiImage from '../../assets/campana.svg';
+import NOTIFICACION_LIST from 'src/gql/notificacion/list'
+import NOTIFICACION_CHANGE_VISTO from 'src/gql/notificacion/changeVisto'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -87,63 +92,77 @@ const useStyles = makeStyles(theme => ({
 
     '& .image': {
       //width: 100,,
-      paddingRight: 40
+      paddingRight: 40,
     },
   },
 }))
 
 const Notifications = () => {
-
   const classes = useStyles()
+
+  const [list, setList] = useState([])
+
+  const { data: dataList, loading: loading } = useQuery(NOTIFICACION_LIST, {
+    ssr: false,
+    fetchPolicy: 'network-only',
+  })
+
+  // const [addTodo] = useMutation(ADD_TODO, {
+  const [changeVisto, { data: dataUpdate, loading: loadingUpdate, error: errorUpdate }] =
+    useMutation(NOTIFICACION_CHANGE_VISTO)
+
+  useEffect(() => {
+    if (get(dataList, 'notificacionList')) {
+      setList(get(dataList, 'notificacionList'))
+    }
+  }, [dataList])
+
+  const onHandleVisto = (id, visto) => {
+    changeVisto({
+      variables: { id, visto },
+      update: (store, { data }) => {
+        const list = store.readQuery({ query: NOTIFICACION_LIST })
+        store.writeQuery({
+          query: NOTIFICACION_LIST,
+          data: {
+            notificacionList: [
+              ...get(list, 'notificacionList', []),
+              get(data, 'notificacionChangeVisto'),
+            ],
+          },
+        })
+      },
+    })
+  }
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <React.Fragment>
       <Header />
       <div className={classes.contentFull}>
-          <div className={classes.contentProfile}>
-            <Typography>Notificaciones</Typography>
-          </div>
-          <div className={`${classes.contentNoti} new`}>
-            <div className="image">
-              <SimpleImage height={60} image={NotiImage} />
+        <div className={classes.contentProfile}>
+          <Typography>Notificaciones</Typography>
+        </div>
+        {list.map(item => {
+          return (
+            <div
+              className={`${classes.contentNoti} ${item.visto ? 'old' : 'new'}`}
+              onClick={() => {
+                // if (!item.visto) {
+                onHandleVisto(item.id, !item.visto)
+                // }
+              }}
+            >
+              <div className='image'>
+                <SimpleImage height={60} image={NotiImage} />
+              </div>
+              <div className='content'>{item.descripcion}</div>
             </div>
-            <div className="content">
-              Califica tu experiencia con nostros
-            </div>
-          </div>
-          <div className={`${classes.contentNoti} old`}>
-            <div className="image">
-              <SimpleImage height={60} image={NotiImage} />
-            </div>
-            <div className="content">
-              Promo Imperdible
-            </div>
-          </div>
-          <div className={`${classes.contentNoti} old`}>
-            <div className="image">
-              <SimpleImage height={60} image={NotiImage} />
-            </div>
-            <div className="content">
-              Promo Imperdible
-            </div>
-          </div>
-          <div className={`${classes.contentNoti} old`}>
-            <div className="image">
-              <SimpleImage height={60} image={NotiImage} />
-            </div>
-            <div className="content">
-              Promo Imperdible
-            </div>
-          </div>
-          {/* <div className={classes.contentProfile}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Button variant='contained' size='small' disabled color='secondary'>
-                  Guardar Cambios
-                </Button>
-              </Grid>
-            </Grid>
-          </div> */}
+          )
+        })}
       </div>
       <Footer />
     </React.Fragment>

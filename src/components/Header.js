@@ -270,23 +270,29 @@ const Header = () => {
                 </Typography>
               </Link>
             </li>
-            <li>
-              <Link to={`/notifications`}>
-                <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Notification} />
-                <Badge
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  color='primary'
-                  badgeContent={10}
-                >
-                  <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
-                    Notificaciones
-                  </Typography>
-                </Badge>
-              </Link>
-            </li>
+            {user && (
+              <li>
+                <Link to={`/notifications`}>
+                  <SimpleImage
+                    alt='Alquilar Balneario Costa Atlantica'
+                    height={28}
+                    image={Notification}
+                  />
+                  <Badge
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    color='primary'
+                    badgeContent={10}
+                  >
+                    <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                      Notificaciones
+                    </Typography>
+                  </Badge>
+                </Link>
+              </li>
+            )}
             <li>
               <a className='flex row' onClick={handleClickOpen}>
                 <SimpleImage alt='Alquilar Balneario Costa Atlantica' height={28} image={Accepted} />

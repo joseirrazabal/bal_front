@@ -49,13 +49,6 @@ const routes = [
     useLayout: false,
     isPrivate: false,
   },
-  {
-    route: '/notifications',
-    component: Notifications,
-    Props: {},
-    useLayout: false,
-    isPrivate: false,
-  },
 
   {
     route: '/registro/confirmacion/:token',
@@ -95,6 +88,13 @@ const routes = [
   {
     route: '/profile/password',
     component: ChangePassword,
+    Props: {},
+    useLayout: false,
+    isPrivate: true,
+  },
+  {
+    route: '/notifications',
+    component: Notifications,
     Props: {},
     useLayout: false,
     isPrivate: true,
