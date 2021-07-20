@@ -4,6 +4,7 @@ import { useLocation, useParams, Redirect, Link as RouterLink } from 'react-rout
 import { useLazyQuery, gql, useQuery, useMutation, useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import get from 'lodash/get'
+import { useHistory } from 'react-router-dom'
 
 import Loading from 'src/components/Loading'
 import Header from 'src/components/Header'
@@ -99,6 +100,7 @@ const useStyles = makeStyles(theme => ({
 
 const Notifications = () => {
   const classes = useStyles()
+  const history = useHistory()
 
   const [list, setList] = useState([])
 
@@ -149,8 +151,12 @@ const Notifications = () => {
         {list.map(item => {
           return (
             <div
+              key={item.id}
               className={`${classes.contentNoti} ${item.visto ? 'old' : 'new'}`}
               onClick={() => {
+                if (get(item, 'data.calificacion')) {
+                  history.push(`/calificacion/${get(item, 'data.articuloId')}`)
+                }
                 // if (!item.visto) {
                 onHandleVisto(item.id, !item.visto)
                 // }

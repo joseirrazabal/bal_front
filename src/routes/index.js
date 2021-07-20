@@ -10,8 +10,8 @@ import Logout from 'src/containers/Login/Logout'
 import ListBalnearios from 'src/containers/ListBalnearios/ListBalnearios'
 import DetalleBalneario from 'src/containers/DetalleBalneario/DetalleBalneario'
 import CheckoutBalnearios from 'src/containers/CheckoutBalnearios/CheckoutBalnearios'
-import Qualify from 'src/containers/Qualify/Qualify'
 import Notifications from 'src/containers/Profile/Notifications'
+import Calificacion from 'src/containers/Calificacion/Calificacion'
 
 const routes = [
   {
@@ -43,13 +43,12 @@ const routes = [
     isPrivate: false,
   },
   {
-    route: '/qualify',
-    component: Qualify,
+    route: '/calificacion/:token',
+    component: Calificacion,
     Props: {},
     useLayout: false,
-    isPrivate: false,
+    isPrivate: true,
   },
-
   {
     route: '/registro/confirmacion/:token',
     component: Confirmation,
