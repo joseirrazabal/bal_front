@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
-import esLocale from "date-fns/locale/es"
+import esLocale from 'date-fns/locale/es'
 import DateFnsUtils from '@date-io/date-fns'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
       background: 'white',
 
       '&::before': {
-        borderBottom: 'none'
+        borderBottom: 'none',
       },
 
       '@media (max-width: 680px)': {
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         fontSize: 12,
         width: '100%',
-        border: 'none'
+        border: 'none',
       },
     },
 
@@ -70,13 +70,19 @@ const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('YYYY-MM-DD
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
       <DatePicker
-        disableToolbar
-        disablePast
         className={classes.calendar}
-        autoOk
         variant='inline'
         format='dd/MM/yyyy'
         value={selectedDate}
+        disableToolbar
+        disablePast
+        autoOk
+        onError={e => {
+          // si hay error limpio la fecha
+          if (e) {
+            handleDateChange(null)
+          }
+        }}
         //InputAdornmentProps={{ position: 'start' }}
         onChange={date => {
           // setValue(name, dayjs(date).format('DD-MM-YYYY'))
@@ -90,4 +96,3 @@ const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('YYYY-MM-DD
 }
 
 export default Calendar
-
