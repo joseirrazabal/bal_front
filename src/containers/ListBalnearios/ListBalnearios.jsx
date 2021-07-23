@@ -303,7 +303,7 @@ const ListBalnearios = () => {
   }, [ciudades])
 
   const handleChange = event => {
-    setState({ ...state, [event.target.value]: event.target.checked })
+    setState({ ...state, [event.target.value]: { selected: event.target.checked } })
   }
 
   const onSubmitSearch = data => {
