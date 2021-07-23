@@ -586,12 +586,11 @@ const DetalleBalneario = () => {
                             </Typography>
                           </div>
                         )}
-                      <Button
-                        /* disabled={
+                      {/* <Button
+                        disabled={
                           !get(dataPrecio, 'precioGetFront.precio', 0) ||
                           !get(dataPrecio, 'precioGetFront.stock', 0)
-                        } */
-                        disabled={true}
+                        }
                         height={40}
                         width={200}
                         onClick={() =>
@@ -601,7 +600,7 @@ const DetalleBalneario = () => {
                         }
                       >
                         ALQUILAR X {cantidadDias} DIA/S
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                   <div className={classes.gridColumn} style={{ marginTop: 15 }}>
