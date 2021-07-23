@@ -222,4 +222,4 @@ const MessageGeneric = ({
   )
 }
 
-export default React.memo(MessageGeneric)
+export default MessageGeneric

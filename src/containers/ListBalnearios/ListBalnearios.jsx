@@ -251,7 +251,7 @@ const ListBalnearios = () => {
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
-          if (state[item.ciudadSlug]) {
+          if (state[item.ciudadSlug].selected) {
             return true
           }
           return false
@@ -264,7 +264,7 @@ const ListBalnearios = () => {
       let algoSeleccionado = false
 
       for (const item in state) {
-        if (state[item]) {
+        if (state[item].selected) {
           algoSeleccionado = true
         }
       }
@@ -285,11 +285,16 @@ const ListBalnearios = () => {
       const check = {}
 
       ciudades.map(item => {
-        check[item.slug] = false
+        check[item.slug] = { selected: false, item }
       })
 
+      // selecciono la ciudad o la ciudad del balnario
       if (ciudad) {
-        check[ciudad] = true
+        if (check[ciudad].item.ciudad) {
+          check[check[ciudad].item.ciudad].selected = true
+        } else {
+          check[ciudad].selected = true
+        }
       }
 
       setLoadingCheck(false)
@@ -363,7 +368,7 @@ const ListBalnearios = () => {
                           <FormControlLabel
                             control={
                               <Checkbox
-                                checked={state[item.slug]}
+                                checked={state[item.slug].selected}
                                 onChange={handleChange}
                                 name='checkedA'
                                 color='secondary'
@@ -471,7 +476,7 @@ const ListBalnearios = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state[item.slug]}
+                      checked={state[item.slug].selected}
                       onChange={handleChange}
                       name='checkedA'
                       color='secondary'

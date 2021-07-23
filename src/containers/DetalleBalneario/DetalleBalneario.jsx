@@ -593,14 +593,19 @@ const DetalleBalneario = () => {
                         )}
                       <Button
                         disable={false}
-                        // disabled={
-                        //   !get(dataPrecio, 'precioGetFront.precio', 0) ||
-                        //   !get(dataPrecio, 'precioGetFront.stock', 0)
-                        // }
+                        disabled={
+                          !get(dataPrecio, 'precioGetFront.precio', 0) ||
+                          !get(dataPrecio, 'precioGetFront.stock', 0)
+                        }
                         height={40}
                         width={200}
                         onClick={() =>
-                          history.push(`/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(dataPrecio,'precioGetFront.categoriaSlug')}/${desde}/${hasta}`)
+                          history.push(
+                            `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
+                              dataPrecio,
+                              'precioGetFront.categoriaSlug'
+                            )}/${desde}/${hasta}`
+                          )
                         }
                       >
                         ALQUILAR X {get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S
