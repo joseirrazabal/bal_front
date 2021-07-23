@@ -587,10 +587,11 @@ const DetalleBalneario = () => {
                           </div>
                         )}
                       <Button
-                        disabled={
+                        /* disabled={
                           !get(dataPrecio, 'precioGetFront.precio', 0) ||
                           !get(dataPrecio, 'precioGetFront.stock', 0)
-                        }
+                        } */
+                        disabled={true}
                         height={40}
                         width={200}
                         onClick={() =>
