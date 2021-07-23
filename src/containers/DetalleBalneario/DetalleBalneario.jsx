@@ -11,6 +11,7 @@ import NoSsr from '@material-ui/core/NoSsr'
 import Header from 'src/components/Header'
 import Footer from 'src/components/Footer'
 import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
+import PlanoGridBig from 'copo/Atoms/PlanoGrid/PlanoGridBig'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
 import Button from '../../components/Button'
@@ -711,13 +712,16 @@ const DetalleBalneario = () => {
           </FullScreenDialog>
 
           <FullScreenDialog
-            fullScreen={false}
+            fullScreen={true}
             title='Plano Balneario'
             open={open}
             handleClose={handleClose}
           >
-            <div style={{ margin: '0 auto', maxWidth: 850, width: '100%' }}>
+            {/* <div style={{ margin: '0 auto', maxWidth: 850, width: '100%' }}>
               <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
+            </div> */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+             <PlanoGridBig />
             </div>
           </FullScreenDialog>
         </div>
