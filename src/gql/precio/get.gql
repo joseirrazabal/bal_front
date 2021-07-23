@@ -19,5 +19,6 @@ query precioGetFront($balneario: String, $categoria: String, $desde: String, $ha
     tagImagen
     imagen
     dias
+    stock
   }
 }
