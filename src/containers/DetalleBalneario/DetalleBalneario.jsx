@@ -345,10 +345,13 @@ const DetalleBalneario = () => {
     fetchPolicy: 'no-cache',
   })
 
-  const [getPrecio, { data: dataPrecio, loading: loadingPrecio }] = useLazyQuery(PRECIO_GET, {
-    variables: { balneario: get(balneario, 'slug'), categoria: categoriaSelected, desde, hasta },
-    fetchPolicy: 'no-cache',
-  })
+  const [getPrecio, { data: dataPrecio, loading: loadingPrecio, error: errorPrecio }] = useLazyQuery(
+    PRECIO_GET,
+    {
+      variables: { balneario: get(balneario, 'slug'), categoria: categoriaSelected, desde, hasta },
+      fetchPolicy: 'no-cache',
+    }
+  )
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -544,6 +547,20 @@ const DetalleBalneario = () => {
                   />
                 </div>
               </div>
+
+              {errorPrecio && (
+                <div className={classes.detalleBottom}>
+                  <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
+                    <div>
+                      <div>
+                        <Typography fontSize={12} fontWeight={400} variant='p'>
+                          Error: {errorPrecio.message}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {get(dataPrecio, 'precioGetFront.precio') && (
                 <div className={classes.detalleBottom}>

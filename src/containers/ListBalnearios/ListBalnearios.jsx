@@ -212,9 +212,9 @@ const ListBalnearios = () => {
   const [items, setItems] = useState([])
   const [tipos, setTipos] = useState([])
 
-  const { data: dataCiudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
+  const { data: dataCiudades, loading: loadingCiudad, error: errorCiudad } = useQuery(SEARCH_LIST)
 
-  const [getBalnearioSearch, { data, loading }] = useLazyQuery(BALNEARIO_LIST_SEARCH, {
+  const [getBalnearioSearch, { data, loading, error: errorList }] = useLazyQuery(BALNEARIO_LIST_SEARCH, {
     variables: { desde, hasta },
     fetchPolicy: 'no-cache',
   })
@@ -408,6 +408,21 @@ const ListBalnearios = () => {
                     })}
                   </Tabs>
                 </AppBar>
+
+                {errorList && (
+                  <div className={classes.detalleBottom}>
+                    <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
+                      <div>
+                        <div>
+                          <Typography fontSize={12} fontWeight={400} variant='p'>
+                            Error: {errorList.message}
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {tipos.map((tipo, i) => {
                   return (
                     <TabPanel key={i} value={value} index={i}>
