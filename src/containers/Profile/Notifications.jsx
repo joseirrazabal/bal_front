@@ -155,11 +155,11 @@ const Notifications = () => {
               className={`${classes.contentNoti} ${item.visto ? 'old' : 'new'}`}
               onClick={() => {
                 if (get(item, 'data.calificacion')) {
-                  history.push(`/calificacion/${get(item, 'data.articuloId')}`)
+                  history.push(`/calificacion/${get(item, 'data.token')}`)
                 }
-                // if (!item.visto) {
-                onHandleVisto(item.id, !item.visto)
-                // }
+                if (!item.visto) {
+                  onHandleVisto(item.id, !item.visto)
+                }
               }}
             >
               <div className='image'>

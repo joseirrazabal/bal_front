@@ -544,7 +544,8 @@ const CheckoutBalnearios = ({ theme }) => {
         data={get(precio, 'balneario')}
         direccion={get(precio, 'direccion')}
         ciudad={get(precio, 'ciudad')}
-        precio={`Alquilaste una ${get(precio, 'tipo')}`}
+        // precio={`Alquilaste una ${get(precio, 'tipo')}`}
+        precio={parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias'))}
         pagoStatus={get(dataReserva, 'reservaAdd.pago.status')}
         pagoMessage={get(dataReserva, 'reservaAdd.pago.message')}
       />

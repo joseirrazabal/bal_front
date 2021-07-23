@@ -132,7 +132,7 @@ const Message = ({ pagoStatus, pagoMessage }) => {
 
 const MessageGeneric = ({
   isError = false,
-  precio = 450,
+  precio = false,
   loading = false,
   data,
   ciudad,
