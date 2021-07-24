@@ -115,7 +115,11 @@ const Qualify = () => {
   const [calificacionAdd, { data: dataAdd, loading: loadingAdd, error: errorAdd }] =
     useMutation(CALIFICACION_ADD)
 
-  const { data: data, loading: loading } = useQuery(CALIFICACION_GET, {
+  const {
+    data: data,
+    loading: loading,
+    error: errorGet,
+  } = useQuery(CALIFICACION_GET, {
     variables: { token },
     ssr: false,
     fetchPolicy: 'network-only',
@@ -169,11 +173,11 @@ const Qualify = () => {
     )
   }
 
-  if (!get(info, 'id')) {
+  if (errorGet) {
     return (
       <div className={classes.contentFull}>
         <div className={classes.centerMode}>
-          <div>La encuesta ya fue respondida</div>
+          <div>{errorGet.message}</div>
         </div>
       </div>
     )
