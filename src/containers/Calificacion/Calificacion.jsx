@@ -178,6 +178,17 @@ const Qualify = () => {
       <div className={classes.contentFull}>
         <div className={classes.centerMode}>
           <div>{errorGet.message}</div>
+          <Button
+            variant='link'
+            fullWidth
+            size='big'
+            color='secondary'
+            disabled={loadingAdd}
+            component={RouterLink}
+            to='/home'
+          >
+            Ir a la home
+          </Button>
         </div>
       </div>
     )
