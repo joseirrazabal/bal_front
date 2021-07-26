@@ -13,6 +13,7 @@ import Typography from '../../components/Typography'
 import SimpleImage from '../../components/SimpleImage'
 
 import NotiImage from '../../assets/campana.svg'
+import NotNotification from '../../assets/icon-notifications-off.svg'
 
 import NOTIFICACION_LIST from 'src/gql/notificacion/list'
 import NOTIFICACION_CHANGE_VISTO from 'src/gql/notificacion/changeVisto'
@@ -148,6 +149,7 @@ const Notifications = () => {
         <div className={classes.contentProfile}>
           <Typography>Notificaciones</Typography>
         </div>
+        {/* <SimpleImage height={200} image={NotNotification} /> */}
         {list.map(item => {
           return (
             <div

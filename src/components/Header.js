@@ -135,7 +135,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Header = () => {
+const Header = ( {notification = false} ) => {
   const apolloClient = useApolloClient()
   const history = useHistory()
   const classes = useStyles()
@@ -278,6 +278,7 @@ const Header = () => {
                     height={28}
                     image={Notification}
                   />
+                  {notification ? 
                   <Badge
                     anchorOrigin={{
                       vertical: 'top',
@@ -289,7 +290,11 @@ const Header = () => {
                     <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
                       Notificaciones
                     </Typography>
-                  </Badge>
+                  </Badge> :
+                  <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
+                    Notificaciones
+                  </Typography>
+                  }
                 </Link>
               </li>
             )}

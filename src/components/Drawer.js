@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SwipeableTemporaryDrawer({children}) {
+export default function SwipeableTemporaryDrawer({children, notification = false}) {
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -39,9 +39,12 @@ export default function SwipeableTemporaryDrawer({children}) {
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>
-            <Badge color="primary" badgeContent={10}>
+            {notification ?
+              <Badge color="primary" badgeContent={10}>
+                <MenuIcon />
+              </Badge> :
               <MenuIcon />
-            </Badge>
+            }
           </Button>
           <SwipeableDrawer
             anchor={anchor}
