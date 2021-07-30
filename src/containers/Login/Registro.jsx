@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
 import loginTab from './tab'
@@ -48,8 +46,8 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 }))
 
 const Register = () => {
@@ -86,96 +84,100 @@ const Register = () => {
   }, [data, error])
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.centerMode}>
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
-            <div className={classes.contentProfile}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Nombre'
-                    // autoComplete='off'
-                    fullWidth
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('name', { required: 'Campo requerido' })}
-                  />
-                  {errors.name && <span role='alert'>{errors.name.message}</span>}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Email'
-                    // autoComplete='off'
-                    fullWidth
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('email', {
-                      required: 'Campo requerido',
-                      pattern: {
-                        value: /\S+@\S+\.\S+/,
-                        message: 'Valor invalido',
-                      },
-                    })}
-                  />
-                  {errors.email && <span role='alert'>{errors.email.message}</span>}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Password'
-                    // autoComplete='off'
-                    inputProps={{
-                      autoComplete: 'new-password',
-                    }}
-                    fullWidth
-                    type='password'
-                    id='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('password', { required: 'Campo requerido' })}
-                  />
-                  {errors.password && <p>{errors.password.message}</p>}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Repetir password'
-                    fullWidth
-                    type='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('password_repeat', {
-                      validate: value => value === password || 'las contraseñas no coinciden',
-                    })}
-                  />
-                  {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    type='submit'
-                    disabled={loading}
-                  >
-                    Registrar
-                  </Button>
-                </Grid>
-                {info && <div variant="span" className={classes.envioCorrecto}><p>{info}</p></div>}
-                {infoError && <div variant="span" className={classes.envioCorrecto}><p>{infoError}</p></div>}
+    <div className={classes.contentFull}>
+      <div className={classes.centerMode}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
+          <div className={classes.contentProfile}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label='Nombre'
+                  // autoComplete='off'
+                  fullWidth
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('name', { required: 'Campo requerido' })}
+                />
+                {errors.name && <span role='alert'>{errors.name.message}</span>}
               </Grid>
-            </div>
-          </form>
-        </div>
+              <Grid item xs={12}>
+                <TextField
+                  label='Email'
+                  // autoComplete='off'
+                  fullWidth
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('email', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: 'Valor invalido',
+                    },
+                  })}
+                />
+                {errors.email && <span role='alert'>{errors.email.message}</span>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label='Password'
+                  // autoComplete='off'
+                  inputProps={{
+                    autoComplete: 'new-password',
+                  }}
+                  fullWidth
+                  type='password'
+                  id='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('password', { required: 'Campo requerido' })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label='Repetir password'
+                  fullWidth
+                  type='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('password_repeat', {
+                    validate: value => value === password || 'las contraseñas no coinciden',
+                  })}
+                />
+                {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  type='submit'
+                  disabled={loading}
+                >
+                  Registrar
+                </Button>
+              </Grid>
+              {info && (
+                <div variant='span' className={classes.envioCorrecto}>
+                  <p>{info}</p>
+                </div>
+              )}
+              {infoError && (
+                <div variant='span' className={classes.envioCorrecto}>
+                  <p>{infoError}</p>
+                </div>
+              )}
+            </Grid>
+          </div>
+        </form>
       </div>
-      <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

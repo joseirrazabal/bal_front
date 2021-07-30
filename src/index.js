@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import get from 'lodash/get'
 import { Helmet } from 'react-helmet-async'
+import { SnackbarProvider } from 'notistack'
 
-import Route from 'core/routes/limpio'
+import Layout from './components/Layout/Layout'
+import Notifications from './notifications'
+import Route from 'core/routes/mainRoute'
 import routes from './routes'
 import theme from './theme'
 import './i18n'
@@ -34,7 +37,18 @@ const App = () => {
       />
       <link rel='manifest' href='/manifest.json' />
     </Helmet>,
-    <Route routes={routes} key={2} />,
+    <SnackbarProvider
+      key={2}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      maxSnack={3}
+      autoHideDuration={3500}
+    >
+      <Notifications />
+      <Route routes={routes} layout={Layout} />
+    </SnackbarProvider>,
   ]
 }
 

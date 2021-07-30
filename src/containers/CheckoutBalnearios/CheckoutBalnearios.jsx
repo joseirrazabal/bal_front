@@ -11,8 +11,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import NoSsr from '@material-ui/core/NoSsr'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import ButtonAcceptComponent from '../../components/ButtonAccept'
 import MessageGeneric from '../../components/MessageGeneric'
 import ItemSelected from '../../components/ItemSelected'
@@ -554,7 +552,6 @@ const CheckoutBalnearios = ({ theme }) => {
 
   return (
     <div className={classes.contentFull}>
-      <Header />
       <div className={classes.contentBanners}>
         <div className={classes.container}>
           <Typography
@@ -878,7 +875,6 @@ const CheckoutBalnearios = ({ theme }) => {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
       <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
         <Term />

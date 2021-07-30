@@ -7,8 +7,6 @@ import get from 'lodash/get'
 import { useHistory } from 'react-router-dom'
 
 import Loading from 'src/components/Loading'
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 import SimpleImage from '../../components/SimpleImage'
 
@@ -137,43 +135,39 @@ const Notifications = () => {
       },
     })
   }
-
+  
   if (loading) {
     return <Loading />
   }
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.contentProfile}>
-          <Typography>Notificaciones</Typography>
-        </div>
-        {/* <SimpleImage height={200} image={NotNotification} /> */}
-        {list.map(item => {
-          return (
-            <div
-              key={item.id}
-              className={`${classes.contentNoti} ${item.visto ? 'old' : 'new'}`}
-              onClick={() => {
-                if (get(item, 'data.calificacion')) {
-                  history.push(`/calificacion/${get(item, 'data.token')}`)
-                }
-                if (!item.visto) {
-                  onHandleVisto(item.id, !item.visto)
-                }
-              }}
-            >
-              <div className='image'>
-                <SimpleImage height={60} image={NotiImage} />
-              </div>
-              <div className='content'>{item.descripcion}</div>
-            </div>
-          )
-        })}
+    <div className={classes.contentFull}>
+      <div className={classes.contentProfile}>
+        <Typography>Notificaciones</Typography>
       </div>
-      <Footer />
-    </React.Fragment>
+      {/* <SimpleImage height={200} image={NotNotification} /> */}
+      {list.map(item => {
+        return (
+          <div
+            key={item.id}
+            className={`${classes.contentNoti} ${item.visto ? 'old' : 'new'}`}
+            onClick={() => {
+              if (get(item, 'data.calificacion')) {
+                history.push(`/calificacion/${get(item, 'data.token')}`)
+              }
+              // if (!item.visto) {
+                onHandleVisto(item.id, !item.visto)
+              // }
+            }}
+          >
+            <div className='image'>
+              <SimpleImage height={60} image={NotiImage} />
+            </div>
+            <div className='content'>{item.descripcion}</div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 

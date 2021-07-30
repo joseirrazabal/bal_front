@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
 import loginTab from './tab'
@@ -92,94 +90,86 @@ const Password = () => {
 
   if (user) {
     return (
-      <React.Fragment>
-        <Header />
-        <div className={classes.contentFull}>
-          <div className={classes.centerMode}>
-            <div>Debe hacer logout para reestablecer la contraseña</div>
-          </div>
+      <div className={classes.contentFull}>
+        <div className={classes.centerMode}>
+          <div>Debe hacer logout para reestablecer la contraseña</div>
         </div>
-        <Footer />
-      </React.Fragment>
+      </div>
     )
   }
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.centerMode}>
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
-            <div className={classes.contentProfile}>
-              <Grid container spacing={2}>
-                {user && <div>Cambiar password de {user.name}</div>}
-                <Grid item xs={12}>
-                  <TextField
-                    label='Password'
-                    // autoComplete='off'
-                    inputProps={{
-                      autoComplete: 'new-password',
-                    }}
-                    fullWidth
-                    type='password'
-                    id='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('password', { required: 'Campo requerido' })}
-                  />
-                  {errors.password && <p>{errors.password.message}</p>}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Repetir password'
-                    fullWidth
-                    type='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('password_repeat', {
-                      validate: value => value === password || 'The passwords do not match',
-                    })}
-                  />
-                  {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    disabled={loading}
-                    component={RouterLink}
-                    to='/'
-                  >
-                    Cancelar
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    type='submit'
-                    disabled={loading}
-                  >
-                    Cambiar
-                  </Button>
-                </Grid>
-                {info}
+    <div className={classes.contentFull}>
+      <div className={classes.centerMode}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
+          <div className={classes.contentProfile}>
+            <Grid container spacing={2}>
+              {user && <div>Cambiar password de {user.name}</div>}
+              <Grid item xs={12}>
+                <TextField
+                  label='Password'
+                  // autoComplete='off'
+                  inputProps={{
+                    autoComplete: 'new-password',
+                  }}
+                  fullWidth
+                  type='password'
+                  id='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('password', { required: 'Campo requerido' })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
               </Grid>
-            </div>
-          </form>
-        </div>
+              <Grid item xs={12}>
+                <TextField
+                  label='Repetir password'
+                  fullWidth
+                  type='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('password_repeat', {
+                    validate: value => value === password || 'The passwords do not match',
+                  })}
+                />
+                {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  disabled={loading}
+                  component={RouterLink}
+                  to='/'
+                >
+                  Cancelar
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  type='submit'
+                  disabled={loading}
+                >
+                  Cambiar
+                </Button>
+              </Grid>
+              {info}
+            </Grid>
+          </div>
+        </form>
       </div>
-      <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

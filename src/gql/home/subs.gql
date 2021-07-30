@@ -1,0 +1,7 @@
+subscription onCountIncr {
+  count {
+    id
+    userId
+    precio
+  }
+}

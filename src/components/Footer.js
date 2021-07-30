@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+
 import SimpleImage from './SimpleImage'
 import Typography from './Typography'
-import FullScreenDialog from './Dialog'
 
 import Facebook from '../assets/icon-facebook.svg'
 import Instagram from '../assets/icon-instagram.svg'
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.secondary.dark,
     position: 'relative',
     zIndex: 2,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   content: {
     padding: '40px 20px',
@@ -34,18 +34,18 @@ const useStyles = makeStyles(theme => ({
       listStyle: 'none',
 
       '& a': {
-        cursor: 'pointer'
+        cursor: 'pointer',
       },
 
       '& li': {
         display: 'flex',
         alignItems: 'center',
-        margin: 5
-      }
+        margin: 5,
+      },
     },
 
     '@media (max-width: 680px)': {
-     flexDirection: 'column'
+      flexDirection: 'column',
     },
   },
   itemFooter: {
@@ -54,64 +54,76 @@ const useStyles = makeStyles(theme => ({
     /* '& p': {
       paddingLeft: 10
     } */
-  }
+  },
 }))
 
-const Footer = () => {
-
+const Footer = ({ setContentModal = () => {} }) => {
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
-  const [open2, setOpen2] = useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-  const handleClickOpen2 = () => {
-    setOpen2(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const handleClose2 = () => {
-    setOpen2(false)
-  }
 
   return (
     <div className={classes.footer}>
       <div className={classes.content}>
         <div>
-          <Typography variant="h4" color="white">Info de contacto:</Typography>
-          <ul style={{flexDirection: 'column'}}>
-            <a alt="Alamar - Balnearios Costa Atlantica">
-              <li className={classes.itemFooter}>{/* <SimpleImage image={Phone} height={20} /> */} <Typography variant="p" color="white" fontSize={12}>alamarargentina@gmail.com</Typography></li>
+          <Typography variant='h4' color='white'>
+            Info de contacto:
+          </Typography>
+          <ul style={{ flexDirection: 'column' }}>
+            <a alt='Alamar - Balnearios Costa Atlantica'>
+              <li className={classes.itemFooter}>
+                {/* <SimpleImage image={Phone} height={20} /> */}{' '}
+                <Typography variant='p' color='white' fontSize={12}>
+                  alamarargentina@gmail.com
+                </Typography>
+              </li>
             </a>
-           {/*  <a>
+            {/*  <a>
               <li className={classes.itemFooter}><SimpleImage image={Location} height={25} /> <Typography variant="p" color="white" fontSize={12}>Direccion de ejmplo 123 - Buenos Aires</Typography></li>
             </a> */}
           </ul>
         </div>
         <div>
-          <Typography variant="h4" color="white">Nos podes encontrar en:</Typography>
+          <Typography variant='h4' color='white'>
+            Nos podes encontrar en:
+          </Typography>
           <ul>
-            <a href="https://www.facebook.com/alamar.alamar.94064" target="_blank"><li className={classes.itemFooter}><SimpleImage image={Facebook} height={25} /></li></a>
-            <a href="https://www.instagram.com/alamar_ar/" target="_blank"><li className={classes.itemFooter}><SimpleImage image={Instagram} height={25} /></li></a>
+            <a href='https://www.facebook.com/alamar.alamar.94064' target='_blank'>
+              <li className={classes.itemFooter}>
+                <SimpleImage image={Facebook} height={25} />
+              </li>
+            </a>
+            <a href='https://www.instagram.com/alamar_ar/' target='_blank'>
+              <li className={classes.itemFooter}>
+                <SimpleImage image={Instagram} height={25} />
+              </li>
+            </a>
           </ul>
         </div>
         <div>
-          <Typography variant="h4" color="white">¿Dudas?</Typography>
-          <ul style={{flexDirection: 'column'}}>
-            <li onClick={handleClickOpen2}><Typography variant="p" color="white" fontSize={12}>Preguntas Frecuentes</Typography></li>
-            <li onClick={handleClickOpen}><Typography variant="p" color="white" fontSize={12}>Terminos y condiciones</Typography></li>
+          <Typography variant='h4' color='white'>
+            ¿Dudas?
+          </Typography>
+          <ul style={{ flexDirection: 'column' }}>
+            <li
+              onClick={() => {
+                setContentModal(<Faqs />)
+              }}
+            >
+              <Typography variant='p' color='white' fontSize={12}>
+                Preguntas Frecuentes
+              </Typography>
+            </li>
+            <li
+              onClick={() => {
+                setContentModal(<Term />)
+              }}
+            >
+              <Typography variant='p' color='white' fontSize={12}>
+                Terminos y condiciones
+              </Typography>
+            </li>
           </ul>
         </div>
       </div>
-      <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
-        <Term />
-      </FullScreenDialog>
-      <FullScreenDialog title='Preguntas Frecuentes' open={open2} handleClose={handleClose2}>
-        <Faqs />
-      </FullScreenDialog>
     </div>
   )
 }

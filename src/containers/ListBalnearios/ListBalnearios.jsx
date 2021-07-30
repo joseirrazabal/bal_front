@@ -14,9 +14,6 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
-
 import CardBalList from 'copo/Atoms/Cards/CardList/CardList'
 
 import Search from '../../components/Search'
@@ -325,7 +322,6 @@ const ListBalnearios = () => {
 
   return (
     <div className={classes.contentFull}>
-      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
@@ -506,7 +502,6 @@ const ListBalnearios = () => {
           {/* <Divider /> */}
         </ul>
       </FullScreenDialog>
-      <Footer />
     </div>
   )
 }

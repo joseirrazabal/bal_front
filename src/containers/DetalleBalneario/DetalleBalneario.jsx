@@ -8,8 +8,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 import NoSsr from '@material-ui/core/NoSsr'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import PlanoGridBig from 'copo/Atoms/PlanoGrid/PlanoGridBig'
 import Search from '../../components/Search'
@@ -438,7 +436,6 @@ const DetalleBalneario = () => {
 
   return (
     <div className={classes.contentFull}>
-      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.container}>
           <Search
@@ -743,12 +740,11 @@ const DetalleBalneario = () => {
               <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
             </div> */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-             <PlanoGridBig />
+              <PlanoGridBig />
             </div>
           </FullScreenDialog>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

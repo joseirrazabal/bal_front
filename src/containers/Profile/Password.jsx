@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
 import { signIn } from 'kit/login/utils'
@@ -91,96 +89,92 @@ const Password = () => {
   }
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.centerMode}>
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
-            <div className={classes.contentProfile}>
-              <Grid container spacing={2}>
-                {user && <div>Cambiar password de {user.name}</div>}
-                <Grid item xs={12}>
-                  <TextField
-                    label='Contraseña actual'
-                    // autoComplete='off'
-                    inputProps={{
-                      autoComplete: 'old_password',
-                    }}
-                    fullWidth
-                    type='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('old_password', { required: 'Campo requerido' })}
-                  />
-                  {errors.old_password && <p>{errors.old_password.message}</p>}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label='nueva contraseña'
-                    // autoComplete='off'
-                    inputProps={{
-                      autoComplete: 'new-password',
-                    }}
-                    fullWidth
-                    type='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('password', { required: 'Campo requerido' })}
-                  />
-                  {errors.password && <p>{errors.password.message}</p>}
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Repetir contraseña'
-                    fullWidth
-                    type='password'
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('password_repeat', {
-                      validate: value => value === password || 'Las contraseñas deben ser iguales',
-                    })}
-                  />
-                  {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    disabled={loading}
-                    component={RouterLink}
-                    to='/profile'
-                  >
-                    Cancelar
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    type='submit'
-                    disabled={loading}
-                  >
-                    Cambiar
-                  </Button>
-                </Grid>
-                {info}
+    <div className={classes.contentFull}>
+      <div className={classes.centerMode}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
+          <div className={classes.contentProfile}>
+            <Grid container spacing={2}>
+              {user && <div>Cambiar password de {user.name}</div>}
+              <Grid item xs={12}>
+                <TextField
+                  label='Contraseña actual'
+                  // autoComplete='off'
+                  inputProps={{
+                    autoComplete: 'old_password',
+                  }}
+                  fullWidth
+                  type='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('old_password', { required: 'Campo requerido' })}
+                />
+                {errors.old_password && <p>{errors.old_password.message}</p>}
               </Grid>
-            </div>
-          </form>
-        </div>
+              <Grid item xs={12}>
+                <TextField
+                  label='nueva contraseña'
+                  // autoComplete='off'
+                  inputProps={{
+                    autoComplete: 'new-password',
+                  }}
+                  fullWidth
+                  type='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('password', { required: 'Campo requerido' })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label='Repetir contraseña'
+                  fullWidth
+                  type='password'
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('password_repeat', {
+                    validate: value => value === password || 'Las contraseñas deben ser iguales',
+                  })}
+                />
+                {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  disabled={loading}
+                  component={RouterLink}
+                  to='/profile'
+                >
+                  Cancelar
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  type='submit'
+                  disabled={loading}
+                >
+                  Cambiar
+                </Button>
+              </Grid>
+              {info}
+            </Grid>
+          </div>
+        </form>
       </div>
-      <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

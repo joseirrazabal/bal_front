@@ -14,6 +14,7 @@ const SimpleImage = ({
   circular = null,
   className,
   onClick = () => {},
+  style,
 }) => {
   const classes = useStyles({ image, width, height, circular })
 
@@ -25,6 +26,7 @@ const SimpleImage = ({
       title={title}
       onClick={onClick}
       style={{
+        ...style,
         height: height || 'auto',
         width: width || 'auto',
         borderRadius: circular && '50%',

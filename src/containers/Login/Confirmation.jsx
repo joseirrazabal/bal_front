@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
 import loginTab from './tab'
@@ -74,17 +72,13 @@ const Confirmation = () => {
   }, [data, error])
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.centerMode}>
-          {loading && <div>Cargando...</div>}
-          {info && <div className={classes.contentProfile}>{info}</div>}
-          {infoError && <div className={classes.contentProfile}>{infoError}</div>}
-        </div>
+    <div className={classes.contentFull}>
+      <div className={classes.centerMode}>
+        {loading && <div>Cargando...</div>}
+        {info && <div className={classes.contentProfile}>{info}</div>}
+        {infoError && <div className={classes.contentProfile}>{infoError}</div>}
       </div>
-      <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

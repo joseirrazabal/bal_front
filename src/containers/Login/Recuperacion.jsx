@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
 import loginTab from './tab'
@@ -48,8 +46,8 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 }))
 
 const Recuperacion = () => {
@@ -82,67 +80,67 @@ const Recuperacion = () => {
   }, [data, error])
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.centerMode}>
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
-            <div className={classes.contentProfile}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    label='Email'
-                    // autoComplete='off'
-                    fullWidth
-                    color='secondary'
-                    defaultValue=''
-                    variant='outlined'
-                    {...register('email', {
-                      required: 'Campo requerido',
-                      pattern: {
-                        value: /\S+@\S+\.\S+/,
-                        message: 'Valor invalido',
-                      },
-                    })}
-                  />
-                  {errors.email && <span role='alert'>{errors.email.message}</span>}
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    type='submit'
-                    disabled={loading}
-                  >
-                    Enviar
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='link'
-                    style={{ color: 'white' }}
-                    disabled={loading}
-                    component={RouterLink}
-                    to='/'
-                  >
-                    Cancelar
-                  </Button>
-                </Grid>
-                
-                {info && <div variant="span" className={classes.envioCorrecto}><p>{info}</p></div>}
+    <div className={classes.contentFull}>
+      <div className={classes.centerMode}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
+          <div className={classes.contentProfile}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label='Email'
+                  // autoComplete='off'
+                  fullWidth
+                  color='secondary'
+                  defaultValue=''
+                  variant='outlined'
+                  {...register('email', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: 'Valor invalido',
+                    },
+                  })}
+                />
+                {errors.email && <span role='alert'>{errors.email.message}</span>}
               </Grid>
-            </div>
-          </form>
-        </div>
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  type='submit'
+                  disabled={loading}
+                >
+                  Enviar
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='link'
+                  style={{ color: 'white' }}
+                  disabled={loading}
+                  component={RouterLink}
+                  to='/'
+                >
+                  Cancelar
+                </Button>
+              </Grid>
+
+              {info && (
+                <div variant='span' className={classes.envioCorrecto}>
+                  <p>{info}</p>
+                </div>
+              )}
+            </Grid>
+          </div>
+        </form>
       </div>
-      <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

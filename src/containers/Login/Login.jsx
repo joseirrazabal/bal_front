@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
 import Typography from '../../components/Typography'
 
 import loginTab from './tab'
@@ -81,95 +79,93 @@ const Login = () => {
   }
 
   return (
-    <React.Fragment>
-      <Header />
-      <div className={classes.contentFull}>
-        <div className={classes.centerMode}>
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
-            <div className={classes.contentProfile}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography fontWeight={400} textAlign='center'>
-                    Iniciar Sesion
-                  </Typography>
-                </Grid>
-                {error?.message}
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label='Email'
-                    color='secondary'
-                    // defaultValue='ejemplo@gmail.com'
-                    variant='outlined'
-                    {...register('email', { required: 'Campo requerido' })}
-                  />
-                </Grid>
-                {errors.email && <p>{errors.email.message}</p>}
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    type='password'
-                    label='password'
-                    color='secondary'
-                    // defaultValue='password'
-                    variant='outlined'
-                    {...register('password', { required: 'Campo requerido' })}
-                  />
-                </Grid>
-                {errors.password && <p>{errors.password.message}</p>}
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                    type='submit'
-                    disabled={loading}
-                  >
-                    ENTRAR
-                  </Button>
-                  <Button
-                    variant='outline'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                    component={RouterLink}
-                    to='/recuperacion'
-                  >
-                    olvidaste la clave?
-                  </Button>
-                  <Button
-                    component={RouterLink}
-                    to='/registro'
-                    variant='outline'
-                    fullWidth
-                    size='big'
-                    color='secondary'
-                  >
-                    Registro
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography fontWeight={400} textAlign='center'>
-                    Redes Sociales
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    // type='submit'
-                    onClick={() => handleLogIn('google')}
-                    fullWidth
-                    variant='contained'
-                    style={{ background: '#ea4335', color: 'white' }}
-                  >
-                    GOOGLE
-                  </Button>
-                </Grid>
-                {/* <Grid item xs={12}>
+    <div className={classes.contentFull}>
+      <div className={classes.centerMode}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
+          <div className={classes.contentProfile}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography fontWeight={400} textAlign='center'>
+                  Iniciar Sesion
+                </Typography>
+              </Grid>
+              {error?.message}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label='Email'
+                  color='secondary'
+                  // defaultValue='ejemplo@gmail.com'
+                  variant='outlined'
+                  {...register('email', { required: 'Campo requerido' })}
+                />
+              </Grid>
+              {errors.email && <p>{errors.email.message}</p>}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  type='password'
+                  label='password'
+                  color='secondary'
+                  // defaultValue='password'
+                  variant='outlined'
+                  {...register('password', { required: 'Campo requerido' })}
+                />
+              </Grid>
+              {errors.password && <p>{errors.password.message}</p>}
+              <Grid item xs={12}>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                  type='submit'
+                  disabled={loading}
+                >
+                  ENTRAR
+                </Button>
+                <Button
+                  variant='outline'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                  component={RouterLink}
+                  to='/recuperacion'
+                >
+                  olvidaste la clave?
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to='/registro'
+                  variant='outline'
+                  fullWidth
+                  size='big'
+                  color='secondary'
+                >
+                  Registro
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography fontWeight={400} textAlign='center'>
+                  Redes Sociales
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  // type='submit'
+                  onClick={() => handleLogIn('google')}
+                  fullWidth
+                  variant='contained'
+                  style={{ background: '#ea4335', color: 'white' }}
+                >
+                  GOOGLE
+                </Button>
+              </Grid>
+              {/* <Grid item xs={12}>
                   <Button
                     variant='contained'
                     fullWidth
@@ -178,13 +174,11 @@ const Login = () => {
                     Facebook
                   </Button>
                 </Grid> */}
-              </Grid>
-            </div>
-          </form>
-        </div>
+            </Grid>
+          </div>
+        </form>
       </div>
-      <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

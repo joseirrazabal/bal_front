@@ -13,8 +13,6 @@ import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import HomeSlider from 'copo/Atoms/HomeSlider/HomeSlider'
 import SimpleImage from 'copo/Atoms/Images/SimpleImage'
 
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
 import Typography from '../../components/Typography'
 import Search from '../../components/Search'
 import DialogSimpleComponent from '../../components/DialogSimple'
@@ -210,8 +208,6 @@ const Home = () => {
   }
 
   return (
-    <React.Fragment>
-      <Header />
       <div className={classes.contentFull}>
         <HomeSlider imageBackground={get(config, '0.imagen')}>
           <Typography fontWeight='900' className={classes.title} varian='h1'>
@@ -306,8 +302,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </React.Fragment>
   )
 }
 
