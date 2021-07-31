@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     paddingBottom: '187px',
+    // paddingTop: '64px',
   },
   footer: {
     position: 'absolute',
@@ -54,7 +55,7 @@ const Layout = ({ children }) => {
   const [user, setUser] = useState(null)
   const [list, setList] = useState([])
 
-  const { data: dataList, loading: loading } = useQuery(NOTIFICACION_LIST, {
+  const [getNotifications, { data: dataList, loading: loadingList }] = useLazyQuery(NOTIFICACION_LIST, {
     ssr: false,
     fetchPolicy: 'network-only',
   })
@@ -65,6 +66,10 @@ const Layout = ({ children }) => {
   })
 
   useEffect(() => {
+    if (getToken()) {
+      getUser()
+    }
+
     const querySubscription = apolloClient
       .watchQuery({
         query: CURRENT_USER,
@@ -72,11 +77,10 @@ const Layout = ({ children }) => {
       })
       .subscribe({
         next: ({ data }) => {
-          console.log('jose 01')
           setUser(get(data, 'currentUser', null) || null)
         },
         error: e => {
-          console.error('jose error subscribe', e)
+          console.error('error subscribe', e)
         },
       })
 
@@ -88,15 +92,12 @@ const Layout = ({ children }) => {
   useEffect(() => {
     if (dataUser) {
       setUser(get(dataUser, 'currentUser'))
-    }
-    if (getToken()) {
-      getUser()
+      getNotifications()
     }
   }, [dataUser])
 
   useEffect(() => {
     if (get(dataList, 'notificacionList')) {
-      console.log(get(dataList, 'notificacionList'))
       setList(get(dataList, 'notificacionList', []).filter(item => item.visto === false))
     }
   }, [dataList])
