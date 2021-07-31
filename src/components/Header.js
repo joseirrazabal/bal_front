@@ -66,7 +66,7 @@ const PersistentDrawerRight = ({
       >
         <Toolbar>
           <Typography variant='h6' noWrap className={classes.title}>
-            <Link to='/'>
+            <Link to='/home'>
               <SimpleImage alt={alt} height={30} image={logo} />
             </Link>
           </Typography>
