@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { SnackbarProvider } from 'notistack'
 
 import Layout from './components/Layout/Layout'
-import Notifications from './notifications'
+// import Notifications from './notifications'
 import Route from 'core/routes/mainRoute'
 import routes from './routes'
 import theme from './theme'
@@ -46,7 +46,7 @@ const App = () => {
       maxSnack={3}
       autoHideDuration={3500}
     >
-      <Notifications />
+      {/* <Notifications /> */}
       <Route routes={routes} layout={Layout} />
     </SnackbarProvider>,
   ]

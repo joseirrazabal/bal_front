@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHistory, useLocation, Redirect } from 'react-router-dom'
 
-import { useLogout } from 'kit/login/utils'
-
 import Button from '@material-ui/core/Button'
+
+import { useLogout } from 'kit/login/utils'
+import { ReconnectWSContext } from 'kit/shared/index'
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -34,14 +35,20 @@ const useStyles = makeStyles(theme => ({
 const Logout = ({ cancel }) => {
   const classes = useStyles()
   const history = useHistory()
+  const { setReconnectWS } = useContext(ReconnectWSContext)
+
   const [setUseFrom, setLogout, setPath] = useLogout()
 
-  const handleLogout = useCallback(e => {
-    e.preventDefault()
-    setPath('/')
-    setUseFrom(false)
-    setLogout(true)
-  }, [])
+  const handleLogout = useCallback(
+    e => {
+      e.preventDefault()
+      setPath('/')
+      setReconnectWS(true) // reset webSocket
+      setUseFrom(false)
+      setLogout(true)
+    },
+    [setPath, setUseFrom, setLogout, setReconnectWS]
+  )
 
   const handleCancel = useCallback(e => {
     e.preventDefault()

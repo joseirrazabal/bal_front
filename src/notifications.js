@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery, useSubscription } from '@apollo/client'
+import { useQuery, useSubscription, useApolloClient } from '@apollo/client'
 import { useSnackbar } from 'notistack'
 import { useHistory } from 'react-router-dom'
 import get from 'lodash/get'
@@ -12,11 +12,42 @@ const Notifications = () => {
   const history = useHistory()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
+  const [prueba, setPrueba] = useState(false)
   const {
     data: dataSubs,
     loading: loadingSubs,
     error: errorSubs,
-  } = useSubscription(COUNTER_SUBSCRIPTION, {})
+  } = useSubscription(COUNTER_SUBSCRIPTION, {
+    // resubscribe si se le pasan variables y estas cambian
+    shouldResubscribe: true,
+  })
+
+  const client = useApolloClient()
+
+  const getAllFuncs = toCheck => {
+    const props = []
+    let obj = toCheck
+    do {
+      props.push(...Object.getOwnPropertyNames(obj))
+    } while ((obj = Object.getPrototypeOf(obj)))
+
+    return props.sort().map((e, i, arr) => {
+      if (e != arr[i + 1] && typeof toCheck[e] == 'function') {
+        return `${e}()`
+      } else {
+        return `${e}`
+      }
+    })
+  }
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log('bien1', getAllFuncs(client))
+  //     console.log('bien2', getAllFuncs(client.link))
+  //     console.log('bien3', getAllFuncs(client.link.request()))
+  //     console.log('bien9')
+  //   }, 5000)
+  // }, [])
 
   // const onHandleVisto = (id, visto) => {
   //   changeVisto({

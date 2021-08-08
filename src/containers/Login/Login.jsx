@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import { useLocation, Redirect, Link as RouterLink } from 'react-router-dom'
@@ -15,6 +15,7 @@ import Typography from '../../components/Typography'
 import loginTab from './tab'
 
 import { signIn } from 'kit/login/utils'
+import { ReconnectWSContext } from 'kit/shared/index'
 
 import LOGIN_MUTATION from 'core/gql/user/login'
 
@@ -44,6 +45,7 @@ const Login = () => {
   const classes = useStyles()
   const location = useLocation()
   const { from } = location.state || { from: { pathname: '/' } }
+  const { setReconnectWS } = useContext(ReconnectWSContext)
 
   const {
     register,
@@ -56,16 +58,22 @@ const Login = () => {
 
   const [user, setUser] = useState()
 
+  useEffect(() => {
+    if (get(data, 'login.jwt')) {
+      setReconnectWS(true) // reset webSocket
+    }
+  }, [data])
+
   const handleLogIn = provider => {
     const msg = loginTab(`${process.env.LOGIN_URL ? process.env.LOGIN_URL : ''}/auth/${provider}`)
     msg.then(user => {
+      setReconnectWS(true) // reset webSocket
       signIn(get(user, 'jwt'), get(user, 'refreshToken'))
       setUser(user)
     })
   }
 
   const onSubmit = data => {
-    console.log('on submit', data)
     login({ variables: data })
   }
 
