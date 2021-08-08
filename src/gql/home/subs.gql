@@ -1,7 +1,5 @@
-subscription onCountIncr {
-  count {
-    id
-    userId
-    precio
+subscription sendMessage {
+  getMessage {
+    texto
   }
 }

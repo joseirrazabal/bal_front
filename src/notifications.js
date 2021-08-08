@@ -56,8 +56,8 @@ const Notifications = () => {
   }
 
   useEffect(() => {
-    if (get(dataSubs, 'count')) {
-      handleClick({ text: get(dataSubs, 'count.precio'), variant: 'success' })
+    if (get(dataSubs, 'getMessage')) {
+      handleClick({ text: get(dataSubs, 'getMessage.texto'), variant: 'success' })
     }
   }, [dataSubs])
 
