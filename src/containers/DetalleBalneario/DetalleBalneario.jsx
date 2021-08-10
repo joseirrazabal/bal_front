@@ -8,8 +8,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 import NoSsr from '@material-ui/core/NoSsr'
 
-import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import PlanoGridBig from 'copo/Atoms/PlanoGrid/PlanoGridBig'
+import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
 import Button from '../../components/Button'
@@ -426,6 +426,18 @@ const DetalleBalneario = () => {
     setOpen3(false)
   }
 
+  const handleComprar = item => {
+    if (get(dataPrecio, 'precioGetFront.precio', 0) && get(dataPrecio, 'precioGetFront.stock', 0)) {
+      history.push({
+        pathname: `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
+          dataPrecio,
+          'precioGetFront.categoriaSlug'
+        )}/${desde}/${hasta}`,
+        state: { itemSelected: item },
+      })
+    }
+  }
+
   if (loading || loadingCiudad) {
     return (
       <NoSsr>
@@ -496,7 +508,8 @@ const DetalleBalneario = () => {
                   </Button>
                 </div>
               )}
-              {get(balneario, 'planos.0') && (
+              {/* {get(balneario, 'planos.0') && ( */}
+              {get(balneario, 'plano') && (
                 <div className={classes.verPlano}>
                   <Button colorBg='secondary' height={30} onClick={handleClickOpen}>
                     VER PLANO
@@ -614,14 +627,7 @@ const DetalleBalneario = () => {
                         }
                         height={40}
                         width={200}
-                        onClick={() =>
-                          history.push(
-                            `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
-                              dataPrecio,
-                              'precioGetFront.categoriaSlug'
-                            )}/${desde}/${hasta}`
-                          )
-                        }
+                        onClick={() => handleComprar()}
                       >
                         ALQUILAR X {get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S
                       </Button>
@@ -740,7 +746,7 @@ const DetalleBalneario = () => {
               <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
             </div> */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <PlanoGridBig />
+              <PlanoGridBig data={get(balneario, 'plano')} handleClick={handleComprar} />
             </div>
           </FullScreenDialog>
         </div>

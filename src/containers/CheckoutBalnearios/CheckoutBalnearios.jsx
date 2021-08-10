@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, useLocation } from 'react-router-dom'
 import { useQuery, useLazyQuery, useMutation } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import get from 'lodash/get'
@@ -305,6 +305,10 @@ const CheckoutBalnearios = ({ theme }) => {
   const classes = useStyles()
   const history = useHistory()
   const { balneario, categoria, desde, hasta } = useParams()
+  const { state } = useLocation()
+
+  const itemSelected = state.itemSelected
+
   const {
     register,
     handleSubmit,
@@ -478,6 +482,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
     const form = {
       ...data,
+      anotaciones: `numero: ${get(itemSelected, 'numero')}`,
       cardExpirationMonth: parseInt(cardExpirationMonth.current.value),
       cardExpirationYear: parseInt(cardExpirationYear.current.value),
       cardNumber: parseInt(cardNumber.current.value),
@@ -852,6 +857,11 @@ const CheckoutBalnearios = ({ theme }) => {
                   <Typography fontSize={16} variant='p' color='grey'>
                     {get(precio, 'direccion')}
                   </Typography>
+                  {itemSelected && (
+                    <Typography fontSize={16} variant='p' color='grey'>
+                      Numero seleccionado: {get(itemSelected, 'numero')}
+                    </Typography>
+                  )}
                   <ItemSelected
                     className={classes.item}
                     checkout

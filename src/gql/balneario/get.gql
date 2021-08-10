@@ -12,6 +12,7 @@ query balnearioGetFront($slug: String!) {
       lat
       lng
     }
+    plano
     imagenes {
       url
     }
