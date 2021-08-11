@@ -438,13 +438,13 @@ const DetalleBalneario = () => {
     }
   }
 
-  if (loading || loadingCiudad) {
-    return (
-      <NoSsr>
-        <Loading />
-      </NoSsr>
-    )
-  }
+  // if (loading || loadingCiudad) {
+  //   return (
+  //     <NoSsr>
+  //       <Loading />
+  //     </NoSsr>
+  //   )
+  // }
 
   return (
     <div className={classes.contentFull}>

@@ -117,10 +117,11 @@ const CardBal = ({
 }) => {
   const image = get(item, 'image', ImageDefault)
 
-  const classes = useStyles({
-    moludar,
-    image,
-  })
+  // const classes = useStyles({
+  //   moludar,
+  //   image,
+  // })
+  const classes = useStyles()
 
   const clasesDisponibles = ['nuevo', 'promo', 'descuento']
 

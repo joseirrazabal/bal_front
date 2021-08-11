@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography'
 
 import SimpleImage from './SimpleImage'
 
+const drawerWidth = 300
+
 const useStyles = makeStyles(theme => ({
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -20,28 +22,28 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-  appBarShift: ({ drawerWidth }) => ({
+  appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginRight: drawerWidth,
-  }),
+  },
   title: {
     flexGrow: 1,
   },
   hide: {
     display: 'none',
   },
-  drawer: ({ drawerWidth }) => ({
+  drawer: {
     width: drawerWidth,
     flexShrink: 0,
-  }),
-  drawerPaper: ({ drawerWidth }) => ({
+  },
+  drawerPaper: {
     backgroundColor: theme.palette.secondary.dark,
     width: drawerWidth,
-  }),
+  },
 }))
 
 const PersistentDrawerRight = ({
@@ -53,9 +55,8 @@ const PersistentDrawerRight = ({
   open = false,
   toggleDrawer = () => {},
   anchorPosition = 'right',
-  drawerWidth = 300,
 }) => {
-  const classes = useStyles({ drawerWidth })
+  const classes = useStyles()
 
   return (
     <React.Fragment>

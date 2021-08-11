@@ -3,15 +3,15 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
-  buttonStyles: ({ color }) => ({
+  buttonStyles: {
     fontSize: '14!important',
     margin: 0,
     //background: theme.palette.secondary.main,
 
     '& span': {
-      color: color || 'white!important',
+      color: 'white!important',
     },
-  }),
+  },
 }))
 
 const ButtonComponent = ({
@@ -28,7 +28,8 @@ const ButtonComponent = ({
   colorBg = 'secondary',
   variant = 'contained',
 }) => {
-  const classes = useStyles({ border, width, height, color, variant, colorBg })
+  // const classes = useStyles({ border, width, height, color, variant, colorBg })
+  const classes = useStyles()
 
   return (
     <Button

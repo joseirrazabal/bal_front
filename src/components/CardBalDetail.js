@@ -13,7 +13,7 @@ import IconSombri from '../assets/icon-sombrilla_azul.svg'
 
 
 const useStyles = makeStyles((theme) => ({
-  cardBal: ({ moludar = false }) => ({
+  cardBal: {
     display: 'flex',
     width: '100%',
     height: 'auto',
@@ -31,19 +31,19 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       flexDirection: 'column'
     },
-  }),
-  image: ({ image }) => ({
+  },
+  image: {
     position: 'relative',
     width: '100%',
     maxWidth: 300,
     height: 170,
-    backgroundImage: `url(${image})`,
+    // backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
 
     '@media (max-width: 600px)': {
       maxWidth: '100%',
     },
-  }),
+  },
   content: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -141,7 +141,8 @@ const CardBalDetail = ({
     'https://ss-static-01.esmsv.com/id/87403/galeriaimagenes/obtenerimagen/?id=37&tipoEscala=stretch&width=2000&height=1119'
   )
 
-  const classes = useStyles({ moludar, image })
+  // const classes = useStyles({ moludar, image })
+  const classes = useStyles()
 
   return (
     <div className={`${className} ${classes.cardBal}`} onClick={onClick}>

@@ -2,9 +2,9 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  Typography: () => ({
+  Typography: {
     width: '100%',
-  }),
+  },
 }))
 
 const Typography = ({
@@ -20,16 +20,7 @@ const Typography = ({
   margin = 0,
   textAlign,
 }) => {
-  const classes = useStyles({
-    fontSize,
-    fontWeight,
-    color,
-    margin,
-    textAlign,
-    fontStyle,
-    lineHeight,
-    textDecoration
-  })
+  const classes = useStyles()
 
   return React.createElement(
     variant,
