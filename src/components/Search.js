@@ -146,10 +146,6 @@ const Search = ({
   const [loading2, setLoading2] = useState(true)
   const [checked, setChecked] = useState(variosDias)
 
-  const handleChange = event => {
-    setChecked(event.target.checked)
-  }
-
   // const { reset, register, control, handleSubmit, errors, setValue } = useForm()
   const {
     register,
@@ -158,14 +154,6 @@ const Search = ({
     control,
     setValue,
   } = useForm()
-
-  const onSubmit = ({ ciudad, desde, hasta }) => {
-    if (checked) {
-      handleOnSubmit({ ciudad, desde, hasta })
-    } else {
-      handleOnSubmit({ ciudad, desde, hasta: desde })
-    }
-  }
 
   useEffect(() => {
     const date1 = dayjs(hasta)
@@ -181,14 +169,6 @@ const Search = ({
     register('hasta')
   }, [])
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   useEffect(() => {
     if (ciudad) {
       const ciudadesA = get(ciudades, 'searchListFront', []) || []
@@ -202,6 +182,26 @@ const Search = ({
     }
     setLoading2(false)
   }, [ciudades, ciudad])
+
+  const handleChange = event => {
+    setChecked(event.target.checked)
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const onSubmit = ({ ciudad, desde, hasta }) => {
+    if (checked) {
+      handleOnSubmit({ ciudad, desde, hasta })
+    } else {
+      handleOnSubmit({ ciudad, desde, hasta: desde })
+    }
+  }
 
   return (
     <form

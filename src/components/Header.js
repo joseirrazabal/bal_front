@@ -55,6 +55,8 @@ const PersistentDrawerRight = ({
   open = false,
   toggleDrawer = () => {},
   anchorPosition = 'right',
+  listItems: ListItems,
+  setContentModal,
 }) => {
   const classes = useStyles()
 
@@ -100,10 +102,15 @@ const PersistentDrawerRight = ({
         onClose={toggleDrawer}
         onOpen={toggleDrawer}
       >
-        {children}
+        <ListItems
+          user={user}
+          notifications={notifications}
+          onClickItem={toggleDrawer}
+          setContentModal={setContentModal}
+        />
       </SwipeableDrawer>
     </React.Fragment>
   )
 }
 
-export default PersistentDrawerRight
+export default React.memo(PersistentDrawerRight)

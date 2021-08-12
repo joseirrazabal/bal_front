@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
@@ -192,12 +192,15 @@ const Home = () => {
     }
   }, [data])
 
-  const onSubmitSearch = data => {
-    history.push(
-      `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
+  const onSubmitSearch = useCallback(
+    data => {
+      history.push(
+        `/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}
         `
-    )
-  }
+      )
+    },
+    [data, history]
+  )
 
   // if (loading || loadingCiudad) {
   //   return (
@@ -208,100 +211,96 @@ const Home = () => {
   // }
 
   return (
-      <div className={classes.contentFull}>
-        <HomeSlider imageBackground={get(config, '0.imagen')}>
-          <Typography fontWeight='900' className={classes.title} varian='h1'>
-            DISFRUTA TU LUGAR
-          </Typography>
-          <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
-        </HomeSlider>
-        <div className={classes.contentBanners}>
-          <div className={classes.containerMobile}>
-            {get(config, '0.publicidad') && (
-              <div className={classes.banner}>
-                <SimpleImage
-                  alt='Alamar - Balnearios Costa Atlantica'
-                  image={get(config, '0.publicidad')}
-                  width={'100%'}
-                />
-              </div>
-            )}
-            <div className={classes.bannerMobile}>
-              <SimpleImage image={ImageBannerMobile} width={'100%'} />
+    <div className={classes.contentFull}>
+      <HomeSlider imageBackground={get(config, '0.imagen')}>
+        <Typography fontWeight='900' className={classes.title} variant='h1'>
+          DISFRUTA TU LUGAR
+        </Typography>
+        <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
+      </HomeSlider>
+      <div className={classes.contentBanners}>
+        <div className={classes.containerMobile}>
+          {get(config, '0.publicidad') && (
+            <div className={classes.banner}>
+              <SimpleImage
+                alt='Alamar - Balnearios Costa Atlantica'
+                image={get(config, '0.publicidad')}
+                width={'100%'}
+              />
             </div>
-
-            {config.map((carousel, carouselIndex) => {
-              return [
-                <div key={carouselIndex}>
-                  <Typography
-                    fontWeight={500}
-                    fontSize={20}
-                    textAlign='center'
-                    className={classes.subTitle}
-                    varian='h2'
-                  >
-                    {carousel.titulo}
-                  </Typography>
-                </div>,
-                <div className={classes.contentSlider} key={`2-${carouselIndex}`}>
-                  <ul>
-                    <Slider {...settings({ slidesToShow: parseInt(carousel.cantItems) || 3 })}>
-                      {carousel.config.map((item, itemIndex) => {
-                        return (
-                          <div key={itemIndex}>
-                            <div style={{ margin: 5 }}>
-                              <li>
-                                <CardBal
-                                  modular
-                                  tag={get(item, 'tagNombre')}
-                                  tagTexto={get(item, 'tagTexto')}
-                                  tagColor={get(item, 'tagColor')}
-                                  tagFontColor={get(item, 'tagFontColor')}
-                                  tagImagen={
-                                    get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
-                                  }
-                                  price={get(item, 'precio')}
-                                  oldPrice={get(item, 'oldPprecio')}
-                                  name={get(item, 'balneario')}
-                                  city={get(item, 'ciudad')}
-                                  image={get(item, 'imagen')}
-                                  category={get(item, 'tipo')}
-                                  onClick={() => {
-                                    history.push(
-                                      `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
-                                        'YYYY-MM-DD'
-                                      )}/${dayjs(item.hasta).format('YYYY-MM-DD')}`
-                                    )
-                                  }}
-                                />
-                              </li>
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </Slider>
-                  </ul>
-                </div>,
-              ]
-            })}
-
-            <DialogSimpleComponent>
-              <div className={classes.modalContent}>
-                <SimpleImage image={ImageCoronaVirus} width='100%' />
-                <a
-                  href='https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf'
-                  width='100%'
-                  style={{ textDecoration: 'none', marginTop: 15 }}
-                >
-                  <Button color='primary' variant='contained'>
-                    ver protocolos
-                  </Button>
-                </a>
-              </div>
-            </DialogSimpleComponent>
+          )}
+          <div className={classes.bannerMobile}>
+            <SimpleImage image={ImageBannerMobile} width={'100%'} />
           </div>
+
+          {config.map((carousel, carouselIndex) => {
+            return [
+              <div key={carouselIndex}>
+                <Typography
+                  fontWeight={500}
+                  fontSize={20}
+                  textAlign='center'
+                  className={classes.subTitle}
+                  variant='h2'
+                >
+                  {carousel.titulo}
+                </Typography>
+              </div>,
+              <div className={classes.contentSlider} key={`2-${carouselIndex}`}>
+                <Slider {...settings({ slidesToShow: parseInt(carousel.cantItems) || 3 })}>
+                  {carousel.config.map((item, itemIndex) => {
+                    return (
+                      <div key={itemIndex}>
+                        <div style={{ margin: 5 }}>
+                          <CardBal
+                            modular
+                            tag={get(item, 'tagNombre')}
+                            tagTexto={get(item, 'tagTexto')}
+                            tagColor={get(item, 'tagColor')}
+                            tagFontColor={get(item, 'tagFontColor')}
+                            tagImagen={
+                              get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
+                            }
+                            price={get(item, 'precio')}
+                            oldPrice={get(item, 'oldPprecio')}
+                            name={get(item, 'balneario')}
+                            city={get(item, 'ciudad')}
+                            image={get(item, 'imagen')}
+                            category={get(item, 'tipo')}
+                            onClick={() => {
+                              history.push(
+                                `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
+                                  'YYYY-MM-DD'
+                                )}/${dayjs(item.hasta).format('YYYY-MM-DD')}`
+                              )
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </Slider>
+              </div>,
+            ]
+          })}
+
+          <DialogSimpleComponent>
+            <div className={classes.modalContent}>
+              <SimpleImage image={ImageCoronaVirus} width='100%' />
+              <a
+                href='https://www.argentina.gob.ar/sites/default/files/protocolo_-playas_5.pdf'
+                width='100%'
+                style={{ textDecoration: 'none', marginTop: 15 }}
+              >
+                <Button color='primary' variant='contained'>
+                  ver protocolos
+                </Button>
+              </a>
+            </div>
+          </DialogSimpleComponent>
         </div>
       </div>
+    </div>
   )
 }
 

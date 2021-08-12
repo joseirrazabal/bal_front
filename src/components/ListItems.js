@@ -173,4 +173,4 @@ const ListItems = ({ user, notifications, setContentModal = () => {}, onClickIte
   )
 }
 
-export default ListItems
+export default React.memo(ListItems)

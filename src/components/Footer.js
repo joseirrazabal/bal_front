@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 
 import SimpleImage from './SimpleImage'
 import Typography from './Typography'
@@ -68,14 +69,18 @@ const Footer = ({ setContentModal = () => {} }) => {
             Info de contacto:
           </Typography>
           <ul style={{ flexDirection: 'column' }}>
-            <a alt='Alamar - Balnearios Costa Atlantica'>
-              <li className={classes.itemFooter}>
+            <li className={classes.itemFooter}>
+              <a
+                href={`mailto:alamarargentina@gmail.com`}
+                target='_blank'
+                alt='Alamar - Balnearios Costa Atlantica'
+              >
                 {/* <SimpleImage image={Phone} height={20} /> */}{' '}
                 <Typography variant='p' color='white' fontSize={12}>
                   alamarargentina@gmail.com
                 </Typography>
-              </li>
-            </a>
+              </a>
+            </li>
             {/*  <a>
               <li className={classes.itemFooter}><SimpleImage image={Location} height={25} /> <Typography variant="p" color="white" fontSize={12}>Direccion de ejmplo 123 - Buenos Aires</Typography></li>
             </a> */}
@@ -86,16 +91,16 @@ const Footer = ({ setContentModal = () => {} }) => {
             Nos podes encontrar en:
           </Typography>
           <ul>
-            <a href='https://www.facebook.com/alamar.alamar.94064' target='_blank'>
-              <li className={classes.itemFooter}>
+            <li className={classes.itemFooter}>
+              <a href='https://www.facebook.com/alamar.alamar.94064' target='_blank' rel='noreferrer'>
                 <SimpleImage image={Facebook} height={25} />
-              </li>
-            </a>
-            <a href='https://www.instagram.com/alamar_ar/' target='_blank'>
-              <li className={classes.itemFooter}>
+              </a>
+            </li>
+            <li className={classes.itemFooter}>
+              <a href='https://www.instagram.com/alamar_ar/' target='_blank' rel='noreferrer'>
                 <SimpleImage image={Instagram} height={25} />
-              </li>
-            </a>
+              </a>
+            </li>
           </ul>
         </div>
         <div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useLazyQuery, gql, useQuery, useApolloClient } from '@apollo/client'
 import get from 'lodash/get'
@@ -104,13 +104,16 @@ const Layout = ({ children }) => {
     }
   }, [dataList])
 
-  const toggleDrawer = event => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
-    }
+  const toggleDrawer = useCallback(
+    event => {
+      if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return
+      }
 
-    setOpen(prevState => !prevState)
-  }
+      setOpen(prevState => !prevState)
+    },
+    [setOpen]
+  )
 
   return (
     <div className={classes.root}>
@@ -124,15 +127,10 @@ const Layout = ({ children }) => {
         notifications={list.length}
         open={open}
         toggleDrawer={toggleDrawer}
+        listItems={ListItems}
+        setContentModal={setContentModal}
         // anchorPosition='left'
-      >
-        <ListItems
-          user={user}
-          notifications={list.length}
-          onClickItem={toggleDrawer}
-          setContentModal={setContentModal}
-        />
-      </Header>
+      />
 
       {/* padding para backoffice ? */}
       {/* <div className={classes.drawerHeader} /> */}

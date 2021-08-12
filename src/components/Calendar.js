@@ -70,6 +70,7 @@ const Calendar = ({ name = 'fecha', setValue, value = dayjs().format('YYYY-MM-DD
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
       <DatePicker
+        label={name}
         className={classes.calendar}
         variant='inline'
         format='dd/MM/yyyy'
