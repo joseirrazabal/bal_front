@@ -268,11 +268,19 @@ const Home = () => {
                             image={get(item, 'imagen')}
                             category={get(item, 'tipo')}
                             onClick={() => {
-                              history.push(
-                                `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
-                                  'YYYY-MM-DD'
-                                )}/${dayjs(item.hasta).format('YYYY-MM-DD')}`
-                              )
+                              if (item.sinFecha) {
+                                history.push(
+                                  `/detalle/${get(item, 'balnearioSlug')}/${dayjs().format(
+                                    'YYYY-MM-DD'
+                                  )}/${dayjs().format('YYYY-MM-DD')}`
+                                )
+                              } else {
+                                history.push(
+                                  `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
+                                    'YYYY-MM-DD'
+                                  )}/${dayjs(item.hasta).format('YYYY-MM-DD')}`
+                                )
+                              }
                             }}
                           />
                         </div>
