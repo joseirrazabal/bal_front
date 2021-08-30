@@ -444,6 +444,8 @@ const ListBalnearios = () => {
                               <li key={i}>
                                 <CardBalList
                                   nuevo
+                                  umbrella={true}
+                                  tent={true}
                                   tag={get(item, 'tagNombre')}
                                   tagTexto={get(item, 'tagTexto')}
                                   tagColor={get(item, 'tagColor')}
