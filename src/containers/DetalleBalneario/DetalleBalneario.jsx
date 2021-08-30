@@ -131,6 +131,13 @@ const useStyles = makeStyles(theme => ({
       marginTop: 0,
     },
 
+    '&.details': {
+      background: '#f2f2f2',
+      border: 'none',
+      padding: 5,
+      'box-shadow': 'none',
+    },
+
     '& ul': {
       listStyle: 'none',
       padding: 0,
@@ -468,7 +475,8 @@ const DetalleBalneario = () => {
                   <div className={classes.imageBackground}>
                     <SimpleImage
                       alt='Alquilar Balneario Costa Atlantica'
-                      width='100%'
+                      //width='100%'
+                      height='100%'
                       image={DefaultImage}
                     />
                   </div>
@@ -530,7 +538,7 @@ const DetalleBalneario = () => {
                     {get(balneario, 'direccion')}
                   </Typography>
                 </div>
-                <div className={classes.gridRow}>
+                {/* <div className={classes.gridRow}>
                   {tipos.map((item, i) => {
                     return (
                       <ItemSelected
@@ -547,8 +555,14 @@ const DetalleBalneario = () => {
                       />
                     )
                   })}
-                </div>
-                <div className={classes.gridRow}>
+                </div> */}
+                <ItemSelected
+                  icon={IconCarpAzul}
+                  title={`VER PLANO`}
+                  precio={400}
+                  onClick={handleClickOpen}
+                />
+                {/* <div className={classes.gridRow}>
                   <Selected
                     items={categorias}
                     loading={false}
@@ -556,7 +570,7 @@ const DetalleBalneario = () => {
                       setCategoriaSelected(e.target.value)
                     }}
                   />
-                </div>
+                </div> */}
               </div>
 
               {errorPrecio && (
@@ -695,7 +709,7 @@ const DetalleBalneario = () => {
               )},${get(balneario, 'geoLocation.lng')}&key=${key}`}
             />
           </div>
-          <div className={classes.contentDetalleColumn}>
+          <div className={`${classes.contentDetalleColumn} details`}>
             <Typography fontWeight={700} fontSize={20} varian='h3'>
               Otros Balnearios
             </Typography>
@@ -707,7 +721,7 @@ const DetalleBalneario = () => {
                   return (
                     <li key={i}>
                       <CardBal
-                        modular
+                        
                         name={get(item, 'nombre')}
                         city={get(item, 'ciudad.nombre')}
                         image={get(item, 'imagenes.0.url')}

@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   itemSelected: {
     width: '100%',
     height: 110,
-    margin: 5,
+    marginTop: 10,
     border: '1px solid #ECEAEA',
     boxSizing: 'border-box',
     display: 'flex',
@@ -38,10 +38,31 @@ const useStyles = makeStyles(theme => ({
       color: 'gray',
     },
 
+    '&.plano': {
+      background: theme.palette.secondary.light,
+      borderRadius: 10,
+      height: 60,
+      border: 'none',
+      'box-shadow': '0 1px 5px 0 rgba(0,0,0,.4)',
+
+      '&:hover': {
+        background: theme.palette.secondary.dark,
+        'box-shadow': '0 3px 8px 0 rgba(0,0,0,.6)',
+      },
+
+      '& h2': {
+        margin: 0,
+        fontSize: 18,
+        fontWeight: 700,
+        color: 'white',
+      },
+      '& img': {
+        display: 'none'
+      }
+    },
+
     '@media (max-width: 1024px)': {
-      /* flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center', */
+      // futuros cambios
     },
   },
   checkoutSelected: {
@@ -107,6 +128,7 @@ const useStyles = makeStyles(theme => ({
 
 const ItemSelected = ({
   active = false,
+  plano = true,
   checkout = false,
   dias = 3,
   icon = IconSomb,
@@ -122,15 +144,15 @@ const ItemSelected = ({
     <div
       className={`${className} ${
         checkout ? classes.checkoutSelected : !active ? classes.itemSelected : classes.selected
-      }`}
+      } ${plano && 'plano'}`}
       onClick={onClick}
     >
       <div>
         <SimpleImage height={45} alt='Alquiler de Carpas en Balnearios' image={icon} />
       </div>
       <div>
-        <h2>{title}</h2>
-        {/* <Typography textAlign="center" variant="p" fontSize={12} color="black">Disponibles: {disponibles}</Typography> */}
+        <Typography textAlign="center" fontWeight={700} variant="h2" fontSize={18} color="white">{title}</Typography>
+        {plano && <Typography textAlign="center" fontWeight={500} variant="p" fontSize={12} color="white">plano real del balneario</Typography>}
         {/* <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p> */}
       </div>
     </div>
