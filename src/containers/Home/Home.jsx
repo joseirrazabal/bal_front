@@ -246,7 +246,7 @@ const Home = () => {
                   {carousel.titulo}
                 </Typography>
               </div>,
-              <div className={classes.contentSlider} key={`2-${carouselIndex}`}>
+              <div style={{pasition: 'relative', width: '100%'}}  key={`2-${carouselIndex}`}>
                 <Slider {...settings({ slidesToShow: parseInt(carousel.cantItems) || 3 })}>
                   {carousel.config.map((item, itemIndex) => {
                     return (

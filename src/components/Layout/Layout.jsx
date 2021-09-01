@@ -21,7 +21,7 @@ import { getToken } from 'kit/login/utils'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    // display: 'flex',
     position: 'relative',
     minHeight: '100vh',
   },
@@ -135,7 +135,7 @@ const Layout = ({ children }) => {
       {/* padding para backoffice ? */}
       {/* <div className={classes.drawerHeader} /> */}
 
-      <main className={clsx(classes.content)}>{children}</main>
+      <main className={classes.content}>{children}</main>
 
       <footer className={classes.footer}>
         <Footer setContentModal={setContentModal} />
