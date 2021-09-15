@@ -8,22 +8,6 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Button from '@material-ui/core/Button'
 import MenuIcon from '@material-ui/icons/Menu'
 import Badge from '@material-ui/core/Badge'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import Avatar from '@material-ui/core/Avatar'
-
-import SimpleImage from './SimpleImage'
-import LogoAlamar from '../assets/alamar-logo-2.svg'
-import Typography from './Typography'
-import IconPlaya from '../assets/icon-playa2.svg'
-import Accepted from '../assets/accepted.svg'
-import Conversation from '../assets/conversation.svg'
-import Notification from '../assets/notification.svg'
-import FullScreenDialog from './Dialog'
-import Term from '../containers/TyC/Term'
-import Faqs from '../containers/Faqs/Faqs'
 
 const useStyles = makeStyles(theme => ({
   root: {
