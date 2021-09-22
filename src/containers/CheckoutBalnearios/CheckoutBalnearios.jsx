@@ -343,12 +343,12 @@ const CheckoutBalnearios = ({ theme }) => {
   useEffect(() => {
     if (get(dataPrecio, 'precioGetFront.precio')) {
       setPrecio(get(dataPrecio, 'precioGetFront'))
-      if (NODE_ENV !== 'production') {
+      // if (NODE_ENV !== 'production') {
         console.log('key meli dev')
         setKeyPublic(MERCADO_PAGO_PUBLIC_KEY)
-      } else {
-        setKeyPublic(get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.keyPublic'))
-      }
+      // } else {
+      //   setKeyPublic(get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.keyPublic'))
+      // }
     }
   }, [dataPrecio])
 
