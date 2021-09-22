@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      paddingTop: 55
+      paddingTop: 55,
     },
   },
   container: {
@@ -320,9 +320,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
 
     '& svg': {
-      color: 'orange'
-    }
-  }
+      color: 'orange',
+    },
+  },
 }))
 
 const DetalleBalneario = () => {
@@ -330,6 +330,7 @@ const DetalleBalneario = () => {
   const history = useHistory()
   const { slug, desde, hasta } = useParams()
 
+  const [item, setItem] = useState(null)
   const [balneario, setBalneario] = useState({})
 
   const [categoriasAll, setCategoriasAll] = useState([])
@@ -444,7 +445,12 @@ const DetalleBalneario = () => {
     setOpen3(false)
   }
 
-  const handleComprar = item => {
+  const selectItem = item => {
+    setItem(item)
+    setOpen(false)
+  }
+
+  const handleComprar = () => {
     if (get(dataPrecio, 'precioGetFront.precio', 0) && get(dataPrecio, 'precioGetFront.stock', 0)) {
       history.push({
         pathname: `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
@@ -527,7 +533,9 @@ const DetalleBalneario = () => {
                 </div>
               )}
               <div className={classes.calification}>
-                <div><Typography color='white'>3.5</Typography></div>
+                <div>
+                  <Typography color='white'>3.5</Typography>
+                </div>
                 <StarHalfIcon />
               </div>
             </div>
@@ -624,13 +632,16 @@ const DetalleBalneario = () => {
                       disable={false}
                       disabled={
                         !get(dataPrecio, 'precioGetFront.precio', 0) ||
-                        !get(dataPrecio, 'precioGetFront.stock', 0)
+                        !get(dataPrecio, 'precioGetFront.stock', 0) ||
+                        !item
                       }
                       height={40}
                       width={200}
                       onClick={() => handleComprar()}
                     >
-                      ALQUILAR X {get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S
+                      {!item
+                        ? 'Seleccione un item en el plano'
+                        : `ALQUILAR X ${get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S`}
                     </Button>
                   </div>
                 </div>
@@ -743,7 +754,7 @@ const DetalleBalneario = () => {
             handleClose={handleClose}
           >
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <PlanoGridBig data={get(balneario, 'plano')} handleClick={handleComprar} />
+              <PlanoGridBig data={get(balneario, 'plano')} handleClick={selectItem} />
             </div>
           </FullScreenDialog>
         </div>

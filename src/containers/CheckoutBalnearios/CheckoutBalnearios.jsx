@@ -322,6 +322,8 @@ const CheckoutBalnearios = ({ theme }) => {
   const [errorMP, setErrorMP] = useState(false)
   const [precio, setPrecio] = useState({})
 
+  console.log(precio)
+
   const { data: dataPrecio, loading: loadingPrecio } = useQuery(PRECIO_GET, {
     variables: { balneario: balneario, categoria: categoria, desde: desde, hasta: hasta },
     fetchPolicy: 'no-cache',

@@ -151,7 +151,7 @@ const ItemSelected = ({
         <SimpleImage height={45} alt='Alquiler de Carpas en Balnearios' image={icon} />
       </div>
       <div>
-        <Typography textAlign="center" fontWeight={700} variant="h2" fontSize={18} color="white">{title}</Typography>
+        <Typography textAlign="center" fontWeight={700} variant="h2" fontSize={18}>{title}</Typography>
         {plano && <Typography textAlign="center" fontWeight={500} variant="p" fontSize={12} color="white">plano real del balneario</Typography>}
         {/* <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p> */}
       </div>
