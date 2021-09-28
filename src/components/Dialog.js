@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+  contentDataDialog: {
+    overflow: 'scroll',
+  },
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -49,7 +52,7 @@ export default function FullScreenDialog({
             </Typography>
           </Toolbar>
         </AppBar>
-        <List>{children}</List>
+        <div className={classes.contentDataDialog}>{children}</div>
       </Dialog>
     </div>
   )

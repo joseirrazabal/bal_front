@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
       borderRadius: 10,
       height: 60,
       border: 'none',
+      color: 'white!important',
       'box-shadow': '0 1px 5px 0 rgba(0,0,0,.4)',
 
       '&:hover': {
@@ -57,8 +58,8 @@ const useStyles = makeStyles(theme => ({
         color: 'white',
       },
       '& img': {
-        display: 'none'
-      }
+        display: 'none',
+      },
     },
 
     '@media (max-width: 1024px)': {
@@ -151,8 +152,20 @@ const ItemSelected = ({
         <SimpleImage height={45} alt='Alquiler de Carpas en Balnearios' image={icon} />
       </div>
       <div>
-        <Typography textAlign="center" fontWeight={700} variant="h2" fontSize={18}>{title}</Typography>
-        {plano && <Typography textAlign="center" fontWeight={500} variant="p" fontSize={12} color="white">plano real del balneario</Typography>}
+        <Typography
+          textAlign='center'
+          color={plano && 'white'}
+          fontWeight={700}
+          variant='h2'
+          fontSize={18}
+        >
+          {title}
+        </Typography>
+        {plano && (
+          <Typography textAlign='center' fontWeight={500} variant='p' fontSize={12} color='white'>
+            plano real del balneario
+          </Typography>
+        )}
         {/* <p>{checkout ? `cantidad de dias ${dias}` : `${precio} por dia`}</p> */}
       </div>
     </div>

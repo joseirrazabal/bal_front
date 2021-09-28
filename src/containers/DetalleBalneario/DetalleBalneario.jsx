@@ -235,7 +235,7 @@ const useStyles = makeStyles(theme => ({
       background: 'white',
       alignItems: 'center',
       position: 'fixed',
-      padding: 15,
+      padding: '5px 10px',
       bottom: 0,
       zIndex: 3,
       left: 0,
@@ -323,6 +323,15 @@ const useStyles = makeStyles(theme => ({
       color: 'orange',
     },
   },
+  contentPlanoModal: {
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+
+    '@media (max-width: 900px)': {
+      display: 'block',
+    },
+  }
 }))
 
 const DetalleBalneario = () => {
@@ -532,12 +541,12 @@ const DetalleBalneario = () => {
                   </Button>
                 </div>
               )}
-              <div className={classes.calification}>
+              {/* <div className={classes.calification}>
                 <div>
                   <Typography color='white'>3.5</Typography>
                 </div>
                 <StarHalfIcon />
-              </div>
+              </div> */}
             </div>
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
@@ -640,7 +649,7 @@ const DetalleBalneario = () => {
                       onClick={() => handleComprar()}
                     >
                       {!item
-                        ? 'Seleccione un item en el plano'
+                        ? 'Seleccionar'
                         : `ALQUILAR X ${get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S`}
                     </Button>
                   </div>
@@ -753,7 +762,7 @@ const DetalleBalneario = () => {
             open={open}
             handleClose={handleClose}
           >
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div className={classes.contentPlanoModal}>
               <PlanoGridBig data={get(balneario, 'plano')} handleClick={selectItem} />
             </div>
           </FullScreenDialog>
