@@ -39,6 +39,10 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      paddingTop: 65
+    },
+    '@media (max-width: 600px)': {
+      paddingTop: 56
     },
   },
   container: {
@@ -326,6 +330,7 @@ const ListBalnearios = () => {
         <div className={classes.shadow} />
         <div className={classes.container}>
           <Search
+            textSearch="CAMBIAR SELECCION"
             ciudades={dataCiudades}
             ciudad={{ slug: ciudad }}
             desde={desde}

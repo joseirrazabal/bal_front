@@ -139,6 +139,7 @@ const Search = ({
   hasta,
   handleOnSubmit,
   variosDias = false,
+  textSearch = 'Buscar Balneario',
 }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -278,7 +279,7 @@ const Search = ({
         </div>
         <div>
           <Typography color='gray' textAlign='cemter' fontSize={25} variant='h2'>
-            Buscar Balneario
+            {textSearch}
           </Typography>
         </div>
       </div>

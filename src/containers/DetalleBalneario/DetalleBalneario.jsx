@@ -484,6 +484,7 @@ const DetalleBalneario = () => {
       <div className={classes.contentSearch}>
         <div className={classes.container}>
           <Search
+            textSearch="CAMBIAR FECHA"
             ciudades={ciudades}
             ciudad={{ slug: slug }}
             desde={desde}
@@ -536,8 +537,8 @@ const DetalleBalneario = () => {
               </FullScreenDialog>
               {imagenes.length != 0 && (
                 <div className={classes.verFotos}>
-                  <Button colorBg='default' color='black' height={30} onClick={handleClickOpen2}>
-                    AMPLIAR FOTOS
+                  <Button color='secondary' height={30} onClick={handleClickOpen2}>
+                    + AMPLIAR FOTOS
                   </Button>
                 </div>
               )}
