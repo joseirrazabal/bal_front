@@ -110,6 +110,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  flexRevert: {
+    flexDirection: 'revert',
+  },
   border: {
     border: '1px solid #FFFFFF',
     boxSizing: 'border-box',
@@ -128,6 +131,7 @@ const useStyles = makeStyles(theme => ({
     padding: 10,
     background: '#f2f2f2',
     boxSizing: 'border-box',
+    height: '100vh',
   },
 }))
 
@@ -147,7 +151,6 @@ const Search = ({
   const [loading2, setLoading2] = useState(true)
   const [checked, setChecked] = useState(variosDias)
 
-  // const { reset, register, control, handleSubmit, errors, setValue } = useForm()
   const {
     register,
     handleSubmit,
@@ -297,10 +300,11 @@ const Search = ({
               valueDefault={ciudadDefault}
               options={get(ciudades, 'searchListFront')}
               setValue={setValue}
+              errors={errors}
             />
           </div>
           <div style={{ marginTop: 10, marginBottom: 5 }}>
-            <Typography textAlign='left' fontSize={18} variant='p' color='black'>
+            <Typography textAlign='left' fontSize={15} variant='p' color='black'>
               Seleccionar Fecha
             </Typography>
           </div>
@@ -308,13 +312,27 @@ const Search = ({
             <div style={{ width: '100%', marginBottom: 10 }}>
               <Calendar name='desde' setValue={setValue} value={desde} />
             </div>
-            <div style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
-              <Typography textAlign='center' fontSize={18} variant='p' color='black'>
-                hasta
+            {checked && (
+              <React.Fragment>
+                <div style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
+                  <Typography textAlign='center' fontSize={15} variant='p' color='black'>
+                    hasta
+                  </Typography>
+                </div>
+                <div style={{ width: '100%', marginBottom: 10 }}>
+                  <Calendar name='hasta' setValue={setValue} value={hasta} />
+                </div>
+              </React.Fragment>
+            )}
+            <div className={`${classes.gridColumn} ${classes.flexRevert}`}>
+              <Checkbox
+                checked={checked}
+                onChange={handleChange}
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+              <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
+                Seleccionar varios dias
               </Typography>
-            </div>
-            <div style={{ width: '100%', marginBottom: 10 }}>
-              <Calendar name='hasta' setValue={setValue} value={hasta} />
             </div>
           </div>
           <div>
@@ -322,10 +340,10 @@ const Search = ({
               type='submit'
               fullWidth
               height={48}
-              // onClick={e => {
-              //   e.preventDefault()
-              //   onSubmit()
-              // }}
+              onClick={e => {
+                e.preventDefault()
+                onSubmit()
+              }}
             >
               Buscar
             </Button>
