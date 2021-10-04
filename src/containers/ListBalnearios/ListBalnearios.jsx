@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { useHistory, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import get from 'lodash/get'
@@ -8,22 +8,25 @@ import NoSsr from '@material-ui/core/NoSsr'
 import Divider from '@material-ui/core/Divider'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import { Button } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Box from '@material-ui/core/Box'
 
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
-import CardBalDetail from '../../components/CardBalDetail'
+import CardBalList from 'copo/Atoms/Cards/CardList/CardList'
+
 import Search from '../../components/Search'
 import Typography from '../../components/Typography'
 import Loading from '../../components/Loading'
 import SimpleImage from '../../components/SimpleImage'
 import FullScreenDialog from '../../components/Dialog'
 
-import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
-import CIUDAD_LIST from 'gql/ciudad/list'
-
 import imageBackground from '../../assets/banner-fondo.jpeg'
 import ImageDefault from '../../assets/sin-resultados.jpg'
-import { Button } from '@material-ui/core'
+
+import SEARCH_LIST from 'gql/search/list'
+import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {
@@ -36,6 +39,10 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      paddingTop: 65
+    },
+    '@media (max-width: 600px)': {
+      paddingTop: 56
     },
   },
   container: {
@@ -179,22 +186,38 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const TabPanel = ({ children, value, index }) => {
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </div>
+  )
+}
+
 const ListBalnearios = () => {
   const classes = useStyles()
   const history = useHistory()
   const { ciudad, desde, hasta } = useParams()
 
+  const [state, setState] = useState({})
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(0)
+
   const [loadingCheck, setLoadingCheck] = useState(true)
   const [ciudades, setCiudades] = useState([])
-  const [state, setState] = useState({})
   const [items, setItems] = useState([])
-  const [open, setOpen] = useState(false)
+  const [tipos, setTipos] = useState([])
 
-  const { data: dataCiudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
-  const { data, loading } = useQuery(BALNEARIO_LIST_SEARCH, {
-    // variables: {
-    //   ciudad,
-    // },
+  const { data: dataCiudades, loading: loadingCiudad, error: errorCiudad } = useQuery(SEARCH_LIST)
+
+  const [getBalnearioSearch, { data, loading, error: errorList }] = useLazyQuery(BALNEARIO_LIST_SEARCH, {
+    variables: { desde, hasta },
+    fetchPolicy: 'no-cache',
   })
 
   const handleClickOpen = () => {
@@ -206,52 +229,30 @@ const ListBalnearios = () => {
   }
 
   useEffect(() => {
-    if (get(data, 'balnearioListSearch')) {
-      setItems(get(data, 'balnearioListSearch', []))
-    }
-  }, [data])
+    getBalnearioSearch()
+  }, [desde, hasta])
 
   useEffect(() => {
-    if (get(dataCiudades, 'ciudadListFront')) {
-      setCiudades(get(dataCiudades, 'ciudadListFront', []))
-    } else {
-      setLoadingCheck(false)
+    if (get(dataCiudades, 'searchListFront')) {
+      setCiudades(get(dataCiudades, 'searchListFront', []))
     }
   }, [dataCiudades])
 
   useEffect(() => {
-    if (ciudades.length) {
-      const check = {}
-
-      ciudades.map(item => {
-        check[item._id] = false
+    if (get(data, 'balnearioListSearch')) {
+      const objTipos = {}
+      get(data, 'balnearioListSearch').filter(item => {
+        objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
       })
-
-      if (ciudad) {
-        check[ciudad] = true
-      }
-
-      setLoadingCheck(false)
-      setState(check)
+      setTipos(Object.values(objTipos))
     }
-  }, [ciudades])
+  }, [data])
 
   useEffect(() => {
-    const seleccionado = () => {
-      let algoSeleccionado = false
-
-      for (const item in state) {
-        if (state[item]) {
-          algoSeleccionado = true
-        }
-      }
-      return algoSeleccionado
-    }
-
     const result = async () => {
       const prueba = await Promise.all(
         get(data, 'balnearioListSearch').filter(item => {
-          if (state[item.ciudad._id]) {
+          if (state[item.ciudadSlug].selected) {
             return true
           }
           return false
@@ -260,20 +261,62 @@ const ListBalnearios = () => {
       setItems(prueba)
     }
 
-    if (!loadingCheck && !loading) {
+    const seleccionado = () => {
+      let algoSeleccionado = false
+
+      for (const item in state) {
+        if (state[item].selected) {
+          algoSeleccionado = true
+        }
+      }
+      return algoSeleccionado
+    }
+
+    if (tipos) {
       if (seleccionado()) {
         result()
       } else {
-        setItems(get(data, 'balnearioListSearch'))
+        setItems(get(data, 'balnearioListSearch', []))
       }
     }
-  }, [state, loadingCheck, loading])
+  }, [tipos, state])
+
+  useEffect(() => {
+    if (ciudades.length) {
+      const check = {}
+
+      ciudades.map(item => {
+        check[item.slug] = { selected: false, item }
+      })
+
+      // selecciono la ciudad o la ciudad del balnario
+      if (ciudad) {
+        if (check[ciudad].item.ciudad) {
+          check[check[ciudad].item.ciudad].selected = true
+        } else {
+          check[ciudad].selected = true
+        }
+      }
+
+      setLoadingCheck(false)
+      setState(check)
+    }
+  }, [ciudades])
 
   const handleChange = event => {
-    setState({ ...state, [event.target.value]: event.target.checked })
+    setState({ ...state, [event.target.value]: { selected: event.target.checked } })
+  }
+
+  const onSubmitSearch = data => {
+    history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+  }
+
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue)
   }
 
   if (loading || loadingCiudad || loadingCheck) {
+    // return <Loading />
     return (
       <NoSsr>
         <Loading />
@@ -283,11 +326,17 @@ const ListBalnearios = () => {
 
   return (
     <div className={classes.contentFull}>
-      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.shadow} />
         <div className={classes.container}>
-          <Search ciudades={dataCiudades} ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search
+            textSearch="CAMBIAR SELECCION"
+            ciudades={dataCiudades}
+            ciudad={{ slug: ciudad }}
+            desde={desde}
+            hasta={hasta}
+            handleOnSubmit={onSubmitSearch}
+          />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -312,24 +361,26 @@ const ListBalnearios = () => {
                       CIUDAD
                     </Typography>
                   </li>
-                  {ciudades.map((item, i) => {
-                    return (
-                      <li key={i}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={state[item._id]}
-                              onChange={handleChange}
-                              name='checkedA'
-                              color='secondary'
-                              value={item._id}
-                            />
-                          }
-                          label={item.nombre}
-                        />
-                      </li>
-                    )
-                  })}
+                  {ciudades
+                    .filter(item => item.category === 'ciudad')
+                    .map((item, i) => {
+                      return (
+                        <li key={i}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={state[item.slug].selected}
+                                onChange={handleChange}
+                                name='checkedA'
+                                color='secondary'
+                                value={item.slug}
+                              />
+                            }
+                            label={item.nombre}
+                          />
+                        </li>
+                      )
+                    })}
                   {/* <Divider /> */}
                 </ul>
               </div>
@@ -343,7 +394,7 @@ const ListBalnearios = () => {
               </Button>
               <div className={classes.list}>
                 <Typography
-                  fontWeight={700}
+                  fontWeight={400}
                   fontSize={25}
                   textAlign='center'
                   className={classes.title}
@@ -351,29 +402,86 @@ const ListBalnearios = () => {
                 >
                   Balnearios
                 </Typography>
-                <ul className={`${classes.ul} ${classes.gridFull}`} style={{ margin: 0, padding: 0 }}>
-                  {items.length == 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
-                  {items.map((item, i) => {
-                    return (
-                      <li key={i}>
-                        <CardBalDetail
-                          modular
-                          key={i}
-                          item={item}
-                          onClick={() => {
-                            history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}/${ciudad}`)
-                          }}
-                        />
-                      </li>
-                    )
-                  })}
-                </ul>
+                <AppBar position='static'>
+                  <Tabs value={value} onChange={handleChangeTab} aria-label='simple tabs example'>
+                    {tipos.map((tipo, i) => {
+                      return <Tab key={i} label={tipo.nombre} />
+                    })}
+                  </Tabs>
+                </AppBar>
+
+                {errorList && (
+                  <div className={classes.detalleBottom}>
+                    <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
+                      <div>
+                        <div>
+                          <Typography fontSize={12} fontWeight={400} variant='p'>
+                            Error: {errorList.message}
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {tipos.map((tipo, i) => {
+                  return (
+                    <TabPanel key={i} value={value} index={i}>
+                      <ul
+                        className={`${classes.ul} ${classes.gridFull}`}
+                        style={{ margin: 0, padding: 0 }}
+                      >
+                        {items.length === 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
+                        {items
+                          .reduce((unique, item) => {
+                            // filtro para que solo haya un precio por balneario
+                            const exist = unique.find(item2 => item2.slug === item.slug)
+                            // return unique.includes(item) ? unique : [...unique, item]
+                            return exist ? unique : [...unique, item]
+                          }, [])
+                          .filter(item => item.tipoSlug === tipo.slug)
+                          .map((item, i) => {
+                            const precioOld =
+                              get(item, 'precio', 0) !== get(item, 'oldPrecio')
+                                ? parseFloat(get(item, 'oldPrecio')).toFixed(2)
+                                : 0
+                            return (
+                              <li key={i}>
+                                <CardBalList
+                                  nuevo
+                                  umbrella={!tipo.slug && true}
+                                  tent={tipo.slug && true}
+                                  tag={get(item, 'tagNombre')}
+                                  tagTexto={get(item, 'tagTexto')}
+                                  tagColor={get(item, 'tagColor')}
+                                  tagFontColor={get(item, 'tagFontColor')}
+                                  tagImagen={
+                                    get(item, 'tagImagen') !== 'false' ? get(item, 'tagImagen') : false
+                                  }
+                                  price={parseFloat(get(item, 'precio')).toFixed(2)}
+                                  oldPrice={precioOld}
+                                  name={get(item, 'nombre')}
+                                  locate={get(item, 'direccion')}
+                                  city={get(item, 'ciudad')}
+                                  image={get(item, 'imagen')}
+                                  category={get(item, 'tipo')}
+                                  onClick={() => {
+                                    history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
+                                  }}
+                                />
+                              </li>
+                            )
+                          })}
+                      </ul>
+                    </TabPanel>
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <FullScreenDialog title='Filtros' open={open} handleClose={handleClose}>
+      <FullScreenDialog fullScreen={true} title='Filtros' open={open} handleClose={handleClose}>
         <ul className={classes.filters}>
           <li>
             <Typography fontWeight={700} fontSize={16} textAlign='left' varian='p'>
@@ -386,11 +494,11 @@ const ListBalnearios = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state[item._id]}
+                      checked={state[item.slug].selected}
                       onChange={handleChange}
                       name='checkedA'
                       color='secondary'
-                      value={item._id}
+                      value={item.slug}
                     />
                   }
                   label={item.nombre}
@@ -401,7 +509,6 @@ const ListBalnearios = () => {
           {/* <Divider /> */}
         </ul>
       </FullScreenDialog>
-      <Footer />
     </div>
   )
 }

@@ -1,199 +1,116 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
+import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import Divider from '@material-ui/core/Divider'
 
-import { useHistory, Link } from 'react-router-dom'
-import dayjs from 'dayjs'
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import Badge from '@material-ui/core/Badge'
+import Typography from '@material-ui/core/Typography'
 
 import SimpleImage from './SimpleImage'
-import LogoAlamar from '../assets/alamar-logo-2.svg'
-import Typography from './Typography'
 
-import SwipeableTemporaryDrawer from './Drawer'
-
-import IconPlaya from '../assets/icon-playa2.svg'
-import Accepted from '../assets/accepted.svg'
-import Conversation from '../assets/conversation.svg'
-
-import FullScreenDialog from './Dialog'
-
-import Term from '../containers/TyC/Term'
-import Faqs from '../containers/Faqs/Faqs'
+const drawerWidth = 300
 
 const useStyles = makeStyles(theme => ({
-  header: {
-    width: '100%',
-    height: 60,
-    top: 0,
-    left: 0,
-    background: theme.palette.secondary.dark,
-    position: 'absolute',
-    zIndex: 2,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    boxSizing: 'border-box',
-    '-webkit-box-shadow': '0px 0px 9px 0px rgba(0,0,0,0.75)',
-    '-moz-box-shadow': '0px 0px 9px 0px rgba(0,0,0,0.75)',
-    'box-shadow': '0px 0px 9px 0px rgba(0,0,0,0.75)',
-
-    '@media (max-width: 960px)': {
-      justifyContent: 'center',
-      position: 'relative',
-      padding: '0 10px',
-    },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
-  container: {
-    padding: 0,
-    width: '100%',
-    maxWidth: 1200,
-    margin: '0 auto',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
-    '& svg': {
-      color: 'white',
-    },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginRight: drawerWidth,
   },
-  contentLogo: {
-    cursor: 'pointer',
-
-    '@media (max-width: 680px)': {
-      '& img': {
-        height: '30px!important',
-      },
-    },
+  title: {
+    flexGrow: 1,
   },
-  nav: {
-    display: 'flex',
-    flexDirection: 'column',
-    listStyle: 'none',
-    color: 'black',
-    alignItems: 'center',
-    padding: 10,
-
-    '& li': {
-      margin: 5,
-      padding: 0,
-      width: '100%',
-      color: 'white',
-
-      '& hr': {
-        background: 'white',
-      },
-
-      '& a': {
-        textDecoration: 'none',
-        display: 'flex',
-        alignItems: 'center',
-
-        '& img': {
-          marginRight: 15
-        },
-
-        '&:hover': {
-          textDecoration: 'underline',
-        },
-      },
-
-      '@media (max-width: 960px)': {},
-    },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    backgroundColor: theme.palette.secondary.dark,
+    width: drawerWidth,
   },
 }))
 
-const Header = () => {
-
-  const history = useHistory()
+const PersistentDrawerRight = ({
+  children,
+  logo,
+  alt,
+  user,
+  notifications,
+  open = false,
+  toggleDrawer = () => {},
+  anchorPosition = 'right',
+  listItems: ListItems,
+  setContentModal,
+}) => {
   const classes = useStyles()
-  const dia = dayjs().format('DD-MM-YYYY')
-  const [open, setOpen] = useState(false)
-  const [open2, setOpen2] = useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-  const handleClickOpen2 = () => {
-    setOpen2(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const handleClose2 = () => {
-    setOpen2(false)
-  }
 
   return (
-    <div className={classes.header}>
-      <div className={classes.container}>
-        <div className={classes.contentLogo}>
-          <Link to='/'>
-            <SimpleImage alt="Alamar - Balnearios Costa Atlantica" height={30} alt='Alamar' image={LogoAlamar} onClick={() => history.push('/')} />
-          </Link>
-        </div>
-        <SwipeableTemporaryDrawer>
-          <ul className={classes.nav}>
-            {/* <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Luiciano Recchini" src="/static/images/avatar/1.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Biuenvenido"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="white"
-                    >
-                      Luciano Recchini
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem> */}
-            <li>
-              <Link to={`/list/${dia}/${dia}`}>
-                <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={IconPlaya} />
-                <Typography variant='p' textAlign='left' color='white' fontWeight={400}>
-                  Balnearios
-                </Typography>
-              </Link>
-            </li>
-            <li>
-              <Divider />
-            </li>
-            <li>
-              <Link onClick={handleClickOpen}>
-                <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Accepted} />
-                <Typography variant='p' color='white'>
-                  Terminos y Condiciones
-                </Typography>
-              </Link>
-            </li>
-            <li>
-              <Divider />
-            </li>
-            <li>
-              <Link onClick={handleClickOpen2}>
-                <SimpleImage alt="Alquilar Balneario Costa Atlantica" height={28} image={Conversation} />
-                <Typography variant='p' color='white'>
-                  Preguntas Frecuentes
-                </Typography>
-              </Link>
-            </li>
-          </ul>
-        </SwipeableTemporaryDrawer>
-      </div>
-      <FullScreenDialog title='Terminos y condiciones' open={open} handleClose={handleClose}>
-        <Term />
-      </FullScreenDialog>
-      <FullScreenDialog title='Preguntas Frecuentes' open={open2} handleClose={handleClose2}>
-        <Faqs />
-      </FullScreenDialog>
-    </div>
+    <React.Fragment>
+      <AppBar
+        position='fixed'
+        color='secondary'
+        // className={clsx(classes.appBar, { [classes.appBarShift]: open})}
+      >
+        <Toolbar>
+          <Typography variant='h6' noWrap className={classes.title}>
+            <Link to='/home'>
+              <SimpleImage alt={alt} height={30} image={logo} />
+            </Link>
+          </Typography>
+
+          <IconButton
+            color='inherit'
+            aria-label='open drawer'
+            edge='start'
+            onClick={toggleDrawer}
+            // className={clsx(open && classes.hide)}
+          >
+            {notifications ? (
+              <Badge color='primary' badgeContent={notifications}>
+                <MenuIcon />
+              </Badge>
+            ) : (
+              <MenuIcon />
+            )}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <SwipeableDrawer
+        className={classes.drawer}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        anchor={anchorPosition}
+        open={open}
+        onClose={toggleDrawer}
+        onOpen={toggleDrawer}
+      >
+        <ListItems
+          user={user}
+          notifications={notifications}
+          onClickItem={toggleDrawer}
+          setContentModal={setContentModal}
+        />
+      </SwipeableDrawer>
+    </React.Fragment>
   )
 }
-export default Header
+
+export default React.memo(PersistentDrawerRight)

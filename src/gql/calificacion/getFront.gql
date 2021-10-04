@@ -1,0 +1,30 @@
+query calificacionGetFront($token: ID!) {
+  calificacionGetFront(token: $token) {
+    id
+    pago
+    dias
+    amount
+    articulo {
+      id
+      categoria {
+        id
+        slug
+        nombre
+        tipo {
+          id
+          slug
+          nombre
+        }
+        balneario {
+          id
+          slug
+          nombre
+          ciudad {
+            id
+            nombre
+          }
+        }
+      }
+    }
+  }
+}

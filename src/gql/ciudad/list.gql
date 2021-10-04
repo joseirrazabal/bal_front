@@ -1,8 +1,0 @@
-query ciudadListFront {
-  ciudadListFront {
-    _id
-    nombre
-    descripcion
-  }
-}
-

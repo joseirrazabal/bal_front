@@ -1,0 +1,8 @@
+query notificacionGet($id: ID!) {
+  notificacionGet(id: $id) {
+    id
+    descripcion
+    visto
+    data
+  }
+}

@@ -1,15 +1,21 @@
+# entorno flex, prod
+# service: default
+# runtime: nodejs
+# entrypoint: npm run prod
+#
+# env: flex
+# automatic_scaling:
+#   min_num_instances: 1
+#   max_num_instances: 6
+
+# entorno standard, dev
 service: default
-runtime: nodejs
 entrypoint: npm run prod
-
-env: flex
 automatic_scaling:
-  min_num_instances: 1
-  max_num_instances: 6
+  max_instances: 1
 
-# network:
-#   forwarded_ports:
-#     - 8080/tcp
+runtime: nodejs14
+env_variables:
+  MICRO: "https://micro-dot-alamar-308401.uc.r.appspot.com"
+  LOGIN_URL: "https://alamar-308401.uc.r.appspot.com"
 
-# env_variables:
-#   NODE_ENV: 'production'

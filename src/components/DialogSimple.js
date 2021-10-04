@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Slide from '@material-ui/core/Slide'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -12,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function DialogSimpleComponent({children}) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);

@@ -6,36 +6,34 @@ import get from 'lodash/get'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-import NoSsr from '@material-ui/core/NoSsr'
-
-import Header from 'src/components/Header'
-import Footer from 'src/components/Footer'
-import CardLab from '../../components/CardBal'
+/* import NoSsr from '@material-ui/core/NoSsr' */
+import StarHalfIcon from '@material-ui/icons/StarHalf'
+import PlanoGridBig from 'copo/Atoms/PlanoGrid/PlanoGridBig'
+import CardBal from 'copo/Atoms/Cards/CardGeneric/Card'
 import Search from '../../components/Search'
 import Carousel from '../../components/Carousel'
 import Button from '../../components/Button'
 import ItemSelected from '../../components/ItemSelected'
 import Typography from '../../components/Typography'
-import Selected from '../../components/Selected'
 import FullScreenDialog from '../../components/Dialog'
 import SimpleImage from '../../components/SimpleImage'
-import Loading from '../../components/Loading'
+/* import Loading from '../../components/Loading' */
 import MyMap from '../../components/Map'
 
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 import DefaultImage from '../../assets/default-image.jpg'
 import ImageBackground from '../../assets/fondo.jpg'
-import MapaDefault from '../../assets/mapaDefault.jpg'
+/* import MapaDefault from '../../assets/mapaDefault.jpg' */
 
-import TIPO_LIST from 'gql/tipo/list'
+import SEARCH_LIST from 'gql/search/list'
 import BALNEARIO_GET from 'gql/balneario/get'
-import BALNEARIO_LIST from 'gql/balneario/listUltimos'
-import CATEGORIA_LIST from 'gql/categoria/list'
 import PRECIO_GET from 'gql/precio/get'
-import CIUDAD_LIST from 'gql/ciudad/list'
+
+import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 
 dayjs.extend(customParseFormat)
 
+// googleMaps static image key
 const key = 'AIzaSyDqmMaF9eTJtA2x-a_xYSK2sF5giJTlkCo'
 
 const useStyles = makeStyles(theme => ({
@@ -49,6 +47,7 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      paddingTop: 55,
     },
   },
   container: {
@@ -62,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentSearch: {
     width: '100%',
-    height: 80,
+    height: 180,
     backgroundImage: 'url(' + ImageBackground + ')',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
@@ -132,6 +131,13 @@ const useStyles = makeStyles(theme => ({
       marginTop: 0,
     },
 
+    '&.details': {
+      background: '#f2f2f2',
+      border: 'none',
+      padding: 5,
+      'box-shadow': 'none',
+    },
+
     '& ul': {
       listStyle: 'none',
       padding: 0,
@@ -152,7 +158,6 @@ const useStyles = makeStyles(theme => ({
     width: '60%',
     position: 'relative',
     height: 500,
-    //background: 'green',
 
     '@media (max-width: 960px)': {
       width: '100%',
@@ -161,7 +166,6 @@ const useStyles = makeStyles(theme => ({
   },
   detalle: {
     width: '40%',
-    // background: 'red',
     position: 'relative',
     display: 'flex',
     alignSelf: 'strech',
@@ -231,7 +235,7 @@ const useStyles = makeStyles(theme => ({
       background: 'white',
       alignItems: 'center',
       position: 'fixed',
-      padding: 15,
+      padding: '5px 10px',
       bottom: 0,
       zIndex: 3,
       left: 0,
@@ -279,10 +283,8 @@ const useStyles = makeStyles(theme => ({
     height: 280,
     display: 'flex',
     overflow: 'hidden',
-    // justifyContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundImage: 'url(' + MapaDefault + ')',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -306,24 +308,50 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     zIndex: 2,
   },
+  calification: {
+    position: 'absolute',
+    width: 75,
+    borderRadius: '0 0 15px 0',
+    top: 0,
+    height: 30,
+    background: 'rgba(0, 176, 255, .8)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '& svg': {
+      color: 'orange',
+    },
+  },
+  contentPlanoModal: {
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+
+    '@media (max-width: 900px)': {
+      display: 'block',
+    },
+  }
 }))
 
 const DetalleBalneario = () => {
-  const [widthNav, setWidthNav] = useState(null)
-
-  useEffect(() => {
-    setWidthNav(window.innerWidth)
-  }, [])
-
   const classes = useStyles()
   const history = useHistory()
-  const { id, ciudad, desde, hasta } = useParams()
+  const { slug, desde, hasta } = useParams()
 
-  const [categoria, setCategoria] = useState()
+  const [item, setItem] = useState(null)
+  const [balneario, setBalneario] = useState({})
+
+  const [categoriasAll, setCategoriasAll] = useState([])
+  const [categorias, setCategorias] = useState([])
+  const [categoriaSelected, setCategoriaSelected] = useState()
+
   const [tipos, setTipos] = useState([])
   const [tipoSelected, setTipoSelected] = useState(null)
-  const [balneario, setBalneario] = useState({})
+
   const [imagenes, setImagenes] = useState([])
+  const [widthNav, setWidthNav] = useState(null)
+
   const [open, setOpen] = useState(false)
   const [open2, setOpen2] = useState(false)
   const [open3, setOpen3] = useState(false)
@@ -331,6 +359,80 @@ const DetalleBalneario = () => {
 
   const date1 = dayjs(hasta, 'DD-MM-YYYY')
   const cantidadDias = date1.diff(dayjs(desde, 'DD-MM-YYYY'), 'day') + 1
+
+  const { data: ciudades, loading: loadingCiudad } = useQuery(SEARCH_LIST)
+
+  const { data, loading } = useQuery(BALNEARIO_GET, {
+    variables: {
+      slug: `${slug}`,
+    },
+  })
+
+  const { data: dataList, loadingList } = useQuery(BALNEARIO_LIST, {
+    fetchPolicy: 'no-cache',
+  })
+
+  const [getPrecio, { data: dataPrecio, loading: loadingPrecio, error: errorPrecio }] = useLazyQuery(
+    PRECIO_GET,
+    {
+      variables: { balneario: get(balneario, 'slug'), categoria: categoriaSelected, desde, hasta },
+      fetchPolicy: 'no-cache',
+    }
+  )
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    setWidthNav(window.innerWidth)
+
+    if (categoriaSelected) {
+      getPrecio()
+    }
+  }, [categoriaSelected, desde, hasta])
+
+  useEffect(() => {
+    if (get(data, 'balnearioGetFront')) {
+      setBalneario(get(data, 'balnearioGetFront', {}) || {})
+      setImagenes(get(data, 'balnearioGetFront.imagenes', []) || [])
+
+      setCategoriasAll(get(data, 'balnearioGetFront.Categoria'))
+
+      const aTipos = []
+      get(data, 'balnearioGetFront.Categoria', []).map(item => {
+        aTipos[item.tipo.slug] = item.tipo
+      })
+
+      const aTipos2 = []
+      for (const item in aTipos) {
+        aTipos2.push(aTipos[item])
+      }
+
+      setTipos(aTipos2)
+      setTipoSelected(aTipos2[0])
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (get(dataList, 'balnearioListFrontUltimos', []).length) {
+      setOtros(get(dataList, 'balnearioListFrontUltimos'))
+    }
+  }, [dataList])
+
+  useEffect(() => {
+    const aCategorias = categoriasAll.filter(item => item.tipo.slug === tipoSelected.slug)
+    setCategorias(aCategorias)
+  }, [tipoSelected])
+
+  useEffect(() => {
+    setCategoriaSelected(get(categorias[0], 'slug'))
+  }, [categorias])
+
+  const onSubmitSearch = data => {
+    if (data.ciudad.slug === slug) {
+      history.push(`/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+    } else {
+      history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+    }
+  }
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -352,80 +454,43 @@ const DetalleBalneario = () => {
     setOpen3(false)
   }
 
-  const { data: ciudades, loading: loadingCiudad } = useQuery(CIUDAD_LIST)
-  const { data: dataTipoList, loadingTipoList } = useQuery(TIPO_LIST, {
-    variables: { balneario: id },
-    fetchPolicy: 'no-cache',
-  })
-  const { data: dataList, loadingList } = useQuery(BALNEARIO_LIST, {
-    fetchPolicy: 'no-cache',
-  })
-
-  const [getCategorias, { data: dataCategorias, loading: loadingCategorias }] = useLazyQuery(
-    CATEGORIA_LIST,
-    {
-      variables: { tipo: get(tipoSelected, '_id'), balneario: id },
-      fetchPolicy: 'no-cache',
-    }
-  )
-  const [getPrecio, { data: dataPrecio, loading: loadingPrecio }] = useLazyQuery(PRECIO_GET, {
-    variables: { categoria: categoria, desde, hasta },
-    fetchPolicy: 'no-cache',
-  })
-
-  const { data, loading } = useQuery(BALNEARIO_GET, {
-    variables: {
-      id: `${id}`,
-    },
-  })
-
-  useEffect(() => {
-    if (get(dataList, 'balnearioListFrontUltimos', []).length) {
-      setOtros(get(dataList, 'balnearioListFrontUltimos'))
-    }
-  }, [dataList])
-
-  useEffect(() => {
-    setBalneario(get(data, 'balnearioGetFront', {}) || {})
-    setImagenes(get(data, 'balnearioGetFront.imagenes', []) || [])
-  }, [data])
-
-  useEffect(() => {
-    setTipos(get(dataTipoList, 'tipoListFront', []) || [])
-
-    setTipoSelected(get(dataTipoList, 'tipoListFront.0', {}) || {})
-  }, [dataTipoList])
-
-  useEffect(() => {
-    getCategorias()
-  }, [tipoSelected])
-
-  useEffect(() => {
-    if (get(dataCategorias, 'categoriaListFront')) {
-      setCategoria(get(dataCategorias, 'categoriaListFront.0._id'))
-    }
-  }, [dataCategorias])
-
-  useEffect(() => {
-    if (categoria) {
-      getPrecio()
-    }
-  }, [categoria])
-
-  if (loading || loadingCiudad || loadingTipoList) {
-    return (
-      <NoSsr>
-        <Loading />
-      </NoSsr>
-    )
+  const selectItem = item => {
+    setItem(item)
+    setOpen(false)
   }
+
+  const handleComprar = () => {
+    if (get(dataPrecio, 'precioGetFront.precio', 0) && get(dataPrecio, 'precioGetFront.stock', 0)) {
+      history.push({
+        pathname: `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
+          dataPrecio,
+          'precioGetFront.categoriaSlug'
+        )}/${desde}/${hasta}`,
+        state: { itemSelected: item },
+      })
+    }
+  }
+
+  // if (loading || loadingCiudad) {
+  //   return (
+  //     <NoSsr>
+  //       <Loading />
+  //     </NoSsr>
+  //   )
+  // }
 
   return (
     <div className={classes.contentFull}>
-      <Header />
       <div className={classes.contentSearch}>
         <div className={classes.container}>
-          <Search ciudades={ciudades} ciudad={ciudad} desde={desde} hasta={hasta} />
+          <Search
+            textSearch="CAMBIAR FECHA"
+            ciudades={ciudades}
+            ciudad={{ slug: slug }}
+            desde={desde}
+            hasta={hasta}
+            handleOnSubmit={onSubmitSearch}
+          />
         </div>
       </div>
       <div className={classes.contentBanners}>
@@ -437,7 +502,7 @@ const DetalleBalneario = () => {
                   <div className={classes.imageBackground}>
                     <SimpleImage
                       alt='Alquilar Balneario Costa Atlantica'
-                      width='100%'
+                      height='100%'
                       image={DefaultImage}
                     />
                   </div>
@@ -472,18 +537,17 @@ const DetalleBalneario = () => {
               </FullScreenDialog>
               {imagenes.length != 0 && (
                 <div className={classes.verFotos}>
-                  <Button colorBg='default' color="black" height={30} onClick={handleClickOpen2}>
-                    AMPLIAR FOTOS
+                  <Button color='secondary' height={30} onClick={handleClickOpen2}>
+                    + AMPLIAR FOTOS
                   </Button>
                 </div>
               )}
-              {get(balneario, 'planos.0') && (
-                <div className={classes.verPlano}>
-                  <Button colorBg="secondary" height={30} onClick={handleClickOpen}>
-                    VER PLANO
-                  </Button>
+              {/* <div className={classes.calification}>
+                <div>
+                  <Typography color='white'>3.5</Typography>
                 </div>
-              )}
+                <StarHalfIcon />
+              </div> */}
             </div>
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
@@ -498,126 +562,113 @@ const DetalleBalneario = () => {
                     {get(balneario, 'direccion')}
                   </Typography>
                 </div>
-                <div className={classes.gridRow}>
-                  {tipos.map((item, i) => {
-                    return (
-                      <ItemSelected
-                        key={i}
-                        active={item.nombre === get(tipoSelected, 'nombre')}
-                        //icon={IconCarpAzul}
-                        icon={get(item, 'imagen') || IconCarpAzul}
-                        title={`Alquilar ${item.nombre}`}
-                        precio={400}
-                        // disponibles={get(dataPrecio, 'precioGetFront.stock', 0)}
-                        onClick={() => {
-                          setTipoSelected(item)
-                        }}
-                      />
-                    )
-                  })}
-                </div>
-                {get(dataCategorias, 'categoriaListFront.0') && (
-                  <div className={classes.gridRow}>
-                    <Selected
-                      items={get(dataCategorias, 'categoriaListFront')}
-                      loading={loadingCategorias}
-                      onChange={e => {
-                        setCategoria(e.target.value)
-                      }}
-                    />
-                  </div>
+                {get(balneario, 'plano') && (
+                  <ItemSelected
+                    icon={IconCarpAzul}
+                    title={`VER PLANO`}
+                    precio={400}
+                    onClick={handleClickOpen}
+                  />
                 )}
+                <div className={classes.gridColumn} style={{ marginTop: 20 }}>
+                  <Typography fontSize={16} fontWeight={700} color='grey' variant='p'>
+                    Seleccionaste:
+                  </Typography>
+                  <Typography fontSize={14} variant='p' color='grey'>
+                    Carpa numero 4
+                  </Typography>
+                </div>
               </div>
 
-              {get(dataPrecio, 'precioGetFront.precio') && (
+              {errorPrecio && (
                 <div className={classes.detalleBottom}>
                   <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                     <div>
                       <div>
                         <Typography fontSize={12} fontWeight={400} variant='p'>
-                          Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
+                          Error: {errorPrecio.message}
                         </Typography>
-                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
-                          {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`}
-
-                          {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 &&
-                            parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0)) > 0 && (
-                              <Typography
-                                fontSize={11}
-                                fontWeight={400}
-                                color='black'
-                                variant='span'
-                                textDecoration='line-through'
-                              >
-                                {' '}
-                                ${parseInt(get(dataPrecio, 'precioGetFront.precioCero', 0))}
-                              </Typography>
-                            )}
-                        </Typography>
-                        <div>
-                          <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                            ${parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) * cantidadDias}
-                          </Typography>
-                          <Typography
-                            fontWeight={400}
-                            fontSize={16}
-                            color='black'
-                            variant='span'
-                            fontStyle='italic'
-                          >
-                            Total
-                          </Typography>
-                        </div>
                       </div>
-                    </div>
-                    <div>
-                      {parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 1 &&
-                        parseInt(get(dataPrecio, 'precioGetFront.dias', 0)) > 0 && (
-                          <div style={{ marginBottom: 5 }}>
-                            <Typography
-                              className={classes.offer}
-                              fontSize={11}
-                              fontWeight={400}
-                              color='#55C443'
-                              variant='span'
-                            >
-                              Descuento por seleccionar{' '}
-                              {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))} dias
-                            </Typography>
-                          </div>
-                        )}
-                      {/* <Button
-                        disabled={
-                          !get(dataPrecio, 'precioGetFront.precio', 0) ||
-                          !get(dataPrecio, 'precioGetFront.stock', 0)
-                        }
-                        height={40}
-                        width={200}
-                        onClick={() =>
-                          history.push(
-                            `/checkout/${get(dataPrecio, 'precioGetFront._id')}/${desde}/${hasta}`
-                          )
-                        }
-                      >
-                        ALQUILAR X {cantidadDias} DIA/S
-                      </Button> */}
-                    </div>
-                  </div>
-                  <div className={classes.gridColumn} style={{ marginTop: 15 }}>
-                    <Typography color='black' variant='h3'>
-                      Información importante
-                    </Typography>
-                    <div style={{ paddingTop: 10 }}>
-                      <Typography color='green' variant='p' fontSize={13}>
-                        <b>Checkin:</b> {get(balneario, 'checkIn')}
-                      </Typography>
-                      <Typography color='red' variant='p' fontSize={13}>
-                        <b>Checkout:</b> {get(balneario, 'checkOut')}
-                      </Typography>
                     </div>
                   </div>
                 </div>
               )}
+              <div className={classes.detalleBottom}>
+                <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
+                  <div>
+                    <div>
+                      <Typography fontSize={12} fontWeight={400} variant='p'>
+                        Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
+                      </Typography>
+                      <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
+                        {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`}
+                      </Typography>
+                      <div>
+                        <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
+                          $
+                          {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) *
+                            parseInt(get(dataPrecio, 'precioGetFront.dias', 1))}
+                        </Typography>
+                        <Typography
+                          fontWeight={400}
+                          fontSize={16}
+                          color='black'
+                          variant='span'
+                          fontStyle='italic'
+                        >
+                          Total
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    {get(dataPrecio, 'precioGetFront.oldPrecio', 0) !==
+                      get(dataPrecio, 'precioGetFront.precio', 0) &&
+                      parseInt(get(dataPrecio, 'precioGetFront.oldPrecio', 0)) > 0 && (
+                        <div style={{ marginBottom: 5 }}>
+                          <Typography
+                            className={classes.offer}
+                            fontSize={11}
+                            fontWeight={400}
+                            color='#55C443'
+                            variant='span'
+                          >
+                            Descuento por seleccionar{' '}
+                            {parseInt(get(dataPrecio, 'precioGetFront.dias', 0))} dias
+                          </Typography>
+                        </div>
+                      )}
+                    <Button
+                      disable={false}
+                      disabled={
+                        !get(dataPrecio, 'precioGetFront.precio', 0) ||
+                        !get(dataPrecio, 'precioGetFront.stock', 0) ||
+                        !item
+                      }
+                      height={40}
+                      width={200}
+                      onClick={() => handleComprar()}
+                    >
+                      {!item
+                        ? 'Seleccionar'
+                        : `ALQUILAR X ${get(dataPrecio, 'precioGetFront.dias', 1)} DIA/S`}
+                    </Button>
+                  </div>
+                </div>
+                <div className={classes.gridColumn} style={{ marginTop: 15 }}>
+                  <Typography color='black' variant='h3'>
+                    Información importante
+                  </Typography>
+                  <div style={{ paddingTop: 10 }}>
+                    <Typography color='green' variant='p' fontSize={13}>
+                      <b>Checkin:</b> {get(balneario, 'checkIn')}
+                    </Typography>
+                    <Typography color='red' variant='p' fontSize={13}>
+                      <b>Checkout:</b> {get(balneario, 'checkOut')}
+                    </Typography>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className={classes.contentDetalleColumn}>
@@ -665,22 +716,24 @@ const DetalleBalneario = () => {
               )},${get(balneario, 'geoLocation.lng')}&key=${key}`}
             />
           </div>
-          <div className={classes.contentDetalleColumn}>
+          <div className={`${classes.contentDetalleColumn} details`}>
             <Typography fontWeight={700} fontSize={20} varian='h3'>
               Otros Balnearios
             </Typography>
             <ul>
               {otros
-                .filter(item => `${item._id}` !== `${id}`)
+                .filter(item => `${item.slug}` !== `${slug}`)
                 .slice(0, 3)
                 .map((item, i) => {
                   return (
                     <li key={i}>
-                      <CardLab
+                      <CardBal
                         moludar
-                        item={item}
+                        name={get(item, 'nombre')}
+                        city={get(item, 'ciudad.nombre')}
+                        image={get(item, 'imagenes.0.url')}
                         onClick={() => {
-                          history.push(`/detalle/${get(item, '_id')}/${desde}/${hasta}`)
+                          history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
                         }}
                       />
                     </li>
@@ -689,7 +742,12 @@ const DetalleBalneario = () => {
             </ul>
           </div>
 
-          <FullScreenDialog fullScreen={widthNav < 600} title='Nuestra Ubicación' open={open3} handleClose={handleClose3}>
+          <FullScreenDialog
+            fullScreen={widthNav < 600}
+            title='Nuestra Ubicación'
+            open={open3}
+            handleClose={handleClose3}
+          >
             <div style={{ width: widthNav > 600 ? 600 : '100%', height: 600 }}>
               <MyMap
                 onDragMarker={() => {}}
@@ -700,18 +758,17 @@ const DetalleBalneario = () => {
           </FullScreenDialog>
 
           <FullScreenDialog
-            fullScreen={false}
+            fullScreen={true}
             title='Plano Balneario'
             open={open}
             handleClose={handleClose}
           >
-            <div style={{ margin: '0 auto', maxWidth: 850, width: '100%' }}>
-              <SimpleImage width='100%' image={get(balneario, 'planos.0.url')} />
+            <div className={classes.contentPlanoModal}>
+              <PlanoGridBig data={get(balneario, 'plano')} handleClick={selectItem} />
             </div>
           </FullScreenDialog>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

@@ -1,0 +1,10 @@
+query homeListFront {
+  homeListFront {
+    nombre
+    imagen
+    publicidad
+    titulo
+    cantItems
+    config
+  }
+}

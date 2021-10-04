@@ -1,6 +1,7 @@
-query balnearioGetFront($id: ID!) {
-  balnearioGetFront(id: $id) {
-    _id
+query balnearioGetFront($slug: String!) {
+  balnearioGetFront(slug: $slug) {
+    id
+    slug
     nombre
     direccion
     descripcion
@@ -11,17 +12,25 @@ query balnearioGetFront($id: ID!) {
       lat
       lng
     }
+    plano
     imagenes {
       url
-      titulo
     }
     planos {
       url
-      titulo
     }
     ciudad {
-      _id
+      id
       nombre
+    }
+    Categoria {
+      slug
+      nombre
+      tipo {
+        slug
+        nombre
+        imagen
+      }
     }
   }
 }

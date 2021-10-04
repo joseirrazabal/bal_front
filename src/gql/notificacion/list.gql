@@ -1,0 +1,8 @@
+query notificacionList {
+  notificacionList {
+    id
+    descripcion
+    visto
+    data
+  }
+}

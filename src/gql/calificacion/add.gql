@@ -1,0 +1,7 @@
+mutation calificacionAddFront($token: ID, $calificacion: Int, $descripcion: String) {
+  calificacionAddFront(token: $token, calificacion: $calificacion, descripcion: $descripcion) {
+    n
+    nModified
+    ok
+  }
+}

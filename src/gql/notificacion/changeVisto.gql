@@ -1,0 +1,7 @@
+mutation notificacionChangeVisto($id: ID!, $visto: Boolean) {
+  notificacionChangeVisto(id: $id, visto: $visto) {
+    id
+    descripcion
+    visto
+  }
+}

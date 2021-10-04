@@ -1,29 +1,24 @@
-query precioGetFront($id: String, $categoria: String, $desde: String, $hasta: String) {
-  precioGetFront(id: $id, categoria: $categoria, desde: $desde, hasta: $hasta) {
-    _id
+query precioGetFront($balneario: String, $categoria: String, $desde: String, $hasta: String) {
+  precioGetFront(balneario: $balneario, categoria: $categoria, desde: $desde, hasta: $hasta) {
+    id
+    balneario
+    balnearioSlug
+    direccion
+    ciudad
+    ciudadSlug
+    categoria
+    categoriaSlug
+    tipo
+    tipoSlug
+    articulo
+    oldPrecio
     precio
+    tagNombre
+    tagTexto
+    tagClase
+    tagImagen
+    imagen
     dias
     stock
-    precioCero
-    articulo {
-      _id
-      categoria {
-        _id
-        nombre
-        tipo {
-          _id
-          nombre
-        }
-        balneario {
-          _id
-          nombre
-          ciudad {
-            _id
-            nombre
-          }
-          keyPublic
-        }
-      }
-    }
   }
 }
