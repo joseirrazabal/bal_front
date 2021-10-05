@@ -3,6 +3,7 @@ query precioGetFront($balneario: String, $categoria: String, $desde: String, $ha
     id
     balneario
     balnearioSlug
+    keyPublic
     direccion
     ciudad
     ciudadSlug

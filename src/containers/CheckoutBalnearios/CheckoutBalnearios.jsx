@@ -322,8 +322,6 @@ const CheckoutBalnearios = ({ theme }) => {
   const [errorMP, setErrorMP] = useState(false)
   const [precio, setPrecio] = useState({})
 
-  console.log(precio)
-
   const { data: dataPrecio, loading: loadingPrecio } = useQuery(PRECIO_GET, {
     variables: { balneario: balneario, categoria: categoria, desde: desde, hasta: hasta },
     fetchPolicy: 'no-cache',
@@ -345,12 +343,12 @@ const CheckoutBalnearios = ({ theme }) => {
   useEffect(() => {
     if (get(dataPrecio, 'precioGetFront.precio')) {
       setPrecio(get(dataPrecio, 'precioGetFront'))
-      // if (NODE_ENV !== 'production') {
+      if (NODE_ENV !== 'production') {
         console.log('key meli dev')
         setKeyPublic(MERCADO_PAGO_PUBLIC_KEY)
-      // } else {
-      //   setKeyPublic(get(dataPrecio, 'precioGetFront.articulo.categoria.balneario.keyPublic'))
-      // }
+      } else {
+        setKeyPublic(get(dataPrecio, 'precioGetFront.keyPublic'))
+      }
     }
   }, [dataPrecio])
 
@@ -480,8 +478,6 @@ const CheckoutBalnearios = ({ theme }) => {
   const cardholderName = useRef()
 
   const onSubmit = ({ checkedA, ...data }) => {
-    console.log(data)
-
     const form = {
       ...data,
       anotaciones: `numero: ${get(itemSelected, 'numero')}`,
@@ -505,8 +501,6 @@ const CheckoutBalnearios = ({ theme }) => {
           precio,
           'categoria'
         )} desde: ${desde} hasta: ${hasta}`
-
-        console.log('enviando')
 
         reservaAdd({
           variables: {
