@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "kit start",
-    "build": "kit build",
+    "build": "cp .env_example .env && kit build",
     "prodLocal": "cd dist && cross-env NODE_ENV=production node app.js",
     "prod": "node app.js",
     "dist": "cd dist && gcloud app deploy --project alamar-308401",

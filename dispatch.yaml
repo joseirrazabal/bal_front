@@ -1,7 +1,7 @@
 dispatch:
-  - url: '*/backoffice/*'
+  - url: 'backoffice.alamar.ar/*'
     service: backoffice
   - url: '*/auth/*'
     service: micro
-  - url: 'alamar-308401.uc.r.appspot.com/*'
+  - url: 'alamar.ar/*'
     service: default
