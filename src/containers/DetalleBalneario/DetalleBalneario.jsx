@@ -582,7 +582,7 @@ const DetalleBalneario = () => {
                     Seleccionaste:
                   </Typography>
                   <Typography fontSize={14} variant='p' color='grey'>
-                    Carpa numero {get(item, 'numero', '')}
+                    {get(item, 'tipo', 'carpa')} numero {get(item, 'numero', '')}
                   </Typography>
                 </div>
               </div>
