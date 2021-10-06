@@ -599,19 +599,20 @@ const DetalleBalneario = () => {
                 </div>
               </div>
 
-              {errorPrecio && (
-                <div className={classes.detalleBottom}>
-                  <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
-                    <div>
-                      <div>
-                        <Typography fontSize={12} fontWeight={400} variant='p'>
-                          Error: {errorPrecio.message}
-                        </Typography>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* {errorPrecio && ( */}
+              {/*   <div className={classes.detalleBottom}> */}
+              {/*     <div className={`${classes.gridRow} ${classes.cardPrecio}`}> */}
+              {/*       <div> */}
+              {/*         <div> */}
+              {/*           <Typography fontSize={12} fontWeight={400} variant='p'> */}
+              {/*             Error: {errorPrecio.message} */}
+              {/*           </Typography> */}
+              {/*         </div> */}
+              {/*       </div> */}
+              {/*     </div> */}
+              {/*   </div> */}
+              {/* )} */}
+
               <div className={classes.detalleBottom}>
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
