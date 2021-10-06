@@ -304,7 +304,7 @@ const useStyles = makeStyles(theme => ({
 const CheckoutBalnearios = ({ theme }) => {
   const classes = useStyles()
   const history = useHistory()
-  const { balneario, categoria, desde, hasta } = useParams()
+  const { balneario, tipo, desde, hasta } = useParams()
   const { state } = useLocation()
 
   const itemSelected = state.itemSelected
@@ -323,7 +323,7 @@ const CheckoutBalnearios = ({ theme }) => {
   const [precio, setPrecio] = useState({})
 
   const { data: dataPrecio, loading: loadingPrecio } = useQuery(PRECIO_GET, {
-    variables: { balneario: balneario, categoria: categoria, desde: desde, hasta: hasta },
+    variables: { balneario: balneario, tipo: tipo, desde: desde, hasta: hasta },
     fetchPolicy: 'no-cache',
   })
 
@@ -368,6 +368,8 @@ const CheckoutBalnearios = ({ theme }) => {
 
   const [paymentMethod, setPaymentMethod] = useState({})
   const [tipoDocumento, setTipoDocument] = useState([])
+
+  console.log("precio", precio)
 
   useEffect(() => {
     setIssuerSelect(get(issuers, '0.id'))
@@ -499,7 +501,7 @@ const CheckoutBalnearios = ({ theme }) => {
 
         const descrip = `Alamar: ${get(precio, 'balneario')} - ${get(precio, 'tipo')} - ${get(
           precio,
-          'categoria'
+          'tipo'
         )} desde: ${desde} hasta: ${hasta}`
 
         reservaAdd({
@@ -508,7 +510,8 @@ const CheckoutBalnearios = ({ theme }) => {
               ...data,
               precioId: get(precio, 'id'),
               balneario: get(precio, 'balnearioSlug'),
-              categoria: get(precio, 'categoriaSlug'),
+              tipo: get(precio, 'tipoSlug'),
+              numero: get(itemSelected, 'numero'),
               desde: desde,
               hasta: hasta,
               precio: get(precio, 'id'),
@@ -523,6 +526,7 @@ const CheckoutBalnearios = ({ theme }) => {
     })
   }
 
+  console.log(itemSelected)
   if (loadingPrecio) {
     return (
       <NoSsr>
@@ -845,7 +849,7 @@ const CheckoutBalnearios = ({ theme }) => {
                     {get(precio, 'balneario')}
                   </Typography>
                   <Typography fontSize={23} className={classes.subTitle} variant='h4'>
-                    {get(precio, 'categoria')}
+                    {get(precio, 'tipo')}
                   </Typography>
                   <Typography fontSize={18} color='grey' variant='p'>
                     {get(precio, 'ciudad')}

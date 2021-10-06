@@ -38,7 +38,7 @@ const routes = [
     isPrivate: false,
   },
   {
-    route: '/checkout/:balneario/:categoria/:desde/:hasta',
+    route: '/checkout/:balneario/:tipo/:desde/:hasta',
     component: CheckoutBalnearios,
     Props: {},
     useLayout: true,

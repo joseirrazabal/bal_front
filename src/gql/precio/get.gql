@@ -1,5 +1,5 @@
-query precioGetFront($balneario: String, $categoria: String, $desde: String, $hasta: String) {
-  precioGetFront(balneario: $balneario, categoria: $categoria, desde: $desde, hasta: $hasta) {
+query precioGetFront($balneario: String, $tipo: String, $numero: Int $desde: String, $hasta: String) {
+  precioGetFront(balneario: $balneario, tipo: $tipo, numero: $numero, desde: $desde, hasta: $hasta) {
     id
     balneario
     balnearioSlug

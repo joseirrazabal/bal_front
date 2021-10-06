@@ -433,12 +433,12 @@ const ListBalnearios = () => {
                       >
                         {items.length === 0 && <SimpleImage width={'100%'} image={ImageDefault} />}
                         {items
-                          .reduce((unique, item) => {
-                            // filtro para que solo haya un precio por balneario
-                            const exist = unique.find(item2 => item2.slug === item.slug)
-                            // return unique.includes(item) ? unique : [...unique, item]
-                            return exist ? unique : [...unique, item]
-                          }, [])
+                          // .reduce((unique, item) => {
+                          //   // filtro para que solo haya un precio por balneario
+                          //   const exist = unique.find(item2 => item2.slug === item.slug)
+                          //   // return unique.includes(item) ? unique : [...unique, item]
+                          //   return exist ? unique : [...unique, item]
+                          // }, [])
                           .filter(item => item.tipoSlug === tipo.slug)
                           .map((item, i) => {
                             const precioOld =
@@ -449,8 +449,7 @@ const ListBalnearios = () => {
                               <li key={i}>
                                 <CardBalList
                                   nuevo
-                                  umbrella={!tipo.slug && true}
-                                  tent={tipo.slug && true}
+                                  umbrella={tipo.slug === "sombrilla" }
                                   tag={get(item, 'tagNombre')}
                                   tagTexto={get(item, 'tagTexto')}
                                   tagColor={get(item, 'tagColor')}
@@ -464,7 +463,6 @@ const ListBalnearios = () => {
                                   locate={get(item, 'direccion')}
                                   city={get(item, 'ciudad')}
                                   image={get(item, 'imagen')}
-                                  category={get(item, 'tipo')}
                                   onClick={() => {
                                     history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
                                   }}

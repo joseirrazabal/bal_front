@@ -324,14 +324,14 @@ const useStyles = makeStyles(theme => ({
     },
   },
   contentPlanoModal: {
-    display: 'flex', 
-    justifyContent: 'center', 
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
 
     '@media (max-width: 900px)': {
       display: 'block',
     },
-  }
+  },
 }))
 
 const DetalleBalneario = () => {
@@ -375,7 +375,13 @@ const DetalleBalneario = () => {
   const [getPrecio, { data: dataPrecio, loading: loadingPrecio, error: errorPrecio }] = useLazyQuery(
     PRECIO_GET,
     {
-      variables: { balneario: get(balneario, 'slug'), categoria: categoriaSelected, desde, hasta },
+      variables: {
+        balneario: get(balneario, 'slug'),
+        tipo: get(item, 'tipo'),
+        numero: get(item, 'numero'),
+        desde,
+        hasta,
+      },
       fetchPolicy: 'no-cache',
     }
   )
@@ -384,10 +390,10 @@ const DetalleBalneario = () => {
     window.scrollTo(0, 0)
     setWidthNav(window.innerWidth)
 
-    if (categoriaSelected) {
-      getPrecio()
-    }
-  }, [categoriaSelected, desde, hasta])
+    // if (categoriaSelected) {
+    getPrecio()
+    // }
+  }, [item, desde, hasta])
 
   useEffect(() => {
     if (get(data, 'balnearioGetFront')) {
@@ -427,6 +433,7 @@ const DetalleBalneario = () => {
   }, [categorias])
 
   const onSubmitSearch = data => {
+    console.log('bien')
     if (data.ciudad.slug === slug) {
       history.push(`/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     } else {
@@ -464,7 +471,7 @@ const DetalleBalneario = () => {
       history.push({
         pathname: `/checkout/${get(dataPrecio, 'precioGetFront.balnearioSlug')}/${get(
           dataPrecio,
-          'precioGetFront.categoriaSlug'
+          'precioGetFront.tipoSlug'
         )}/${desde}/${hasta}`,
         state: { itemSelected: item },
       })
@@ -484,7 +491,7 @@ const DetalleBalneario = () => {
       <div className={classes.contentSearch}>
         <div className={classes.container}>
           <Search
-            textSearch="CAMBIAR FECHA"
+            textSearch='CAMBIAR FECHA'
             ciudades={ciudades}
             ciudad={{ slug: slug }}
             desde={desde}
@@ -575,7 +582,7 @@ const DetalleBalneario = () => {
                     Seleccionaste:
                   </Typography>
                   <Typography fontSize={14} variant='p' color='grey'>
-                    Carpa numero 4
+                    Carpa numero {get(item, 'numero', '')}
                   </Typography>
                 </div>
               </div>
@@ -772,4 +779,5 @@ const DetalleBalneario = () => {
     </div>
   )
 }
+
 export default DetalleBalneario
