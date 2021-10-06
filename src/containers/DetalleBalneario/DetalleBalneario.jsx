@@ -28,6 +28,7 @@ import ImageBackground from '../../assets/fondo.jpg'
 import SEARCH_LIST from 'gql/search/list'
 import BALNEARIO_GET from 'gql/balneario/get'
 import PRECIO_GET from 'gql/precio/get'
+import RESERVADAS_GET from 'gql/reserva/reservadas'
 
 import BALNEARIO_LIST from 'gql/balneario/listUltimos'
 
@@ -368,6 +369,17 @@ const DetalleBalneario = () => {
     },
   })
 
+  const [getReservadas, { data: dataReservadas, loading: loadingReservadas }] = useLazyQuery(
+    RESERVADAS_GET,
+    {
+      variables: {
+        balneario: get(balneario, 'slug'),
+        desde,
+        hasta,
+      },
+    }
+  )
+
   const { data: dataList, loadingList } = useQuery(BALNEARIO_LIST, {
     fetchPolicy: 'no-cache',
   })
@@ -391,9 +403,10 @@ const DetalleBalneario = () => {
     setWidthNav(window.innerWidth)
 
     // if (categoriaSelected) {
+    getReservadas()
     getPrecio()
     // }
-  }, [item, desde, hasta])
+  }, [item, desde, hasta, slug])
 
   useEffect(() => {
     if (get(data, 'balnearioGetFront')) {
@@ -433,7 +446,6 @@ const DetalleBalneario = () => {
   }, [categorias])
 
   const onSubmitSearch = data => {
-    console.log('bien')
     if (data.ciudad.slug === slug) {
       history.push(`/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     } else {
@@ -771,7 +783,11 @@ const DetalleBalneario = () => {
             handleClose={handleClose}
           >
             <div className={classes.contentPlanoModal}>
-              <PlanoGridBig data={get(balneario, 'plano')} handleClick={selectItem} />
+              <PlanoGridBig
+                data={get(balneario, 'plano')}
+                handleClick={selectItem}
+                reservadas={get(dataReservadas, 'reservadas', [])}
+              />
             </div>
           </FullScreenDialog>
         </div>

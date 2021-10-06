@@ -1,0 +1,8 @@
+query reservadas($balneario: String, $desde: String, $hasta: String) {
+  reservadas(balneario: $balneario, desde: $desde, hasta: $hasta) {
+    numero
+    tipo {
+      slug
+    }
+  }
+}
