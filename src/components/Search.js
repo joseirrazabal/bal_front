@@ -200,6 +200,7 @@ const Search = ({
   }
 
   const onSubmit = ({ ciudad, desde, hasta }) => {
+    console.log('onSubmit', ciudad, desde, hasta)
     if (checked) {
       handleOnSubmit({ ciudad, desde, hasta })
     } else {
@@ -208,24 +209,106 @@ const Search = ({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      style={styles}
-      className={`${classes.contentSearchCenter}`}
-      //noValidate
-    >
-      <div className={classes.boxColumn}>
-        {/* <div className={classes.boxEnd}>
+    <React.Fragment>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={styles}
+        className={`${classes.contentSearchCenter}`}
+        //noValidate
+      >
+        <div className={classes.boxColumn}>
+          {/* <div className={classes.boxEnd}>
           <Typography color="gray" textAlign='left' fontSize={18} variant='p'>
             Busca y reserva en donde quieras
           </Typography>
         </div> */}
-        <div className={classes.box}>
           <div className={classes.box}>
-            <div className={classes.icon}>
-              <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
+            <div className={classes.box}>
+              <div className={classes.icon}>
+                <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconSomb} />
+              </div>
+              <div style={{ margin: '0 10px', width: '100%' }}>
+                {loading2 ? (
+                  <CircularProgress />
+                ) : (
+                  <AutocompleteComponent
+                    valueDefault={ciudadDefault}
+                    options={get(ciudades, 'searchListFront')}
+                    setValue={setValue}
+                    errors={errors}
+                  />
+                )}
+              </div>
             </div>
-            <div style={{ margin: '0 10px', width: '100%' }}>
+            <div className={classes.box}>
+              <div className={classes.icon}>
+                <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
+              </div>
+              <div className={`${classes.gridRow} ${classes.border}`}>
+                <div style={{ width: '100%' }}>
+                  <Calendar name='desde' setValue={setValue} value={desde} />
+                </div>
+                {checked && (
+                  <React.Fragment>
+                    <div>
+                      <SimpleImage
+                        height={20}
+                        alt='Alquiler de Carpas en Balnearios'
+                        image={IdaVuelta}
+                      />
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <Calendar name='hasta' setValue={setValue} value={hasta} />
+                    </div>
+                  </React.Fragment>
+                )}
+              </div>
+            </div>
+            <div className={classes.boxButton}>
+              <Button fullWidth type='submit' width={100} height={50} disableElevation border={20}>
+                <SimpleImage height={22} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
+              </Button>
+            </div>
+          </div>
+          <div className={classes.box}>
+            <Checkbox
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+            <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
+              Seleccionar varios dias
+            </Typography>
+          </div>
+        </div>
+        {/* Mini Search Mobile */}
+        <div className={classes.mobile} onClick={handleClickOpen}>
+          <div style={{ marginRight: 10 }}>
+            <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
+          </div>
+          <div>
+            <Typography color='gray' textAlign='cemter' fontSize={25} variant='h2'>
+              {textSearch}
+            </Typography>
+          </div>
+        </div>
+      </form>
+
+      {/* Search Mobile en Modal */}
+      <FullScreenDialog fullScreen={true} open={open} handleClose={handleClose}>
+        <div className={classes.contentSearMobile}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            // style={styles}
+            //className={`${classes.contentSearchCenter}`}
+            //noValidate
+          >
+            <div style={{ marginBottom: 10 }}>
+              <Typography textAlign='left' fontSize={18} variant='p' color='black'>
+                Ingresar Playa
+              </Typography>
+            </div>
+            <div>
               {loading2 ? (
                 <CircularProgress />
               ) : (
@@ -237,120 +320,55 @@ const Search = ({
                 />
               )}
             </div>
-          </div>
-          <div className={classes.box}>
-            <div className={classes.icon}>
-              <SimpleImage height={25} alt='Alquiler de Carpas en Balnearios' image={IconCalendar} />
+            <div style={{ marginTop: 10, marginBottom: 5 }}>
+              <Typography textAlign='left' fontSize={15} variant='p' color='black'>
+                Seleccionar Fecha
+              </Typography>
             </div>
-            <div className={`${classes.gridRow} ${classes.border}`}>
-              <div style={{ width: '100%' }}>
+            <div className={`${classes.gridColumn} ${classes.border}`}>
+              <div style={{ width: '100%', marginBottom: 10 }}>
                 <Calendar name='desde' setValue={setValue} value={desde} />
               </div>
               {checked && (
                 <React.Fragment>
-                  <div>
-                    <SimpleImage height={20} alt='Alquiler de Carpas en Balnearios' image={IdaVuelta} />
+                  <div style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
+                    <Typography textAlign='center' fontSize={15} variant='p' color='black'>
+                      hasta
+                    </Typography>
                   </div>
-                  <div style={{ width: '100%' }}>
+                  <div style={{ width: '100%', marginBottom: 10 }}>
                     <Calendar name='hasta' setValue={setValue} value={hasta} />
                   </div>
                 </React.Fragment>
               )}
+              <div className={`${classes.gridColumn} ${classes.flexRevert}`}>
+                <Checkbox
+                  checked={checked}
+                  onChange={handleChange}
+                  inputProps={{ 'aria-label': 'primary checkbox' }}
+                />
+                <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
+                  Seleccionar varios dias
+                </Typography>
+              </div>
             </div>
-          </div>
-          <div className={classes.boxButton}>
-            <Button fullWidth type='submit' width={100} height={50} disableElevation border={20}>
-              <SimpleImage height={22} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
-            </Button>
-          </div>
-        </div>
-        <div className={classes.box}>
-          <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />
-          <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
-            Seleccionar varios dias
-          </Typography>
-        </div>
-      </div>
-      {/* Mini Search Mobile */}
-      <div className={classes.mobile} onClick={handleClickOpen}>
-        <div style={{ marginRight: 10 }}>
-          <SimpleImage height={30} alt='Alquiler de Carpas en Balnearios' image={IconLupa} />
-        </div>
-        <div>
-          <Typography color='gray' textAlign='cemter' fontSize={25} variant='h2'>
-            {textSearch}
-          </Typography>
-        </div>
-      </div>
-
-      {/* Search Mobile en Modal */}
-      <FullScreenDialog fullScreen={true} open={open} handleClose={handleClose}>
-        <div className={classes.contentSearMobile}>
-          <div style={{ marginBottom: 10 }}>
-            <Typography textAlign='left' fontSize={18} variant='p' color='black'>
-              Ingresar Playa
-            </Typography>
-          </div>
-          <div>
-            <AutocompleteComponent
-              valueDefault={ciudadDefault}
-              options={get(ciudades, 'searchListFront')}
-              setValue={setValue}
-              errors={errors}
-            />
-          </div>
-          <div style={{ marginTop: 10, marginBottom: 5 }}>
-            <Typography textAlign='left' fontSize={15} variant='p' color='black'>
-              Seleccionar Fecha
-            </Typography>
-          </div>
-          <div className={`${classes.gridColumn} ${classes.border}`}>
-            <div style={{ width: '100%', marginBottom: 10 }}>
-              <Calendar name='desde' setValue={setValue} value={desde} />
+            <div>
+              <Button
+                type='submit'
+                fullWidth
+                height={48}
+                // onClick={e => {
+                //   e.preventDefault()
+                //   onSubmit()
+                // }}
+              >
+                Buscar
+              </Button>
             </div>
-            {checked && (
-              <React.Fragment>
-                <div style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
-                  <Typography textAlign='center' fontSize={15} variant='p' color='black'>
-                    hasta
-                  </Typography>
-                </div>
-                <div style={{ width: '100%', marginBottom: 10 }}>
-                  <Calendar name='hasta' setValue={setValue} value={hasta} />
-                </div>
-              </React.Fragment>
-            )}
-            <div className={`${classes.gridColumn} ${classes.flexRevert}`}>
-              <Checkbox
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
-                Seleccionar varios dias
-              </Typography>
-            </div>
-          </div>
-          <div>
-            <Button
-              type='submit'
-              fullWidth
-              height={48}
-              onClick={e => {
-                e.preventDefault()
-                onSubmit()
-              }}
-            >
-              Buscar
-            </Button>
-          </div>
+          </form>
         </div>
       </FullScreenDialog>
-    </form>
+    </React.Fragment>
   )
 }
 export default React.memo(Search)
