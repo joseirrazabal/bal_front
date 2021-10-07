@@ -1644,10 +1644,10 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
-"@joseirrazabal/copo@^0.0.22":
-  "integrity" "sha512-TWTTZ9uHmKTXv3Cu1rITvSTM/mMc68v9vn0NJPCw0rJu7WcyHd/HgVFfxCxheQw7xBvBLYucvcw41rZdTNgfRA=="
-  "resolved" "https://registry.npmjs.org/@joseirrazabal/copo/-/copo-0.0.22.tgz"
-  "version" "0.0.22"
+"@joseirrazabal/copo@^0.0.24":
+  "integrity" "sha512-dE3cjRIFJgfaNgCGCtQvzyR/Pzj2pfHytV/BRU8ZcUEX8OndjaPdmdzy9MGTJtgcntoxnazf2zwXQzgXRFQ86g=="
+  "resolved" "https://registry.npmjs.org/@joseirrazabal/copo/-/copo-0.0.24.tgz"
+  "version" "0.0.24"
   dependencies:
     "classnames" "^2.3.1"
     "fontsource-roboto" "^3.0.3"
