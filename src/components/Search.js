@@ -200,7 +200,7 @@ const Search = ({
   }
 
   const onSubmit = ({ ciudad, desde, hasta }) => {
-    console.log('onSubmit', ciudad, desde, hasta)
+    handleClose()
     if (checked) {
       handleOnSubmit({ ciudad, desde, hasta })
     } else {

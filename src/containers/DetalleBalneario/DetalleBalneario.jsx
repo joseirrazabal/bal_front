@@ -626,9 +626,9 @@ const DetalleBalneario = () => {
                 <div className={`${classes.gridRow} ${classes.cardPrecio}`}>
                   <div>
                     <div>
-                      <Typography fontSize={12} fontWeight={400} variant='p'>
-                        Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
-                      </Typography>
+                      {/* <Typography fontSize={12} fontWeight={400} variant='p'> */}
+                      {/*   Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)} */}
+                      {/* </Typography> */}
                       {!isNaN(parseInt(get(dataPrecio, 'precioGetFront.precio'))) && (
                         <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
                           {`Precio por dia $${get(precio, 'precio', 0)}`}
