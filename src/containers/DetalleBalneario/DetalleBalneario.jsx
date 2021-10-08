@@ -398,6 +398,14 @@ const DetalleBalneario = () => {
     }
   )
 
+  const [precio, setPrecio] = useState({})
+
+  useEffect(() => {
+    if (get(dataPrecio, 'precioGetFront')) {
+      setPrecio(get(dataPrecio, 'precioGetFront'))
+    }
+  }, [dataPrecio])
+
   useEffect(() => {
     window.scrollTo(0, 0)
     setWidthNav(window.innerWidth)
@@ -621,25 +629,29 @@ const DetalleBalneario = () => {
                       <Typography fontSize={12} fontWeight={400} variant='p'>
                         Disponibles {get(dataPrecio, 'precioGetFront.stock', 0)}
                       </Typography>
-                      <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
-                        {`Precio por dia $${parseInt(get(dataPrecio, 'precioGetFront.precio', 0))}`}
-                      </Typography>
-                      <div>
-                        <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
-                          $
-                          {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) *
-                            parseInt(get(dataPrecio, 'precioGetFront.dias', 1))}
+                      {!isNaN(parseInt(get(dataPrecio, 'precioGetFront.precio'))) && (
+                        <Typography fontSize={12} fontWeight={400} color='black' variant='p'>
+                          {`Precio por dia $${get(precio, 'precio', 0)}`}
                         </Typography>
-                        <Typography
-                          fontWeight={400}
-                          fontSize={16}
-                          color='black'
-                          variant='span'
-                          fontStyle='italic'
-                        >
-                          Total
-                        </Typography>
-                      </div>
+                      )}
+                      {!isNaN(parseInt(get(dataPrecio, 'precioGetFront.precio'))) && (
+                        <div>
+                          <Typography fontWeight={700} fontSize={25} color='black' variant='b'>
+                            $
+                            {parseInt(get(dataPrecio, 'precioGetFront.precio', 0)) *
+                              parseInt(get(dataPrecio, 'precioGetFront.dias', 1))}
+                          </Typography>
+                          <Typography
+                            fontWeight={400}
+                            fontSize={16}
+                            color='black'
+                            variant='span'
+                            fontStyle='italic'
+                          >
+                            Total
+                          </Typography>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div>
