@@ -17,7 +17,6 @@ let theme = createTheme({
     },
     secondary: {
       dark: '#1769aa',
-      // main: '#00b0ff',
       main: '#1769aa',
       light: '#4dabf5',
     },

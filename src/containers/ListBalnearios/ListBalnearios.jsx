@@ -22,7 +22,7 @@ import Loading from '../../components/Loading'
 import SimpleImage from '../../components/SimpleImage'
 import FullScreenDialog from '../../components/Dialog'
 
-import imageBackground from '../../assets/banner-fondo.jpeg'
+import imageBackground from '../../assets/fondo2.jpg'
 import ImageDefault from '../../assets/sin-resultados.jpg'
 
 import SEARCH_LIST from 'gql/search/list'
@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 300,
     backgroundImage: 'url(' + imageBackground + ')',
-    backgroundAttachment: 'fixed',
+/*     backgroundAttachment: 'fixed', */
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',

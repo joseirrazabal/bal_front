@@ -129,7 +129,7 @@ const useStyles = makeStyles(theme => ({
 
 const ItemSelected = ({
   active = false,
-  plano = true,
+  plano = false,
   checkout = false,
   dias = 3,
   icon = IconSomb,
@@ -148,10 +148,12 @@ const ItemSelected = ({
       } ${plano && 'plano'}`}
       onClick={onClick}
     >
-      <div>
-        <SimpleImage height={45} alt='Alquiler de Carpas en Balnearios' image={icon} />
-      </div>
-      <div>
+      {!checkout && (
+        <div>
+          <SimpleImage height={45} alt='Alquiler de Carpas en Balnearios' image={icon} />
+        </div>
+      )}
+      <div style={{ width: '100%' }}>
         <Typography
           textAlign='center'
           color={plano && 'white'}

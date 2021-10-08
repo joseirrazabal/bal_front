@@ -22,7 +22,7 @@ import MyMap from '../../components/Map'
 
 import IconCarpAzul from '../../assets/icon-carpa.svg'
 import DefaultImage from '../../assets/default-image.jpg'
-import ImageBackground from '../../assets/fondo.jpg'
+import ImageBackground from '../../assets/fondo2.jpg'
 /* import MapaDefault from '../../assets/mapaDefault.jpg' */
 
 import SEARCH_LIST from 'gql/search/list'
@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 180,
     backgroundImage: 'url(' + ImageBackground + ')',
-    backgroundAttachment: 'fixed',
+    //backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -586,6 +586,7 @@ const DetalleBalneario = () => {
                     icon={IconCarpAzul}
                     title={`VER PLANO`}
                     precio={400}
+                    plano
                     onClick={handleClickOpen}
                   />
                 )}
