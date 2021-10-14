@@ -3,9 +3,11 @@ import get from 'lodash/get'
 import { Helmet } from 'react-helmet-async'
 import { SnackbarProvider } from 'notistack'
 
-import Layout from './components/Layout/Layout'
-// import Notifications from './notifications'
+import SwUpdate from 'kit/client/swUpdate'
 import Route from 'core/routes/mainRoute'
+
+import { Offline, Reload } from './offline'
+import Layout from './components/Layout/Layout'
 import routes from './routes'
 import theme from './theme'
 import './i18n'
@@ -47,7 +49,7 @@ const App = () => {
       maxSnack={3}
       autoHideDuration={3500}
     >
-      {/* <Notifications /> */}
+      <SwUpdate offline={Offline} reload={Reload} />
       <Route routes={routes} layout={Layout} />
     </SnackbarProvider>,
   ]

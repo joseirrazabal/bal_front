@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "kit start",
-    "build": "cp .env.prod .env && kit build",
+    "build": "kit build",
     "prodLocal": "cd dist && cross-env NODE_ENV=production node app.js",
     "prod": "node app.js",
     "dist": "cd dist && gcloud app deploy --project alamar-308401",
@@ -20,7 +20,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/pickers": "^3.3.10",
-    "@nextj/kit": "^0.3.2",
+    "@nextj/kit": "^0.3.7",
     "clsx": "^1.1.1",
     "date-fns": "^2.21.3",
     "dayjs": "^1.10.4",
