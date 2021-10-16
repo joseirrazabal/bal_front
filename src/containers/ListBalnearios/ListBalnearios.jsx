@@ -39,10 +39,10 @@ const useStyles = makeStyles(theme => ({
     '@media (max-width: 960px)': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      paddingTop: 65
+      paddingTop: 65,
     },
     '@media (max-width: 600px)': {
-      paddingTop: 56
+      paddingTop: 56,
     },
   },
   container: {
@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 300,
     backgroundImage: 'url(' + imageBackground + ')',
-/*     backgroundAttachment: 'fixed', */
+    /*     backgroundAttachment: 'fixed', */
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
@@ -230,7 +230,7 @@ const ListBalnearios = () => {
 
   useEffect(() => {
     getBalnearioSearch()
-  }, [desde, hasta])
+  }, [desde, hasta, ciudad])
 
   useEffect(() => {
     if (get(dataCiudades, 'searchListFront')) {
@@ -242,7 +242,9 @@ const ListBalnearios = () => {
     if (get(data, 'balnearioListSearch')) {
       const objTipos = {}
       get(data, 'balnearioListSearch').filter(item => {
-        objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
+        if (item.tipoSlug) {
+          objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
+        }
       })
       setTipos(Object.values(objTipos))
     }
@@ -301,7 +303,7 @@ const ListBalnearios = () => {
       setLoadingCheck(false)
       setState(check)
     }
-  }, [ciudades])
+  }, [ciudades, ciudad])
 
   const handleChange = event => {
     setState({ ...state, [event.target.value]: { selected: event.target.checked } })
@@ -330,7 +332,7 @@ const ListBalnearios = () => {
         <div className={classes.shadow} />
         <div className={classes.container}>
           <Search
-            textSearch="CAMBIAR SELECCION"
+            textSearch='CAMBIAR SELECCION'
             ciudades={dataCiudades}
             ciudad={{ slug: ciudad }}
             desde={desde}
@@ -439,7 +441,14 @@ const ListBalnearios = () => {
                           //   // return unique.includes(item) ? unique : [...unique, item]
                           //   return exist ? unique : [...unique, item]
                           // }, [])
-                          .filter(item => item.tipoSlug === tipo.slug)
+                          .filter(item => {
+                            if (!item.tipoSlug || item.tipoSlug === '' || item.tipoSlug === tipo.slug) {
+                              return true
+                            }
+
+                            return false
+                          })
+                          .sort((a, b) => (!a.tipoSlug ? 1 : -1))
                           .map((item, i) => {
                             const precioOld =
                               get(item, 'precio', 0) !== get(item, 'oldPrecio')
@@ -448,9 +457,10 @@ const ListBalnearios = () => {
                             return (
                               <li key={i}>
                                 <CardBalList
+                                  calification={get(item, 'calificacion')}
                                   nuevo
-                                  tent={tipo.slug === "carpa" }
-                                  umbrella={tipo.slug === "sombrilla" }
+                                  tent={tipo.slug === 'carpa'}
+                                  umbrella={tipo.slug === 'sombrilla'}
                                   tag={get(item, 'tagNombre')}
                                   tagTexto={get(item, 'tagTexto')}
                                   tagColor={get(item, 'tagColor')}
@@ -465,7 +475,7 @@ const ListBalnearios = () => {
                                   city={get(item, 'ciudad')}
                                   image={get(item, 'imagen')}
                                   onClick={() => {
-                                    history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
+                                    history.push(`/${get(item, 'slug')}/${desde}/${hasta}`)
                                   }}
                                 />
                               </li>

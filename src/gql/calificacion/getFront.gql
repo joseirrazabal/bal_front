@@ -4,27 +4,19 @@ query calificacionGetFront($token: ID!) {
     pago
     dias
     amount
-    articulo {
+    balneario {
       id
-      categoria {
+      slug
+      nombre
+      ciudad {
         id
-        slug
         nombre
-        tipo {
-          id
-          slug
-          nombre
-        }
-        balneario {
-          id
-          slug
-          nombre
-          ciudad {
-            id
-            nombre
-          }
-        }
       }
+    }
+    tipo {
+      id
+      slug
+      nombre
     }
   }
 }

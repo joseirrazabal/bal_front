@@ -199,7 +199,7 @@ const Qualify = () => {
       <div className={classes.contentFull}>
         <div className={classes.centerMode}>
           <Typography variant='h4' textAlign='center'>
-            Califica tu experiencia en {get(info, 'articulo.categoria.balneario.nombre', '')}
+            Califica tu experiencia en {get(info, 'balneario.nombre', '')}
           </Typography>
           <Box component='fieldset' mb={3} borderColor='transparent'>
             <Typography component='legend'>Nos interesa tu opinión</Typography>

@@ -30,13 +30,7 @@ const routes = [
     useLayout: true,
     isPrivate: false,
   },
-  {
-    route: '/detalle/:slug/:desde?/:hasta?/:ciudad?',
-    component: DetalleBalneario,
-    Props: {},
-    useLayout: true,
-    isPrivate: false,
-  },
+
   {
     route: '/checkout/:balneario/:tipo/:desde/:hasta',
     component: CheckoutBalnearios,
@@ -124,6 +118,13 @@ const routes = [
   {
     route: '/home',
     component: Home,
+    Props: {},
+    useLayout: true,
+    isPrivate: false,
+  },
+  {
+    route: '/:slug/:desde?/:hasta?/:ciudad?',
+    component: DetalleBalneario,
     Props: {},
     useLayout: true,
     isPrivate: false,

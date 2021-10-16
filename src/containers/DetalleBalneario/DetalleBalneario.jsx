@@ -455,7 +455,7 @@ const DetalleBalneario = () => {
 
   const onSubmitSearch = data => {
     if (data.ciudad.slug === slug) {
-      history.push(`/detalle/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
+      history.push(`/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     } else {
       history.push(`/list/${get(data, 'ciudad.slug')}/${get(data, 'desde')}/${get(data, 'hasta')}`)
     }
@@ -569,12 +569,14 @@ const DetalleBalneario = () => {
                   </Button>
                 </div>
               )}
-              {/* <div className={classes.calification}>
-                <div>
-                  <Typography color='white'>3.5</Typography>
+              {get(dataPrecio, 'precioGetFront.calificacion') && (
+                <div className={classes.calification}>
+                  <div>
+                    <Typography color='white'>{get(dataPrecio, 'precioGetFront.calificacion')}</Typography>
+                  </div>
+                  <StarHalfIcon />
                 </div>
-                <StarHalfIcon />
-              </div> */}
+              )}
             </div>
             <div className={classes.detalle}>
               <div className={classes.detalleTop}>
@@ -766,7 +768,7 @@ const DetalleBalneario = () => {
                         city={get(item, 'ciudad.nombre')}
                         image={get(item, 'imagenes.0.url')}
                         onClick={() => {
-                          history.push(`/detalle/${get(item, 'slug')}/${desde}/${hasta}`)
+                          history.push(`/${get(item, 'slug')}/${desde}/${hasta}`)
                         }}
                       />
                     </li>

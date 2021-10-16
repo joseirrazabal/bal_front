@@ -12,6 +12,7 @@ query precioGetFront($balneario: String, $tipo: String, $numero: Int $desde: Str
     tipo
     tipoSlug
     articulo
+    calificacion
     oldPrecio
     precio
     tagNombre

@@ -253,6 +253,7 @@ const Home = () => {
                       <div key={itemIndex}>
                         <div style={{ margin: 5 }}>
                           <CardBal
+                            calification={get(item, "calificacion")}
                             modular
                             tag={get(item, 'tagNombre')}
                             tagTexto={get(item, 'tagTexto')}
@@ -270,13 +271,13 @@ const Home = () => {
                             onClick={() => {
                               if (item.sinFecha) {
                                 history.push(
-                                  `/detalle/${get(item, 'balnearioSlug')}/${dayjs().format(
+                                  `/${get(item, 'balnearioSlug')}/${dayjs().format(
                                     'YYYY-MM-DD'
                                   )}/${dayjs().format('YYYY-MM-DD')}`
                                 )
                               } else {
                                 history.push(
-                                  `/detalle/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
+                                  `/${get(item, 'balnearioSlug')}/${dayjs(item.desde).format(
                                     'YYYY-MM-DD'
                                   )}/${dayjs(item.hasta).format('YYYY-MM-DD')}`
                                 )
