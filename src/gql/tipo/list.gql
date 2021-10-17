@@ -1,0 +1,8 @@
+query tipoList {
+  tipoList {
+    id
+    slug
+    nombre
+    imagen
+  }
+}

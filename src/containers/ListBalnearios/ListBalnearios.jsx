@@ -26,6 +26,7 @@ import imageBackground from '../../assets/fondo2.jpg'
 import ImageDefault from '../../assets/sin-resultados.jpg'
 
 import SEARCH_LIST from 'gql/search/list'
+import TIPO_LIST from 'gql/tipo/list'
 import BALNEARIO_LIST_SEARCH from 'gql/balneario/listSearch'
 
 const useStyles = makeStyles(theme => ({
@@ -214,19 +215,22 @@ const ListBalnearios = () => {
   const [tipos, setTipos] = useState([])
 
   const { data: dataCiudades, loading: loadingCiudad, error: errorCiudad } = useQuery(SEARCH_LIST)
+  const { data: dataTipos, loading: loadingTipos, error: errorTipo } = useQuery(TIPO_LIST)
 
   const [getBalnearioSearch, { data, loading, error: errorList }] = useLazyQuery(BALNEARIO_LIST_SEARCH, {
     variables: { desde, hasta },
     fetchPolicy: 'no-cache',
   })
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+  useEffect(() => {
+    if (get(dataTipos, 'tipoList')) {
+      const objTipos = {}
+      get(dataTipos, 'tipoList').filter(item => {
+        objTipos[item.slug] = { slug: item.slug, nombre: item.nombre }
+      })
+      setTipos(Object.values(objTipos))
+    }
+  }, [dataTipos])
 
   useEffect(() => {
     getBalnearioSearch()
@@ -237,18 +241,6 @@ const ListBalnearios = () => {
       setCiudades(get(dataCiudades, 'searchListFront', []))
     }
   }, [dataCiudades])
-
-  useEffect(() => {
-    if (get(data, 'balnearioListSearch')) {
-      const objTipos = {}
-      get(data, 'balnearioListSearch').filter(item => {
-        if (item.tipoSlug) {
-          objTipos[item.tipo] = { slug: item.tipoSlug, nombre: item.tipo }
-        }
-      })
-      setTipos(Object.values(objTipos))
-    }
-  }, [data])
 
   useEffect(() => {
     const result = async () => {
@@ -281,7 +273,7 @@ const ListBalnearios = () => {
         setItems(get(data, 'balnearioListSearch', []))
       }
     }
-  }, [tipos, state])
+  }, [tipos, state, data])
 
   useEffect(() => {
     if (ciudades.length) {
@@ -305,6 +297,14 @@ const ListBalnearios = () => {
     }
   }, [ciudades, ciudad])
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   const handleChange = event => {
     setState({ ...state, [event.target.value]: { selected: event.target.checked } })
   }
@@ -317,7 +317,7 @@ const ListBalnearios = () => {
     setValue(newValue)
   }
 
-  if (loading || loadingCiudad || loadingCheck) {
+  if (loading || loadingCiudad || loadingCheck || loadingTipos) {
     // return <Loading />
     return (
       <NoSsr>
