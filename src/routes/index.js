@@ -1,12 +1,14 @@
 import Home from 'src/containers/Home/Home'
-import ChangePassword from 'src/containers/Profile/Password'
-import Profile from 'src/containers/Profile/Profile'
+
 import Login from 'src/containers/Login/Login'
 import Registro from 'src/containers/Login/Registro'
 import Confirmation from 'src/containers/Login/Confirmation'
 import Password from 'src/containers/Login/Password'
 import Recuperacion from 'src/containers/Login/Recuperacion'
 import Logout from 'src/containers/Login/Logout'
+
+import ChangePassword from 'src/containers/Profile/Password'
+import Profile from 'src/containers/Profile/Profile'
 import Notifications from 'src/containers/Profile/Notifications'
 import Calificacion from 'src/containers/Calificacion/Calificacion'
 

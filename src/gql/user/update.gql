@@ -1,0 +1,7 @@
+mutation profileUpdate($name: String, $image: String, $password: String, $extras: Extras) {
+  profileUpdate(name: $name, image: $image, password: $password, extras: $extras) {
+    n
+    nModified
+    ok
+  }
+}

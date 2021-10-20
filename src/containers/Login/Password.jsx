@@ -17,7 +17,7 @@ import loginTab from './tab'
 import { signIn } from 'kit/login/utils'
 
 import CHANGE_MUTATION from 'src/gql/user/changePassword'
-import CURRENT_USER from 'core/gql/user/currentUser'
+import CURRENT_USER from 'gql/user/currentUser'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {

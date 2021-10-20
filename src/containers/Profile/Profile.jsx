@@ -20,9 +20,9 @@ import EditIcon from '@material-ui/icons/Edit'
 import Loading from '../../components/Loading'
 import Typography from '../../components/Typography'
 
-import CURRENT_USER from 'core/gql/user/currentUser'
-import PROFILE_UPDATE from 'core/gql/user/update'
-import SINGLE_UPLOAD_MUTATION from 'core/gql/image'
+import CURRENT_USER from 'gql/user/currentUser'
+import PROFILE_UPDATE from 'gql/user/update'
+import SINGLE_UPLOAD_MUTATION from 'gql/image'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {

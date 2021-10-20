@@ -17,7 +17,7 @@ import loginTab from './tab'
 import { signIn } from 'kit/login/utils'
 import { ReconnectWSContext } from 'kit/shared/index'
 
-import LOGIN_MUTATION from 'core/gql/user/login'
+import LOGIN_MUTATION from 'gql/user/login'
 
 const useStyles = makeStyles(theme => ({
   contentFull: {

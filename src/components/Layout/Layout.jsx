@@ -15,7 +15,7 @@ import Term from '../../containers/TyC/Term'
 
 import Notifications from '../../notifications'
 
-import CURRENT_USER from 'core/gql/user/currentUser'
+import CURRENT_USER from 'gql/user/currentUser'
 import NOTIFICACION_LIST from 'src/gql/notificacion/list'
 import { getToken } from 'kit/login/utils'
 
