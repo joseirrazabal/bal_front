@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentBanners: {
     width: '100vw',
-    height: '100vh',
+    //height: '100vh',
     paddingTop: 70,
     background: 'white',
     position: 'relative',
