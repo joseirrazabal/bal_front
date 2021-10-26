@@ -307,9 +307,11 @@ const CheckoutBalnearios = ({ theme }) => {
   const { balneario, tipo, desde, hasta } = useParams()
   const { state } = useLocation()
 
-  const itemSelected = state.itemSelected
+  const numero = get(state, 'itemSelected.numero')
 
   const {
+    setValue,
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -323,7 +325,13 @@ const CheckoutBalnearios = ({ theme }) => {
   const [precio, setPrecio] = useState({})
 
   const { data: dataPrecio, loading: loadingPrecio } = useQuery(PRECIO_GET, {
-    variables: { balneario: balneario, tipo: tipo, desde: desde, hasta: hasta },
+    variables: {
+      balneario: balneario,
+      tipo: tipo,
+      desde: desde,
+      hasta: hasta,
+      numero: parseInt(numero),
+    },
     fetchPolicy: 'no-cache',
   })
 
@@ -344,7 +352,6 @@ const CheckoutBalnearios = ({ theme }) => {
     if (get(dataPrecio, 'precioGetFront.precio')) {
       setPrecio(get(dataPrecio, 'precioGetFront'))
       if (NODE_ENV !== 'production') {
-        console.log('key meli dev')
         setKeyPublic(MERCADO_PAGO_PUBLIC_KEY)
       } else {
         setKeyPublic(get(dataPrecio, 'precioGetFront.keyPublic'))
@@ -364,12 +371,11 @@ const CheckoutBalnearios = ({ theme }) => {
   const [issuers, setIssuers] = useState([])
   const [installments, setInstallments] = useState([])
   const [issuerSelect, setIssuerSelect] = useState({})
-  const [installmentSelect, setInstallmentSelect] = useState(false)
+  const [installmentSelect, setInstallmentSelect] = useState()
+  const [docTypeSelect, setDocTypeSelect] = useState()
 
   const [paymentMethod, setPaymentMethod] = useState({})
   const [tipoDocumento, setTipoDocument] = useState([])
-
-  console.log("precio", precio)
 
   useEffect(() => {
     setIssuerSelect(get(issuers, '0.id'))
@@ -383,6 +389,12 @@ const CheckoutBalnearios = ({ theme }) => {
     const result = installments.find(item => item.id === parseInt(installmentSelect))
 
     setTextoCuota(get(result, 'name', ''))
+
+    setTimeout(() => {
+      setValue('docType', docTypeSelect)
+      setValue('issuer', issuerSelect)
+      setValue('installments', installmentSelect)
+    }, 500)
   }, [installmentSelect])
 
   useEffect(() => {
@@ -390,6 +402,7 @@ const CheckoutBalnearios = ({ theme }) => {
       Mercadopago.setPublishableKey(keyPublic)
       Mercadopago.getIdentificationTypes((status, response) => {
         setTipoDocument(response)
+        setDocTypeSelect(get(response, '0.id'))
       })
     }
   }, [keyPublic])
@@ -482,7 +495,7 @@ const CheckoutBalnearios = ({ theme }) => {
   const onSubmit = ({ checkedA, ...data }) => {
     const form = {
       ...data,
-      anotaciones: `numero: ${get(itemSelected, 'numero')}`,
+      anotaciones: `numero: ${numero}`,
       cardExpirationMonth: parseInt(cardExpirationMonth.current.value),
       cardExpirationYear: parseInt(cardExpirationYear.current.value),
       cardNumber: parseInt(cardNumber.current.value),
@@ -508,10 +521,11 @@ const CheckoutBalnearios = ({ theme }) => {
           variables: {
             input: {
               ...data,
+              name: get(cardholderName, 'current.value'),
               precioId: get(precio, 'id'),
               balneario: get(precio, 'balnearioSlug'),
               tipo: get(precio, 'tipoSlug'),
-              numero: get(itemSelected, 'numero'),
+              numero: numero,
               desde: desde,
               hasta: hasta,
               precio: get(precio, 'id'),
@@ -526,7 +540,6 @@ const CheckoutBalnearios = ({ theme }) => {
     })
   }
 
-  console.log(itemSelected)
   if (loadingPrecio) {
     return (
       <NoSsr>
@@ -535,9 +548,19 @@ const CheckoutBalnearios = ({ theme }) => {
     )
   }
 
+  // no hay stock
+  if (!loadingPrecio && !get(precio, 'stock')) {
+    return <MessageGeneric isError pagoMessage={'Sin disponibilidad'} />
+  }
+
+  // viene sin el numero de carpa
+  if (!loadingPrecio && !numero) {
+    return <MessageGeneric isError pagoMessage={'Vuelva a realizar la busqueda'} />
+  }
+
   // error en la reserva
   if (errorReserva) {
-    return <MessageGeneric isError pagoMessage={errorReserva.message} />
+    return <MessageGeneric isError pagoMessage={get(errorReserva, 'message', 'Error vuelva a buscar')} />
   }
 
   // mensaje reserva
@@ -607,6 +630,10 @@ const CheckoutBalnearios = ({ theme }) => {
                             id='docType'
                             name='docType'
                             {...register('docType', { required: 'Campo requerido' })}
+                            // defaultValue={docTypeSelect}
+                            onChange={e => {
+                              setDocTypeSelect(e.target.value)
+                            }}
                           >
                             {tipoDocumento.map((tipo, i) => {
                               return (
@@ -731,7 +758,10 @@ const CheckoutBalnearios = ({ theme }) => {
                           <select
                             name={`issuer`}
                             {...register('issuer', { required: 'Campo requerido' })}
+                            // defaultValue={issuerSelect}
                             onChange={e => {
+                              setIssuerSelect(e.target.value)
+
                               getInstallments(
                                 paymentMethod,
                                 parseInt(get(precio, 'precio')) * parseInt(get(precio, 'dias')),
@@ -758,6 +788,7 @@ const CheckoutBalnearios = ({ theme }) => {
                           <select
                             name={`installments`}
                             {...register('installments', { required: 'Campo requerido' })}
+                            // defaultValue={installmentSelect}
                             onChange={e => {
                               setInstallmentSelect(e.target.value)
                             }}
@@ -857,9 +888,9 @@ const CheckoutBalnearios = ({ theme }) => {
                   <Typography fontSize={16} variant='p' color='grey'>
                     {get(precio, 'direccion')}
                   </Typography>
-                  {itemSelected && (
+                  {numero && (
                     <Typography fontSize={16} variant='p' color='grey'>
-                      Numero seleccionado: {get(itemSelected, 'numero')}
+                      Numero seleccionado: {numero}
                     </Typography>
                   )}
                   <ItemSelected
