@@ -620,7 +620,16 @@ const CheckoutBalnearios = ({ theme }) => {
                             id='email'
                             type='text'
                             required
-                            {...register('email', { required: 'Campo requerido' })}
+                            {...register(
+                              'email',
+                              {
+                                pattern: {
+                                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                  message: 'email invalido',
+                                },
+                              }
+                              //                          { required: 'Campo requerido' }
+                            )}
                           />
                           {errors.email && <div style={{ color: 'red' }}>{errors.email.message}</div>}
                         </div>
