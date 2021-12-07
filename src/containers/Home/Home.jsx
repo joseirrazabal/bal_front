@@ -56,7 +56,6 @@ const useStyles = makeStyles(theme => ({
     },
 
     '@media (max-width: 960px)': {
-      // height: '70vh',
       alignItems: 'flex-start',
     },
   },
@@ -78,7 +77,6 @@ const useStyles = makeStyles(theme => ({
         },
       },
     },
-
     '@media (max-width: 600px)': {
       overflowX: 'scroll',
       whiteSpace: 'nowrap',
@@ -293,7 +291,6 @@ const Home = () => {
               </div>,
             ]
           })}
-
           <DialogSimpleComponent>
             <div className={classes.modalContent}>
               <SimpleImage image={ImageCoronaVirus} width='100%' />

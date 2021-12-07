@@ -100,9 +100,6 @@ const Footer = ({ setContentModal = () => {} }) => {
                 </Typography>
               </a>
             </li>
-            {/*  <a>
-              <li className={classes.itemFooter}><SimpleImage image={Location} height={25} /> <Typography variant="p" color="white" fontSize={12}>Direccion de ejmplo 123 - Buenos Aires</Typography></li>
-            </a> */}
           </ul>
         </div>
         <div>

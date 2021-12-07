@@ -281,6 +281,7 @@ const Search = ({
             </Typography>
           </div>
         </div>
+
         {/* Mini Search Mobile */}
         <div className={classes.mobile} onClick={handleClickOpen}>
           <div style={{ marginRight: 10 }}>
