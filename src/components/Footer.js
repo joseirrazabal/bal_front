@@ -10,6 +10,7 @@ import Instagram from '../assets/icon-instagram.svg'
 
 import Term from '../containers/TyC/Term'
 import Faqs from '../containers/Faqs/Faqs'
+import Send from '../assets/icon-email.png'
 
 const useStyles = makeStyles(theme => ({
   footer: {
@@ -52,9 +53,15 @@ const useStyles = makeStyles(theme => ({
   itemFooter: {
     display: 'flex',
 
-    /* '& p': {
-      paddingLeft: 10
-    } */
+    '& a': {
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+
+      '& img': {
+        marginRight: 10,
+      },
+    },
   },
 }))
 
@@ -65,8 +72,8 @@ const Footer = ({ setContentModal = () => {} }) => {
     <div className={classes.footer}>
       <div className={classes.content}>
         <div>
-          <Typography variant='h4' color='white'>
-            Info de contacto:
+          <Typography variant='h4' fontWeight={900} color='white'>
+            Info de contacto
           </Typography>
           <ul style={{ flexDirection: 'column' }}>
             <li className={classes.itemFooter}>
@@ -75,8 +82,20 @@ const Footer = ({ setContentModal = () => {} }) => {
                 target='_blank'
                 alt='Alamar - Balnearios Costa Atlantica'
               >
-                {/* <SimpleImage image={Phone} height={20} /> */}{' '}
-                <Typography variant='p' color='white' fontSize={12}>
+                {/* <SimpleImage image={Send} height={20} /> */}
+                <Typography variant='p' fontWeight={400} color='white' fontSize={12}>
+                  Sumate a alamar
+                </Typography>
+              </a>
+            </li>
+            <li className={classes.itemFooter}>
+              <a
+                href={`mailto:alamarargentina@gmail.com`}
+                target='_blank'
+                alt='Alamar - Balnearios Costa Atlantica'
+              >
+                <SimpleImage image={Send} height={20} />
+                <Typography variant='p' fontWeight={400} color='white' fontSize={12}>
                   alamarargentina@gmail.com
                 </Typography>
               </a>
@@ -87,8 +106,8 @@ const Footer = ({ setContentModal = () => {} }) => {
           </ul>
         </div>
         <div>
-          <Typography variant='h4' color='white'>
-            Nos podes encontrar en:
+          <Typography variant='h4' fontWeight={900} color='white'>
+            Nos podes encontrar en
           </Typography>
           <ul>
             <li className={classes.itemFooter}>
@@ -104,7 +123,7 @@ const Footer = ({ setContentModal = () => {} }) => {
           </ul>
         </div>
         <div>
-          <Typography variant='h4' color='white'>
+          <Typography variant='h4' fontWeight={900} color='white'>
             ¿Dudas?
           </Typography>
           <ul style={{ flexDirection: 'column' }}>
@@ -113,7 +132,7 @@ const Footer = ({ setContentModal = () => {} }) => {
                 setContentModal(<Faqs />)
               }}
             >
-              <Typography variant='p' color='white' fontSize={12}>
+              <Typography variant='p' fontWeight={400} color='white' fontSize={12}>
                 Preguntas Frecuentes
               </Typography>
             </li>
@@ -122,7 +141,7 @@ const Footer = ({ setContentModal = () => {} }) => {
                 setContentModal(<Term />)
               }}
             >
-              <Typography variant='p' color='white' fontSize={12}>
+              <Typography variant='p' fontWeight={400} color='white' fontSize={12}>
                 Terminos y condiciones
               </Typography>
             </li>

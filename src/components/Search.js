@@ -276,7 +276,7 @@ const Search = ({
               onChange={handleChange}
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
-            <Typography color='gray' textAlign='cemter' fontSize={13} variant='p'>
+            <Typography color='#1769aa' fontWeight={900} textAlign='cemter' fontSize={15} variant='p'>
               Seleccionar varios dias
             </Typography>
           </div>

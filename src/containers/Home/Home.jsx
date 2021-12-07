@@ -28,7 +28,7 @@ import SEARCH_LIST from 'gql/search/list'
 const useStyles = makeStyles(theme => ({
   contentFull: {
     width: '100%',
-    background: 'black',
+    //background: 'black',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   },
   contentBanners: {
     width: '100%',
-    background: '#f2f2f2',
+    background: '#ebebeb',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -97,6 +97,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '55px',
     maxWidth: 540,
     color: 'white!important',
+    paddingBottom: 10,
 
     '@media (max-width: 960px)': {
       display: 'none',
@@ -213,7 +214,7 @@ const Home = () => {
   return (
     <div className={classes.contentFull}>
       <HomeSlider imageBackground={get(config, '0.imagen')}>
-        <Typography fontWeight='900' className={classes.title} variant='h1'>
+        <Typography textAlign="center" fontWeight='900' className={classes.title} variant='h1'>
           DISFRUTA TU LUGAR
         </Typography>
         <Search ciudades={dataSearch} ciudad={ciudadSelect} handleOnSubmit={onSubmitSearch} />
