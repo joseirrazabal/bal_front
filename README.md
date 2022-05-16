@@ -1,2 +1,1 @@
-# alamar_front
-Frontend Site Alamar
+# alamar front
